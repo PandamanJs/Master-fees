@@ -80,15 +80,23 @@ export default function Testimonials() {
         </div>
         
         {/* Trusted Schools Logos */}
-        <div className="border-t border-slate-200 pt-16">
-          <h3 className="text-center text-lg font-semibold text-slate-900 mb-8">Trusted by leading schools</h3>
+        <div className="border-t border-slate-200 dark:border-slate-700 pt-16">
+          <h3 className="text-center text-lg font-semibold text-slate-900 dark:text-white mb-8">Trusted by leading schools</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 items-center opacity-60">
             {trustedSchools.map((school, index) => (
               <div
                 key={index}
-                className="bg-slate-200 h-12 rounded-lg flex items-center justify-center"
+                className={`bg-slate-200 dark:bg-slate-700 h-12 rounded-lg flex items-center justify-center hover:opacity-100 transition-all duration-300 cursor-pointer group ${
+                  index % 2 === 0 ? 'animate-circular-motion' : 'animate-orbit'
+                }`}
+                style={{
+                  animationDelay: `${index * 0.5}s`,
+                  animationDuration: index % 2 === 0 ? '6s' : '10s'
+                }}
               >
-                <span className="text-slate-600 text-sm font-medium">{school}</span>
+                <span className="text-slate-600 dark:text-slate-300 text-sm font-medium group-hover:text-brand-teal transition-colors duration-300">
+                  {school}
+                </span>
               </div>
             ))}
           </div>

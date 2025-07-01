@@ -629,3 +629,39 @@ html {
 .border-brand-teal {
   border-color: hsl(201, 100%, 14%);
 }
+
+/* Circular motion animations */
+@keyframes circular-motion {
+  0% { 
+    transform: translateX(0) translateY(0); 
+  }
+  25% { 
+    transform: translateX(6px) translateY(-4px); 
+  }
+  50% { 
+    transform: translateX(0) translateY(-8px); 
+  }
+  75% { 
+    transform: translateX(-6px) translateY(-4px); 
+  }
+  100% { 
+    transform: translateX(0) translateY(0); 
+  }
+}
+
+@keyframes orbit {
+  from {
+    transform: rotate(0deg) translateX(12px) rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg) translateX(12px) rotate(-360deg);
+  }
+}
+
+.animate-circular-motion {
+  animation: circular-motion 4s ease-in-out infinite;
+}
+
+.animate-orbit {
+  animation: orbit 8s linear infinite;
+}
