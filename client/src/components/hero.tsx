@@ -77,15 +77,15 @@ export default function Hero() {
                   <div className="w-24 sm:w-32 h-2 sm:h-3 bg-gradient-to-b from-slate-600 to-slate-700 dark:from-slate-700 dark:to-slate-800 rounded-full shadow-md"></div>
                 </div>
               </div>
-                {/* Floating elements with animation */}
-                <div className="absolute -top-4 -right-4 w-8 h-8 bg-brand-teal rounded-full opacity-20 animate-float delay-100 transition-all duration-500 group-hover:opacity-60 group-hover:scale-125"></div>
-                <div className="absolute -bottom-2 -left-2 w-6 h-6 bg-brand-mint rounded-full opacity-30 animate-float delay-300 transition-all duration-500 group-hover:opacity-80 group-hover:scale-125"></div>
-                <div className="absolute top-1/4 -left-3 w-4 h-4 bg-brand-teal/30 rounded-full animate-float delay-500 transition-all duration-500 group-hover:opacity-100 group-hover:scale-150"></div>
-                <div className="absolute bottom-1/3 -right-2 w-5 h-5 bg-brand-mint/40 rounded-full animate-float delay-700 transition-all duration-500 group-hover:opacity-100 group-hover:scale-125"></div>
-                
-                {/* Glow effect on hover */}
-                <div className="absolute inset-0 rounded-3xl opacity-0 transition-opacity duration-700 group-hover:opacity-100 bg-gradient-to-br from-brand-mint/10 via-transparent to-brand-teal/10 pointer-events-none"></div>
-              </div>
+              
+              {/* Floating elements with animation */}
+              <div className="absolute -top-4 -right-4 w-8 h-8 bg-brand-teal rounded-full opacity-20 animate-float delay-100 transition-all duration-500 group-hover:opacity-60 group-hover:scale-125"></div>
+              <div className="absolute -bottom-2 -left-2 w-6 h-6 bg-brand-mint rounded-full opacity-30 animate-float delay-300 transition-all duration-500 group-hover:opacity-80 group-hover:scale-125"></div>
+              <div className="absolute top-1/4 -left-3 w-4 h-4 bg-brand-teal/30 rounded-full animate-float delay-500 transition-all duration-500 group-hover:opacity-100 group-hover:scale-150"></div>
+              <div className="absolute bottom-1/3 -right-2 w-5 h-5 bg-brand-mint/40 rounded-full animate-float delay-700 transition-all duration-500 group-hover:opacity-100 group-hover:scale-125"></div>
+              
+              {/* Glow effect on hover */}
+              <div className="absolute inset-0 rounded-3xl opacity-0 transition-opacity duration-700 group-hover:opacity-100 bg-gradient-to-br from-brand-mint/10 via-transparent to-brand-teal/10 pointer-events-none"></div>
             </div>
           </div>
         </div>

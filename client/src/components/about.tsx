@@ -43,7 +43,8 @@ export default function About() {
           {features.map((feature, index) => (
             <div
               key={index}
-              className={`group bg-white bg-opacity-10 backdrop-blur-sm p-6 sm:p-8 rounded-xl border border-white border-opacity-20 transition-all duration-700 hover:bg-opacity-20 hover:scale-102 hover:-translate-y-1 cursor-pointer relative overflow-hidden animate-fade-in-up delay-${(index + 1) * 200} glass-effect`}
+              className={`group bg-white bg-opacity-10 backdrop-blur-sm p-6 sm:p-8 rounded-xl border border-white border-opacity-20 transition-all duration-700 hover:bg-opacity-20 hover:scale-102 hover:-translate-y-1 cursor-pointer relative overflow-hidden animate-fade-in-up glass-effect`}
+              style={{ animationDelay: `${(index + 1) * 200}ms` }}
             >
               {/* Subtle glow effect */}
               <div className="absolute inset-0 rounded-xl opacity-0 transition-opacity duration-500 group-hover:opacity-100 bg-gradient-to-br from-brand-mint/5 via-transparent to-brand-light-mint/5 pointer-events-none"></div>
