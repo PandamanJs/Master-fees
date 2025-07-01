@@ -976,75 +976,35 @@ body.page-transitioning section:not(:target) {
   to { transform: rotate(360deg); }
 }
 
-.custom-cursor {
-  position: fixed;
-  width: 16px;
-  height: 16px;
-  pointer-events: none;
-  z-index: 9999;
-  transition: all 0.2s ease;
-  transform: rotate(45deg);
+/* Remove custom cursor styles - back to normal cursor */
+
+/* Normal cursor for all elements */
+
+/* Typing animation for heading */
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
 }
 
-.custom-cursor::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, hsl(151, 93%, 79%) 0%, hsl(201, 100%, 14%) 50%, hsl(163, 100%, 87%) 100%);
-  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-  transition: all 0.2s ease;
+@keyframes blink {
+  0%, 50% { border-color: transparent; }
+  51%, 100% { border-color: hsl(151, 93%, 79%); }
 }
 
-.custom-cursor-follower {
-  position: fixed;
-  width: 32px;
-  height: 32px;
-  pointer-events: none;
-  z-index: 9998;
-  transition: all 0.3s ease;
-  opacity: 0.3;
-  transform: rotate(45deg);
+.typing-effect {
+  overflow: hidden;
+  border-right: 2px solid hsl(151, 93%, 79%);
+  white-space: nowrap;
+  animation: typing 2s steps(20, end), blink 1s infinite;
 }
 
-.custom-cursor-follower::before {
-  content: '';
-  position: absolute;
-  inset: 2px;
-  border: 2px solid hsl(151, 93%, 79%);
-  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-  transition: all 0.3s ease;
+.fade-in-slow {
+  animation: fadeIn 1.5s ease-in-out;
 }
 
-.custom-cursor-hover {
-  transform: rotate(45deg) scale(1.8);
-}
-
-.custom-cursor-hover::before {
-  background: linear-gradient(135deg, hsl(201, 100%, 14%) 0%, hsl(151, 93%, 79%) 50%, hsl(163, 100%, 87%) 100%);
-  box-shadow: 0 0 15px rgba(20, 184, 166, 0.5);
-}
-
-.custom-cursor-follower-hover {
-  transform: rotate(45deg) scale(1.5);
-  opacity: 0.7;
-}
-
-.custom-cursor-follower-hover::before {
-  border-color: hsl(201, 100%, 14%);
-  box-shadow: 0 0 20px rgba(20, 184, 166, 0.3);
-}
-
-/* Cursor for different elements */
-button, a, [role="button"] {
-  cursor: none !important;
-}
-
-input, textarea, select {
-  cursor: none !important;
-}
-
-.cursor-text {
-  cursor: none !important;
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* Mascot animations */

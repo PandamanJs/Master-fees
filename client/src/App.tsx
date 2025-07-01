@@ -4,7 +4,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/theme-provider";
-import CustomCursor from "@/components/custom-cursor";
+// import CustomCursor from "@/components/custom-cursor";
 import MascotGuide from "@/components/mascot-guide";
 import PageTransition from "@/components/page-transition";
 import Home from "@/pages/home";
@@ -26,7 +26,7 @@ function App() {
     <ThemeProvider defaultTheme="light" storageKey="masterfees-ui-theme">
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
-          <CustomCursor />
+          {/* <CustomCursor /> */}
           <MascotGuide />
           <Toaster />
           <Router />
