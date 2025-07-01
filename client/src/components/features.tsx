@@ -1,4 +1,5 @@
 import { Zap, FileText, User, Bell, BarChart3, Building2 } from "lucide-react";
+import { useScrollAnimation, useStaggerAnimation } from "@/hooks/use-scroll-animation";
 
 const features = [
   {
@@ -46,8 +47,11 @@ const features = [
 ];
 
 export default function Features() {
+  const sectionRef = useScrollAnimation();
+  const gridRef = useStaggerAnimation();
+
   return (
-    <section id="features" className="py-12 sm:py-16 md:py-20 lg:py-24 bg-slate-50/80 dark:bg-gray-950/80 transition-all duration-300">
+    <section ref={sectionRef} id="features" className="section-animate py-12 sm:py-16 md:py-20 lg:py-24 bg-slate-50/80 dark:bg-gray-950/80 transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-4xl mx-auto mb-12 sm:mb-16 lg:mb-20">
@@ -63,7 +67,7 @@ export default function Features() {
         </div>
         
         {/* Features Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+        <div ref={gridRef} className="stagger-animate grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {features.map((feature, index) => (
             <div
               key={index}

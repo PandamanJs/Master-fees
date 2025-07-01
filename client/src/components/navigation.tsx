@@ -10,7 +10,15 @@ export default function Navigation() {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
+      // Add transition class to body for smooth scrolling effect
+      document.body.classList.add('page-transitioning');
+      
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      
+      // Remove transition class after scroll completes
+      setTimeout(() => {
+        document.body.classList.remove('page-transitioning');
+      }, 1000);
     }
     setIsMenuOpen(false);
   };
@@ -36,31 +44,31 @@ export default function Navigation() {
             <div className="ml-10 flex items-baseline space-x-1">
               <button
                 onClick={() => scrollToSection('home')}
-                className="text-slate-900 dark:text-white hover:text-brand-teal px-4 py-2 rounded-lg text-base font-medium transition-all duration-200 hover:bg-brand-mint/10 dark:hover:bg-brand-mint/20 focus:ring-2 focus:ring-brand-teal/30 hover-lift cursor-magic hover:animate-bounce-subtle"
+                className="nav-link text-slate-900 dark:text-white hover:text-brand-teal px-4 py-2 rounded-lg text-base font-medium hover:bg-brand-mint/10 dark:hover:bg-brand-mint/20 focus:ring-2 focus:ring-brand-teal/30 cursor-magic"
               >
                 Home
               </button>
               <button
                 onClick={() => scrollToSection('features')}
-                className="text-slate-600 dark:text-slate-300 hover:text-brand-teal px-4 py-2 rounded-lg text-base font-medium transition-all duration-200 hover:bg-brand-mint/10 dark:hover:bg-brand-mint/20 focus:ring-2 focus:ring-brand-teal/30 hover-lift cursor-magic hover:animate-bounce-subtle"
+                className="nav-link text-slate-600 dark:text-slate-300 hover:text-brand-teal px-4 py-2 rounded-lg text-base font-medium hover:bg-brand-mint/10 dark:hover:bg-brand-mint/20 focus:ring-2 focus:ring-brand-teal/30 cursor-magic"
               >
                 Features
               </button>
               <button
                 onClick={() => scrollToSection('about')}
-                className="text-slate-600 dark:text-slate-300 hover:text-brand-teal px-4 py-2 rounded-lg text-base font-medium transition-all duration-200 hover:bg-brand-mint/10 dark:hover:bg-brand-mint/20 focus:ring-2 focus:ring-brand-teal/30 hover-lift cursor-magic hover:animate-bounce-subtle"
+                className="nav-link text-slate-600 dark:text-slate-300 hover:text-brand-teal px-4 py-2 rounded-lg text-base font-medium hover:bg-brand-mint/10 dark:hover:bg-brand-mint/20 focus:ring-2 focus:ring-brand-teal/30 cursor-magic"
               >
                 About
               </button>
               <button
                 onClick={() => scrollToSection('pricing')}
-                className="text-slate-600 dark:text-slate-300 hover:text-brand-teal px-4 py-2 rounded-lg text-base font-medium transition-all duration-200 hover:bg-brand-mint/10 dark:hover:bg-brand-mint/20 focus:ring-2 focus:ring-brand-teal/30"
+                className="nav-link text-slate-600 dark:text-slate-300 hover:text-brand-teal px-4 py-2 rounded-lg text-base font-medium hover:bg-brand-mint/10 dark:hover:bg-brand-mint/20 focus:ring-2 focus:ring-brand-teal/30 cursor-magic"
               >
                 Pricing
               </button>
               <button
                 onClick={() => scrollToSection('contact')}
-                className="text-slate-600 dark:text-slate-300 hover:text-brand-teal px-4 py-2 rounded-lg text-base font-medium transition-all duration-200 hover:bg-brand-mint/10 dark:hover:bg-brand-mint/20 focus:ring-2 focus:ring-brand-teal/30"
+                className="nav-link text-slate-600 dark:text-slate-300 hover:text-brand-teal px-4 py-2 rounded-lg text-base font-medium hover:bg-brand-mint/10 dark:hover:bg-brand-mint/20 focus:ring-2 focus:ring-brand-teal/30 cursor-magic"
               >
                 Contact
               </button>

@@ -6,15 +6,18 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/theme-provider";
 import CustomCursor from "@/components/custom-cursor";
 import MascotGuide from "@/components/mascot-guide";
+import PageTransition from "@/components/page-transition";
 import Home from "@/pages/home";
 import NotFound from "@/pages/not-found";
 
 function Router() {
   return (
-    <Switch>
-      <Route path="/" component={Home} />
-      <Route component={NotFound} />
-    </Switch>
+    <PageTransition>
+      <Switch>
+        <Route path="/" component={Home} />
+        <Route component={NotFound} />
+      </Switch>
+    </PageTransition>
   );
 }
 

@@ -195,28 +195,28 @@ export default function MascotGuide() {
         className="relative cursor-pointer group"
       >
         {/* Panda body */}
-        <div className={`w-16 h-16 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group-hover:scale-110 border-4 border-black ${isExpanded ? 'mascot-excited' : 'mascot-idle'}`}>
+        <div className={`w-12 h-12 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group-hover:scale-110 border-3 border-black ${isExpanded ? 'mascot-excited' : 'mascot-idle'}`}>
           {/* Panda face */}
           <div className="absolute inset-1 bg-white rounded-full flex items-center justify-center relative">
             {/* Panda ears */}
-            <div className="absolute -top-2 -left-2 w-4 h-4 bg-black rounded-full"></div>
-            <div className="absolute -top-2 -right-2 w-4 h-4 bg-black rounded-full"></div>
+            <div className="absolute -top-1.5 -left-1.5 w-3 h-3 bg-black rounded-full"></div>
+            <div className="absolute -top-1.5 -right-1.5 w-3 h-3 bg-black rounded-full"></div>
             
             {/* Eye patches */}
-            <div className="absolute top-1 left-2 w-3 h-4 bg-black rounded-full opacity-80"></div>
-            <div className="absolute top-1 right-2 w-3 h-4 bg-black rounded-full opacity-80"></div>
+            <div className="absolute top-0.5 left-1.5 w-2.5 h-3 bg-black rounded-full opacity-80"></div>
+            <div className="absolute top-0.5 right-1.5 w-2.5 h-3 bg-black rounded-full opacity-80"></div>
             
             {/* Eyes */}
-            <div className="flex space-x-3 relative z-10">
-              <div className="w-1.5 h-1.5 bg-white rounded-full eye-blink"></div>
-              <div className="w-1.5 h-1.5 bg-white rounded-full eye-blink" style={{ animationDelay: '0.2s' }}></div>
+            <div className="flex space-x-2 relative z-10">
+              <div className="w-1 h-1 bg-white rounded-full eye-blink"></div>
+              <div className="w-1 h-1 bg-white rounded-full eye-blink" style={{ animationDelay: '0.2s' }}></div>
             </div>
             
             {/* Panda nose */}
-            <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 w-1.5 h-1 bg-black rounded-full"></div>
+            <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-1 h-0.5 bg-black rounded-full"></div>
             
             {/* Panda mouth */}
-            <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 w-3 h-1.5 border-2 border-black border-t-0 rounded-b-full transition-all duration-300 group-hover:border-brand-teal"></div>
+            <div className="absolute bottom-0.5 left-1/2 transform -translate-x-1/2 w-2 h-1 border border-black border-t-0 rounded-b-full transition-all duration-300 group-hover:border-brand-teal"></div>
           </div>
 
           {/* Activity indicator */}
