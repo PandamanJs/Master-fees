@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Check } from "lucide-react";
+import { Check, X, ZoomIn, ZoomOut, Move } from "lucide-react";
 import dashboardImage from "@assets/Dashboard_1751383261879.png";
 import logoImage from "@assets/Group 15_1751377323388.png";
 
@@ -10,6 +10,11 @@ export default function Hero() {
   const [bootStage, setBootStage] = useState(0);
   const [isZoomed, setIsZoomed] = useState(false);
   const [zoomPosition, setZoomPosition] = useState({ x: 50, y: 50 });
+  const [zoomLevel, setZoomLevel] = useState(1);
+  const [panPosition, setPanPosition] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+  const zoomModalRef = useRef<HTMLDivElement>(null);
 
   const bootMessages = [
     "Master Fees",
@@ -46,6 +51,10 @@ export default function Hero() {
     
     e.stopPropagation();
     setIsZoomed(!isZoomed);
+    if (!isZoomed) {
+      setZoomLevel(2);
+      setPanPosition({ x: 0, y: 0 });
+    }
   };
 
   const handleZoomMove = (e: React.MouseEvent) => {
@@ -63,7 +72,67 @@ export default function Hero() {
 
   const handleZoomClose = () => {
     setIsZoomed(false);
+    setZoomLevel(1);
+    setPanPosition({ x: 0, y: 0 });
   };
+
+  const handleZoomIn = useCallback(() => {
+    setZoomLevel(prev => Math.min(prev + 0.5, 4));
+  }, []);
+
+  const handleZoomOut = useCallback(() => {
+    setZoomLevel(prev => Math.max(prev - 0.5, 1));
+  }, []);
+
+  const handleMouseDown = useCallback((e: React.MouseEvent) => {
+    if (!isZoomed) return;
+    setIsDragging(true);
+    setDragStart({ x: e.clientX - panPosition.x, y: e.clientY - panPosition.y });
+  }, [isZoomed, panPosition]);
+
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
+    if (!isDragging || !isZoomed) return;
+    
+    const newX = e.clientX - dragStart.x;
+    const newY = e.clientY - dragStart.y;
+    
+    // Constrain panning within reasonable bounds
+    const maxPan = (zoomLevel - 1) * 200;
+    setPanPosition({
+      x: Math.max(-maxPan, Math.min(maxPan, newX)),
+      y: Math.max(-maxPan, Math.min(maxPan, newY))
+    });
+  }, [isDragging, isZoomed, dragStart, zoomLevel]);
+
+  const handleMouseUp = useCallback(() => {
+    setIsDragging(false);
+  }, []);
+
+  const handleWheel = useCallback((e: React.WheelEvent) => {
+    if (!isZoomed) return;
+    e.preventDefault();
+    
+    const delta = e.deltaY > 0 ? -0.2 : 0.2;
+    setZoomLevel(prev => Math.max(1, Math.min(4, prev + delta)));
+  }, [isZoomed]);
+
+  const handleKeyDown = useCallback((e: KeyboardEvent) => {
+    if (!isZoomed) return;
+    
+    if (e.key === 'Escape') {
+      handleZoomClose();
+    } else if (e.key === '+' || e.key === '=') {
+      handleZoomIn();
+    } else if (e.key === '-') {
+      handleZoomOut();
+    }
+  }, [isZoomed, handleZoomClose, handleZoomIn, handleZoomOut]);
+
+  // Add keyboard event listeners
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [handleKeyDown]);
 
   return (
     <section id="home" className="bg-gradient-to-br from-white via-slate-50/50 to-brand-mint/5 dark:bg-gradient-to-br dark:from-black dark:via-gray-950 dark:to-brand-mint/10 transition-all duration-500">
@@ -273,55 +342,101 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Full-screen zoom modal */}
+      {/* Enhanced Full-screen zoom modal */}
       {isZoomed && (
         <div 
-          className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center zoom-modal"
+          className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center zoom-modal backdrop-blur-sm"
           onClick={handleZoomClose}
         >
-          <div className="relative max-w-6xl max-h-screen p-4">
-            {/* Close button */}
-            <button
-              onClick={handleZoomClose}
-              className="absolute -top-12 right-0 text-white hover:text-brand-mint text-xl bg-black/50 rounded-full w-10 h-10 flex items-center justify-center transition-colors duration-200"
-            >
-              ✕
-            </button>
-            
-            {/* Zoom controls */}
-            <div className="absolute -top-12 left-0 flex space-x-2">
-              <div className="text-white text-sm bg-black/50 px-3 py-1 rounded-md">
-                Master Fees Dashboard Preview
+          <div 
+            className="relative max-w-7xl max-h-screen p-6"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header with controls */}
+            <div className="absolute -top-16 left-0 right-0 flex justify-between items-center">
+              <div className="flex space-x-4">
+                <div className="text-white text-lg font-semibold bg-black/60 px-4 py-2 rounded-lg border border-brand-mint/30">
+                  Master Fees Dashboard Preview
+                </div>
+                <div className="flex space-x-2">
+                  <button
+                    onClick={handleZoomOut}
+                    className="bg-brand-teal/80 hover:bg-brand-teal text-white p-2 rounded-lg zoom-control-btn flex items-center space-x-1"
+                    disabled={zoomLevel <= 1}
+                  >
+                    <ZoomOut className="w-4 h-4" />
+                    <span className="text-sm">Out</span>
+                  </button>
+                  <button
+                    onClick={handleZoomIn}
+                    className="bg-brand-teal/80 hover:bg-brand-teal text-white p-2 rounded-lg zoom-control-btn flex items-center space-x-1"
+                    disabled={zoomLevel >= 4}
+                  >
+                    <ZoomIn className="w-4 h-4" />
+                    <span className="text-sm">In</span>
+                  </button>
+                  <div className="bg-black/60 text-white px-3 py-2 rounded-lg border border-brand-mint/30 text-sm">
+                    {Math.round(zoomLevel * 100)}%
+                  </div>
+                </div>
               </div>
-              <div className="text-brand-mint text-sm bg-black/50 px-3 py-1 rounded-md">
-                Click anywhere to close
-              </div>
+              
+              <button
+                onClick={handleZoomClose}
+                className="text-white hover:text-brand-mint bg-red-600/80 hover:bg-red-600 rounded-full w-12 h-12 flex items-center justify-center transition-colors duration-200 border border-red-500/50"
+              >
+                <X className="w-6 h-6" />
+              </button>
             </div>
             
-            {/* Zoomed dashboard image */}
+            {/* Zoomed dashboard image container */}
             <div 
-              className="relative overflow-hidden rounded-lg shadow-2xl cursor-move"
-              onMouseMove={handleZoomMove}
+              ref={zoomModalRef}
+              className="relative overflow-hidden rounded-xl shadow-2xl border border-brand-mint/20 bg-white"
+              style={{ 
+                width: '90vw', 
+                height: '80vh',
+                cursor: isDragging ? 'grabbing' : 'grab'
+              }}
+              onMouseDown={handleMouseDown}
+              onMouseMove={handleMouseMove}
+              onMouseUp={handleMouseUp}
+              onMouseLeave={handleMouseUp}
+              onWheel={handleWheel}
             >
               <img 
                 src={dashboardImage} 
                 alt="Master Fees Dashboard Interface - Full View" 
-                className="w-full h-auto max-w-none transition-transform duration-200"
+                className="w-full h-auto max-w-none transition-transform duration-200 select-none"
                 style={{
-                  transform: `scale(1.5) translate(${(50 - zoomPosition.x) * 0.3}%, ${(50 - zoomPosition.y) * 0.3}%)`,
-                  transformOrigin: `${zoomPosition.x}% ${zoomPosition.y}%`
+                  transform: `scale(${zoomLevel}) translate(${panPosition.x}px, ${panPosition.y}px)`,
+                  transformOrigin: 'center center'
                 }}
+                draggable={false}
               />
               
-              {/* Interactive hotspots */}
-              <div className="absolute top-4 left-4 bg-brand-teal/90 text-white px-3 py-2 rounded-lg text-sm animate-pulse">
-                💰 Revenue Analytics
+              {/* Interactive overlay hints */}
+              <div className="absolute top-6 left-6 bg-brand-teal/90 text-white px-4 py-3 rounded-xl text-sm shadow-lg border border-brand-mint/30 animate-pulse">
+                <div className="flex items-center space-x-2">
+                  <Move className="w-4 h-4" />
+                  <span>Drag to pan • Scroll to zoom</span>
+                </div>
               </div>
-              <div className="absolute top-1/3 right-4 bg-brand-mint/90 text-black px-3 py-2 rounded-lg text-sm animate-pulse">
-                📊 Payment Reports
+              
+              {/* Feature highlights */}
+              <div className="absolute top-20 right-6 bg-gradient-to-br from-brand-mint/90 to-brand-teal/90 text-white px-4 py-3 rounded-xl text-sm shadow-lg border border-white/20">
+                <div className="font-semibold mb-1">Dashboard Features:</div>
+                <div className="text-xs space-y-1">
+                  <div>• Real-time payment tracking</div>
+                  <div>• Student fee management</div>
+                  <div>• Revenue analytics</div>
+                  <div>• Payment reminders</div>
+                </div>
               </div>
-              <div className="absolute bottom-1/4 left-1/4 bg-blue-500/90 text-white px-3 py-2 rounded-lg text-sm animate-pulse">
-                👥 Student Records
+              
+              {/* Bottom instruction bar */}
+              <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 bg-black/80 text-white px-6 py-3 rounded-full text-sm border border-brand-mint/30">
+                Click outside or press ESC to close
               </div>
             </div>
           </div>
