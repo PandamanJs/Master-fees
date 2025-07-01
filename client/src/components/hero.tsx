@@ -5,15 +5,15 @@ import logoImage from "@assets/Group 15_1751377323388.png";
 
 export default function Hero() {
   return (
-    <section id="home" className="bg-white">
+    <section id="home" className="bg-white dark:bg-black transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
         <div className="lg:grid lg:grid-cols-12 lg:gap-8">
           <div className="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 leading-tight tracking-tight animate-fade-in-up">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white leading-tight tracking-tight animate-fade-in-up">
               Simplify School
               <span className="text-brand-teal text-shimmer"> Fee Management</span>
             </h1>
-            <p className="mt-8 text-xl text-slate-600 leading-relaxed max-w-2xl animate-fade-in-up delay-200">
+            <p className="mt-8 text-xl text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl animate-fade-in-up delay-200">
               Streamline fee collection, automate receipt generation, and provide parents with a seamless payment experience. Master Fees makes school financial management effortless.
             </p>
             
