@@ -67,15 +67,29 @@ export default function Features() {
           {features.map((feature, index) => (
             <div
               key={index}
-              className="group bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-slate-100"
+              className={`group bg-white p-8 rounded-2xl shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 hover:scale-105 border border-slate-100 card-hover animate-fade-in-up delay-${(index + 1) * 100} cursor-pointer relative overflow-hidden`}
             >
-              <div className={`w-14 h-14 ${feature.bgColor} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-200`}>
-                <feature.icon className={`w-7 h-7 ${feature.iconColor}`} />
+              {/* Subtle gradient overlay on hover */}
+              <div className="absolute inset-0 bg-gradient-to-br from-brand-mint/5 via-transparent to-brand-teal/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"></div>
+              
+              {/* Icon with enhanced animations */}
+              <div className={`relative w-14 h-14 ${feature.bgColor} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-125 group-hover:rotate-6 transition-all duration-500 shadow-lg group-hover:shadow-xl`}>
+                <feature.icon className={`w-7 h-7 ${feature.iconColor} transition-all duration-300 group-hover:scale-110`} />
+                
+                {/* Pulsing ring effect */}
+                <div className="absolute inset-0 rounded-2xl ring-2 ring-transparent group-hover:ring-brand-teal/30 transition-all duration-500 animate-pulse"></div>
               </div>
-              <h3 className="text-xl font-semibold text-slate-900 mb-4 group-hover:text-brand-teal transition-colors duration-200">{feature.title}</h3>
-              <p className="text-slate-600 leading-relaxed">
+              
+              {/* Content with staggered animations */}
+              <h3 className="relative text-xl font-semibold text-slate-900 mb-4 group-hover:text-brand-teal transition-all duration-300 transform group-hover:-translate-y-1">{feature.title}</h3>
+              <p className="relative text-slate-600 leading-relaxed transition-all duration-300 group-hover:text-slate-700 transform group-hover:-translate-y-1">
                 {feature.description}
               </p>
+              
+              {/* Shimmer effect on hover */}
+              <div className="absolute top-0 left-0 w-full h-full opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                <div className="absolute top-0 left-0 w-1/3 h-full bg-gradient-to-r from-transparent via-white/10 to-transparent transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[300%] transition-transform duration-1000"></div>
+              </div>
             </div>
           ))}
         </div>

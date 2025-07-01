@@ -15,18 +15,18 @@ export default function Navigation() {
   };
 
   return (
-    <nav className="bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-200 sticky top-0 z-50">
+    <nav className="bg-white/80 backdrop-blur-xl shadow-lg border-b border-white/20 sticky top-0 z-50 transition-all duration-300 glass-effect">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <div className="flex items-center">
-            <div className="flex-shrink-0 flex items-center">
+            <div className="flex-shrink-0 flex items-center group cursor-pointer">
               <img 
                 src={logoImage} 
                 alt="Master Fees Logo" 
-                className="w-10 h-10"
+                className="w-10 h-10 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12 animate-float"
               />
-              <span className="ml-3 text-2xl font-bold text-slate-900">Master Fees</span>
+              <span className="ml-3 text-2xl font-bold text-slate-900 transition-all duration-300 group-hover:text-brand-teal">Master Fees</span>
             </div>
           </div>
           
