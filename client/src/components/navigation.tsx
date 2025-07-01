@@ -21,13 +21,13 @@ export default function Navigation() {
         <div className="flex justify-between items-center h-16 sm:h-18 lg:h-20">
           {/* Logo */}
           <div className="flex items-center">
-            <div className="flex-shrink-0 flex items-center group cursor-pointer">
+            <div className="flex-shrink-0 flex items-center group cursor-pointer hover-lift cursor-magic">
               <img 
                 src={logoImage} 
                 alt="Master Fees Logo" 
-                className="w-8 h-8 sm:w-10 sm:h-10 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12 animate-float"
+                className="w-8 h-8 sm:w-10 sm:h-10 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12 animate-bounce-subtle group-hover:animate-rubber-band"
               />
-              <span className="ml-2 sm:ml-3 text-xl sm:text-2xl font-bold text-slate-900 dark:text-white transition-all duration-300 group-hover:text-brand-teal">Master Fees</span>
+              <span className="ml-2 sm:ml-3 text-xl sm:text-2xl font-bold text-slate-900 dark:text-white transition-all duration-300 group-hover:text-brand-teal group-hover:animate-wiggle">Master Fees</span>
             </div>
           </div>
           
@@ -36,19 +36,19 @@ export default function Navigation() {
             <div className="ml-10 flex items-baseline space-x-1">
               <button
                 onClick={() => scrollToSection('home')}
-                className="text-slate-900 dark:text-white hover:text-brand-teal px-4 py-2 rounded-lg text-base font-medium transition-all duration-200 hover:bg-brand-mint/10 dark:hover:bg-brand-mint/20 focus:ring-2 focus:ring-brand-teal/30"
+                className="text-slate-900 dark:text-white hover:text-brand-teal px-4 py-2 rounded-lg text-base font-medium transition-all duration-200 hover:bg-brand-mint/10 dark:hover:bg-brand-mint/20 focus:ring-2 focus:ring-brand-teal/30 hover-lift cursor-magic hover:animate-bounce-subtle"
               >
                 Home
               </button>
               <button
                 onClick={() => scrollToSection('features')}
-                className="text-slate-600 dark:text-slate-300 hover:text-brand-teal px-4 py-2 rounded-lg text-base font-medium transition-all duration-200 hover:bg-brand-mint/10 dark:hover:bg-brand-mint/20 focus:ring-2 focus:ring-brand-teal/30"
+                className="text-slate-600 dark:text-slate-300 hover:text-brand-teal px-4 py-2 rounded-lg text-base font-medium transition-all duration-200 hover:bg-brand-mint/10 dark:hover:bg-brand-mint/20 focus:ring-2 focus:ring-brand-teal/30 hover-lift cursor-magic hover:animate-bounce-subtle"
               >
                 Features
               </button>
               <button
                 onClick={() => scrollToSection('about')}
-                className="text-slate-600 dark:text-slate-300 hover:text-brand-teal px-4 py-2 rounded-lg text-base font-medium transition-all duration-200 hover:bg-brand-mint/10 dark:hover:bg-brand-mint/20 focus:ring-2 focus:ring-brand-teal/30"
+                className="text-slate-600 dark:text-slate-300 hover:text-brand-teal px-4 py-2 rounded-lg text-base font-medium transition-all duration-200 hover:bg-brand-mint/10 dark:hover:bg-brand-mint/20 focus:ring-2 focus:ring-brand-teal/30 hover-lift cursor-magic hover:animate-bounce-subtle"
               >
                 About
               </button>

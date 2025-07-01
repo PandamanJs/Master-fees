@@ -50,7 +50,7 @@ export default function About() {
           {features.map((feature, index) => (
             <div
               key={index}
-              className="group bg-white/15 backdrop-blur-lg p-8 sm:p-10 rounded-2xl border border-white/30 transition-all duration-700 hover:bg-white/25 hover:scale-105 hover:-translate-y-2 cursor-pointer relative overflow-hidden shadow-2xl hover:shadow-3xl"
+              className="group bg-white/15 backdrop-blur-lg p-8 sm:p-10 rounded-2xl border border-white/30 transition-all duration-700 hover:bg-white/25 hover:scale-105 hover:-translate-y-2 cursor-pointer relative overflow-hidden shadow-2xl hover:shadow-3xl hover-lift cursor-magic hover:animate-rubber-band"
               style={{ animationDelay: `${(index + 1) * 200}ms` }}
             >
               {/* Enhanced glow effect */}
@@ -62,14 +62,15 @@ export default function About() {
               </div>
               
               <div className="flex items-start space-x-6 relative z-10">
-                <div className="w-16 h-16 bg-gradient-to-br from-brand-light-mint to-brand-mint rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 shadow-xl group-hover:shadow-2xl">
-                  <feature.icon className="w-8 h-8 text-brand-teal transition-all duration-500 group-hover:scale-110" />
+                <div className="w-16 h-16 bg-gradient-to-br from-brand-light-mint to-brand-mint rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 shadow-xl group-hover:shadow-2xl animate-heartbeat group-hover:animate-bounce-subtle">
+                  <feature.icon className="w-8 h-8 text-brand-teal transition-all duration-500 group-hover:scale-110 group-hover:animate-wiggle" />
+                  <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 bg-gradient-to-br from-white/20 to-transparent transition-opacity duration-500"></div>
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-2xl font-bold mb-4 text-white transition-all duration-500 group-hover:text-brand-light-mint transform group-hover:-translate-y-1">
+                  <h3 className="text-2xl font-bold mb-4 text-white transition-all duration-500 group-hover:text-brand-light-mint transform group-hover:-translate-y-1 group-hover:animate-bounce-subtle">
                     {feature.title}
                   </h3>
-                  <p className="text-white/85 text-lg leading-relaxed transition-all duration-500 group-hover:text-white transform group-hover:-translate-y-1">
+                  <p className="text-white/85 text-lg leading-relaxed transition-all duration-500 group-hover:text-white transform group-hover:-translate-y-1 group-hover:animate-wiggle">
                     {feature.description}
                   </p>
                 </div>

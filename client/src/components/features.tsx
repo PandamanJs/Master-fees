@@ -67,19 +67,21 @@ export default function Features() {
           {features.map((feature, index) => (
             <div
               key={index}
-              className={`group bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm p-6 sm:p-8 rounded-xl sm:rounded-2xl shadow-sm hover:shadow-md dark:hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-slate-200/50 dark:border-gray-700/50 hover:border-brand-mint/50 dark:hover:border-brand-mint/50 animate-fade-in-up delay-${(index + 1) * 100} cursor-pointer relative overflow-hidden`}
+              className={`group bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm p-6 sm:p-8 rounded-xl sm:rounded-2xl shadow-sm hover:shadow-md dark:hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-slate-200/50 dark:border-gray-700/50 hover:border-brand-mint/50 dark:hover:border-brand-mint/50 animate-fade-in-up cursor-pointer relative overflow-hidden hover-lift cursor-magic hover:animate-rubber-band`}
+              style={{ animationDelay: `${(index + 1) * 100}ms` }}
             >
               {/* Subtle gradient overlay on hover */}
               <div className="absolute inset-0 bg-gradient-to-br from-brand-mint/5 via-transparent to-brand-teal/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"></div>
               
               {/* Icon with enhanced animations */}
-              <div className={`relative w-14 h-14 ${feature.bgColor} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-105 transition-all duration-300 shadow-md group-hover:shadow-lg`}>
-                <feature.icon className={`w-7 h-7 ${feature.iconColor} transition-all duration-300`} />
+              <div className={`relative w-14 h-14 ${feature.bgColor} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-all duration-300 shadow-md group-hover:shadow-lg animate-bounce-subtle group-hover:animate-heartbeat`}>
+                <feature.icon className={`w-7 h-7 ${feature.iconColor} transition-all duration-300 group-hover:animate-wiggle`} />
+                <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 bg-gradient-to-br from-white/20 to-transparent transition-opacity duration-300"></div>
               </div>
               
               {/* Content with staggered animations */}
-              <h3 className="relative text-xl font-semibold text-slate-900 dark:text-white mb-4 group-hover:text-brand-teal transition-colors duration-300">{feature.title}</h3>
-              <p className="relative text-slate-700 dark:text-slate-300 leading-relaxed transition-colors duration-300 group-hover:text-slate-800 dark:group-hover:text-slate-200">
+              <h3 className="relative text-xl font-semibold text-slate-900 dark:text-white mb-4 group-hover:text-brand-teal transition-colors duration-300 group-hover:animate-bounce-subtle">{feature.title}</h3>
+              <p className="relative text-slate-700 dark:text-slate-300 leading-relaxed transition-colors duration-300 group-hover:text-slate-800 dark:group-hover:text-slate-200 group-hover:animate-wiggle">
                 {feature.description}
               </p>
             </div>
