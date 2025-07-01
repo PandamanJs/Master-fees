@@ -13,7 +13,7 @@ export default function Hero() {
               <span className="block sm:inline">Transform School</span>
               <span className="bg-gradient-to-r from-brand-teal to-brand-mint bg-clip-text text-transparent block sm:inline"> Fee Collection</span>
             </h1>
-            <p className="mt-6 sm:mt-8 text-lg sm:text-xl lg:text-xl text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl animate-fade-in-up delay-200">
+            <p className="mt-6 sm:mt-8 text-lg sm:text-xl lg:text-xl text-slate-700 dark:text-slate-300 leading-relaxed max-w-2xl animate-fade-in-up delay-200">
               Automate fee collection, streamline payment processing, and provide real-time financial insights. Master Fees empowers schools with modern payment management solutions.
             </p>
             
@@ -34,17 +34,17 @@ export default function Hero() {
             
             {/* Trust Indicators */}
             <div className="mt-10 sm:mt-12 flex flex-wrap items-center justify-center lg:justify-start gap-x-4 sm:gap-x-6 gap-y-3 sm:gap-y-4 animate-fade-in-up delay-600">
-              <div className="flex items-center bg-brand-mint/10 dark:bg-brand-mint/20 backdrop-blur-sm border border-brand-mint/30 px-4 sm:px-5 py-3 rounded-xl transition-all duration-300 hover:bg-brand-mint/20 dark:hover:bg-brand-mint/30 hover:scale-105 hover:shadow-lg animate-float delay-100">
+              <div className="flex items-center bg-brand-teal/5 dark:bg-brand-mint/20 backdrop-blur-sm border border-brand-teal/20 dark:border-brand-mint/30 px-4 sm:px-5 py-3 rounded-xl transition-all duration-300 hover:bg-brand-teal/10 dark:hover:bg-brand-mint/30 hover:scale-105 hover:shadow-lg animate-float delay-100">
                 <Check className="w-4 h-4 text-brand-teal mr-3" />
-                <span className="text-sm font-semibold text-brand-teal dark:text-brand-mint">Instant Setup</span>
+                <span className="text-sm font-bold text-slate-800 dark:text-brand-mint">Instant Setup</span>
               </div>
-              <div className="flex items-center bg-brand-mint/10 dark:bg-brand-mint/20 backdrop-blur-sm border border-brand-mint/30 px-4 sm:px-5 py-3 rounded-xl transition-all duration-300 hover:bg-brand-mint/20 dark:hover:bg-brand-mint/30 hover:scale-105 hover:shadow-lg animate-float delay-200">
+              <div className="flex items-center bg-brand-teal/5 dark:bg-brand-mint/20 backdrop-blur-sm border border-brand-teal/20 dark:border-brand-mint/30 px-4 sm:px-5 py-3 rounded-xl transition-all duration-300 hover:bg-brand-teal/10 dark:hover:bg-brand-mint/30 hover:scale-105 hover:shadow-lg animate-float delay-200">
                 <Check className="w-4 h-4 text-brand-teal mr-3" />
-                <span className="text-sm font-semibold text-brand-teal dark:text-brand-mint">Bank Security</span>
+                <span className="text-sm font-bold text-slate-800 dark:text-brand-mint">Bank Security</span>
               </div>
-              <div className="flex items-center bg-brand-mint/10 dark:bg-brand-mint/20 backdrop-blur-sm border border-brand-mint/30 px-4 sm:px-5 py-3 rounded-xl transition-all duration-300 hover:bg-brand-mint/20 dark:hover:bg-brand-mint/30 hover:scale-105 hover:shadow-lg animate-float delay-300">
+              <div className="flex items-center bg-brand-teal/5 dark:bg-brand-mint/20 backdrop-blur-sm border border-brand-teal/20 dark:border-brand-mint/30 px-4 sm:px-5 py-3 rounded-xl transition-all duration-300 hover:bg-brand-teal/10 dark:hover:bg-brand-mint/30 hover:scale-105 hover:shadow-lg animate-float delay-300">
                 <Check className="w-4 h-4 text-brand-teal mr-3" />
-                <span className="text-sm font-semibold text-brand-teal dark:text-brand-mint">30-Day Trial</span>
+                <span className="text-sm font-bold text-slate-800 dark:text-brand-mint">30-Day Trial</span>
               </div>
             </div>
           </div>

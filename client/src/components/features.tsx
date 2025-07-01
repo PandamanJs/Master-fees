@@ -57,7 +57,7 @@ export default function Features() {
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white mb-4 sm:mb-6 tracking-tight">
             Everything you need to manage school fees
           </h2>
-          <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-300 leading-relaxed px-4 sm:px-0">
+          <p className="text-lg sm:text-xl text-slate-700 dark:text-slate-300 leading-relaxed px-4 sm:px-0">
             Powerful features designed specifically for educational institutions to streamline fee collection and financial management.
           </p>
         </div>
@@ -79,7 +79,7 @@ export default function Features() {
               
               {/* Content with staggered animations */}
               <h3 className="relative text-xl font-semibold text-slate-900 dark:text-white mb-4 group-hover:text-brand-teal transition-colors duration-300">{feature.title}</h3>
-              <p className="relative text-slate-600 dark:text-slate-300 leading-relaxed transition-colors duration-300 group-hover:text-slate-700 dark:group-hover:text-slate-200">
+              <p className="relative text-slate-700 dark:text-slate-300 leading-relaxed transition-colors duration-300 group-hover:text-slate-800 dark:group-hover:text-slate-200">
                 {feature.description}
               </p>
             </div>
