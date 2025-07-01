@@ -194,24 +194,29 @@ export default function MascotGuide() {
         onClick={handleMascotClick}
         className="relative cursor-pointer group"
       >
-        {/* Mascot body */}
-        <div className={`w-16 h-16 bg-gradient-to-br from-brand-teal to-brand-mint rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group-hover:scale-110 ${isExpanded ? 'mascot-excited' : 'mascot-idle'}`}>
-          {/* Mascot face */}
-          <div className="absolute inset-2 bg-white dark:bg-slate-100 rounded-full flex items-center justify-center">
+        {/* Panda body */}
+        <div className={`w-16 h-16 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group-hover:scale-110 border-4 border-black ${isExpanded ? 'mascot-excited' : 'mascot-idle'}`}>
+          {/* Panda face */}
+          <div className="absolute inset-1 bg-white rounded-full flex items-center justify-center relative">
+            {/* Panda ears */}
+            <div className="absolute -top-2 -left-2 w-4 h-4 bg-black rounded-full"></div>
+            <div className="absolute -top-2 -right-2 w-4 h-4 bg-black rounded-full"></div>
+            
+            {/* Eye patches */}
+            <div className="absolute top-1 left-2 w-3 h-4 bg-black rounded-full opacity-80"></div>
+            <div className="absolute top-1 right-2 w-3 h-4 bg-black rounded-full opacity-80"></div>
+            
             {/* Eyes */}
-            <div className="flex space-x-2">
-              <div className="w-2 h-2 bg-slate-700 rounded-full eye-blink"></div>
-              <div className="w-2 h-2 bg-slate-700 rounded-full eye-blink" style={{ animationDelay: '0.2s' }}></div>
+            <div className="flex space-x-3 relative z-10">
+              <div className="w-1.5 h-1.5 bg-white rounded-full eye-blink"></div>
+              <div className="w-1.5 h-1.5 bg-white rounded-full eye-blink" style={{ animationDelay: '0.2s' }}></div>
             </div>
-            {/* Smile */}
-            <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-4 h-2 border-2 border-slate-700 border-t-0 rounded-b-full transition-all duration-300 group-hover:border-brand-teal"></div>
-          </div>
-          
-          {/* Mascot hat/cap */}
-          <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 w-8 h-6 bg-gradient-to-r from-brand-mint to-brand-light-mint rounded-t-full shadow-md transition-all duration-300 group-hover:scale-110">
-            <div className="absolute top-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-white rounded-full animate-pulse"></div>
-            {/* Graduation cap detail */}
-            <div className="absolute -right-1 top-1 w-2 h-2 bg-gradient-to-r from-brand-mint to-brand-light-mint transform rotate-45 shadow-sm"></div>
+            
+            {/* Panda nose */}
+            <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 w-1.5 h-1 bg-black rounded-full"></div>
+            
+            {/* Panda mouth */}
+            <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 w-3 h-1.5 border-2 border-black border-t-0 rounded-b-full transition-all duration-300 group-hover:border-brand-teal"></div>
           </div>
 
           {/* Activity indicator */}
@@ -228,7 +233,7 @@ export default function MascotGuide() {
 
         {/* Hover hint */}
         <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-slate-800 dark:bg-slate-700 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none">
-          {isExpanded ? "Close menu" : "Hi! I'm Feely 👋"}
+          {isExpanded ? "Close menu" : "Hi! I'm Panda 🐼"}
         </div>
 
         {/* Floating sparkles */}

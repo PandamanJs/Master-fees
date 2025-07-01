@@ -102,9 +102,7 @@ export default function Hero() {
                   {/* 3D Screen Bezel with depth */}
                   <div className="relative bg-gradient-to-b from-black via-slate-900 to-black rounded-t-2xl p-3 shadow-inner border border-slate-700/50">
                     {/* Screen Content with enhanced depth */}
-                    <div className={`bg-white dark:bg-slate-900 rounded-xl shadow-2xl overflow-hidden ring-2 ring-slate-700/40 dark:ring-slate-600/40 transition-all duration-700 group-hover:ring-brand-teal/60 relative ${
-                      isLaptopOn ? 'laptop-screen-glow' : ''
-                    }`}>
+                    <div className="bg-white dark:bg-slate-900 rounded-xl shadow-2xl overflow-hidden ring-2 ring-slate-700/40 dark:ring-slate-600/40 transition-all duration-700 group-hover:ring-brand-teal/60 relative">
                       {/* Boot screen overlay */}
                       {showBootScreen && (
                         <div className="absolute inset-0 bg-black flex items-center justify-center z-10 laptop-screen-on">
@@ -153,10 +151,8 @@ export default function Hero() {
                         />
                       </div>
                       
-                      {/* Enhanced screen glow */}
-                      <div className={`absolute inset-0 bg-gradient-to-br from-blue-400/10 via-transparent to-brand-teal/10 transition-opacity duration-500 pointer-events-none ${
-                        isLaptopOn ? 'opacity-80' : 'opacity-20'
-                      }`}></div>
+                      {/* Subtle screen overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-brand-teal/5 opacity-30 pointer-events-none"></div>
                       
                       {/* Power indicator light */}
                       <div className={`absolute bottom-2 right-2 w-2 h-2 rounded-full transition-all duration-300 ${
