@@ -37,7 +37,7 @@ export default function About() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header Section */}
         <div className="text-center mb-16 sm:mb-20 animate-fade-in-up">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-black via-brand-teal to-black dark:from-white dark:via-brand-light-mint dark:to-white bg-clip-text text-transparent">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-black dark:text-white">
             Why Choose Us?
           </h2>
           <p className="text-xl sm:text-2xl text-black/90 dark:text-white/90 max-w-4xl mx-auto animate-fade-in-up delay-200 px-4 sm:px-0 leading-relaxed font-medium">
