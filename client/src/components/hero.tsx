@@ -267,8 +267,7 @@ export default function Hero() {
                 <div className="absolute inset-0 bg-gradient-to-br from-white/25 to-transparent rounded-full"></div>
               </div>
               
-              {/* Enhanced 3D glow effect */}
-              <div className="absolute inset-0 rounded-3xl opacity-0 transition-opacity duration-700 group-hover:opacity-100 bg-gradient-to-br from-brand-mint/8 via-brand-teal/4 to-brand-light-mint/6 pointer-events-none blur-2xl transform-gpu" style={{ transform: 'translateZ(-10px)' }}></div>
+
             </div>
           </div>
         </div>
