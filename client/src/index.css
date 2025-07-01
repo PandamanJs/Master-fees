@@ -692,6 +692,45 @@ html {
   animation: scroll-left 25s linear infinite;
 }
 
+/* Dashboard zoom animations */
+@keyframes zoom-in {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes zoom-out {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+
+.zoom-modal {
+  animation: zoom-in 0.3s ease-out forwards;
+}
+
+.zoom-modal.closing {
+  animation: zoom-out 0.3s ease-in forwards;
+}
+
+.dashboard-interactive {
+  transition: all 0.2s ease;
+}
+
+.dashboard-interactive:hover {
+  cursor: zoom-in;
+}
+
 /* Custom cursor styles */
 * {
   cursor: none;

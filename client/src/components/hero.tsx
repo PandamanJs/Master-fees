@@ -8,6 +8,8 @@ export default function Hero() {
   const [isLaptopOn, setIsLaptopOn] = useState(false);
   const [showBootScreen, setShowBootScreen] = useState(false);
   const [bootStage, setBootStage] = useState(0);
+  const [isZoomed, setIsZoomed] = useState(false);
+  const [zoomPosition, setZoomPosition] = useState({ x: 50, y: 50 });
 
   const bootMessages = [
     "Master Fees",
@@ -37,6 +39,30 @@ export default function Hero() {
   const handleLaptopLeave = () => {
     setIsLaptopOn(false);
     setShowBootScreen(false);
+  };
+
+  const handleDashboardClick = (e: React.MouseEvent) => {
+    if (!isLaptopOn || showBootScreen) return;
+    
+    e.stopPropagation();
+    setIsZoomed(!isZoomed);
+  };
+
+  const handleZoomMove = (e: React.MouseEvent) => {
+    if (!isZoomed) return;
+    
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    
+    setZoomPosition({ 
+      x: Math.max(0, Math.min(100, x)), 
+      y: Math.max(0, Math.min(100, y)) 
+    });
+  };
+
+  const handleZoomClose = () => {
+    setIsZoomed(false);
   };
 
   return (
@@ -140,15 +166,32 @@ export default function Hero() {
                       )}
                       
                       {/* Main dashboard content */}
-                      <div className={`${!isLaptopOn && !showBootScreen ? 'laptop-screen-off' : ''} transition-all duration-300`}>
+                      <div 
+                        className={`${!isLaptopOn && !showBootScreen ? 'laptop-screen-off' : ''} transition-all duration-300 ${
+                          isLaptopOn && !showBootScreen ? 'dashboard-interactive' : ''
+                        }`}
+                        onClick={handleDashboardClick}
+                        onMouseMove={handleZoomMove}
+                      >
                         <img 
                           src={dashboardImage} 
                           alt="Master Fees Dashboard Interface showing revenue analytics and payment management" 
                           className={`w-full h-auto transform transition-all duration-500 group-hover:scale-102 ${
                             isLaptopOn ? 'laptop-screen-on' : ''
-                          }`}
+                          } ${isZoomed ? 'scale-150' : ''}`}
+                          style={isZoomed ? {
+                            transformOrigin: `${zoomPosition.x}% ${zoomPosition.y}%`,
+                            transform: `scale(2.5) translate(${(50 - zoomPosition.x) * 0.5}%, ${(50 - zoomPosition.y) * 0.5}%)`
+                          } : {}}
                           loading="lazy"
                         />
+                        
+                        {/* Zoom indicator */}
+                        {isLaptopOn && !showBootScreen && !isZoomed && (
+                          <div className="absolute top-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            Click to zoom 🔍
+                          </div>
+                        )}
                       </div>
                       
                       {/* Subtle screen overlay */}
@@ -230,6 +273,61 @@ export default function Hero() {
           </div>
         </div>
       </div>
+
+      {/* Full-screen zoom modal */}
+      {isZoomed && (
+        <div 
+          className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center zoom-modal"
+          onClick={handleZoomClose}
+        >
+          <div className="relative max-w-6xl max-h-screen p-4">
+            {/* Close button */}
+            <button
+              onClick={handleZoomClose}
+              className="absolute -top-12 right-0 text-white hover:text-brand-mint text-xl bg-black/50 rounded-full w-10 h-10 flex items-center justify-center transition-colors duration-200"
+            >
+              ✕
+            </button>
+            
+            {/* Zoom controls */}
+            <div className="absolute -top-12 left-0 flex space-x-2">
+              <div className="text-white text-sm bg-black/50 px-3 py-1 rounded-md">
+                Master Fees Dashboard Preview
+              </div>
+              <div className="text-brand-mint text-sm bg-black/50 px-3 py-1 rounded-md">
+                Click anywhere to close
+              </div>
+            </div>
+            
+            {/* Zoomed dashboard image */}
+            <div 
+              className="relative overflow-hidden rounded-lg shadow-2xl cursor-move"
+              onMouseMove={handleZoomMove}
+            >
+              <img 
+                src={dashboardImage} 
+                alt="Master Fees Dashboard Interface - Full View" 
+                className="w-full h-auto max-w-none transition-transform duration-200"
+                style={{
+                  transform: `scale(1.5) translate(${(50 - zoomPosition.x) * 0.3}%, ${(50 - zoomPosition.y) * 0.3}%)`,
+                  transformOrigin: `${zoomPosition.x}% ${zoomPosition.y}%`
+                }}
+              />
+              
+              {/* Interactive hotspots */}
+              <div className="absolute top-4 left-4 bg-brand-teal/90 text-white px-3 py-2 rounded-lg text-sm animate-pulse">
+                💰 Revenue Analytics
+              </div>
+              <div className="absolute top-1/3 right-4 bg-brand-mint/90 text-black px-3 py-2 rounded-lg text-sm animate-pulse">
+                📊 Payment Reports
+              </div>
+              <div className="absolute bottom-1/4 left-1/4 bg-blue-500/90 text-white px-3 py-2 rounded-lg text-sm animate-pulse">
+                👥 Student Records
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
