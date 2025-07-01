@@ -1,9 +1,28 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
 import dashboardImage from "@assets/Dashboard_1751383261879.png";
 import logoImage from "@assets/Group 15_1751377323388.png";
 
 export default function Hero() {
+  const [isLaptopOn, setIsLaptopOn] = useState(false);
+  const [showBootScreen, setShowBootScreen] = useState(false);
+
+  const handleLaptopHover = () => {
+    if (!isLaptopOn) {
+      setShowBootScreen(true);
+      setTimeout(() => {
+        setIsLaptopOn(true);
+        setShowBootScreen(false);
+      }, 800);
+    }
+  };
+
+  const handleLaptopLeave = () => {
+    setIsLaptopOn(false);
+    setShowBootScreen(false);
+  };
+
   return (
     <section id="home" className="bg-gradient-to-br from-white via-slate-50/50 to-brand-mint/5 dark:bg-gradient-to-br dark:from-black dark:via-gray-950 dark:to-brand-mint/10 transition-all duration-500">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 lg:py-28">
@@ -52,7 +71,11 @@ export default function Hero() {
           </div>
           
           <div className="mt-10 sm:mt-12 lg:mt-0 lg:col-span-6 animate-fade-in-right delay-300">
-            <div className="relative group max-w-2xl mx-auto lg:max-w-none perspective-1000">
+            <div 
+              className="relative group max-w-2xl mx-auto lg:max-w-none perspective-1000"
+              onMouseEnter={handleLaptopHover}
+              onMouseLeave={handleLaptopLeave}
+            >
               {/* 3D Background with depth */}
               <div className="absolute inset-0 bg-gradient-to-br from-brand-mint/20 to-brand-teal/20 rounded-3xl transform rotate-1 scale-105 blur-xl opacity-60 transition-all duration-700 group-hover:rotate-0 group-hover:scale-110 group-hover:opacity-80"></div>
               
@@ -63,15 +86,41 @@ export default function Hero() {
                   {/* 3D Screen Bezel with depth */}
                   <div className="relative bg-gradient-to-b from-black via-slate-900 to-black rounded-t-2xl p-3 shadow-inner border border-slate-700/50">
                     {/* Screen Content with enhanced depth */}
-                    <div className="bg-white dark:bg-slate-900 rounded-xl shadow-2xl overflow-hidden ring-2 ring-slate-700/40 dark:ring-slate-600/40 transition-all duration-700 group-hover:ring-brand-teal/60 relative">
-                      <img 
-                        src={dashboardImage} 
-                        alt="Master Fees Dashboard Interface showing revenue analytics and payment management" 
-                        className="w-full h-auto transform transition-all duration-500 group-hover:scale-102"
-                        loading="lazy"
-                      />
+                    <div className={`bg-white dark:bg-slate-900 rounded-xl shadow-2xl overflow-hidden ring-2 ring-slate-700/40 dark:ring-slate-600/40 transition-all duration-700 group-hover:ring-brand-teal/60 relative ${
+                      isLaptopOn ? 'laptop-screen-glow' : ''
+                    }`}>
+                      {/* Boot screen overlay */}
+                      {showBootScreen && (
+                        <div className="absolute inset-0 bg-black flex items-center justify-center z-10 laptop-screen-on">
+                          <div className="text-center">
+                            <div className="w-8 h-8 border-2 border-brand-teal border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                            <div className="text-brand-mint text-sm font-mono">Master Fees</div>
+                            <div className="text-xs text-brand-light-mint font-mono mt-1">Booting up...</div>
+                          </div>
+                        </div>
+                      )}
+                      
+                      {/* Main dashboard content */}
+                      <div className={`${!isLaptopOn && !showBootScreen ? 'laptop-screen-off' : ''} transition-all duration-300`}>
+                        <img 
+                          src={dashboardImage} 
+                          alt="Master Fees Dashboard Interface showing revenue analytics and payment management" 
+                          className={`w-full h-auto transform transition-all duration-500 group-hover:scale-102 ${
+                            isLaptopOn ? 'laptop-screen-on' : ''
+                          }`}
+                          loading="lazy"
+                        />
+                      </div>
+                      
                       {/* Enhanced screen glow */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-blue-400/10 via-transparent to-brand-teal/10 opacity-60 pointer-events-none"></div>
+                      <div className={`absolute inset-0 bg-gradient-to-br from-blue-400/10 via-transparent to-brand-teal/10 transition-opacity duration-500 pointer-events-none ${
+                        isLaptopOn ? 'opacity-80' : 'opacity-20'
+                      }`}></div>
+                      
+                      {/* Power indicator light */}
+                      <div className={`absolute bottom-2 right-2 w-2 h-2 rounded-full transition-all duration-300 ${
+                        isLaptopOn ? 'bg-green-400 shadow-lg shadow-green-400/50 animate-pulse' : 'bg-red-400/30'
+                      }`}></div>
                     </div>
                     
                     {/* Multi-layer screen reflection */}
