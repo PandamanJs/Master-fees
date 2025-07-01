@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
-import dashboardImage from "@assets/Dashboard_1751374916721.png";
+import dashboardImage from "@assets/Dashboard_1751383261879.png";
 import logoImage from "@assets/Group 15_1751377323388.png";
 
 export default function Hero() {
