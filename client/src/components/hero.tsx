@@ -70,7 +70,7 @@ export default function Hero() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 lg:py-28">
         <div className="lg:grid lg:grid-cols-12 lg:gap-8 xl:gap-12">
           <div className="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left">
-            <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-bold text-slate-900 dark:text-white leading-tight tracking-tight">
+            <h1 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-4xl xl:text-5xl font-bold text-slate-900 dark:text-white leading-tight tracking-tight">
               <span className="block sm:inline typing-effect">Transform School</span>
               <span className="text-slate-900 dark:text-white block sm:inline fade-in-slow"> Fee Collection</span>
             </h1>

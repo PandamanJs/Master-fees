@@ -992,19 +992,44 @@ body.page-transitioning section:not(:target) {
 }
 
 .typing-effect {
+  display: inline-block;
   overflow: hidden;
   border-right: 2px solid hsl(151, 93%, 79%);
   white-space: nowrap;
-  animation: typing 2s steps(20, end), blink 1s infinite;
+  animation: typing 2.5s steps(15, end) 0.5s forwards, blink 1s infinite 0.5s;
+  width: 0;
 }
 
 .fade-in-slow {
-  animation: fadeIn 1.5s ease-in-out;
+  animation: fadeIn 1.5s ease-in-out 3s forwards;
+  opacity: 0;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { 
+    opacity: 0; 
+    transform: translateY(20px) scale(0.95); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0) scale(1); 
+  }
+}
+
+/* Smooth text entrance */
+.text-entrance {
+  animation: slideInFromLeft 1s ease-out;
+}
+
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 /* Mascot animations */
