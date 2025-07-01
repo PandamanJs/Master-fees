@@ -51,16 +51,32 @@ export default function Hero() {
             <div className="relative group max-w-2xl mx-auto lg:max-w-none">
               {/* Background decoration with parallax effect */}
               <div className="absolute inset-0 bg-gradient-to-br from-brand-mint/20 to-brand-teal/20 rounded-2xl sm:rounded-3xl transform rotate-1 sm:rotate-2 transition-transform duration-700 group-hover:rotate-0 sm:group-hover:rotate-1 group-hover:scale-105"></div>
-              <div className="relative bg-gradient-to-br from-primary-50 to-brand-light-mint dark:from-slate-800 dark:to-slate-700 rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 xl:p-10 transition-all duration-700 group-hover:shadow-2xl">
-                {/* Actual Dashboard Image */}
-                <div className="bg-white dark:bg-slate-900 rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl overflow-hidden ring-1 ring-slate-900/5 dark:ring-white/10 transition-all duration-700 group-hover:shadow-3xl group-hover:ring-brand-teal/20">
-                  <img 
-                    src={dashboardImage} 
-                    alt="Master Fees Dashboard Interface showing revenue analytics and payment management" 
-                    className="w-full h-auto transform transition-all duration-1000 group-hover:scale-105 sm:group-hover:scale-110"
-                    loading="lazy"
-                  />
+              {/* TV Frame Container */}
+              <div className="relative bg-gradient-to-br from-slate-800 to-slate-900 dark:from-slate-900 dark:to-black rounded-3xl sm:rounded-[2rem] p-6 sm:p-8 lg:p-10 xl:p-12 transition-all duration-700 group-hover:shadow-2xl shadow-2xl">
+                {/* TV Screen Bezel */}
+                <div className="relative bg-black rounded-2xl sm:rounded-3xl p-3 sm:p-4 shadow-inner">
+                  {/* TV Screen */}
+                  <div className="bg-white dark:bg-slate-900 rounded-xl sm:rounded-2xl shadow-xl overflow-hidden ring-2 ring-slate-700/50 dark:ring-slate-600/50 transition-all duration-700 group-hover:ring-brand-teal/30">
+                    <img 
+                      src={dashboardImage} 
+                      alt="Master Fees Dashboard Interface showing revenue analytics and payment management" 
+                      className="w-full h-auto transform transition-all duration-300 group-hover:scale-102"
+                      loading="lazy"
+                    />
+                  </div>
+                  
+                  {/* TV Screen Reflection */}
+                  <div className="absolute inset-3 sm:inset-4 rounded-xl sm:rounded-2xl bg-gradient-to-br from-white/10 via-transparent to-transparent pointer-events-none"></div>
                 </div>
+                
+                {/* TV Stand */}
+                <div className="flex justify-center mt-4">
+                  <div className="w-16 sm:w-20 h-3 sm:h-4 bg-gradient-to-b from-slate-700 to-slate-800 dark:from-slate-800 dark:to-slate-900 rounded-lg shadow-lg"></div>
+                </div>
+                <div className="flex justify-center mt-1">
+                  <div className="w-24 sm:w-32 h-2 sm:h-3 bg-gradient-to-b from-slate-600 to-slate-700 dark:from-slate-700 dark:to-slate-800 rounded-full shadow-md"></div>
+                </div>
+              </div>
                 {/* Floating elements with animation */}
                 <div className="absolute -top-4 -right-4 w-8 h-8 bg-brand-teal rounded-full opacity-20 animate-float delay-100 transition-all duration-500 group-hover:opacity-60 group-hover:scale-125"></div>
                 <div className="absolute -bottom-2 -left-2 w-6 h-6 bg-brand-mint rounded-full opacity-30 animate-float delay-300 transition-all duration-500 group-hover:opacity-80 group-hover:scale-125"></div>
