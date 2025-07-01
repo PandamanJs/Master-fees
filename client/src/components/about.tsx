@@ -26,24 +26,24 @@ const features = [
 
 export default function About() {
   return (
-    <section id="about" className="py-20 bg-brand-teal text-white">
+    <section id="about" className="py-12 sm:py-16 md:py-20 lg:py-24 bg-brand-teal text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header Section */}
-        <div className="text-center mb-16 animate-fade-in-up">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-shimmer">
+        <div className="text-center mb-12 sm:mb-16 animate-fade-in-up">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 text-shimmer">
             Why Choose Us?
           </h2>
-          <p className="text-xl text-slate-200 max-w-3xl mx-auto animate-fade-in-up delay-200">
+          <p className="text-lg sm:text-xl text-slate-200 max-w-3xl mx-auto animate-fade-in-up delay-200 px-4 sm:px-0">
             Experience excellence in digital craftsmanship with our team of skilled professionals dedicated to delivering exceptional results.
           </p>
         </div>
         
         {/* Features Grid */}
-        <div className="grid md:grid-cols-2 gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mb-12 sm:mb-16">
           {features.map((feature, index) => (
             <div
               key={index}
-              className={`group bg-white bg-opacity-10 backdrop-blur-sm p-8 rounded-xl border border-white border-opacity-20 transition-all duration-500 hover:bg-opacity-20 hover:scale-105 hover:-translate-y-2 cursor-pointer relative overflow-hidden animate-fade-in-up delay-${(index + 1) * 200} glass-effect`}
+              className={`group bg-white bg-opacity-10 backdrop-blur-sm p-6 sm:p-8 rounded-xl border border-white border-opacity-20 transition-all duration-500 hover:bg-opacity-20 hover:scale-105 hover:-translate-y-2 cursor-pointer relative overflow-hidden animate-fade-in-up delay-${(index + 1) * 200} glass-effect`}
             >
               {/* Shimmer effect overlay */}
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
