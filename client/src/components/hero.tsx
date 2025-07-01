@@ -10,82 +10,104 @@ export default function Hero() {
         <div className="lg:grid lg:grid-cols-12 lg:gap-8 xl:gap-12">
           <div className="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left">
             <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-6xl xl:text-7xl font-bold text-slate-900 dark:text-white leading-tight tracking-tight animate-fade-in-up">
-              <span className="block sm:inline">Simplify School</span>
-              <span className="text-brand-teal text-shimmer block sm:inline"> Fee Management</span>
+              <span className="block sm:inline">Transform School</span>
+              <span className="bg-gradient-to-r from-brand-teal to-brand-mint bg-clip-text text-transparent block sm:inline"> Fee Collection</span>
             </h1>
             <p className="mt-6 sm:mt-8 text-lg sm:text-xl lg:text-xl text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl animate-fade-in-up delay-200">
-              Streamline fee collection, automate receipt generation, and provide parents with a seamless payment experience. Master Fees makes school financial management effortless.
+              Automate fee collection, streamline payment processing, and provide real-time financial insights. Master Fees empowers schools with modern payment management solutions.
             </p>
             
             {/* CTA Buttons */}
-            <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row sm:justify-center lg:justify-start gap-3 sm:gap-4 animate-fade-in-up delay-400">
-              <Button className="w-full sm:w-auto bg-gradient-to-r from-brand-mint to-brand-teal hover:from-brand-teal hover:to-brand-mint text-white px-6 sm:px-8 lg:px-10 py-3 sm:py-4 rounded-xl text-base sm:text-lg font-semibold transition-all duration-300 shadow-md hover:shadow-lg hover:transform hover:-translate-y-1 focus:ring-4 focus:ring-brand-teal/30">
-                Get Started Free
+            <div className="mt-10 sm:mt-12 flex flex-col sm:flex-row sm:justify-center lg:justify-start gap-4 sm:gap-6 animate-fade-in-up delay-400">
+              <Button className="group w-full sm:w-auto bg-gradient-to-r from-brand-teal to-brand-mint hover:from-brand-mint hover:to-brand-teal text-white px-8 sm:px-10 lg:px-12 py-4 sm:py-5 rounded-2xl text-lg sm:text-xl font-bold transition-all duration-500 shadow-xl hover:shadow-2xl hover:transform hover:-translate-y-2 focus:ring-4 focus:ring-brand-teal/40 relative overflow-hidden">
+                <span className="relative z-10">Start Free Trial</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               </Button>
               <Button 
                 variant="outline"
-                className="w-full sm:w-auto border-2 border-slate-300 dark:border-slate-600 hover:border-brand-teal dark:hover:border-brand-teal hover:bg-brand-teal/5 dark:hover:bg-brand-teal/10 text-slate-700 dark:text-slate-300 hover:text-brand-teal px-6 sm:px-8 lg:px-10 py-3 sm:py-4 rounded-xl text-base sm:text-lg font-semibold transition-all duration-300 focus:ring-4 focus:ring-slate-300/30"
+                className="group w-full sm:w-auto bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-2 border-brand-teal/30 hover:border-brand-teal hover:bg-brand-teal/10 dark:hover:bg-brand-teal/20 text-brand-teal hover:text-brand-teal px-8 sm:px-10 lg:px-12 py-4 sm:py-5 rounded-2xl text-lg sm:text-xl font-bold transition-all duration-500 shadow-lg hover:shadow-xl hover:transform hover:-translate-y-1 focus:ring-4 focus:ring-brand-teal/30 relative overflow-hidden"
               >
-                Watch Demo
+                <span className="relative z-10">View Demo</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-brand-teal/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               </Button>
             </div>
             
             {/* Trust Indicators */}
-            <div className="mt-10 sm:mt-12 flex flex-wrap items-center justify-center lg:justify-start gap-x-4 sm:gap-x-6 lg:gap-x-8 gap-y-3 sm:gap-y-4 text-sm text-slate-600 dark:text-slate-400 animate-fade-in-up delay-600">
-              <div className="flex items-center bg-emerald-50 dark:bg-emerald-900/30 px-3 sm:px-4 py-2 rounded-full transition-all duration-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/50 hover:scale-105 animate-float delay-100">
-                <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400 mr-2" />
-                <span className="text-xs sm:text-sm">No setup fees</span>
+            <div className="mt-10 sm:mt-12 flex flex-wrap items-center justify-center lg:justify-start gap-x-4 sm:gap-x-6 gap-y-3 sm:gap-y-4 animate-fade-in-up delay-600">
+              <div className="flex items-center bg-brand-mint/10 dark:bg-brand-mint/20 backdrop-blur-sm border border-brand-mint/30 px-4 sm:px-5 py-3 rounded-xl transition-all duration-300 hover:bg-brand-mint/20 dark:hover:bg-brand-mint/30 hover:scale-105 hover:shadow-lg animate-float delay-100">
+                <Check className="w-4 h-4 text-brand-teal mr-3" />
+                <span className="text-sm font-semibold text-brand-teal dark:text-brand-mint">Instant Setup</span>
               </div>
-              <div className="flex items-center bg-emerald-50 dark:bg-emerald-900/30 px-3 sm:px-4 py-2 rounded-full transition-all duration-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/50 hover:scale-105 animate-float delay-200">
-                <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400 mr-2" />
-                <span className="text-xs sm:text-sm">Bank-grade security</span>
+              <div className="flex items-center bg-brand-mint/10 dark:bg-brand-mint/20 backdrop-blur-sm border border-brand-mint/30 px-4 sm:px-5 py-3 rounded-xl transition-all duration-300 hover:bg-brand-mint/20 dark:hover:bg-brand-mint/30 hover:scale-105 hover:shadow-lg animate-float delay-200">
+                <Check className="w-4 h-4 text-brand-teal mr-3" />
+                <span className="text-sm font-semibold text-brand-teal dark:text-brand-mint">Bank Security</span>
               </div>
-              <div className="flex items-center bg-emerald-50 dark:bg-emerald-900/30 px-3 sm:px-4 py-2 rounded-full transition-all duration-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/50 hover:scale-105 animate-float delay-300">
-                <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400 mr-2" />
-                <span className="text-xs sm:text-sm">Free trial</span>
+              <div className="flex items-center bg-brand-mint/10 dark:bg-brand-mint/20 backdrop-blur-sm border border-brand-mint/30 px-4 sm:px-5 py-3 rounded-xl transition-all duration-300 hover:bg-brand-mint/20 dark:hover:bg-brand-mint/30 hover:scale-105 hover:shadow-lg animate-float delay-300">
+                <Check className="w-4 h-4 text-brand-teal mr-3" />
+                <span className="text-sm font-semibold text-brand-teal dark:text-brand-mint">30-Day Trial</span>
               </div>
             </div>
           </div>
           
           <div className="mt-10 sm:mt-12 lg:mt-0 lg:col-span-6 animate-fade-in-right delay-300">
             <div className="relative group max-w-2xl mx-auto lg:max-w-none">
-              {/* Background decoration with parallax effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-brand-mint/20 to-brand-teal/20 rounded-2xl sm:rounded-3xl transform rotate-1 sm:rotate-2 transition-transform duration-700 group-hover:rotate-0 sm:group-hover:rotate-1 group-hover:scale-105"></div>
-              {/* TV Frame Container */}
-              <div className="relative bg-gradient-to-br from-slate-800 to-slate-900 dark:from-slate-900 dark:to-black rounded-3xl sm:rounded-[2rem] p-6 sm:p-8 lg:p-10 xl:p-12 transition-all duration-700 group-hover:shadow-2xl shadow-2xl">
-                {/* TV Screen Bezel */}
-                <div className="relative bg-black rounded-2xl sm:rounded-3xl p-3 sm:p-4 shadow-inner">
-                  {/* TV Screen */}
-                  <div className="bg-white dark:bg-slate-900 rounded-xl sm:rounded-2xl shadow-xl overflow-hidden ring-2 ring-slate-700/50 dark:ring-slate-600/50 transition-all duration-700 group-hover:ring-brand-teal/30">
-                    <img 
-                      src={dashboardImage} 
-                      alt="Master Fees Dashboard Interface showing revenue analytics and payment management" 
-                      className="w-full h-auto transform transition-all duration-300 group-hover:scale-102"
-                      loading="lazy"
-                    />
+              {/* Background decoration with subtle gradient */}
+              <div className="absolute inset-0 bg-gradient-to-br from-brand-mint/15 to-brand-teal/15 rounded-2xl transform rotate-1 transition-transform duration-700 group-hover:rotate-0 group-hover:scale-105"></div>
+              
+              {/* Laptop Container */}
+              <div className="relative transition-all duration-700 group-hover:shadow-2xl">
+                {/* Laptop Screen */}
+                <div className="relative bg-gradient-to-br from-slate-800 to-slate-900 dark:from-slate-900 dark:to-black rounded-t-2xl p-3 sm:p-4 shadow-2xl">
+                  {/* Screen Bezel */}
+                  <div className="relative bg-black rounded-t-xl p-2 shadow-inner">
+                    {/* Screen Content */}
+                    <div className="bg-white dark:bg-slate-900 rounded-lg shadow-xl overflow-hidden ring-1 ring-slate-700/30 dark:ring-slate-600/30 transition-all duration-700 group-hover:ring-brand-teal/40">
+                      <img 
+                        src={dashboardImage} 
+                        alt="Master Fees Dashboard Interface showing revenue analytics and payment management" 
+                        className="w-full h-auto transform transition-all duration-500 group-hover:scale-102"
+                        loading="lazy"
+                      />
+                    </div>
+                    
+                    {/* Screen Reflection */}
+                    <div className="absolute inset-2 rounded-lg bg-gradient-to-br from-white/8 via-transparent to-transparent pointer-events-none"></div>
                   </div>
                   
-                  {/* TV Screen Reflection */}
-                  <div className="absolute inset-3 sm:inset-4 rounded-xl sm:rounded-2xl bg-gradient-to-br from-white/10 via-transparent to-transparent pointer-events-none"></div>
+                  {/* Laptop Camera */}
+                  <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-slate-700 dark:bg-slate-600 rounded-full shadow-inner"></div>
                 </div>
                 
-                {/* TV Stand */}
-                <div className="flex justify-center mt-4">
-                  <div className="w-16 sm:w-20 h-3 sm:h-4 bg-gradient-to-b from-slate-700 to-slate-800 dark:from-slate-800 dark:to-slate-900 rounded-lg shadow-lg"></div>
-                </div>
-                <div className="flex justify-center mt-1">
-                  <div className="w-24 sm:w-32 h-2 sm:h-3 bg-gradient-to-b from-slate-600 to-slate-700 dark:from-slate-700 dark:to-slate-800 rounded-full shadow-md"></div>
+                {/* Laptop Base/Keyboard */}
+                <div className="relative">
+                  {/* Laptop Hinge */}
+                  <div className="w-full h-1 bg-gradient-to-r from-slate-700 via-slate-600 to-slate-700 dark:from-slate-800 dark:via-slate-700 dark:to-slate-800"></div>
+                  
+                  {/* Laptop Bottom */}
+                  <div className="bg-gradient-to-b from-slate-300 to-slate-400 dark:from-slate-700 dark:to-slate-800 rounded-b-2xl p-4 sm:p-6 shadow-xl">
+                    {/* Trackpad */}
+                    <div className="mx-auto w-16 sm:w-20 h-12 sm:h-14 bg-slate-200 dark:bg-slate-600 rounded-lg shadow-inner border border-slate-300 dark:border-slate-500 mt-2"></div>
+                    
+                    {/* Keyboard suggestion lines */}
+                    <div className="flex justify-center space-x-1 mt-3">
+                      <div className="w-2 h-0.5 bg-slate-400 dark:bg-slate-500 rounded-full"></div>
+                      <div className="w-3 h-0.5 bg-slate-400 dark:bg-slate-500 rounded-full"></div>
+                      <div className="w-2 h-0.5 bg-slate-400 dark:bg-slate-500 rounded-full"></div>
+                    </div>
+                  </div>
                 </div>
               </div>
               
-              {/* Floating elements with animation */}
-              <div className="absolute -top-4 -right-4 w-8 h-8 bg-brand-teal rounded-full opacity-20 animate-float delay-100 transition-all duration-500 group-hover:opacity-60 group-hover:scale-125"></div>
-              <div className="absolute -bottom-2 -left-2 w-6 h-6 bg-brand-mint rounded-full opacity-30 animate-float delay-300 transition-all duration-500 group-hover:opacity-80 group-hover:scale-125"></div>
-              <div className="absolute top-1/4 -left-3 w-4 h-4 bg-brand-teal/30 rounded-full animate-float delay-500 transition-all duration-500 group-hover:opacity-100 group-hover:scale-150"></div>
-              <div className="absolute bottom-1/3 -right-2 w-5 h-5 bg-brand-mint/40 rounded-full animate-float delay-700 transition-all duration-500 group-hover:opacity-100 group-hover:scale-125"></div>
+              {/* Floating UI elements with brand colors */}
+              <div className="absolute -top-6 -right-6 w-10 h-10 bg-gradient-to-br from-brand-mint to-brand-light-mint rounded-2xl opacity-20 animate-float delay-100 transition-all duration-500 group-hover:opacity-70 group-hover:scale-110 shadow-lg flex items-center justify-center">
+                <div className="w-4 h-4 bg-brand-teal rounded-full"></div>
+              </div>
+              <div className="absolute -bottom-4 -left-4 w-8 h-8 bg-gradient-to-br from-brand-teal to-blue-600 rounded-xl opacity-25 animate-float delay-300 transition-all duration-500 group-hover:opacity-80 group-hover:scale-110 shadow-lg"></div>
+              <div className="absolute top-1/4 -left-5 w-6 h-6 bg-brand-mint/40 rounded-lg animate-float delay-500 transition-all duration-500 group-hover:opacity-100 group-hover:scale-125 shadow-md"></div>
+              <div className="absolute bottom-1/3 -right-3 w-7 h-7 bg-gradient-to-br from-brand-light-mint to-brand-mint rounded-full opacity-30 animate-float delay-700 transition-all duration-500 group-hover:opacity-90 group-hover:scale-115 shadow-lg"></div>
               
-              {/* Glow effect on hover */}
-              <div className="absolute inset-0 rounded-3xl opacity-0 transition-opacity duration-700 group-hover:opacity-100 bg-gradient-to-br from-brand-mint/10 via-transparent to-brand-teal/10 pointer-events-none"></div>
+              {/* Subtle glow effect */}
+              <div className="absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-700 group-hover:opacity-100 bg-gradient-to-br from-brand-mint/5 via-transparent to-brand-teal/5 pointer-events-none blur-xl"></div>
             </div>
           </div>
         </div>
