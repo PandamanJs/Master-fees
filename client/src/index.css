@@ -955,9 +955,9 @@ body.page-transitioning section:not(:target) {
   transform: translateY(0);
 }
 
-/* Custom cursor styles */
+/* Cursor styles - normal cursor for all elements */
 * {
-  cursor: none;
+  cursor: auto;
 }
 
 @keyframes cursor-pulse {
