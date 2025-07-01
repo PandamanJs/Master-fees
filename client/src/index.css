@@ -980,7 +980,7 @@ body.page-transitioning section:not(:target) {
 
 /* Normal cursor for all elements */
 
-/* Typing animation for heading */
+/* Enhanced typing animation with glow effects */
 @keyframes typing {
   from { width: 0; }
   to { width: 100%; }
@@ -991,28 +991,101 @@ body.page-transitioning section:not(:target) {
   51%, 100% { border-color: hsl(151, 93%, 79%); }
 }
 
+@keyframes rainbow-text {
+  0% { color: hsl(151, 93%, 79%); }
+  16% { color: hsl(201, 100%, 14%); }
+  33% { color: hsl(280, 100%, 70%); }
+  50% { color: hsl(35, 100%, 50%); }
+  66% { color: hsl(120, 100%, 50%); }
+  83% { color: hsl(240, 100%, 70%); }
+  100% { color: hsl(151, 93%, 79%); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% {
+    text-shadow: 
+      0 0 5px hsl(151, 93%, 79%),
+      0 0 10px hsl(151, 93%, 79%),
+      0 0 15px hsl(151, 93%, 79%);
+  }
+  50% {
+    text-shadow: 
+      0 0 10px hsl(151, 93%, 79%),
+      0 0 20px hsl(151, 93%, 79%),
+      0 0 30px hsl(151, 93%, 79%),
+      0 0 40px hsl(201, 100%, 14%);
+  }
+}
+
+@keyframes bounce-in {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.8);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-10px) scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 .typing-effect {
   display: inline-block;
   overflow: hidden;
   border-right: 2px solid hsl(151, 93%, 79%);
   white-space: nowrap;
-  animation: typing 2.5s steps(15, end) 0.5s forwards, blink 1s infinite 0.5s;
+  animation: 
+    typing 2.5s steps(15, end) 0.5s forwards, 
+    blink 1s infinite 0.5s,
+    glow-pulse 2s ease-in-out 3s infinite;
   width: 0;
 }
 
 .fade-in-slow {
-  animation: fadeIn 1.5s ease-in-out 3s forwards;
+  animation: 
+    bounce-in 1.2s ease-out 3s forwards,
+    rainbow-text 4s ease-in-out 4s infinite,
+    sparkle 3s ease-in-out 6s infinite;
   opacity: 0;
+  background: linear-gradient(
+    45deg,
+    hsl(151, 93%, 79%),
+    hsl(201, 100%, 14%),
+    hsl(163, 100%, 87%)
+  );
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
 }
 
-@keyframes fadeIn {
-  from { 
-    opacity: 0; 
-    transform: translateY(20px) scale(0.95); 
+@keyframes sparkle {
+  0%, 100% {
+    filter: brightness(1) contrast(1);
   }
-  to { 
-    opacity: 1; 
-    transform: translateY(0) scale(1); 
+  25% {
+    filter: brightness(1.3) contrast(1.2);
+    text-shadow: 
+      0 0 5px hsl(151, 93%, 79%),
+      0 0 10px hsl(201, 100%, 14%),
+      0 0 15px hsl(163, 100%, 87%);
+  }
+  50% {
+    filter: brightness(1.5) contrast(1.3);
+    text-shadow: 
+      0 0 10px hsl(151, 93%, 79%),
+      0 0 20px hsl(201, 100%, 14%),
+      0 0 30px hsl(163, 100%, 87%);
+  }
+  75% {
+    filter: brightness(1.2) contrast(1.1);
+    text-shadow: 
+      0 0 8px hsl(151, 93%, 79%),
+      0 0 15px hsl(201, 100%, 14%);
   }
 }
 
