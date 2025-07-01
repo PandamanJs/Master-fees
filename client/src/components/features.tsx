@@ -50,11 +50,14 @@ export default function Features() {
     <section id="features" className="py-20 bg-slate-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">
+        <div className="text-center max-w-4xl mx-auto mb-20">
+          <div className="inline-flex items-center justify-center px-4 py-2 bg-brand-mint/10 rounded-full text-brand-teal font-semibold text-sm tracking-wide uppercase mb-6">
+            Features
+          </div>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 mb-6 tracking-tight">
             Everything you need to manage school fees
           </h2>
-          <p className="text-xl text-slate-600">
+          <p className="text-xl text-slate-600 leading-relaxed">
             Powerful features designed specifically for educational institutions to streamline fee collection and financial management.
           </p>
         </div>
@@ -64,12 +67,12 @@ export default function Features() {
           {features.map((feature, index) => (
             <div
               key={index}
-              className="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200"
+              className="group bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-slate-100"
             >
-              <div className={`w-12 h-12 ${feature.bgColor} rounded-lg flex items-center justify-center mb-6`}>
-                <feature.icon className={`w-6 h-6 ${feature.iconColor}`} />
+              <div className={`w-14 h-14 ${feature.bgColor} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-200`}>
+                <feature.icon className={`w-7 h-7 ${feature.iconColor}`} />
               </div>
-              <h3 className="text-xl font-semibold text-slate-900 mb-3">{feature.title}</h3>
+              <h3 className="text-xl font-semibold text-slate-900 mb-4 group-hover:text-brand-teal transition-colors duration-200">{feature.title}</h3>
               <p className="text-slate-600 leading-relaxed">
                 {feature.description}
               </p>

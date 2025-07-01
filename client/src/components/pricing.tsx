@@ -5,7 +5,7 @@ const plans = [
   {
     name: "Basic",
     description: "Perfect for small schools",
-    price: "₹999",
+    price: "ZMW 199",
     period: "/month",
     features: [
       "Up to 500 students",
@@ -21,7 +21,7 @@ const plans = [
   {
     name: "Standard",
     description: "Best for growing schools",
-    price: "₹2,499",
+    price: "ZMW 499",
     period: "/month",
     features: [
       "Up to 2,000 students",
@@ -59,11 +59,14 @@ export default function Pricing() {
     <section id="pricing" className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">
+        <div className="text-center max-w-4xl mx-auto mb-20">
+          <div className="inline-flex items-center justify-center px-4 py-2 bg-brand-mint/10 rounded-full text-brand-teal font-semibold text-sm tracking-wide uppercase mb-6">
+            Pricing
+          </div>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 mb-6 tracking-tight">
             Simple, transparent pricing
           </h2>
-          <p className="text-xl text-slate-600">
+          <p className="text-xl text-slate-600 leading-relaxed">
             Choose the perfect plan for your school. All plans include core features with no hidden fees.
           </p>
         </div>
@@ -73,15 +76,15 @@ export default function Pricing() {
           {plans.map((plan, index) => (
             <div
               key={index}
-              className={`bg-white rounded-2xl p-8 transition-colors duration-200 relative ${
+              className={`group bg-white rounded-3xl p-8 transition-all duration-300 relative hover:-translate-y-2 ${
                 plan.popular
-                  ? "bg-primary-50 border-2 border-primary-500 lg:scale-105 lg:shadow-xl"
-                  : "border-2 border-slate-200 hover:border-primary-200"
+                  ? "bg-gradient-to-br from-brand-mint/5 to-brand-teal/5 border-2 border-brand-teal lg:scale-105 shadow-xl"
+                  : "border-2 border-slate-200 hover:border-brand-mint hover:shadow-lg"
               }`}
             >
               {plan.popular && (
                 <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                  <span className="bg-primary-500 text-white px-4 py-2 rounded-full text-sm font-semibold">
+                  <span className="bg-gradient-to-r from-brand-mint to-brand-teal text-white px-6 py-2 rounded-full text-sm font-semibold shadow-lg">
                     Most Popular
                   </span>
                 </div>
@@ -108,10 +111,10 @@ export default function Pricing() {
               
               <Button
                 variant={plan.buttonVariant}
-                className={`w-full px-6 py-3 rounded-lg font-semibold transition-colors duration-200 ${
+                className={`w-full px-6 py-4 rounded-xl font-semibold transition-all duration-300 hover:transform hover:-translate-y-0.5 ${
                   plan.buttonVariant === "default"
-                    ? "bg-primary-500 hover:bg-primary-600 text-white shadow-lg"
-                    : "border-2 border-primary-500 text-primary-600 hover:bg-primary-50"
+                    ? "bg-gradient-to-r from-brand-mint to-brand-teal hover:from-brand-teal hover:to-brand-mint text-white shadow-lg hover:shadow-xl focus:ring-4 focus:ring-brand-teal/30"
+                    : "border-2 border-brand-teal text-brand-teal hover:bg-brand-teal/5 focus:ring-4 focus:ring-brand-teal/20"
                 }`}
               >
                 {plan.buttonText}
