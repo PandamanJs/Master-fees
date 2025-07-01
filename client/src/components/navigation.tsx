@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import logoImage from "@assets/Group 15_1751377323388.png";
 
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -21,7 +22,7 @@ export default function Navigation() {
           <div className="flex items-center">
             <div className="flex-shrink-0 flex items-center">
               <img 
-                src="/attached_assets/Group 15_1751377323388.png" 
+                src={logoImage} 
                 alt="Master Fees Logo" 
                 className="w-10 h-10"
               />
