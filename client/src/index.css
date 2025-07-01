@@ -187,6 +187,81 @@ html {
   transform: scale(1.10);
 }
 
+.group-hover\:scale-115:hover {
+  transform: scale(1.15);
+}
+
+.group-hover\:scale-120:hover {
+  transform: scale(1.20);
+}
+
+.group-hover\:scale-125:hover {
+  transform: scale(1.25);
+}
+
+/* 3D perspective utilities */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.transform-gpu {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+.group-hover\:-rotate-y-2:hover {
+  transform: rotateY(-2deg);
+}
+
+/* Enhanced slate color variations for 3D effects */
+.via-slate-850 {
+  background-color: hsl(215, 28%, 17%);
+}
+
+.via-slate-350 {
+  background-color: hsl(214, 32%, 75%);
+}
+
+.via-slate-450 {
+  background-color: hsl(215, 20%, 65%);
+}
+
+.via-slate-750 {
+  background-color: hsl(215, 25%, 27%);
+}
+
+.from-slate-150 {
+  background-color: hsl(210, 40%, 93%);
+}
+
+.to-slate-250 {
+  background-color: hsl(214, 32%, 85%);
+}
+
+.from-slate-650 {
+  background-color: hsl(215, 25%, 35%);
+}
+
+.to-slate-750 {
+  background-color: hsl(215, 25%, 27%);
+}
+
+.border-slate-350 {
+  border-color: hsl(214, 32%, 75%);
+}
+
+.border-slate-550 {
+  border-color: hsl(215, 16%, 47%);
+}
+
+.bg-slate-450 {
+  background-color: hsl(215, 20%, 65%);
+}
+
+.bg-slate-550 {
+  background-color: hsl(215, 16%, 47%);
+}
+
 /* Initial hidden state */
 .animate-on-scroll {
   opacity: 0;
