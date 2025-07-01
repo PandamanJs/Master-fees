@@ -665,3 +665,56 @@ html {
 .animate-orbit {
   animation: orbit 8s linear infinite;
 }
+
+/* Custom cursor styles */
+* {
+  cursor: none;
+}
+
+.custom-cursor {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  background: linear-gradient(45deg, hsl(201, 100%, 14%), hsl(151, 93%, 79%));
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+  transition: transform 0.1s ease;
+}
+
+.custom-cursor-follower {
+  position: fixed;
+  width: 40px;
+  height: 40px;
+  border: 2px solid hsl(201, 100%, 14%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transition: transform 0.3s ease;
+  opacity: 0.6;
+}
+
+.custom-cursor-hover {
+  transform: scale(1.5);
+  background: linear-gradient(45deg, hsl(151, 93%, 79%), hsl(163, 100%, 87%));
+}
+
+.custom-cursor-follower-hover {
+  transform: scale(0.8);
+  border-color: hsl(151, 93%, 79%);
+  opacity: 1;
+}
+
+/* Cursor for different elements */
+button, a, [role="button"] {
+  cursor: none !important;
+}
+
+input, textarea, select {
+  cursor: none !important;
+}
+
+.cursor-text {
+  cursor: none !important;
+}
