@@ -1000,21 +1000,7 @@ body.page-transitioning section:not(:target) {
   }
 }
 
-@keyframes glow-pulse {
-  0%, 100% {
-    text-shadow: 
-      0 0 5px hsl(151, 93%, 79%),
-      0 0 10px hsl(151, 93%, 79%),
-      0 0 15px hsl(151, 93%, 79%);
-  }
-  50% {
-    text-shadow: 
-      0 0 10px hsl(151, 93%, 79%),
-      0 0 20px hsl(151, 93%, 79%),
-      0 0 30px hsl(151, 93%, 79%),
-      0 0 40px hsl(201, 100%, 14%);
-  }
-}
+
 
 @keyframes bounce-in {
   0% {
@@ -1038,8 +1024,7 @@ body.page-transitioning section:not(:target) {
   white-space: nowrap;
   animation: 
     typing 2.5s steps(15, end) 0.5s forwards, 
-    blink 1s infinite 0.5s,
-    glow-pulse 2s ease-in-out 3s infinite;
+    blink 1s infinite 0.5s;
   width: 0;
 }
 
