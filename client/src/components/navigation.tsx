@@ -21,7 +21,7 @@ export default function Navigation() {
           <div className="flex items-center">
             <div className="flex-shrink-0 flex items-center">
               <img 
-                src="/attached_assets/Group 15_1751372567555.png" 
+                src="/attached_assets/Group 15_1751377323388.png" 
                 alt="Master Fees Logo" 
                 className="w-10 h-10"
               />
