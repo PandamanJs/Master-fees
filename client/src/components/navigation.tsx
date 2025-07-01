@@ -20,10 +20,12 @@ export default function Navigation() {
           {/* Logo */}
           <div className="flex items-center">
             <div className="flex-shrink-0 flex items-center">
-              <div className="w-8 h-8 bg-primary-500 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">MF</span>
-              </div>
-              <span className="ml-3 text-xl font-bold text-slate-900">Master Fees</span>
+              <img 
+                src="/attached_assets/Group 15_1751372567555.png" 
+                alt="Master Fees Logo" 
+                className="w-8 h-8"
+              />
+              <span className="ml-3 text-xl font-bold text-slate-900">fee Master</span>
             </div>
           </div>
           
@@ -38,13 +40,19 @@ export default function Navigation() {
               </button>
               <button
                 onClick={() => scrollToSection('features')}
-                className="text-slate-600 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors duration-200"
+                className="text-slate-600 hover:text-brand-teal px-3 py-2 text-sm font-medium transition-colors duration-200"
               >
                 Features
               </button>
               <button
+                onClick={() => scrollToSection('about')}
+                className="text-slate-600 hover:text-brand-teal px-3 py-2 text-sm font-medium transition-colors duration-200"
+              >
+                About
+              </button>
+              <button
                 onClick={() => scrollToSection('pricing')}
-                className="text-slate-600 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors duration-200"
+                className="text-slate-600 hover:text-brand-teal px-3 py-2 text-sm font-medium transition-colors duration-200"
               >
                 Pricing
               </button>
@@ -59,7 +67,7 @@ export default function Navigation() {
           
           {/* CTA Button */}
           <div className="hidden md:block">
-            <Button className="bg-primary-500 hover:bg-primary-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200">
+            <Button className="bg-brand-teal hover:bg-opacity-90 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200">
               Get Started
             </Button>
           </div>
@@ -89,13 +97,19 @@ export default function Navigation() {
             </button>
             <button
               onClick={() => scrollToSection('features')}
-              className="text-slate-600 hover:text-primary-600 block px-3 py-2 text-base font-medium w-full text-left"
+              className="text-slate-600 hover:text-brand-teal block px-3 py-2 text-base font-medium w-full text-left"
             >
               Features
             </button>
             <button
+              onClick={() => scrollToSection('about')}
+              className="text-slate-600 hover:text-brand-teal block px-3 py-2 text-base font-medium w-full text-left"
+            >
+              About
+            </button>
+            <button
               onClick={() => scrollToSection('pricing')}
-              className="text-slate-600 hover:text-primary-600 block px-3 py-2 text-base font-medium w-full text-left"
+              className="text-slate-600 hover:text-brand-teal block px-3 py-2 text-base font-medium w-full text-left"
             >
               Pricing
             </button>
@@ -106,7 +120,7 @@ export default function Navigation() {
               Contact
             </button>
             <div className="pt-4 pb-2">
-              <Button className="w-full bg-primary-500 hover:bg-primary-600 text-white px-4 py-2 rounded-lg text-sm font-medium">
+              <Button className="w-full bg-brand-teal hover:bg-opacity-90 text-white px-4 py-2 rounded-lg text-sm font-medium">
                 Get Started
               </Button>
             </div>

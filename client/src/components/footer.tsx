@@ -2,11 +2,10 @@ import { Mail, Phone, MapPin } from "lucide-react";
 
 const quickLinks = [
   { name: "Home", href: "home" },
-  { name: "Features", href: "features" },
-  { name: "Pricing", href: "pricing" },
-  { name: "About Us", href: "#" },
-  { name: "Blog", href: "#" },
-  { name: "Help Center", href: "#" }
+  { name: "Services", href: "features" },
+  { name: "Process", href: "pricing" },
+  { name: "About", href: "#" },
+  { name: "Contact", href: "contact" }
 ];
 
 const supportLinks = [
@@ -68,72 +67,79 @@ export default function Footer() {
   return (
     <footer id="contact" className="bg-slate-900 text-slate-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center space-y-8 lg:space-y-0">
           
-          {/* Company Info */}
-          <div className="lg:col-span-2">
-            <div className="flex items-center mb-6">
-              <div className="w-8 h-8 bg-primary-500 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">MF</span>
-              </div>
-              <span className="ml-3 text-xl font-bold text-white">Master Fees</span>
+          {/* Left Side - Company + Navigation */}
+          <div className="flex flex-col lg:flex-row lg:items-center lg:space-x-16 space-y-8 lg:space-y-0">
+            {/* Company Info */}
+            <div>
+              <span className="text-xl font-bold text-white">fee Master</span>
             </div>
-            <p className="text-slate-400 mb-6 max-w-md leading-relaxed">
-              Simplifying school fee management with modern technology. Trusted by educational institutions across India for secure, efficient payment processing.
-            </p>
             
-            {/* Contact Info */}
-            <div className="space-y-3">
-              <div className="flex items-center">
-                <Mail className="w-5 h-5 text-slate-400 mr-3" />
-                <span>feemaster@gmail.com</span>
-              </div>
-              <div className="flex items-center">
-                <Phone className="w-5 h-5 text-slate-400 mr-3" />
-                <span>+260 766 699 3729</span>
-              </div>
-              <div className="flex items-center">
-                <MapPin className="w-5 h-5 text-slate-400 mr-3" />
-                <span>Lusaka,Zambia</span>
-              </div>
-            </div>
-          </div>
-          
-          {/* Quick Links */}
-          <div>
-            <h3 className="text-white font-semibold mb-6">Quick Links</h3>
-            <ul className="space-y-3">
+            {/* Navigation Links */}
+            <div className="flex flex-wrap gap-x-8 gap-y-4">
               {quickLinks.map((link, index) => (
-                <li key={index}>
+                <div key={index}>
                   {link.href.startsWith('#') ? (
-                    <a href={link.href} className="hover:text-white transition-colors duration-200">
+                    <a href={link.href} className="text-slate-300 hover:text-white transition-colors duration-200">
                       {link.name}
                     </a>
                   ) : (
                     <button
                       onClick={() => scrollToSection(link.href)}
-                      className="hover:text-white transition-colors duration-200 text-left"
+                      className="text-slate-300 hover:text-white transition-colors duration-200 text-left"
                     >
                       {link.name}
                     </button>
                   )}
-                </li>
+                </div>
               ))}
-            </ul>
+            </div>
           </div>
           
-          {/* Support */}
+          {/* Right Side - Social Media */}
           <div>
-            <h3 className="text-white font-semibold mb-6">Support</h3>
-            <ul className="space-y-3">
-              {supportLinks.map((link, index) => (
-                <li key={index}>
-                  <a href={link.href} className="hover:text-white transition-colors duration-200">
-                    {link.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
+            <h3 className="text-white font-medium mb-4">Stay Connected</h3>
+            <div className="flex space-x-4">
+              <a href="#" className="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center hover:bg-slate-700 transition-colors">
+                <svg className="w-5 h-5 text-slate-300" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+              </a>
+              <a href="#" className="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center hover:bg-slate-700 transition-colors">
+                <svg className="w-5 h-5 text-slate-300" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                </svg>
+              </a>
+              <a href="#" className="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center hover:bg-slate-700 transition-colors">
+                <svg className="w-5 h-5 text-slate-300" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        {/* Contact Info Section */}
+        <div className="border-t border-slate-800 mt-8 pt-8">
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center space-y-4 lg:space-y-0">
+            <div className="flex flex-col lg:flex-row lg:items-center lg:space-x-8 space-y-2 lg:space-y-0">
+              <div className="flex items-center">
+                <Mail className="w-4 h-4 text-slate-400 mr-2" />
+                <span className="text-slate-300">feemaster@gmail.com</span>
+              </div>
+              <div className="flex items-center">
+                <Phone className="w-4 h-4 text-slate-400 mr-2" />
+                <span className="text-slate-300">+260 766 699 3729</span>
+              </div>
+              <div className="flex items-center">
+                <MapPin className="w-4 h-4 text-slate-400 mr-2" />
+                <span className="text-slate-300">Lusaka, Zambia</span>
+              </div>
+            </div>
+            <p className="text-slate-400 text-sm">
+              © All Rights Reserved 2025 Fee Master ltd.
+            </p>
           </div>
         </div>
         
