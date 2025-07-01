@@ -19,12 +19,12 @@ export default function Hero() {
             
             {/* CTA Buttons */}
             <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row sm:justify-center lg:justify-start gap-3 sm:gap-4 animate-fade-in-up delay-400">
-              <Button className="w-full sm:w-auto bg-gradient-to-r from-brand-mint to-brand-teal hover:from-brand-teal hover:to-brand-mint text-white px-6 sm:px-8 lg:px-10 py-3 sm:py-4 rounded-xl text-base sm:text-lg font-semibold transition-all duration-500 shadow-lg hover:shadow-2xl hover:transform hover:-translate-y-2 hover:scale-105 focus:ring-4 focus:ring-brand-teal/30 button-premium animate-pulse-glow">
+              <Button className="w-full sm:w-auto bg-gradient-to-r from-brand-mint to-brand-teal hover:from-brand-teal hover:to-brand-mint text-white px-6 sm:px-8 lg:px-10 py-3 sm:py-4 rounded-xl text-base sm:text-lg font-semibold transition-all duration-300 shadow-md hover:shadow-lg hover:transform hover:-translate-y-1 focus:ring-4 focus:ring-brand-teal/30">
                 Get Started Free
               </Button>
               <Button 
                 variant="outline"
-                className="w-full sm:w-auto border-2 border-slate-300 dark:border-slate-600 hover:border-brand-teal dark:hover:border-brand-teal hover:bg-brand-teal/5 dark:hover:bg-brand-teal/10 text-slate-700 dark:text-slate-300 hover:text-brand-teal px-6 sm:px-8 lg:px-10 py-3 sm:py-4 rounded-xl text-base sm:text-lg font-semibold transition-all duration-500 focus:ring-4 focus:ring-slate-300/30 hover:transform hover:-translate-y-1 hover:scale-105 glass-effect"
+                className="w-full sm:w-auto border-2 border-slate-300 dark:border-slate-600 hover:border-brand-teal dark:hover:border-brand-teal hover:bg-brand-teal/5 dark:hover:bg-brand-teal/10 text-slate-700 dark:text-slate-300 hover:text-brand-teal px-6 sm:px-8 lg:px-10 py-3 sm:py-4 rounded-xl text-base sm:text-lg font-semibold transition-all duration-300 focus:ring-4 focus:ring-slate-300/30"
               >
                 Watch Demo
               </Button>

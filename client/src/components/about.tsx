@@ -45,10 +45,8 @@ export default function About() {
               key={index}
               className={`group bg-white bg-opacity-10 backdrop-blur-sm p-6 sm:p-8 rounded-xl border border-white border-opacity-20 transition-all duration-700 hover:bg-opacity-20 hover:scale-102 hover:-translate-y-1 cursor-pointer relative overflow-hidden animate-fade-in-up delay-${(index + 1) * 200} glass-effect`}
             >
-              {/* Shimmer effect overlay */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-1000">
-                <div className="absolute top-0 left-0 w-1/3 h-full bg-gradient-to-r from-transparent via-white/10 to-transparent transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[300%] transition-transform duration-1500"></div>
-              </div>
+              {/* Subtle glow effect */}
+              <div className="absolute inset-0 rounded-xl opacity-0 transition-opacity duration-500 group-hover:opacity-100 bg-gradient-to-br from-brand-mint/5 via-transparent to-brand-light-mint/5 pointer-events-none"></div>
               
               <div className="flex items-start space-x-4 relative z-10">
                 <div className="w-12 h-12 bg-brand-light-mint rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-500 group-hover:scale-105 group-hover:rotate-3 shadow-lg group-hover:shadow-xl">
@@ -62,47 +60,40 @@ export default function About() {
                 </div>
               </div>
               
-              {/* Glow effect on hover */}
-              <div className="absolute inset-0 rounded-xl opacity-0 transition-opacity duration-700 group-hover:opacity-100 bg-gradient-to-br from-brand-mint/10 via-transparent to-brand-light-mint/10 pointer-events-none"></div>
+
             </div>
           ))}
         </div>
         
         {/* About Us Content */}
         <div className="group bg-slate-900 rounded-2xl p-8 lg:p-12 relative overflow-hidden transition-all duration-700 hover:scale-102 hover:-translate-y-1 cursor-pointer animate-fade-in-up delay-600">
-          {/* Background decoration with animation */}
-          <div className="absolute inset-0 opacity-10 transition-opacity duration-700 group-hover:opacity-20">
-            <div className="absolute top-10 right-10 w-32 h-32 bg-brand-mint rounded-full animate-float delay-100 transition-all duration-700 group-hover:scale-110"></div>
-            <div className="absolute bottom-10 left-10 w-20 h-20 bg-brand-light-mint rounded-full animate-float delay-300 transition-all duration-700 group-hover:scale-125"></div>
-          </div>
-          
-          {/* Shimmer effect */}
-          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
-            <div className="absolute top-0 left-0 w-1/3 h-full bg-gradient-to-r from-transparent via-white/10 to-transparent transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[300%] transition-transform duration-1000"></div>
+          {/* Subtle background decoration */}
+          <div className="absolute inset-0 opacity-5 transition-opacity duration-300 group-hover:opacity-10">
+            <div className="absolute top-10 right-10 w-32 h-32 bg-brand-mint rounded-full"></div>
+            <div className="absolute bottom-10 left-10 w-20 h-20 bg-brand-light-mint rounded-full"></div>
           </div>
           
           <div className="relative z-10">
             <div className="flex items-center mb-6 animate-fade-in-left delay-700">
               <span className="text-brand-mint text-sm font-semibold tracking-wider uppercase transition-all duration-300 group-hover:text-brand-light-mint">A BIT</span>
             </div>
-            <h2 className="text-2xl lg:text-3xl font-bold text-white mb-6 animate-fade-in-left delay-800 transition-all duration-300 group-hover:text-brand-light-mint transform group-hover:-translate-y-1">
+            <h2 className="text-2xl lg:text-3xl font-bold text-white mb-6 animate-fade-in-left delay-800 transition-colors duration-300 group-hover:text-brand-light-mint">
               ABOUT US
             </h2>
             <div className="space-y-4 mb-8 animate-fade-in-left delay-900">
-              <p className="text-lg text-slate-300 leading-relaxed transition-all duration-300 group-hover:text-white transform group-hover:-translate-y-1">
+              <p className="text-lg text-slate-300 leading-relaxed transition-colors duration-300 group-hover:text-white">
                 Automate collections, receipts, and reporting, so your staff focuses on what matters.
               </p>
-              <p className="text-lg text-slate-300 leading-relaxed transition-all duration-300 group-hover:text-white transform group-hover:-translate-y-1">
+              <p className="text-lg text-slate-300 leading-relaxed transition-colors duration-300 group-hover:text-white">
                 Increase revenue reliability, reduce workload, and gain full control of your finances.
               </p>
             </div>
-            <Button className="bg-brand-mint hover:bg-brand-light-mint text-brand-teal px-8 py-3 rounded-lg text-lg font-semibold transition-all duration-500 hover:scale-105 hover:-translate-y-1 hover:shadow-xl animate-fade-in-left delay-1000 button-premium">
+            <Button className="bg-brand-mint hover:bg-brand-light-mint text-brand-teal px-8 py-3 rounded-lg text-lg font-semibold transition-all duration-300 hover:shadow-lg animate-fade-in-left delay-1000">
               EXPLORE MORE
             </Button>
           </div>
           
-          {/* Glow effect on hover */}
-          <div className="absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100 bg-gradient-to-br from-brand-mint/10 via-transparent to-brand-light-mint/10 pointer-events-none"></div>
+
         </div>
       </div>
     </section>

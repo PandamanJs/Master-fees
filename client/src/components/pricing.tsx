@@ -76,20 +76,15 @@ export default function Pricing() {
           {plans.map((plan, index) => (
             <div
               key={index}
-              className={`group bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 transition-all duration-500 relative hover:-translate-y-2 sm:hover:-translate-y-4 hover:scale-105 cursor-pointer overflow-hidden ${
+              className={`group bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 transition-all duration-300 relative hover:-translate-y-1 cursor-pointer overflow-hidden ${
                 plan.popular
-                  ? "bg-gradient-to-br from-brand-mint/5 to-brand-teal/5 dark:from-brand-mint/15 dark:to-brand-teal/15 border-2 border-brand-teal md:scale-105 lg:scale-105 shadow-2xl dark:shadow-brand-teal/30 animate-pulse-glow"
-                  : "border-2 border-slate-200/60 dark:border-gray-700/60 hover:border-brand-mint/50 dark:hover:border-brand-mint/70 hover:shadow-2xl dark:hover:shadow-brand-mint/20"
+                  ? "bg-gradient-to-br from-brand-mint/5 to-brand-teal/5 dark:from-brand-mint/15 dark:to-brand-teal/15 border-2 border-brand-teal md:scale-102 lg:scale-102 shadow-lg dark:shadow-brand-teal/20"
+                  : "border-2 border-slate-200/60 dark:border-gray-700/60 hover:border-brand-mint/50 dark:hover:border-brand-mint/70 hover:shadow-lg dark:hover:shadow-brand-mint/10"
               } animate-fade-in-up delay-${(index + 1) * 200}`}
             >
-              {/* Shimmer effect overlay */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
-                <div className="absolute top-0 left-0 w-1/3 h-full bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[300%] transition-transform duration-1000"></div>
-              </div>
-              
               {plan.popular && (
                 <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
-                  <span className="bg-gradient-to-r from-brand-mint to-brand-teal text-white px-6 py-2 rounded-full text-sm font-semibold shadow-lg animate-float text-shimmer">
+                  <span className="bg-gradient-to-r from-brand-mint to-brand-teal text-white px-6 py-2 rounded-full text-sm font-semibold shadow-lg">
                     Most Popular
                   </span>
                 </div>
