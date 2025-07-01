@@ -671,39 +671,60 @@ html {
   cursor: none;
 }
 
+@keyframes cursor-pulse {
+  0%, 100% { 
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% { 
+    transform: scale(1.2);
+    opacity: 0.8;
+  }
+}
+
+@keyframes cursor-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
 .custom-cursor {
   position: fixed;
-  width: 20px;
-  height: 20px;
-  background: linear-gradient(45deg, hsl(201, 100%, 14%), hsl(151, 93%, 79%));
+  width: 16px;
+  height: 16px;
+  background: radial-gradient(circle, hsl(151, 93%, 79%) 0%, hsl(201, 100%, 14%) 100%);
   border-radius: 50%;
   pointer-events: none;
   z-index: 9999;
-  mix-blend-mode: difference;
-  transition: transform 0.1s ease;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 10px rgba(20, 184, 166, 0.3);
 }
 
 .custom-cursor-follower {
   position: fixed;
-  width: 40px;
-  height: 40px;
-  border: 2px solid hsl(201, 100%, 14%);
+  width: 32px;
+  height: 32px;
+  border: 2px solid;
+  border-image: linear-gradient(45deg, hsl(151, 93%, 79%), hsl(201, 100%, 14%)) 1;
   border-radius: 50%;
   pointer-events: none;
   z-index: 9998;
-  transition: transform 0.3s ease;
-  opacity: 0.6;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  opacity: 0.4;
 }
 
 .custom-cursor-hover {
-  transform: scale(1.5);
-  background: linear-gradient(45deg, hsl(151, 93%, 79%), hsl(163, 100%, 87%));
+  transform: scale(2) rotate(45deg);
+  background: conic-gradient(from 0deg, hsl(151, 93%, 79%), hsl(201, 100%, 14%), hsl(163, 100%, 87%), hsl(151, 93%, 79%));
+  animation: cursor-rotate 1s linear infinite, cursor-pulse 0.8s ease-in-out infinite;
+  box-shadow: 0 0 20px rgba(20, 184, 166, 0.6), 0 0 40px rgba(16, 185, 129, 0.4);
 }
 
 .custom-cursor-follower-hover {
-  transform: scale(0.8);
-  border-color: hsl(151, 93%, 79%);
+  transform: scale(0.5) rotate(-45deg);
+  border-width: 3px;
+  border-image: conic-gradient(from 0deg, hsl(151, 93%, 79%), hsl(201, 100%, 14%), hsl(163, 100%, 87%), hsl(151, 93%, 79%)) 1;
   opacity: 1;
+  animation: cursor-rotate 2s linear infinite reverse;
 }
 
 /* Cursor for different elements */
@@ -755,20 +776,30 @@ input, textarea, select {
     transform: scaleY(0.1) scaleX(0.8);
     filter: brightness(0);
   }
-  20% {
-    opacity: 0.3;
-    transform: scaleY(0.5) scaleX(0.9);
-    filter: brightness(0.3);
+  15% {
+    opacity: 0.2;
+    transform: scaleY(0.3) scaleX(0.85);
+    filter: brightness(0.2);
+  }
+  30% {
+    opacity: 0.4;
+    transform: scaleY(0.6) scaleX(0.9);
+    filter: brightness(0.4);
   }
   50% {
-    opacity: 0.7;
+    opacity: 0.6;
     transform: scaleY(0.8) scaleX(0.95);
-    filter: brightness(0.7);
+    filter: brightness(0.6);
   }
-  80% {
-    opacity: 0.9;
-    transform: scaleY(0.95) scaleX(0.98);
-    filter: brightness(0.9);
+  70% {
+    opacity: 0.8;
+    transform: scaleY(0.9) scaleX(0.97);
+    filter: brightness(0.8);
+  }
+  85% {
+    opacity: 0.95;
+    transform: scaleY(0.98) scaleX(0.99);
+    filter: brightness(0.95);
   }
   100% {
     opacity: 1;

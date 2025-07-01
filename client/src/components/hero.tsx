@@ -7,14 +7,30 @@ import logoImage from "@assets/Group 15_1751377323388.png";
 export default function Hero() {
   const [isLaptopOn, setIsLaptopOn] = useState(false);
   const [showBootScreen, setShowBootScreen] = useState(false);
+  const [bootStage, setBootStage] = useState(0);
+
+  const bootMessages = [
+    "Master Fees",
+    "Initializing system...",
+    "Loading dashboard...",
+    "Ready!"
+  ];
 
   const handleLaptopHover = () => {
     if (!isLaptopOn) {
       setShowBootScreen(true);
+      setBootStage(0);
+      
+      // Stage progression
+      setTimeout(() => setBootStage(1), 500);
+      setTimeout(() => setBootStage(2), 1200);
+      setTimeout(() => setBootStage(3), 2000);
+      
       setTimeout(() => {
         setIsLaptopOn(true);
         setShowBootScreen(false);
-      }, 800);
+        setBootStage(0);
+      }, 2800); // Extended to 2.8 seconds for full boot sequence
     }
   };
 
@@ -93,9 +109,34 @@ export default function Hero() {
                       {showBootScreen && (
                         <div className="absolute inset-0 bg-black flex items-center justify-center z-10 laptop-screen-on">
                           <div className="text-center">
-                            <div className="w-8 h-8 border-2 border-brand-teal border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-                            <div className="text-brand-mint text-sm font-mono">Master Fees</div>
-                            <div className="text-xs text-brand-light-mint font-mono mt-1">Booting up...</div>
+                            {bootStage === 0 && (
+                              <div className="w-8 h-8 border-2 border-brand-teal border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                            )}
+                            {bootStage === 1 && (
+                              <div className="flex items-center justify-center mb-4">
+                                <div className="w-2 h-2 bg-brand-teal rounded-full animate-pulse mr-2"></div>
+                                <div className="w-2 h-2 bg-brand-teal rounded-full animate-pulse mr-2 delay-100"></div>
+                                <div className="w-2 h-2 bg-brand-teal rounded-full animate-pulse delay-200"></div>
+                              </div>
+                            )}
+                            {bootStage === 2 && (
+                              <div className="w-16 h-2 bg-gray-700 rounded-full mx-auto mb-4 overflow-hidden">
+                                <div className="h-full bg-gradient-to-r from-brand-teal to-brand-mint rounded-full animate-pulse" style={{ width: '70%' }}></div>
+                              </div>
+                            )}
+                            {bootStage === 3 && (
+                              <div className="w-6 h-6 border-2 border-green-400 rounded-full mx-auto mb-4 flex items-center justify-center">
+                                <div className="w-2 h-2 bg-green-400 rounded-full animate-ping"></div>
+                              </div>
+                            )}
+                            <div className="text-brand-mint text-sm font-mono animate-pulse">
+                              {bootMessages[bootStage]}
+                            </div>
+                            {bootStage > 0 && (
+                              <div className="text-xs text-brand-light-mint font-mono mt-2 opacity-60">
+                                {Math.round((bootStage / 3) * 100)}% complete
+                              </div>
+                            )}
                           </div>
                         </div>
                       )}
