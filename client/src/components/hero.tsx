@@ -9,16 +9,6 @@ export default function Hero() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
         <div className="lg:grid lg:grid-cols-12 lg:gap-8">
           <div className="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left">
-            <div className="flex items-center justify-center lg:justify-start mb-6">
-              <img 
-                src={logoImage} 
-                alt="Master Fees Logo" 
-                className="w-16 h-16 mr-4"
-              />
-              <span className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 tracking-tight">
-                Master Fees
-              </span>
-            </div>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 leading-tight tracking-tight">
               Simplify School
               <span className="text-brand-teal"> Fee Management</span>
