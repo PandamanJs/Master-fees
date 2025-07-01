@@ -73,7 +73,7 @@ export default function Footer() {
           <div className="flex flex-col lg:flex-row lg:items-center lg:space-x-16 space-y-8 lg:space-y-0">
             {/* Company Info */}
             <div>
-              <span className="text-xl font-bold text-white">fee Master</span>
+              <span className="text-xl font-bold text-white">Master Fees</span>
             </div>
             
             {/* Navigation Links */}
@@ -138,7 +138,7 @@ export default function Footer() {
               </div>
             </div>
             <p className="text-slate-400 text-sm">
-              © All Rights Reserved 2025 Fee Master ltd.
+              © All Rights Reserved 2025 Master Fees ltd.
             </p>
           </div>
         </div>

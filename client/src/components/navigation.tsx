@@ -25,7 +25,7 @@ export default function Navigation() {
                 alt="Master Fees Logo" 
                 className="w-8 h-8"
               />
-              <span className="ml-3 text-xl font-bold text-slate-900">fee Master</span>
+              <span className="ml-3 text-xl font-bold text-slate-900">Master Fees</span>
             </div>
           </div>
           
