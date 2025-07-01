@@ -29,11 +29,11 @@ export default function About() {
     <section id="about" className="py-20 bg-brand-teal text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header Section */}
-        <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+        <div className="text-center mb-16 animate-fade-in-up">
+          <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-shimmer">
             Why Choose Us?
           </h2>
-          <p className="text-xl text-slate-200 max-w-3xl mx-auto">
+          <p className="text-xl text-slate-200 max-w-3xl mx-auto animate-fade-in-up delay-200">
             Experience excellence in digital craftsmanship with our team of skilled professionals dedicated to delivering exceptional results.
           </p>
         </div>
@@ -43,50 +43,66 @@ export default function About() {
           {features.map((feature, index) => (
             <div
               key={index}
-              className="bg-white bg-opacity-10 backdrop-blur-sm p-8 rounded-xl border border-white border-opacity-20"
+              className={`group bg-white bg-opacity-10 backdrop-blur-sm p-8 rounded-xl border border-white border-opacity-20 transition-all duration-500 hover:bg-opacity-20 hover:scale-105 hover:-translate-y-2 cursor-pointer relative overflow-hidden animate-fade-in-up delay-${(index + 1) * 200} glass-effect`}
             >
-              <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 bg-brand-light-mint rounded-lg flex items-center justify-center flex-shrink-0">
-                  <feature.icon className="w-6 h-6 text-brand-teal" />
+              {/* Shimmer effect overlay */}
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                <div className="absolute top-0 left-0 w-1/3 h-full bg-gradient-to-r from-transparent via-white/10 to-transparent transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[300%] transition-transform duration-1000"></div>
+              </div>
+              
+              <div className="flex items-start space-x-4 relative z-10">
+                <div className="w-12 h-12 bg-brand-light-mint rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 shadow-lg group-hover:shadow-xl">
+                  <feature.icon className="w-6 h-6 text-brand-teal transition-all duration-300 group-hover:scale-110" />
                 </div>
-                <div>
-                  <h3 className="text-xl font-semibold mb-3">{feature.title}</h3>
-                  <p className="text-slate-200 leading-relaxed">
+                <div className="flex-1">
+                  <h3 className="text-xl font-semibold mb-3 transition-all duration-300 group-hover:text-brand-light-mint transform group-hover:-translate-y-1">{feature.title}</h3>
+                  <p className="text-slate-200 leading-relaxed transition-all duration-300 group-hover:text-white transform group-hover:-translate-y-1">
                     {feature.description}
                   </p>
                 </div>
               </div>
+              
+              {/* Glow effect on hover */}
+              <div className="absolute inset-0 rounded-xl opacity-0 transition-opacity duration-500 group-hover:opacity-100 bg-gradient-to-br from-brand-mint/10 via-transparent to-brand-light-mint/10 pointer-events-none"></div>
             </div>
           ))}
         </div>
         
         {/* About Us Content */}
-        <div className="bg-slate-900 rounded-2xl p-8 lg:p-12 relative overflow-hidden">
-          {/* Background decoration */}
-          <div className="absolute inset-0 opacity-10">
-            <div className="absolute top-10 right-10 w-32 h-32 bg-brand-mint rounded-full"></div>
-            <div className="absolute bottom-10 left-10 w-20 h-20 bg-brand-light-mint rounded-full"></div>
+        <div className="group bg-slate-900 rounded-2xl p-8 lg:p-12 relative overflow-hidden transition-all duration-500 hover:scale-105 hover:-translate-y-2 cursor-pointer animate-fade-in-up delay-600">
+          {/* Background decoration with animation */}
+          <div className="absolute inset-0 opacity-10 transition-opacity duration-500 group-hover:opacity-20">
+            <div className="absolute top-10 right-10 w-32 h-32 bg-brand-mint rounded-full animate-float delay-100 transition-all duration-500 group-hover:scale-125"></div>
+            <div className="absolute bottom-10 left-10 w-20 h-20 bg-brand-light-mint rounded-full animate-float delay-300 transition-all duration-500 group-hover:scale-150"></div>
+          </div>
+          
+          {/* Shimmer effect */}
+          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+            <div className="absolute top-0 left-0 w-1/3 h-full bg-gradient-to-r from-transparent via-white/10 to-transparent transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[300%] transition-transform duration-1000"></div>
           </div>
           
           <div className="relative z-10">
-            <div className="flex items-center mb-6">
-              <span className="text-brand-mint text-sm font-semibold tracking-wider uppercase">A BIT</span>
+            <div className="flex items-center mb-6 animate-fade-in-left delay-700">
+              <span className="text-brand-mint text-sm font-semibold tracking-wider uppercase transition-all duration-300 group-hover:text-brand-light-mint">A BIT</span>
             </div>
-            <h2 className="text-2xl lg:text-3xl font-bold text-white mb-6">
+            <h2 className="text-2xl lg:text-3xl font-bold text-white mb-6 animate-fade-in-left delay-800 transition-all duration-300 group-hover:text-brand-light-mint transform group-hover:-translate-y-1">
               ABOUT US
             </h2>
-            <div className="space-y-4 mb-8">
-              <p className="text-lg text-slate-300 leading-relaxed">
+            <div className="space-y-4 mb-8 animate-fade-in-left delay-900">
+              <p className="text-lg text-slate-300 leading-relaxed transition-all duration-300 group-hover:text-white transform group-hover:-translate-y-1">
                 Automate collections, receipts, and reporting, so your staff focuses on what matters.
               </p>
-              <p className="text-lg text-slate-300 leading-relaxed">
+              <p className="text-lg text-slate-300 leading-relaxed transition-all duration-300 group-hover:text-white transform group-hover:-translate-y-1">
                 Increase revenue reliability, reduce workload, and gain full control of your finances.
               </p>
             </div>
-            <Button className="bg-brand-mint hover:bg-brand-light-mint text-brand-teal px-8 py-3 rounded-lg text-lg font-semibold transition-colors duration-200">
+            <Button className="bg-brand-mint hover:bg-brand-light-mint text-brand-teal px-8 py-3 rounded-lg text-lg font-semibold transition-all duration-500 hover:scale-105 hover:-translate-y-1 hover:shadow-xl animate-fade-in-left delay-1000 button-premium">
               EXPLORE MORE
             </Button>
           </div>
+          
+          {/* Glow effect on hover */}
+          <div className="absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100 bg-gradient-to-br from-brand-mint/10 via-transparent to-brand-light-mint/10 pointer-events-none"></div>
         </div>
       </div>
     </section>
