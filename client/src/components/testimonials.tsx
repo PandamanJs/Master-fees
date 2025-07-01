@@ -28,12 +28,12 @@ const testimonials = [
 ];
 
 const trustedSchools = [
-  "DPS",
-  "St. Xavier's",
-  "Ryan Int'l",
-  "DAV",
-  "Kendriya",
-  "CBSE Int'l"
+  "Lusaka Int'l",
+  "St. Mary's",
+  "Hillcrest",
+  "American Int'l",
+  "Rhodes Park",
+  "Chalo Trust"
 ];
 
 export default function Testimonials() {

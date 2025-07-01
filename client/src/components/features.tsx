@@ -4,7 +4,7 @@ const features = [
   {
     icon: Zap,
     title: "Instant Payments",
-    description: "Accept payments instantly through multiple payment gateways. UPI, cards, net banking - all supported with real-time confirmation.",
+    description: "Accept payments instantly through multiple payment gateways. Mobile money, cards, bank transfers - all supported with real-time confirmation.",
     bgColor: "bg-primary-100",
     iconColor: "text-primary-600"
   },
