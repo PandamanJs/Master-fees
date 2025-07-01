@@ -79,26 +79,37 @@ export default function Testimonials() {
           ))}
         </div>
         
-        {/* Trusted Schools Logos */}
+        {/* Trusted Schools - News Headline Style */}
         <div className="border-t border-slate-200 dark:border-slate-700 pt-16">
-          <h3 className="text-center text-lg font-semibold text-slate-900 dark:text-white mb-8">Trusted by leading schools</h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 items-center opacity-60">
-            {trustedSchools.map((school, index) => (
-              <div
-                key={index}
-                className={`bg-slate-200 dark:bg-slate-700 h-12 rounded-lg flex items-center justify-center hover:opacity-100 transition-all duration-300 cursor-pointer group ${
-                  index % 2 === 0 ? 'animate-circular-motion' : 'animate-orbit'
-                }`}
-                style={{
-                  animationDelay: `${index * 0.5}s`,
-                  animationDuration: index % 2 === 0 ? '6s' : '10s'
-                }}
-              >
-                <span className="text-slate-600 dark:text-slate-300 text-sm font-medium group-hover:text-brand-teal transition-colors duration-300">
+          <h3 className="text-center text-lg font-semibold text-black dark:text-white mb-8">Trusted by leading schools</h3>
+          <div className="scrolling-container bg-white dark:bg-slate-800 py-4 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700">
+            <div className="scrolling-content">
+              {/* Duplicate the list to ensure seamless looping */}
+              {[...trustedSchools, ...trustedSchools, ...trustedSchools].map((school, index) => (
+                <span
+                  key={index}
+                  className="inline-block text-black dark:text-white text-lg font-medium px-8 whitespace-nowrap"
+                >
                   {school}
+                  <span className="mx-4 text-brand-teal">•</span>
                 </span>
-              </div>
-            ))}
+              ))}
+            </div>
+          </div>
+          
+          {/* Alternative scrolling row - opposite direction */}
+          <div className="scrolling-container bg-slate-50 dark:bg-slate-900 py-3 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 mt-4">
+            <div className="scrolling-content" style={{ animationDirection: 'reverse', animationDuration: '35s' }}>
+              {[...trustedSchools.slice().reverse(), ...trustedSchools.slice().reverse(), ...trustedSchools.slice().reverse()].map((school, index) => (
+                <span
+                  key={index}
+                  className="inline-block text-black dark:text-slate-300 text-base font-medium px-6 whitespace-nowrap opacity-80"
+                >
+                  ★ {school} School
+                  <span className="mx-4 text-brand-mint">•</span>
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       </div>

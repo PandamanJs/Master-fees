@@ -658,12 +658,38 @@ html {
   }
 }
 
+/* News headline scrolling animation */
+@keyframes scroll-left {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
 .animate-circular-motion {
   animation: circular-motion 4s ease-in-out infinite;
 }
 
 .animate-orbit {
   animation: orbit 8s linear infinite;
+}
+
+.animate-scroll-left {
+  animation: scroll-left 30s linear infinite;
+}
+
+/* Scrolling container */
+.scrolling-container {
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+}
+
+.scrolling-content {
+  display: inline-block;
+  animation: scroll-left 25s linear infinite;
 }
 
 /* Custom cursor styles */
