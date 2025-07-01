@@ -19,9 +19,9 @@ export default function Hero() {
             
             {/* CTA Buttons */}
             <div className="mt-10 sm:mt-12 flex flex-col sm:flex-row sm:justify-center lg:justify-start gap-4 sm:gap-6 animate-fade-in-up delay-400">
-              <Button className="group w-full sm:w-auto bg-gradient-to-r from-brand-teal to-brand-mint hover:from-brand-mint hover:to-brand-teal text-white px-8 sm:px-10 lg:px-12 py-4 sm:py-5 rounded-2xl text-lg sm:text-xl font-bold transition-all duration-500 shadow-xl hover:shadow-2xl hover:transform hover:-translate-y-2 focus:ring-4 focus:ring-brand-teal/40 relative overflow-hidden hover-lift cursor-magic animate-glow-pulse hover:animate-heartbeat">
+              <Button className="group w-full sm:w-auto bg-brand-teal hover:bg-brand-teal/90 text-white px-8 sm:px-10 lg:px-12 py-4 sm:py-5 rounded-2xl text-lg sm:text-xl font-bold transition-all duration-500 shadow-xl hover:shadow-2xl hover:transform hover:-translate-y-2 focus:ring-4 focus:ring-brand-teal/40 relative overflow-hidden hover-lift cursor-magic hover:animate-heartbeat">
                 <span className="relative z-10 group-hover:animate-wiggle">Start Free Trial</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
               </Button>
               <Button 

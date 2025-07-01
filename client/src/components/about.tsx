@@ -26,7 +26,7 @@ const features = [
 
 export default function About() {
   return (
-    <section id="about" className="py-16 sm:py-20 md:py-24 lg:py-28 bg-gradient-to-br from-brand-teal via-brand-teal to-blue-900 text-white relative overflow-hidden">
+    <section id="about" className="py-16 sm:py-20 md:py-24 lg:py-28 bg-gradient-to-br from-brand-teal via-slate-800 to-slate-900 text-white relative overflow-hidden">
       {/* Background decorative elements */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-20 left-10 w-32 h-32 bg-brand-mint rounded-full blur-xl"></div>
