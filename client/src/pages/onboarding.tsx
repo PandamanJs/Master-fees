@@ -88,7 +88,7 @@ export default function Onboarding() {
         title: "Onboarding Complete!",
         description: "Welcome to Master Fees. Your account is now fully set up.",
       });
-      window.location.href = "/dashboard";
+      window.location.href = "/welcome";
     },
     onError: (error) => {
       if (isUnauthorizedError(error)) {

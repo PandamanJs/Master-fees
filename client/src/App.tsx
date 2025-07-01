@@ -10,6 +10,8 @@ import MascotGuide from "@/components/mascot-guide";
 import PageTransition from "@/components/page-transition";
 import Home from "@/pages/home";
 import Onboarding from "@/pages/onboarding";
+import Welcome from "@/pages/welcome";
+import Dashboard from "@/pages/dashboard";
 import ParentLookup from "@/pages/parent-lookup";
 import NotFound from "@/pages/not-found";
 
@@ -31,16 +33,11 @@ function Router() {
           )} />
         ) : !isAuthenticated ? (
           <Route path="/" component={Home} />
-        ) : user?.onboardingCompleted ? (
+        ) : user && 'onboardingCompleted' in user && user.onboardingCompleted ? (
           <>
-            <Route path="/" component={() => (
-              <div className="min-h-screen flex items-center justify-center">
-                <div className="text-center">
-                  <h1 className="text-3xl font-bold mb-4">Welcome to Master Fees Dashboard</h1>
-                  <p className="text-gray-600">Your school management dashboard will be available here.</p>
-                </div>
-              </div>
-            )} />
+            <Route path="/" component={Dashboard} />
+            <Route path="/welcome" component={Welcome} />
+            <Route path="/dashboard" component={Dashboard} />
           </>
         ) : (
           <Route path="/" component={Onboarding} />
