@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
+import dashboardImage from "@assets/Dashboard_1751374916721.png";
 
 export default function Hero() {
   return (
@@ -46,7 +47,7 @@ export default function Hero() {
               {/* Actual Dashboard Image */}
               <div className="bg-white rounded-xl shadow-2xl overflow-hidden">
                 <img 
-                  src="/attached_assets/Dashboard_1751374916721.png" 
+                  src={dashboardImage} 
                   alt="Master Fees Dashboard Interface" 
                   className="w-full h-auto"
                 />
