@@ -1028,6 +1028,50 @@ body.page-transitioning section:not(:target) {
   width: 0;
 }
 
+.typing-effect-reflective {
+  display: inline-block;
+  overflow: hidden;
+  border-right: 2px solid hsl(151, 93%, 79%);
+  white-space: nowrap;
+  animation: 
+    typing 2.5s steps(15, end) 0.5s forwards, 
+    blink 1s infinite 0.5s;
+  width: 0;
+  position: relative;
+  background: linear-gradient(
+    90deg,
+    hsl(201, 100%, 14%) 0%,
+    hsl(201, 100%, 14%) 40%,
+    hsl(163, 100%, 87%) 50%,
+    hsl(201, 100%, 14%) 60%,
+    hsl(201, 100%, 14%) 100%
+  );
+  background-size: 200px 100%;
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.typing-effect-reflective::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.6) 50%,
+    transparent 100%
+  );
+  background-size: 200px 100%;
+  background-repeat: no-repeat;
+  animation: reflection-sweep 3s ease-in-out 6s infinite;
+  pointer-events: none;
+}
+
 .fade-in-slow {
   animation: bounce-in 1.2s ease-out 3s forwards;
   opacity: 0;

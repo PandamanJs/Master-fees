@@ -140,8 +140,8 @@ export default function Hero() {
         <div className="lg:grid lg:grid-cols-12 lg:gap-8 xl:gap-12">
           <div className="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left">
             <h1 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-4xl xl:text-5xl font-bold text-slate-900 dark:text-white leading-tight tracking-tight">
-              <span className="block sm:inline typing-effect hover:scale-105 transition-transform duration-300 cursor-pointer">Transform School</span>
-              <span className="text-slate-900 dark:text-white block sm:inline fade-in-slow hover:scale-105 transition-transform duration-300 cursor-pointer"> Fee Collection</span>
+              <span className="block sm:inline typing-effect-reflective hover:scale-105 transition-transform duration-300 cursor-pointer">Transform School</span>
+              <span className="block sm:inline fade-in-slow hover:scale-105 transition-transform duration-300 cursor-pointer"> Fee Collection</span>
             </h1>
             <p className="mt-6 sm:mt-8 text-lg sm:text-xl lg:text-xl text-slate-700 dark:text-slate-300 leading-relaxed max-w-2xl animate-fade-in-up delay-200">
               Automate fee collection, streamline payment processing, and provide real-time financial insights. Master Fees empowers schools with modern payment management solutions.
