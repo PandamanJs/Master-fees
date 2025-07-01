@@ -5,7 +5,7 @@ import logoImage from "@assets/Group 15_1751377323388.png";
 
 export default function Hero() {
   return (
-    <section id="home" className="bg-white dark:bg-black transition-colors duration-300">
+    <section id="home" className="bg-gradient-to-br from-white via-slate-50/50 to-brand-mint/5 dark:bg-gradient-to-br dark:from-black dark:via-gray-950 dark:to-brand-mint/10 transition-all duration-500">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 lg:py-28">
         <div className="lg:grid lg:grid-cols-12 lg:gap-8 xl:gap-12">
           <div className="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left">

@@ -47,7 +47,7 @@ const features = [
 
 export default function Features() {
   return (
-    <section id="features" className="py-12 sm:py-16 md:py-20 lg:py-24 bg-slate-50 dark:bg-black transition-colors duration-300">
+    <section id="features" className="py-12 sm:py-16 md:py-20 lg:py-24 bg-slate-50/80 dark:bg-gray-950/80 transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-4xl mx-auto mb-12 sm:mb-16 lg:mb-20">
@@ -67,7 +67,7 @@ export default function Features() {
           {features.map((feature, index) => (
             <div
               key={index}
-              className={`group bg-white dark:bg-gray-900 p-6 sm:p-8 rounded-xl sm:rounded-2xl shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 sm:hover:-translate-y-3 hover:scale-105 border border-slate-100 dark:border-gray-800 card-hover animate-fade-in-up delay-${(index + 1) * 100} cursor-pointer relative overflow-hidden`}
+              className={`group bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm p-6 sm:p-8 rounded-xl sm:rounded-2xl shadow-sm hover:shadow-2xl dark:hover:shadow-brand-teal/20 transition-all duration-500 hover:-translate-y-2 sm:hover:-translate-y-3 hover:scale-105 border border-slate-200/50 dark:border-gray-700/50 hover:border-brand-mint/30 dark:hover:border-brand-mint/50 card-hover animate-fade-in-up delay-${(index + 1) * 100} cursor-pointer relative overflow-hidden`}
             >
               {/* Subtle gradient overlay on hover */}
               <div className="absolute inset-0 bg-gradient-to-br from-brand-mint/5 via-transparent to-brand-teal/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"></div>

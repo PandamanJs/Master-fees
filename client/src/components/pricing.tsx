@@ -76,10 +76,10 @@ export default function Pricing() {
           {plans.map((plan, index) => (
             <div
               key={index}
-              className={`group bg-white dark:bg-gray-900 rounded-2xl sm:rounded-3xl p-6 sm:p-8 transition-all duration-500 relative hover:-translate-y-2 sm:hover:-translate-y-4 hover:scale-105 cursor-pointer overflow-hidden ${
+              className={`group bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 transition-all duration-500 relative hover:-translate-y-2 sm:hover:-translate-y-4 hover:scale-105 cursor-pointer overflow-hidden ${
                 plan.popular
-                  ? "bg-gradient-to-br from-brand-mint/5 to-brand-teal/5 dark:from-brand-mint/10 dark:to-brand-teal/10 border-2 border-brand-teal md:scale-105 lg:scale-105 shadow-2xl animate-pulse-glow"
-                  : "border-2 border-slate-200 dark:border-gray-700 hover:border-brand-mint hover:shadow-2xl"
+                  ? "bg-gradient-to-br from-brand-mint/5 to-brand-teal/5 dark:from-brand-mint/15 dark:to-brand-teal/15 border-2 border-brand-teal md:scale-105 lg:scale-105 shadow-2xl dark:shadow-brand-teal/30 animate-pulse-glow"
+                  : "border-2 border-slate-200/60 dark:border-gray-700/60 hover:border-brand-mint/50 dark:hover:border-brand-mint/70 hover:shadow-2xl dark:hover:shadow-brand-mint/20"
               } animate-fade-in-up delay-${(index + 1) * 200}`}
             >
               {/* Shimmer effect overlay */}
