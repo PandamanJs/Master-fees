@@ -1,10 +1,10 @@
-import { useState, useRef, useCallback, useEffect } from "react";
+import { useState, useRef, useCallback, useEffect, useMemo, memo } from "react";
 import { Button } from "@/components/ui/button";
-import { Check, X, ZoomIn, ZoomOut, Move } from "lucide-react";
+import { Check, X, ZoomIn, ZoomOut, Move } from "@/lib/icons";
 import dashboardImage from "@assets/Dashboard_1751383261879.png";
 import logoImage from "@assets/Group 15_1751377323388.png";
 
-export default function Hero() {
+const Hero = memo(function Hero() {
   const [isLaptopOn, setIsLaptopOn] = useState(false);
   const [showBootScreen, setShowBootScreen] = useState(false);
   const [bootStage, setBootStage] = useState(0);
@@ -16,68 +16,64 @@ export default function Hero() {
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const zoomModalRef = useRef<HTMLDivElement>(null);
 
-  const bootMessages = [
+  const bootMessages = useMemo(() => [
     "Master Fees",
     "Initializing system...",
     "Loading dashboard...",
     "Ready!"
-  ];
+  ], []);
 
-  const handleLaptopHover = () => {
+  const handleLaptopHover = useCallback(() => {
     if (!isLaptopOn) {
       setShowBootScreen(true);
       setBootStage(0);
       
-      // Stage progression
-      setTimeout(() => setBootStage(1), 500);
-      setTimeout(() => setBootStage(2), 1200);
-      setTimeout(() => setBootStage(3), 2000);
-      
-      setTimeout(() => {
-        setIsLaptopOn(true);
-        setShowBootScreen(false);
-        setBootStage(0);
-      }, 2800); // Extended to 2.8 seconds for full boot sequence
-    }
-  };
+      // Stage progression with cleanup
+      const timeouts = [
+        setTimeout(() => setBootStage(1), 500),
+        setTimeout(() => setBootStage(2), 1200),
+        setTimeout(() => setBootStage(3), 2000),
+        setTimeout(() => {
+          setIsLaptopOn(true);
+          setShowBootScreen(false);
+          setBootStage(0);
+        }, 2800)
+      ];
 
-  const handleLaptopLeave = () => {
+      // Return cleanup function
+      return () => timeouts.forEach(clearTimeout);
+    }
+  }, [isLaptopOn]);
+
+  const handleLaptopLeave = useCallback(() => {
     setIsLaptopOn(false);
     setShowBootScreen(false);
-  };
+  }, []);
 
-  const handleDashboardClick = (e: React.MouseEvent) => {
+  const handleDashboardClick = useCallback((e: React.MouseEvent) => {
     if (!isLaptopOn || showBootScreen) return;
     
+    e.preventDefault();
     e.stopPropagation();
-    setIsZoomed(!isZoomed);
-    if (!isZoomed) {
-      setZoomLevel(2);
-      setPanPosition({ x: 0, y: 0 });
-    }
-  };
-
-  const handleZoomMove = (e: React.MouseEvent) => {
-    if (!isZoomed) return;
     
     const rect = e.currentTarget.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width) * 100;
     const y = ((e.clientY - rect.top) / rect.height) * 100;
     
-    setZoomPosition({ 
-      x: Math.max(0, Math.min(100, x)), 
-      y: Math.max(0, Math.min(100, y)) 
-    });
-  };
+    setZoomPosition({ x, y });
+    setIsZoomed(true);
+    document.body.style.overflow = 'hidden';
+  }, [isLaptopOn, showBootScreen]);
 
-  const handleZoomClose = () => {
+  const handleZoomClose = useCallback(() => {
     setIsZoomed(false);
     setZoomLevel(1);
     setPanPosition({ x: 0, y: 0 });
-  };
+    document.body.style.overflow = '';
+  }, []);
 
   const handleZoomIn = useCallback(() => {
-    setZoomLevel(prev => Math.min(prev + 0.5, 4));
+    setZoomLevel(prev => Math.min(prev + 0.5, 3));
   }, []);
 
   const handleZoomOut = useCallback(() => {
@@ -85,36 +81,32 @@ export default function Hero() {
   }, []);
 
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
-    if (!isZoomed) return;
     setIsDragging(true);
     setDragStart({ x: e.clientX - panPosition.x, y: e.clientY - panPosition.y });
-  }, [isZoomed, panPosition]);
+  }, [panPosition]);
 
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
-    if (!isDragging || !isZoomed) return;
+    if (!isDragging) return;
     
     const newX = e.clientX - dragStart.x;
     const newY = e.clientY - dragStart.y;
     
-    // Constrain panning within reasonable bounds
-    const maxPan = (zoomLevel - 1) * 200;
+    const maxPan = 200;
     setPanPosition({
       x: Math.max(-maxPan, Math.min(maxPan, newX)),
       y: Math.max(-maxPan, Math.min(maxPan, newY))
     });
-  }, [isDragging, isZoomed, dragStart, zoomLevel]);
+  }, [isDragging, dragStart]);
 
   const handleMouseUp = useCallback(() => {
     setIsDragging(false);
   }, []);
 
   const handleWheel = useCallback((e: React.WheelEvent) => {
-    if (!isZoomed) return;
     e.preventDefault();
-    
     const delta = e.deltaY > 0 ? -0.2 : 0.2;
-    setZoomLevel(prev => Math.max(1, Math.min(4, prev + delta)));
-  }, [isZoomed]);
+    setZoomLevel(prev => Math.max(1, Math.min(3, prev + delta)));
+  }, []);
 
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     if (!isZoomed) return;
@@ -128,11 +120,36 @@ export default function Hero() {
     }
   }, [isZoomed, handleZoomClose, handleZoomIn, handleZoomOut]);
 
+  // Memoize style calculations
+  const laptopScreenStyle = useMemo(() => ({
+    transform: `scale(${zoomLevel}) translate(${panPosition.x}px, ${panPosition.y}px)`,
+    transformOrigin: `${zoomPosition.x}% ${zoomPosition.y}%`,
+  }), [zoomLevel, panPosition, zoomPosition]);
+
   // Add keyboard event listeners
   useEffect(() => {
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [handleKeyDown]);
+
+  // Memoize trust indicators to prevent re-rendering
+  const TrustIndicators = useMemo(() => (
+    <div className="mt-10 sm:mt-12 flex flex-wrap items-center justify-center lg:justify-start gap-x-4 sm:gap-x-6 gap-y-3 sm:gap-y-4 animate-fade-in-up delay-600">
+      {[
+        { text: "Instant Setup", delay: "delay-100" },
+        { text: "Bank Security", delay: "delay-200" },
+        { text: "24/7 Support", delay: "delay-300" }
+      ].map((item, index) => (
+        <div 
+          key={item.text}
+          className={`flex items-center bg-brand-teal/5 dark:bg-brand-mint/20 backdrop-blur-sm border border-brand-teal/20 dark:border-brand-mint/30 px-4 sm:px-5 py-3 rounded-xl transition-all duration-300 hover:bg-brand-teal/10 dark:hover:bg-brand-mint/30 hover:scale-105 hover:shadow-lg animate-float ${item.delay} hover-lift cursor-magic hover:animate-rubber-band`}
+        >
+          <Check className="w-4 h-4 text-brand-teal mr-3 animate-heartbeat hover:animate-bounce-subtle" />
+          <span className="text-sm font-bold text-slate-800 dark:text-brand-mint hover:animate-wiggle">{item.text}</span>
+        </div>
+      ))}
+    </div>
+  ), []);
 
   return (
     <section id="home" className="bg-gradient-to-br from-white via-slate-50/50 to-brand-mint/5 dark:bg-gradient-to-br dark:from-black dark:via-gray-950 dark:to-brand-mint/10 transition-all duration-500">
@@ -168,20 +185,7 @@ export default function Hero() {
             </div>
             
             {/* Trust Indicators */}
-            <div className="mt-10 sm:mt-12 flex flex-wrap items-center justify-center lg:justify-start gap-x-4 sm:gap-x-6 gap-y-3 sm:gap-y-4 animate-fade-in-up delay-600">
-              <div className="flex items-center bg-brand-teal/5 dark:bg-brand-mint/20 backdrop-blur-sm border border-brand-teal/20 dark:border-brand-mint/30 px-4 sm:px-5 py-3 rounded-xl transition-all duration-300 hover:bg-brand-teal/10 dark:hover:bg-brand-mint/30 hover:scale-105 hover:shadow-lg animate-float delay-100 hover-lift cursor-magic hover:animate-rubber-band">
-                <Check className="w-4 h-4 text-brand-teal mr-3 animate-heartbeat hover:animate-bounce-subtle" />
-                <span className="text-sm font-bold text-slate-800 dark:text-brand-mint hover:animate-wiggle">Instant Setup</span>
-              </div>
-              <div className="flex items-center bg-brand-teal/5 dark:bg-brand-mint/20 backdrop-blur-sm border border-brand-teal/20 dark:border-brand-mint/30 px-4 sm:px-5 py-3 rounded-xl transition-all duration-300 hover:bg-brand-teal/10 dark:hover:bg-brand-mint/30 hover:scale-105 hover:shadow-lg animate-float delay-200 hover-lift cursor-magic hover:animate-rubber-band">
-                <Check className="w-4 h-4 text-brand-teal mr-3 animate-heartbeat hover:animate-bounce-subtle" />
-                <span className="text-sm font-bold text-slate-800 dark:text-brand-mint hover:animate-wiggle">Bank Security</span>
-              </div>
-              <div className="flex items-center bg-brand-teal/5 dark:bg-brand-mint/20 backdrop-blur-sm border border-brand-teal/20 dark:border-brand-mint/30 px-4 sm:px-5 py-3 rounded-xl transition-all duration-300 hover:bg-brand-teal/10 dark:hover:bg-brand-mint/30 hover:scale-105 hover:shadow-lg animate-float delay-300 hover-lift cursor-magic hover:animate-rubber-band">
-                <Check className="w-4 h-4 text-brand-teal mr-3 animate-heartbeat hover:animate-bounce-subtle" />
-                <span className="text-sm font-bold text-slate-800 dark:text-brand-mint hover:animate-wiggle">30-Day Trial</span>
-              </div>
-            </div>
+            {TrustIndicators}
           </div>
           
           <div className="mt-10 sm:mt-12 lg:mt-0 lg:col-span-6 animate-fade-in-right delay-300">
@@ -447,4 +451,6 @@ export default function Hero() {
       )}
     </section>
   );
-}
+});
+
+export default Hero;

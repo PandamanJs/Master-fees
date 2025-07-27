@@ -2,7 +2,17 @@ import type { Config } from "tailwindcss";
 
 export default {
   darkMode: ["class"],
-  content: ["./client/index.html", "./client/src/**/*.{js,jsx,ts,tsx}"],
+  content: [
+    "./client/index.html", 
+    "./client/src/**/*.{js,jsx,ts,tsx}",
+    // Add specific paths for better tree-shaking
+    "./client/src/components/**/*.{js,jsx,ts,tsx}",
+    "./client/src/pages/**/*.{js,jsx,ts,tsx}",
+  ],
+  // Enable future CSS features for better performance
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
   theme: {
     extend: {
       screens: {
@@ -91,4 +101,8 @@ export default {
     },
   },
   plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
+  // Optimize CSS generation
+  experimental: {
+    optimizeUniversalDefaults: true,
+  },
 } satisfies Config;

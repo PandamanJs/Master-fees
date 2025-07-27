@@ -47,11 +47,18 @@ export const queryClient = new QueryClient({
       queryFn: getQueryFn({ on401: "throw" }),
       refetchInterval: false,
       refetchOnWindowFocus: false,
-      staleTime: Infinity,
+      // Optimize stale time for better performance
+      staleTime: 5 * 60 * 1000, // 5 minutes
+      // Cache data for longer period
+      gcTime: 10 * 60 * 1000, // 10 minutes (was cacheTime)
       retry: false,
+      // Enable network status tracking for better UX
+      notifyOnChangeProps: ['data', 'error', 'isLoading'],
     },
     mutations: {
       retry: false,
+      // Add global mutation cache
+      gcTime: 5 * 60 * 1000, // 5 minutes
     },
   },
 });
