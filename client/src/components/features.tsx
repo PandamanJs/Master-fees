@@ -51,17 +51,17 @@ export default function Features() {
   const gridRef = useStaggerAnimation();
 
   return (
-    <section ref={sectionRef} id="features" className="section-animate py-12 sm:py-16 md:py-20 lg:py-24 bg-slate-50/80 dark:bg-gray-950/80 transition-all duration-300">
+    <section ref={sectionRef} id="features" className="section-animate py-12 sm:py-16 md:py-20 lg:py-24 bg-slate-50/80-gray-950/80 transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-4xl mx-auto mb-12 sm:mb-16 lg:mb-20">
           <div className="inline-flex items-center justify-center px-4 py-2 bg-brand-mint/10 rounded-full text-brand-teal font-semibold text-sm tracking-wide uppercase mb-6">
             Features
           </div>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white mb-4 sm:mb-6 tracking-tight">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900-white mb-4 sm:mb-6 tracking-tight">
             Everything you need to manage school fees
           </h2>
-          <p className="text-lg sm:text-xl text-slate-700 dark:text-slate-300 leading-relaxed px-4 sm:px-0">
+          <p className="text-lg sm:text-xl text-slate-700-slate-300 leading-relaxed px-4 sm:px-0">
             Powerful features designed specifically for educational institutions to streamline fee collection and financial management.
           </p>
         </div>
@@ -71,7 +71,7 @@ export default function Features() {
           {features.map((feature, index) => (
             <div
               key={index}
-              className={`group bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm p-6 sm:p-8 rounded-xl sm:rounded-2xl shadow-sm hover:shadow-md dark:hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-slate-200/50 dark:border-gray-700/50 hover:border-brand-mint/50 dark:hover:border-brand-mint/50 animate-fade-in-up cursor-pointer relative overflow-hidden hover-lift cursor-magic hover:animate-rubber-band`}
+              className={`group bg-white/90-gray-900/90 backdrop-blur-sm p-6 sm:p-8 rounded-xl sm:rounded-2xl shadow-sm hover:shadow-md-lg transition-all duration-300 hover:-translate-y-1 border border-slate-200/50-gray-700/50 hover:border-brand-mint/50-brand-mint/50 animate-fade-in-up cursor-pointer relative overflow-hidden hover-lift cursor-magic hover:animate-rubber-band`}
               style={{ animationDelay: `${(index + 1) * 100}ms` }}
             >
               {/* Subtle gradient overlay on hover */}
@@ -84,8 +84,8 @@ export default function Features() {
               </div>
               
               {/* Content with staggered animations */}
-              <h3 className="relative text-xl font-semibold text-slate-900 dark:text-white mb-4 group-hover:text-brand-teal transition-colors duration-300 group-hover:animate-bounce-subtle">{feature.title}</h3>
-              <p className="relative text-slate-700 dark:text-slate-300 leading-relaxed transition-colors duration-300 group-hover:text-slate-800 dark:group-hover:text-slate-200 group-hover:animate-wiggle">
+              <h3 className="relative text-xl font-semibold text-slate-900-white mb-4 group-hover:text-brand-teal transition-colors duration-300 group-hover:animate-bounce-subtle">{feature.title}</h3>
+              <p className="relative text-slate-700-slate-300 leading-relaxed transition-colors duration-300 group-hover:text-slate-800-hover:text-slate-200 group-hover:animate-wiggle">
                 {feature.description}
               </p>
             </div>

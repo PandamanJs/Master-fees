@@ -19,13 +19,13 @@ export default function ReceiptTemplateStep({ onComplete }: ReceiptTemplateStepP
     <div className="space-y-6">
       <div className="text-center">
         <h3 className="text-lg font-medium mb-2">Receipt & Invoice Templates</h3>
-        <p className="text-gray-600 dark:text-gray-300">
+        <p className="text-gray-600-gray-300">
           Choose and customize your receipt and invoice templates
         </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Card className="border-2 border-blue-200 bg-blue-50 dark:bg-blue-950 dark:border-blue-800">
+        <Card className="border-2 border-blue-200 bg-blue-50-blue-950-blue-800">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <FileText className="w-5 h-5" />
@@ -35,7 +35,7 @@ export default function ReceiptTemplateStep({ onComplete }: ReceiptTemplateStepP
           <CardContent>
             <div className="space-y-3">
               <Badge variant="secondary">Recommended</Badge>
-              <p className="text-sm text-gray-600 dark:text-gray-300">
+              <p className="text-sm text-gray-600-gray-300">
                 Clean, professional template with school logo, payment details, and transaction summary.
               </p>
               <div className="space-y-2 text-sm">
@@ -66,7 +66,7 @@ export default function ReceiptTemplateStep({ onComplete }: ReceiptTemplateStepP
           <CardContent>
             <div className="space-y-3">
               <Badge variant="outline">Coming Soon</Badge>
-              <p className="text-sm text-gray-600 dark:text-gray-300">
+              <p className="text-sm text-gray-600-gray-300">
                 Create your own custom receipt template with advanced styling options and branding.
               </p>
               <Button variant="outline" className="w-full" disabled>
@@ -85,7 +85,7 @@ export default function ReceiptTemplateStep({ onComplete }: ReceiptTemplateStepP
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="bg-white dark:bg-gray-800 border rounded-lg p-6 space-y-4">
+          <div className="bg-white-gray-800 border rounded-lg p-6 space-y-4">
             <div className="border-b pb-4">
               <div className="flex items-center justify-between">
                 <div>

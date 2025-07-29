@@ -34,7 +34,7 @@ export default function PageTransition({ children }: PageTransitionProps) {
       
       {/* Loading overlay during transition */}
       {isTransitioning && (
-        <div className="fixed inset-0 bg-white dark:bg-black z-40 flex items-center justify-center transition-overlay">
+        <div className="fixed inset-0 bg-white-black z-40 flex items-center justify-center transition-overlay">
           <div className="flex flex-col items-center space-y-4">
             <div className="w-12 h-12 border-4 border-brand-teal border-t-transparent rounded-full animate-spin"></div>
             <div className="text-brand-teal font-medium">Loading...</div>

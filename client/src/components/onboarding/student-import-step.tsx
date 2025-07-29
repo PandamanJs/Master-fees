@@ -22,7 +22,7 @@ export default function StudentImportStep({ onComplete }: StudentImportStepProps
     <div className="space-y-6">
       <div className="text-center">
         <h3 className="text-lg font-medium mb-2">Import Students</h3>
-        <p className="text-gray-600 dark:text-gray-300">
+        <p className="text-gray-600-gray-300">
           Choose how you'd like to add students to your system
         </p>
       </div>
@@ -43,7 +43,7 @@ export default function StudentImportStep({ onComplete }: StudentImportStepProps
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-600 dark:text-gray-300 mb-4">
+              <p className="text-gray-600-gray-300 mb-4">
                 Add students one by one using our form interface. Best for smaller schools or initial setup.
               </p>
               <Button className="w-full" variant="outline">
@@ -62,7 +62,7 @@ export default function StudentImportStep({ onComplete }: StudentImportStepProps
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-600 dark:text-gray-300 mb-4">
+              <p className="text-gray-600-gray-300 mb-4">
                 Upload a CSV file with student information. Ideal for bulk imports from existing systems.
               </p>
               <div className="space-y-4">
@@ -86,7 +86,7 @@ export default function StudentImportStep({ onComplete }: StudentImportStepProps
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-600 dark:text-gray-300 mb-4">
+              <p className="text-gray-600-gray-300 mb-4">
                 Connect your existing student management system via API for seamless data synchronization.
               </p>
               <Button className="w-full" variant="outline">

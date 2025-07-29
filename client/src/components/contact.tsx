@@ -41,25 +41,25 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="py-12 sm:py-16 bg-slate-50 dark:bg-slate-900">
+    <section id="contact" className="py-12 sm:py-16 bg-slate-50">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-8">
-          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-3">
+          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-3">
             Get in Touch
           </h2>
-          <p className="text-lg text-slate-600 dark:text-slate-300">
+          <p className="text-lg text-slate-600">
             Ready to transform your school's fee management? Contact us today.
           </p>
         </div>
 
         {/* Contact Form */}
-        <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-6 sm:p-8 border border-slate-200 dark:border-slate-700">
+        <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8 border border-slate-200">
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Name and Email Row */}
             <div className="grid md:grid-cols-2 gap-4">
               <div className="space-y-1">
-                <label className="text-slate-700 dark:text-slate-300 font-medium text-sm">
+                <label className="text-slate-700 font-medium text-sm">
                   Full Name
                 </label>
                 <Input
@@ -67,11 +67,11 @@ export default function Contact() {
                   placeholder="Type here"
                   value={formData.fullName}
                   onChange={(e) => handleInputChange("fullName", e.target.value)}
-                  className="bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 text-slate-900 dark:text-white placeholder:text-slate-400 h-10 focus:border-brand-teal dark:focus:border-brand-mint hover-lift"
+                  className="bg-white border border-slate-300 text-slate-900 placeholder:text-slate-400 h-10 focus:border-brand-teal hover-lift"
                 />
               </div>
               <div className="space-y-1">
-                <label className="text-slate-700 dark:text-slate-300 font-medium text-sm">
+                <label className="text-slate-700 font-medium text-sm">
                   Email
                 </label>
                 <Input
@@ -79,26 +79,26 @@ export default function Contact() {
                   placeholder="Type here"
                   value={formData.email}
                   onChange={(e) => handleInputChange("email", e.target.value)}
-                  className="bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 text-slate-900 dark:text-white placeholder:text-slate-400 h-10 focus:border-brand-teal dark:focus:border-brand-mint hover-lift"
+                  className="bg-white border border-slate-300 text-slate-900 placeholder:text-slate-400 h-10 focus:border-brand-teal hover-lift"
                 />
               </div>
             </div>
 
             {/* Contact Reason */}
             <div className="space-y-2">
-              <label className="text-slate-700 dark:text-slate-300 font-medium text-sm block">
+              <label className="text-slate-700 font-medium text-sm block">
                 Why are you contacting us?
               </label>
-              <div className="bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg p-4">
+              <div className="bg-slate-50 border border-slate-200 rounded-lg p-4">
                 <div className="grid grid-cols-2 gap-3">
                   <div className="flex items-center space-x-2">
                     <Checkbox
                       id="schoolPay"
                       checked={formData.reasons.schoolPay}
                       onCheckedChange={(checked) => handleReasonChange("schoolPay", checked as boolean)}
-                      className="border-slate-400 dark:border-slate-500 data-[state=checked]:bg-brand-teal data-[state=checked]:border-brand-teal"
+                      className="border-slate-400 data-[state=checked]:bg-brand-teal data-[state=checked]:border-brand-teal"
                     />
-                    <label htmlFor="schoolPay" className="text-slate-700 dark:text-slate-300 font-medium text-sm">
+                    <label htmlFor="schoolPay" className="text-slate-700 font-medium text-sm">
                       School Pay
                     </label>
                   </div>
@@ -107,9 +107,9 @@ export default function Contact() {
                       id="learnMore"
                       checked={formData.reasons.learnMore}
                       onCheckedChange={(checked) => handleReasonChange("learnMore", checked as boolean)}
-                      className="border-slate-400 dark:border-slate-500 data-[state=checked]:bg-brand-teal data-[state=checked]:border-brand-teal"
+                      className="border-slate-400 data-[state=checked]:bg-brand-teal data-[state=checked]:border-brand-teal"
                     />
-                    <label htmlFor="learnMore" className="text-slate-700 dark:text-slate-300 font-medium text-sm">
+                    <label htmlFor="learnMore" className="text-slate-700 font-medium text-sm">
                       Learn more
                     </label>
                   </div>
@@ -118,9 +118,9 @@ export default function Contact() {
                       id="integration"
                       checked={formData.reasons.integration}
                       onCheckedChange={(checked) => handleReasonChange("integration", checked as boolean)}
-                      className="border-slate-400 dark:border-slate-500 data-[state=checked]:bg-brand-teal data-[state=checked]:border-brand-teal"
+                      className="border-slate-400 data-[state=checked]:bg-brand-teal data-[state=checked]:border-brand-teal"
                     />
-                    <label htmlFor="integration" className="text-slate-700 dark:text-slate-300 font-medium text-sm">
+                    <label htmlFor="integration" className="text-slate-700 font-medium text-sm">
                       Integration
                     </label>
                   </div>
@@ -129,9 +129,9 @@ export default function Contact() {
                       id="others"
                       checked={formData.reasons.others}
                       onCheckedChange={(checked) => handleReasonChange("others", checked as boolean)}
-                      className="border-slate-400 dark:border-slate-500 data-[state=checked]:bg-brand-teal data-[state=checked]:border-brand-teal"
+                      className="border-slate-400 data-[state=checked]:bg-brand-teal data-[state=checked]:border-brand-teal"
                     />
-                    <label htmlFor="others" className="text-slate-700 dark:text-slate-300 font-medium text-sm">
+                    <label htmlFor="others" className="text-slate-700 font-medium text-sm">
                       Others
                     </label>
                   </div>
@@ -141,14 +141,14 @@ export default function Contact() {
 
             {/* Message */}
             <div className="space-y-1">
-              <label className="text-slate-700 dark:text-slate-300 font-medium text-sm">
+              <label className="text-slate-700 font-medium text-sm">
                 Your Message
               </label>
               <Textarea
                 placeholder="Type here"
                 value={formData.message}
                 onChange={(e) => handleInputChange("message", e.target.value)}
-                className="bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 text-slate-900 dark:text-white placeholder:text-slate-400 min-h-24 focus:border-brand-teal dark:focus:border-brand-mint resize-none hover-lift"
+                className="bg-white border border-slate-300 text-slate-900 placeholder:text-slate-400 min-h-24 focus:border-brand-teal resize-none hover-lift"
                 rows={3}
               />
             </div>

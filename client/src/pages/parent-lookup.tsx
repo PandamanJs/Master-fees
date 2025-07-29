@@ -91,15 +91,15 @@ export default function ParentLookup() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100-gray-900-gray-800">
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+            <h1 className="text-3xl font-bold text-gray-900-white mb-2">
               Parent Payment Portal
             </h1>
-            <p className="text-gray-600 dark:text-gray-300">
+            <p className="text-gray-600-gray-300">
               Look up your child's fee information and make payments
             </p>
           </div>
@@ -231,7 +231,7 @@ export default function ParentLookup() {
                           <h4 className="font-medium mb-2">Fee Breakdown:</h4>
                           <div className="space-y-2">
                             {student.fees?.map((fee: any) => (
-                              <div key={fee.id} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded">
+                              <div key={fee.id} className="flex items-center justify-between p-3 bg-gray-50-gray-800 rounded">
                                 <div>
                                   <div className="font-medium">{fee.name || `Fee #${fee.id}`}</div>
                                   <div className="text-sm text-gray-600">

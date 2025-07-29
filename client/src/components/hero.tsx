@@ -135,15 +135,15 @@ export default function Hero() {
   }, [handleKeyDown]);
 
   return (
-    <section id="home" className="bg-gradient-to-br from-white via-slate-50/50 to-brand-mint/5 dark:bg-gradient-to-br dark:from-black dark:via-gray-950 dark:to-brand-mint/10 transition-all duration-500">
+    <section id="home" className="bg-gradient-to-br from-white via-slate-50/50 to-brand-mint/5 transition-all duration-500">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 lg:py-28">
         <div className="lg:grid lg:grid-cols-12 lg:gap-8 xl:gap-12">
           <div className="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left">
-            <h1 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-4xl xl:text-5xl font-bold text-black dark:text-white leading-tight tracking-tight">
-              <span className="block sm:inline typing-effect-reflective hover:scale-105 transition-transform duration-300 cursor-pointer text-black dark:text-white">Transform School</span>
-              <span className="block sm:inline fade-in-slow hover:scale-105 transition-transform duration-300 cursor-pointer text-black dark:text-white"> Fee Collection</span>
+            <h1 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-4xl xl:text-5xl font-bold text-black leading-tight tracking-tight">
+              <span className="block sm:inline typing-effect-reflective hover:scale-105 transition-transform duration-300 cursor-pointer text-black">Transform School</span>
+              <span className="block sm:inline fade-in-slow hover:scale-105 transition-transform duration-300 cursor-pointer text-black"> Fee Collection</span>
             </h1>
-            <p className="mt-6 sm:mt-8 text-lg sm:text-xl lg:text-xl text-slate-700 dark:text-slate-300 leading-relaxed max-w-2xl animate-fade-in-up delay-200">
+            <p className="mt-6 sm:mt-8 text-lg sm:text-xl lg:text-xl text-slate-700 leading-relaxed max-w-2xl animate-fade-in-up delay-200">
               Automate fee collection, streamline payment processing, and provide real-time financial insights. Master Fees empowers schools with modern payment management solutions.
             </p>
             
@@ -159,7 +159,7 @@ export default function Hero() {
               <Button 
                 onClick={() => window.location.href = '/parent-lookup'}
                 variant="outline"
-                className="group w-full sm:w-auto bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-2 border-brand-teal/30 hover:border-brand-teal hover:bg-brand-teal/10 dark:hover:bg-brand-teal/20 text-brand-teal hover:text-brand-teal px-8 sm:px-10 lg:px-12 py-4 sm:py-5 rounded-2xl text-lg sm:text-xl font-bold transition-all duration-500 shadow-lg hover:shadow-xl hover:transform hover:-translate-y-1 focus:ring-4 focus:ring-brand-teal/30 relative overflow-hidden hover-tilt cursor-magic hover:animate-rubber-band"
+                className="group w-full sm:w-auto bg-white/80 backdrop-blur-sm border-2 border-brand-teal/30 hover:border-brand-teal hover:bg-brand-teal/10 text-brand-teal hover:text-brand-teal px-8 sm:px-10 lg:px-12 py-4 sm:py-5 rounded-2xl text-lg sm:text-xl font-bold transition-all duration-500 shadow-lg hover:shadow-xl hover:transform hover:-translate-y-1 focus:ring-4 focus:ring-brand-teal/30 relative overflow-hidden hover-tilt cursor-magic hover:animate-rubber-band"
               >
                 <span className="relative z-10 group-hover:animate-bounce-subtle">Parent Portal</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-brand-teal/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -169,17 +169,17 @@ export default function Hero() {
             
             {/* Trust Indicators */}
             <div className="mt-10 sm:mt-12 flex flex-wrap items-center justify-center lg:justify-start gap-x-4 sm:gap-x-6 gap-y-3 sm:gap-y-4 animate-fade-in-up delay-600">
-              <div className="flex items-center bg-brand-teal/5 dark:bg-brand-mint/20 backdrop-blur-sm border border-brand-teal/20 dark:border-brand-mint/30 px-4 sm:px-5 py-3 rounded-xl transition-all duration-300 hover:bg-brand-teal/10 dark:hover:bg-brand-mint/30 hover:scale-105 hover:shadow-lg animate-float delay-100 hover-lift cursor-magic hover:animate-rubber-band">
+              <div className="flex items-center bg-brand-teal/5 backdrop-blur-sm border border-brand-teal/20 px-4 sm:px-5 py-3 rounded-xl transition-all duration-300 hover:bg-brand-teal/10 hover:scale-105 hover:shadow-lg animate-float delay-100 hover-lift cursor-magic hover:animate-rubber-band">
                 <Check className="w-4 h-4 text-brand-teal mr-3 animate-heartbeat hover:animate-bounce-subtle" />
-                <span className="text-sm font-bold text-slate-800 dark:text-brand-mint hover:animate-wiggle">Instant Setup</span>
+                <span className="text-sm font-bold text-slate-800 hover:animate-wiggle">Instant Setup</span>
               </div>
-              <div className="flex items-center bg-brand-teal/5 dark:bg-brand-mint/20 backdrop-blur-sm border border-brand-teal/20 dark:border-brand-mint/30 px-4 sm:px-5 py-3 rounded-xl transition-all duration-300 hover:bg-brand-teal/10 dark:hover:bg-brand-mint/30 hover:scale-105 hover:shadow-lg animate-float delay-200 hover-lift cursor-magic hover:animate-rubber-band">
+              <div className="flex items-center bg-brand-teal/5 backdrop-blur-sm border border-brand-teal/20 px-4 sm:px-5 py-3 rounded-xl transition-all duration-300 hover:bg-brand-teal/10 hover:scale-105 hover:shadow-lg animate-float delay-200 hover-lift cursor-magic hover:animate-rubber-band">
                 <Check className="w-4 h-4 text-brand-teal mr-3 animate-heartbeat hover:animate-bounce-subtle" />
-                <span className="text-sm font-bold text-slate-800 dark:text-brand-mint hover:animate-wiggle">Bank Security</span>
+                <span className="text-sm font-bold text-slate-800 hover:animate-wiggle">Bank Security</span>
               </div>
-              <div className="flex items-center bg-brand-teal/5 dark:bg-brand-mint/20 backdrop-blur-sm border border-brand-teal/20 dark:border-brand-mint/30 px-4 sm:px-5 py-3 rounded-xl transition-all duration-300 hover:bg-brand-teal/10 dark:hover:bg-brand-mint/30 hover:scale-105 hover:shadow-lg animate-float delay-300 hover-lift cursor-magic hover:animate-rubber-band">
+              <div className="flex items-center bg-brand-teal/5 backdrop-blur-sm border border-brand-teal/20 px-4 sm:px-5 py-3 rounded-xl transition-all duration-300 hover:bg-brand-teal/10 hover:scale-105 hover:shadow-lg animate-float delay-300 hover-lift cursor-magic hover:animate-rubber-band">
                 <Check className="w-4 h-4 text-brand-teal mr-3 animate-heartbeat hover:animate-bounce-subtle" />
-                <span className="text-sm font-bold text-slate-800 dark:text-brand-mint hover:animate-wiggle">30-Day Trial</span>
+                <span className="text-sm font-bold text-slate-800 hover:animate-wiggle">30-Day Trial</span>
               </div>
             </div>
           </div>
@@ -196,11 +196,11 @@ export default function Hero() {
               {/* 3D Laptop Container with perspective */}
               <div className="relative transform-gpu transition-all duration-700 group-hover:scale-105 group-hover:-rotate-y-2 group-hover:shadow-3xl" style={{ transformStyle: 'preserve-3d' }}>
                 {/* Laptop Screen with 3D effect */}
-                <div className="relative bg-gradient-to-br from-slate-800 via-slate-850 to-slate-900 dark:from-slate-900 dark:via-slate-950 dark:to-black rounded-t-3xl p-4 sm:p-5 shadow-2xl transform-gpu" style={{ transform: 'rotateX(-5deg) translateZ(20px)' }}>
+                <div className="relative bg-gradient-to-br from-slate-800 via-slate-850 to-slate-900-slate-900-slate-950-black rounded-t-3xl p-4 sm:p-5 shadow-2xl transform-gpu" style={{ transform: 'rotateX(-5deg) translateZ(20px)' }}>
                   {/* 3D Screen Bezel with depth */}
                   <div className="relative bg-gradient-to-b from-black via-slate-900 to-black rounded-t-2xl p-3 shadow-inner border border-slate-700/50">
                     {/* Screen Content with enhanced depth */}
-                    <div className="bg-white dark:bg-slate-900 rounded-xl shadow-2xl overflow-hidden ring-2 ring-slate-700/40 dark:ring-slate-600/40 transition-all duration-700 group-hover:ring-brand-teal/60 relative">
+                    <div className="bg-white-slate-900 rounded-xl shadow-2xl overflow-hidden ring-2 ring-slate-700/40-slate-600/40 transition-all duration-700 group-hover:ring-brand-teal/60 relative">
                       {/* Boot screen overlay */}
                       {showBootScreen && (
                         <div className="absolute inset-0 bg-black flex items-center justify-center z-10 laptop-screen-on">
@@ -281,8 +281,8 @@ export default function Hero() {
                   </div>
                   
                   {/* Laptop Camera with 3D effect */}
-                  <div className="absolute top-3 left-1/2 transform -translate-x-1/2 w-3 h-3 bg-gradient-to-b from-slate-600 to-slate-800 dark:from-slate-700 dark:to-slate-900 rounded-full shadow-inner border border-slate-500/50">
-                    <div className="w-1.5 h-1.5 bg-slate-800 dark:bg-slate-900 rounded-full mt-0.5 ml-0.5"></div>
+                  <div className="absolute top-3 left-1/2 transform -translate-x-1/2 w-3 h-3 bg-gradient-to-b from-slate-600 to-slate-800-slate-700-slate-900 rounded-full shadow-inner border border-slate-500/50">
+                    <div className="w-1.5 h-1.5 bg-slate-800-slate-900 rounded-full mt-0.5 ml-0.5"></div>
                   </div>
                   
                   {/* Screen edge highlights */}
@@ -292,30 +292,30 @@ export default function Hero() {
                 {/* 3D Laptop Base/Keyboard with perspective */}
                 <div className="relative" style={{ transform: 'rotateX(5deg) translateZ(-10px)' }}>
                   {/* Enhanced laptop hinge with 3D effect */}
-                  <div className="w-full h-2 bg-gradient-to-r from-slate-700 via-slate-500 to-slate-700 dark:from-slate-800 dark:via-slate-600 dark:to-slate-800 shadow-lg relative">
+                  <div className="w-full h-2 bg-gradient-to-r from-slate-700 via-slate-500 to-slate-700-slate-800-slate-600-slate-800 shadow-lg relative">
                     <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/10 to-transparent"></div>
                   </div>
                   
                   {/* 3D Laptop Bottom with enhanced depth */}
-                  <div className="bg-gradient-to-b from-slate-300 via-slate-350 to-slate-450 dark:from-slate-700 dark:via-slate-750 dark:to-slate-850 rounded-b-3xl p-6 sm:p-8 shadow-2xl border-x border-b border-slate-400/50 dark:border-slate-600/50">
+                  <div className="bg-gradient-to-b from-slate-300 via-slate-350 to-slate-450-slate-700-slate-750-slate-850 rounded-b-3xl p-6 sm:p-8 shadow-2xl border-x border-b border-slate-400/50-slate-600/50">
                     {/* 3D Trackpad with realistic depth */}
-                    <div className="mx-auto w-20 sm:w-24 h-14 sm:h-16 bg-gradient-to-b from-slate-200 to-slate-300 dark:from-slate-600 dark:to-slate-700 rounded-xl shadow-inner border-2 border-slate-350/80 dark:border-slate-550/80 mt-3 relative">
-                      <div className="absolute inset-1 bg-gradient-to-br from-slate-150 to-slate-250 dark:from-slate-650 dark:to-slate-750 rounded-lg"></div>
+                    <div className="mx-auto w-20 sm:w-24 h-14 sm:h-16 bg-gradient-to-b from-slate-200 to-slate-300-slate-600-slate-700 rounded-xl shadow-inner border-2 border-slate-350/80-slate-550/80 mt-3 relative">
+                      <div className="absolute inset-1 bg-gradient-to-br from-slate-150 to-slate-250-slate-650-slate-750 rounded-lg"></div>
                       {/* Trackpad click area */}
-                      <div className="absolute bottom-1 inset-x-1 h-0.5 bg-slate-300 dark:bg-slate-500 rounded-full"></div>
+                      <div className="absolute bottom-1 inset-x-1 h-0.5 bg-slate-300-slate-500 rounded-full"></div>
                     </div>
                     
                     {/* Enhanced keyboard representation */}
                     <div className="flex justify-center space-x-2 mt-4">
-                      <div className="w-3 h-1 bg-slate-400 dark:bg-slate-500 rounded-full shadow-sm"></div>
-                      <div className="w-4 h-1 bg-slate-400 dark:bg-slate-500 rounded-full shadow-sm"></div>
-                      <div className="w-3 h-1 bg-slate-400 dark:bg-slate-500 rounded-full shadow-sm"></div>
-                      <div className="w-2 h-1 bg-slate-400 dark:bg-slate-500 rounded-full shadow-sm"></div>
+                      <div className="w-3 h-1 bg-slate-400-slate-500 rounded-full shadow-sm"></div>
+                      <div className="w-4 h-1 bg-slate-400-slate-500 rounded-full shadow-sm"></div>
+                      <div className="w-3 h-1 bg-slate-400-slate-500 rounded-full shadow-sm"></div>
+                      <div className="w-2 h-1 bg-slate-400-slate-500 rounded-full shadow-sm"></div>
                     </div>
                     <div className="flex justify-center space-x-1 mt-1">
-                      <div className="w-2 h-1 bg-slate-450 dark:bg-slate-550 rounded-full shadow-sm"></div>
-                      <div className="w-5 h-1 bg-slate-450 dark:bg-slate-550 rounded-full shadow-sm"></div>
-                      <div className="w-2 h-1 bg-slate-450 dark:bg-slate-550 rounded-full shadow-sm"></div>
+                      <div className="w-2 h-1 bg-slate-450-slate-550 rounded-full shadow-sm"></div>
+                      <div className="w-5 h-1 bg-slate-450-slate-550 rounded-full shadow-sm"></div>
+                      <div className="w-2 h-1 bg-slate-450-slate-550 rounded-full shadow-sm"></div>
                     </div>
                     
                     {/* Bottom edge highlight */}

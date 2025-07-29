@@ -141,15 +141,15 @@ export default function Onboarding() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100-gray-900-gray-800">
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+            <h1 className="text-3xl font-bold text-gray-900-white mb-2">
               Welcome to Master Fees
             </h1>
-            <p className="text-gray-600 dark:text-gray-300">
+            <p className="text-gray-600-gray-300">
               Let's set up your school fee management system
             </p>
           </div>
@@ -164,7 +164,7 @@ export default function Onboarding() {
                     Step {currentStep} of {ONBOARDING_STEPS.length}: {ONBOARDING_STEPS[currentStep - 1]?.title}
                   </CardDescription>
                 </div>
-                <div className="text-sm font-medium text-gray-600 dark:text-gray-300">
+                <div className="text-sm font-medium text-gray-600-gray-300">
                   {Math.round(progress)}% Complete
                 </div>
               </div>
@@ -182,7 +182,7 @@ export default function Onboarding() {
                           ? "bg-green-500 text-white"
                           : currentStep === step.id
                           ? "bg-blue-500 text-white"
-                          : "bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-300"
+                          : "bg-gray-200 text-gray-600-gray-700-gray-300"
                       }`}
                     >
                       {completedSteps.includes(step.id) ? (

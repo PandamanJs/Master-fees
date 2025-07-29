@@ -3,7 +3,7 @@ import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { ThemeProvider } from "@/components/theme-provider";
+
 import { useAuth } from "@/hooks/useAuth";
 // import CustomCursor from "@/components/custom-cursor";
 import MascotGuide from "@/components/mascot-guide";
@@ -33,7 +33,7 @@ function Router() {
           )} />
         ) : !isAuthenticated ? (
           <Route path="/" component={Home} />
-        ) : user && 'onboardingCompleted' in user && user.onboardingCompleted ? (
+        ) : user && typeof user === 'object' && 'onboardingCompleted' in user && user.onboardingCompleted ? (
           <>
             <Route path="/" component={Dashboard} />
             <Route path="/welcome" component={Welcome} />
@@ -51,16 +51,14 @@ function Router() {
 
 function App() {
   return (
-    <ThemeProvider defaultTheme="light" storageKey="masterfees-ui-theme">
-      <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           {/* <CustomCursor /> */}
           <MascotGuide />
           <Toaster />
           <Router />
         </TooltipProvider>
-      </QueryClientProvider>
-    </ThemeProvider>
+    </QueryClientProvider>
   );
 }
 

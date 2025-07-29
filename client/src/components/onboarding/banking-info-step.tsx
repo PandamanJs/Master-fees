@@ -211,7 +211,7 @@ export default function BankingInfoStep({ onComplete }: BankingInfoStepProps) {
           {/* Flutterwave Integration */}
           <div className="space-y-4">
             <h3 className="text-lg font-medium">Flutterwave Payment Gateway</h3>
-            <p className="text-sm text-gray-600 dark:text-gray-300">
+            <p className="text-sm text-gray-600-gray-300">
               Configure Flutterwave to accept online payments. Get your keys from your Flutterwave dashboard.
             </p>
             
