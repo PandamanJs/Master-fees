@@ -26,7 +26,7 @@ const features = [
 
 export default function About() {
   return (
-    <section id="about" className="py-16 sm:py-20 md:py-24 lg:py-28 bg-gradient-to-br from-white via-slate-50 to-brand-mint/10-gradient-to-br-brand-teal-slate-800-slate-900 text-black-white relative overflow-hidden">
+    <section id="about" className="py-16 sm:py-20 md:py-24 lg:py-28 bg-gradient-to-br from-white via-slate-50 to-brand-mint/10 dark:bg-gradient-to-br dark:from-brand-teal dark:via-slate-800 dark:to-slate-900 text-black dark:text-white relative overflow-hidden">
       {/* Background decorative elements */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-20 left-10 w-32 h-32 bg-brand-mint rounded-full blur-xl"></div>
@@ -37,10 +37,10 @@ export default function About() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header Section */}
         <div className="text-center mb-16 sm:mb-20 animate-fade-in-up">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-black-white">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-black via-brand-teal to-black dark:from-white dark:via-brand-light-mint dark:to-white bg-clip-text text-transparent">
             Why Choose Us?
           </h2>
-          <p className="text-xl sm:text-2xl text-black/90-white/90 max-w-4xl mx-auto animate-fade-in-up delay-200 px-4 sm:px-0 leading-relaxed font-medium">
+          <p className="text-xl sm:text-2xl text-black/90 dark:text-white/90 max-w-4xl mx-auto animate-fade-in-up delay-200 px-4 sm:px-0 leading-relaxed font-medium">
             Experience excellence in school fee management with our team of skilled professionals dedicated to delivering exceptional results.
           </p>
         </div>
@@ -50,7 +50,7 @@ export default function About() {
           {features.map((feature, index) => (
             <div
               key={index}
-              className="group bg-white/95-white/15 backdrop-blur-lg p-8 sm:p-10 rounded-2xl border border-slate-200-white/30 transition-all duration-700 hover:bg-white-white/25 hover:scale-105 hover:-translate-y-2 cursor-pointer relative overflow-hidden shadow-2xl hover:shadow-3xl hover-lift cursor-magic hover:animate-rubber-band"
+              className="group bg-white/95 dark:bg-white/15 backdrop-blur-lg p-8 sm:p-10 rounded-2xl border border-slate-200 dark:border-white/30 transition-all duration-700 hover:bg-white dark:hover:bg-white/25 hover:scale-105 hover:-translate-y-2 cursor-pointer relative overflow-hidden shadow-2xl hover:shadow-3xl hover-lift cursor-magic hover:animate-rubber-band"
               style={{ animationDelay: `${(index + 1) * 200}ms` }}
             >
               {/* Enhanced glow effect */}
@@ -67,10 +67,10 @@ export default function About() {
                   <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 bg-gradient-to-br from-white/20 to-transparent transition-opacity duration-500"></div>
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-2xl font-bold mb-4 text-black-white transition-all duration-500 group-hover:text-brand-light-mint transform group-hover:-translate-y-1 group-hover:animate-bounce-subtle">
+                  <h3 className="text-2xl font-bold mb-4 text-black dark:text-white transition-all duration-500 group-hover:text-brand-light-mint transform group-hover:-translate-y-1 group-hover:animate-bounce-subtle">
                     {feature.title}
                   </h3>
-                  <p className="text-black/85-white/85 text-lg leading-relaxed transition-all duration-500 group-hover:text-black-hover:text-white transform group-hover:-translate-y-1 group-hover:animate-wiggle">
+                  <p className="text-black/85 dark:text-white/85 text-lg leading-relaxed transition-all duration-500 group-hover:text-black dark:group-hover:text-white transform group-hover:-translate-y-1 group-hover:animate-wiggle">
                     {feature.description}
                   </p>
                 </div>

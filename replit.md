@@ -90,30 +90,7 @@ Master Fees is a modern school fee management system designed to simplify paymen
 
 Preferred communication style: Simple, everyday language.
 
-## Recent Changes
-
-### July 01, 2025 - Complete Onboarding System Implementation
-- Built comprehensive 6-step onboarding wizard for school administrators
-- Implemented PostgreSQL database with full relational schema
-- Added Replit Auth integration for secure authentication
-- Created parent payment lookup system for fee inquiries
-- Updated landing page with authentication and navigation
-
-### Key Features Added:
-1. **Authentication System**: Replit OpenID Connect integration with session management
-2. **Database Schema**: Full PostgreSQL schema with tables for schools, banking, fees, students, transactions
-3. **Onboarding Flow**: 6-step wizard (School Info → Banking → Fees → Students → Templates → Reminders)
-4. **Parent Portal**: Public payment lookup by phone/student ID
-5. **API Endpoints**: Complete REST API for all onboarding steps and data management
-
-### Technical Architecture:
-- Frontend: React + TypeScript with shadcn/ui components
-- Backend: Express.js with Drizzle ORM
-- Database: PostgreSQL with proper relations and constraints
-- Authentication: Replit Auth with session storage
-- Payment Ready: Structured for Flutterwave integration
-
 ## Changelog
 
 Changelog:
-- July 01, 2025. Initial setup and complete onboarding system
+- July 01, 2025. Initial setup

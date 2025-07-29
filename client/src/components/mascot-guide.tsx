@@ -142,14 +142,14 @@ export default function MascotGuide() {
       {/* Message bubble */}
       {currentMessage && (
         <div className="absolute bottom-20 right-0 mb-2 mr-2 max-w-sm animate-fade-in-up">
-          <div className="bg-white-slate-800 rounded-2xl shadow-xl border border-slate-200-slate-700 p-4 relative">
+          <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 p-4 relative">
             <button
               onClick={dismissMessage}
-              className="absolute top-2 right-2 text-slate-400 hover:text-slate-600-slate-300 transition-colors"
+              className="absolute top-2 right-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
             >
               <X className="w-4 h-4" />
             </button>
-            <p className="text-slate-700-slate-300 text-sm leading-relaxed pr-6">
+            <p className="text-slate-700 dark:text-slate-300 text-sm leading-relaxed pr-6">
               {currentMessage.text}
             </p>
             {currentMessage.actionText && (
@@ -163,7 +163,7 @@ export default function MascotGuide() {
             )}
             {/* Speech bubble tail */}
             <div className="absolute bottom-0 right-8 transform translate-y-2">
-              <div className="w-0 h-0 border-l-8 border-l-transparent border-r-8 border-r-transparent border-t-8 border-t-white-t-slate-800"></div>
+              <div className="w-0 h-0 border-l-8 border-l-transparent border-r-8 border-r-transparent border-t-8 border-t-white dark:border-t-slate-800"></div>
             </div>
           </div>
         </div>
@@ -172,13 +172,13 @@ export default function MascotGuide() {
       {/* Quick actions menu */}
       {isExpanded && (
         <div className="absolute bottom-20 right-0 mb-2 animate-fade-in-up">
-          <div className="bg-white-slate-800 rounded-2xl shadow-xl border border-slate-200-slate-700 p-4">
+          <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 p-4">
             <div className="grid grid-cols-2 gap-3">
               {quickActions.map((action, index) => (
                 <button
                   key={index}
                   onClick={action.action}
-                  className="flex flex-col items-center p-3 rounded-xl bg-slate-50-slate-700 hover:bg-brand-teal hover:text-white transition-all duration-200 group"
+                  className="flex flex-col items-center p-3 rounded-xl bg-slate-50 dark:bg-slate-700 hover:bg-brand-teal hover:text-white transition-all duration-200 group"
                 >
                   <action.icon className="w-5 h-5 mb-2 group-hover:animate-wiggle" />
                   <span className="text-xs font-medium">{action.label}</span>
@@ -195,28 +195,28 @@ export default function MascotGuide() {
         className="relative cursor-pointer group"
       >
         {/* Panda body */}
-        <div className={`w-12 h-12 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group-hover:scale-110 border-3 border-black ${isExpanded ? 'mascot-excited' : 'mascot-idle'}`}>
+        <div className={`w-16 h-16 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group-hover:scale-110 border-4 border-black ${isExpanded ? 'mascot-excited' : 'mascot-idle'}`}>
           {/* Panda face */}
           <div className="absolute inset-1 bg-white rounded-full flex items-center justify-center relative">
             {/* Panda ears */}
-            <div className="absolute -top-1.5 -left-1.5 w-3 h-3 bg-black rounded-full"></div>
-            <div className="absolute -top-1.5 -right-1.5 w-3 h-3 bg-black rounded-full"></div>
+            <div className="absolute -top-2 -left-2 w-4 h-4 bg-black rounded-full"></div>
+            <div className="absolute -top-2 -right-2 w-4 h-4 bg-black rounded-full"></div>
             
             {/* Eye patches */}
-            <div className="absolute top-0.5 left-1.5 w-2.5 h-3 bg-black rounded-full opacity-80"></div>
-            <div className="absolute top-0.5 right-1.5 w-2.5 h-3 bg-black rounded-full opacity-80"></div>
+            <div className="absolute top-1 left-2 w-3 h-4 bg-black rounded-full opacity-80"></div>
+            <div className="absolute top-1 right-2 w-3 h-4 bg-black rounded-full opacity-80"></div>
             
             {/* Eyes */}
-            <div className="flex space-x-2 relative z-10">
-              <div className="w-1 h-1 bg-white rounded-full eye-blink"></div>
-              <div className="w-1 h-1 bg-white rounded-full eye-blink" style={{ animationDelay: '0.2s' }}></div>
+            <div className="flex space-x-3 relative z-10">
+              <div className="w-1.5 h-1.5 bg-white rounded-full eye-blink"></div>
+              <div className="w-1.5 h-1.5 bg-white rounded-full eye-blink" style={{ animationDelay: '0.2s' }}></div>
             </div>
             
             {/* Panda nose */}
-            <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-1 h-0.5 bg-black rounded-full"></div>
+            <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 w-1.5 h-1 bg-black rounded-full"></div>
             
             {/* Panda mouth */}
-            <div className="absolute bottom-0.5 left-1/2 transform -translate-x-1/2 w-2 h-1 border border-black border-t-0 rounded-b-full transition-all duration-300 group-hover:border-brand-teal"></div>
+            <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 w-3 h-1.5 border-2 border-black border-t-0 rounded-b-full transition-all duration-300 group-hover:border-brand-teal"></div>
           </div>
 
           {/* Activity indicator */}
@@ -232,7 +232,7 @@ export default function MascotGuide() {
         </div>
 
         {/* Hover hint */}
-        <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-slate-800-slate-700 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none">
+        <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-slate-800 dark:bg-slate-700 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none">
           {isExpanded ? "Close menu" : "Hi! I'm Panda 🐼"}
         </div>
 

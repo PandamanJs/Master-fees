@@ -1,6 +1,6 @@
-import { useState, useRef, useCallback, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Check, X, ZoomIn, ZoomOut, Move } from "lucide-react";
+import { Check } from "lucide-react";
 import dashboardImage from "@assets/Dashboard_1751383261879.png";
 import logoImage from "@assets/Group 15_1751377323388.png";
 
@@ -10,11 +10,6 @@ export default function Hero() {
   const [bootStage, setBootStage] = useState(0);
   const [isZoomed, setIsZoomed] = useState(false);
   const [zoomPosition, setZoomPosition] = useState({ x: 50, y: 50 });
-  const [zoomLevel, setZoomLevel] = useState(1);
-  const [panPosition, setPanPosition] = useState({ x: 0, y: 0 });
-  const [isDragging, setIsDragging] = useState(false);
-  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
-  const zoomModalRef = useRef<HTMLDivElement>(null);
 
   const bootMessages = [
     "Master Fees",
@@ -51,10 +46,6 @@ export default function Hero() {
     
     e.stopPropagation();
     setIsZoomed(!isZoomed);
-    if (!isZoomed) {
-      setZoomLevel(2);
-      setPanPosition({ x: 0, y: 0 });
-    }
   };
 
   const handleZoomMove = (e: React.MouseEvent) => {
@@ -72,96 +63,33 @@ export default function Hero() {
 
   const handleZoomClose = () => {
     setIsZoomed(false);
-    setZoomLevel(1);
-    setPanPosition({ x: 0, y: 0 });
   };
 
-  const handleZoomIn = useCallback(() => {
-    setZoomLevel(prev => Math.min(prev + 0.5, 4));
-  }, []);
-
-  const handleZoomOut = useCallback(() => {
-    setZoomLevel(prev => Math.max(prev - 0.5, 1));
-  }, []);
-
-  const handleMouseDown = useCallback((e: React.MouseEvent) => {
-    if (!isZoomed) return;
-    setIsDragging(true);
-    setDragStart({ x: e.clientX - panPosition.x, y: e.clientY - panPosition.y });
-  }, [isZoomed, panPosition]);
-
-  const handleMouseMove = useCallback((e: React.MouseEvent) => {
-    if (!isDragging || !isZoomed) return;
-    
-    const newX = e.clientX - dragStart.x;
-    const newY = e.clientY - dragStart.y;
-    
-    // Constrain panning within reasonable bounds
-    const maxPan = (zoomLevel - 1) * 200;
-    setPanPosition({
-      x: Math.max(-maxPan, Math.min(maxPan, newX)),
-      y: Math.max(-maxPan, Math.min(maxPan, newY))
-    });
-  }, [isDragging, isZoomed, dragStart, zoomLevel]);
-
-  const handleMouseUp = useCallback(() => {
-    setIsDragging(false);
-  }, []);
-
-  const handleWheel = useCallback((e: React.WheelEvent) => {
-    if (!isZoomed) return;
-    e.preventDefault();
-    
-    const delta = e.deltaY > 0 ? -0.2 : 0.2;
-    setZoomLevel(prev => Math.max(1, Math.min(4, prev + delta)));
-  }, [isZoomed]);
-
-  const handleKeyDown = useCallback((e: KeyboardEvent) => {
-    if (!isZoomed) return;
-    
-    if (e.key === 'Escape') {
-      handleZoomClose();
-    } else if (e.key === '+' || e.key === '=') {
-      handleZoomIn();
-    } else if (e.key === '-') {
-      handleZoomOut();
-    }
-  }, [isZoomed, handleZoomClose, handleZoomIn, handleZoomOut]);
-
-  // Add keyboard event listeners
-  useEffect(() => {
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [handleKeyDown]);
-
   return (
-    <section id="home" className="bg-gradient-to-br from-white via-slate-50/50 to-brand-mint/5 transition-all duration-500">
+    <section id="home" className="bg-gradient-to-br from-white via-slate-50/50 to-brand-mint/5 dark:bg-gradient-to-br dark:from-black dark:via-gray-950 dark:to-brand-mint/10 transition-all duration-500">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 lg:py-28">
         <div className="lg:grid lg:grid-cols-12 lg:gap-8 xl:gap-12">
           <div className="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left">
-            <h1 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-4xl xl:text-5xl font-bold text-black leading-tight tracking-tight">
-              <span className="block sm:inline typing-effect-reflective hover:scale-105 transition-transform duration-300 cursor-pointer text-black">Transform School</span>
-              <span className="block sm:inline fade-in-slow hover:scale-105 transition-transform duration-300 cursor-pointer text-black"> Fee Collection</span>
+            <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-6xl xl:text-7xl font-bold text-slate-900 dark:text-white leading-tight tracking-tight animate-fade-in-up">
+              <span className="block sm:inline">Transform School</span>
+              <span className="bg-gradient-to-r from-brand-teal to-brand-mint bg-clip-text text-transparent block sm:inline"> Fee Collection</span>
             </h1>
-            <p className="mt-6 sm:mt-8 text-lg sm:text-xl lg:text-xl text-slate-700 leading-relaxed max-w-2xl animate-fade-in-up delay-200">
+            <p className="mt-6 sm:mt-8 text-lg sm:text-xl lg:text-xl text-slate-700 dark:text-slate-300 leading-relaxed max-w-2xl animate-fade-in-up delay-200">
               Automate fee collection, streamline payment processing, and provide real-time financial insights. Master Fees empowers schools with modern payment management solutions.
             </p>
             
             {/* CTA Buttons */}
             <div className="mt-10 sm:mt-12 flex flex-col sm:flex-row sm:justify-center lg:justify-start gap-4 sm:gap-6 animate-fade-in-up delay-400">
-              <Button 
-                onClick={() => window.location.href = '/api/login'}
-                className="group w-full sm:w-auto bg-brand-teal hover:bg-brand-teal/90 text-white px-8 sm:px-10 lg:px-12 py-4 sm:py-5 rounded-2xl text-lg sm:text-xl font-bold transition-all duration-500 shadow-xl hover:shadow-2xl hover:transform hover:-translate-y-2 focus:ring-4 focus:ring-brand-teal/40 relative overflow-hidden hover-lift cursor-magic hover:animate-heartbeat">
+              <Button className="group w-full sm:w-auto bg-brand-teal hover:bg-brand-teal/90 text-white px-8 sm:px-10 lg:px-12 py-4 sm:py-5 rounded-2xl text-lg sm:text-xl font-bold transition-all duration-500 shadow-xl hover:shadow-2xl hover:transform hover:-translate-y-2 focus:ring-4 focus:ring-brand-teal/40 relative overflow-hidden hover-lift cursor-magic hover:animate-heartbeat">
                 <span className="relative z-10 group-hover:animate-wiggle">Start Free Trial</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
               </Button>
               <Button 
-                onClick={() => window.location.href = '/parent-lookup'}
                 variant="outline"
-                className="group w-full sm:w-auto bg-white/80 backdrop-blur-sm border-2 border-brand-teal/30 hover:border-brand-teal hover:bg-brand-teal/10 text-brand-teal hover:text-brand-teal px-8 sm:px-10 lg:px-12 py-4 sm:py-5 rounded-2xl text-lg sm:text-xl font-bold transition-all duration-500 shadow-lg hover:shadow-xl hover:transform hover:-translate-y-1 focus:ring-4 focus:ring-brand-teal/30 relative overflow-hidden hover-tilt cursor-magic hover:animate-rubber-band"
+                className="group w-full sm:w-auto bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-2 border-brand-teal/30 hover:border-brand-teal hover:bg-brand-teal/10 dark:hover:bg-brand-teal/20 text-brand-teal hover:text-brand-teal px-8 sm:px-10 lg:px-12 py-4 sm:py-5 rounded-2xl text-lg sm:text-xl font-bold transition-all duration-500 shadow-lg hover:shadow-xl hover:transform hover:-translate-y-1 focus:ring-4 focus:ring-brand-teal/30 relative overflow-hidden hover-tilt cursor-magic hover:animate-rubber-band"
               >
-                <span className="relative z-10 group-hover:animate-bounce-subtle">Parent Portal</span>
+                <span className="relative z-10 group-hover:animate-bounce-subtle">View Demo</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-brand-teal/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-brand-teal/20 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
               </Button>
@@ -169,17 +97,17 @@ export default function Hero() {
             
             {/* Trust Indicators */}
             <div className="mt-10 sm:mt-12 flex flex-wrap items-center justify-center lg:justify-start gap-x-4 sm:gap-x-6 gap-y-3 sm:gap-y-4 animate-fade-in-up delay-600">
-              <div className="flex items-center bg-brand-teal/5 backdrop-blur-sm border border-brand-teal/20 px-4 sm:px-5 py-3 rounded-xl transition-all duration-300 hover:bg-brand-teal/10 hover:scale-105 hover:shadow-lg animate-float delay-100 hover-lift cursor-magic hover:animate-rubber-band">
+              <div className="flex items-center bg-brand-teal/5 dark:bg-brand-mint/20 backdrop-blur-sm border border-brand-teal/20 dark:border-brand-mint/30 px-4 sm:px-5 py-3 rounded-xl transition-all duration-300 hover:bg-brand-teal/10 dark:hover:bg-brand-mint/30 hover:scale-105 hover:shadow-lg animate-float delay-100 hover-lift cursor-magic hover:animate-rubber-band">
                 <Check className="w-4 h-4 text-brand-teal mr-3 animate-heartbeat hover:animate-bounce-subtle" />
-                <span className="text-sm font-bold text-slate-800 hover:animate-wiggle">Instant Setup</span>
+                <span className="text-sm font-bold text-slate-800 dark:text-brand-mint hover:animate-wiggle">Instant Setup</span>
               </div>
-              <div className="flex items-center bg-brand-teal/5 backdrop-blur-sm border border-brand-teal/20 px-4 sm:px-5 py-3 rounded-xl transition-all duration-300 hover:bg-brand-teal/10 hover:scale-105 hover:shadow-lg animate-float delay-200 hover-lift cursor-magic hover:animate-rubber-band">
+              <div className="flex items-center bg-brand-teal/5 dark:bg-brand-mint/20 backdrop-blur-sm border border-brand-teal/20 dark:border-brand-mint/30 px-4 sm:px-5 py-3 rounded-xl transition-all duration-300 hover:bg-brand-teal/10 dark:hover:bg-brand-mint/30 hover:scale-105 hover:shadow-lg animate-float delay-200 hover-lift cursor-magic hover:animate-rubber-band">
                 <Check className="w-4 h-4 text-brand-teal mr-3 animate-heartbeat hover:animate-bounce-subtle" />
-                <span className="text-sm font-bold text-slate-800 hover:animate-wiggle">Bank Security</span>
+                <span className="text-sm font-bold text-slate-800 dark:text-brand-mint hover:animate-wiggle">Bank Security</span>
               </div>
-              <div className="flex items-center bg-brand-teal/5 backdrop-blur-sm border border-brand-teal/20 px-4 sm:px-5 py-3 rounded-xl transition-all duration-300 hover:bg-brand-teal/10 hover:scale-105 hover:shadow-lg animate-float delay-300 hover-lift cursor-magic hover:animate-rubber-band">
+              <div className="flex items-center bg-brand-teal/5 dark:bg-brand-mint/20 backdrop-blur-sm border border-brand-teal/20 dark:border-brand-mint/30 px-4 sm:px-5 py-3 rounded-xl transition-all duration-300 hover:bg-brand-teal/10 dark:hover:bg-brand-mint/30 hover:scale-105 hover:shadow-lg animate-float delay-300 hover-lift cursor-magic hover:animate-rubber-band">
                 <Check className="w-4 h-4 text-brand-teal mr-3 animate-heartbeat hover:animate-bounce-subtle" />
-                <span className="text-sm font-bold text-slate-800 hover:animate-wiggle">30-Day Trial</span>
+                <span className="text-sm font-bold text-slate-800 dark:text-brand-mint hover:animate-wiggle">30-Day Trial</span>
               </div>
             </div>
           </div>
@@ -196,11 +124,11 @@ export default function Hero() {
               {/* 3D Laptop Container with perspective */}
               <div className="relative transform-gpu transition-all duration-700 group-hover:scale-105 group-hover:-rotate-y-2 group-hover:shadow-3xl" style={{ transformStyle: 'preserve-3d' }}>
                 {/* Laptop Screen with 3D effect */}
-                <div className="relative bg-gradient-to-br from-slate-800 via-slate-850 to-slate-900-slate-900-slate-950-black rounded-t-3xl p-4 sm:p-5 shadow-2xl transform-gpu" style={{ transform: 'rotateX(-5deg) translateZ(20px)' }}>
+                <div className="relative bg-gradient-to-br from-slate-800 via-slate-850 to-slate-900 dark:from-slate-900 dark:via-slate-950 dark:to-black rounded-t-3xl p-4 sm:p-5 shadow-2xl transform-gpu" style={{ transform: 'rotateX(-5deg) translateZ(20px)' }}>
                   {/* 3D Screen Bezel with depth */}
                   <div className="relative bg-gradient-to-b from-black via-slate-900 to-black rounded-t-2xl p-3 shadow-inner border border-slate-700/50">
                     {/* Screen Content with enhanced depth */}
-                    <div className="bg-white-slate-900 rounded-xl shadow-2xl overflow-hidden ring-2 ring-slate-700/40-slate-600/40 transition-all duration-700 group-hover:ring-brand-teal/60 relative">
+                    <div className="bg-white dark:bg-slate-900 rounded-xl shadow-2xl overflow-hidden ring-2 ring-slate-700/40 dark:ring-slate-600/40 transition-all duration-700 group-hover:ring-brand-teal/60 relative">
                       {/* Boot screen overlay */}
                       {showBootScreen && (
                         <div className="absolute inset-0 bg-black flex items-center justify-center z-10 laptop-screen-on">
@@ -281,8 +209,8 @@ export default function Hero() {
                   </div>
                   
                   {/* Laptop Camera with 3D effect */}
-                  <div className="absolute top-3 left-1/2 transform -translate-x-1/2 w-3 h-3 bg-gradient-to-b from-slate-600 to-slate-800-slate-700-slate-900 rounded-full shadow-inner border border-slate-500/50">
-                    <div className="w-1.5 h-1.5 bg-slate-800-slate-900 rounded-full mt-0.5 ml-0.5"></div>
+                  <div className="absolute top-3 left-1/2 transform -translate-x-1/2 w-3 h-3 bg-gradient-to-b from-slate-600 to-slate-800 dark:from-slate-700 dark:to-slate-900 rounded-full shadow-inner border border-slate-500/50">
+                    <div className="w-1.5 h-1.5 bg-slate-800 dark:bg-slate-900 rounded-full mt-0.5 ml-0.5"></div>
                   </div>
                   
                   {/* Screen edge highlights */}
@@ -292,30 +220,30 @@ export default function Hero() {
                 {/* 3D Laptop Base/Keyboard with perspective */}
                 <div className="relative" style={{ transform: 'rotateX(5deg) translateZ(-10px)' }}>
                   {/* Enhanced laptop hinge with 3D effect */}
-                  <div className="w-full h-2 bg-gradient-to-r from-slate-700 via-slate-500 to-slate-700-slate-800-slate-600-slate-800 shadow-lg relative">
+                  <div className="w-full h-2 bg-gradient-to-r from-slate-700 via-slate-500 to-slate-700 dark:from-slate-800 dark:via-slate-600 dark:to-slate-800 shadow-lg relative">
                     <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/10 to-transparent"></div>
                   </div>
                   
                   {/* 3D Laptop Bottom with enhanced depth */}
-                  <div className="bg-gradient-to-b from-slate-300 via-slate-350 to-slate-450-slate-700-slate-750-slate-850 rounded-b-3xl p-6 sm:p-8 shadow-2xl border-x border-b border-slate-400/50-slate-600/50">
+                  <div className="bg-gradient-to-b from-slate-300 via-slate-350 to-slate-450 dark:from-slate-700 dark:via-slate-750 dark:to-slate-850 rounded-b-3xl p-6 sm:p-8 shadow-2xl border-x border-b border-slate-400/50 dark:border-slate-600/50">
                     {/* 3D Trackpad with realistic depth */}
-                    <div className="mx-auto w-20 sm:w-24 h-14 sm:h-16 bg-gradient-to-b from-slate-200 to-slate-300-slate-600-slate-700 rounded-xl shadow-inner border-2 border-slate-350/80-slate-550/80 mt-3 relative">
-                      <div className="absolute inset-1 bg-gradient-to-br from-slate-150 to-slate-250-slate-650-slate-750 rounded-lg"></div>
+                    <div className="mx-auto w-20 sm:w-24 h-14 sm:h-16 bg-gradient-to-b from-slate-200 to-slate-300 dark:from-slate-600 dark:to-slate-700 rounded-xl shadow-inner border-2 border-slate-350/80 dark:border-slate-550/80 mt-3 relative">
+                      <div className="absolute inset-1 bg-gradient-to-br from-slate-150 to-slate-250 dark:from-slate-650 dark:to-slate-750 rounded-lg"></div>
                       {/* Trackpad click area */}
-                      <div className="absolute bottom-1 inset-x-1 h-0.5 bg-slate-300-slate-500 rounded-full"></div>
+                      <div className="absolute bottom-1 inset-x-1 h-0.5 bg-slate-300 dark:bg-slate-500 rounded-full"></div>
                     </div>
                     
                     {/* Enhanced keyboard representation */}
                     <div className="flex justify-center space-x-2 mt-4">
-                      <div className="w-3 h-1 bg-slate-400-slate-500 rounded-full shadow-sm"></div>
-                      <div className="w-4 h-1 bg-slate-400-slate-500 rounded-full shadow-sm"></div>
-                      <div className="w-3 h-1 bg-slate-400-slate-500 rounded-full shadow-sm"></div>
-                      <div className="w-2 h-1 bg-slate-400-slate-500 rounded-full shadow-sm"></div>
+                      <div className="w-3 h-1 bg-slate-400 dark:bg-slate-500 rounded-full shadow-sm"></div>
+                      <div className="w-4 h-1 bg-slate-400 dark:bg-slate-500 rounded-full shadow-sm"></div>
+                      <div className="w-3 h-1 bg-slate-400 dark:bg-slate-500 rounded-full shadow-sm"></div>
+                      <div className="w-2 h-1 bg-slate-400 dark:bg-slate-500 rounded-full shadow-sm"></div>
                     </div>
                     <div className="flex justify-center space-x-1 mt-1">
-                      <div className="w-2 h-1 bg-slate-450-slate-550 rounded-full shadow-sm"></div>
-                      <div className="w-5 h-1 bg-slate-450-slate-550 rounded-full shadow-sm"></div>
-                      <div className="w-2 h-1 bg-slate-450-slate-550 rounded-full shadow-sm"></div>
+                      <div className="w-2 h-1 bg-slate-450 dark:bg-slate-550 rounded-full shadow-sm"></div>
+                      <div className="w-5 h-1 bg-slate-450 dark:bg-slate-550 rounded-full shadow-sm"></div>
+                      <div className="w-2 h-1 bg-slate-450 dark:bg-slate-550 rounded-full shadow-sm"></div>
                     </div>
                     
                     {/* Bottom edge highlight */}
@@ -345,101 +273,55 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Enhanced Full-screen zoom modal */}
+      {/* Full-screen zoom modal */}
       {isZoomed && (
         <div 
-          className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center zoom-modal backdrop-blur-sm"
+          className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center zoom-modal"
           onClick={handleZoomClose}
         >
-          <div 
-            className="relative max-w-7xl max-h-screen p-6"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Header with controls */}
-            <div className="absolute -top-16 left-0 right-0 flex justify-between items-center">
-              <div className="flex space-x-4">
-                <div className="text-white text-lg font-semibold bg-black/60 px-4 py-2 rounded-lg border border-brand-mint/30">
-                  Master Fees Dashboard Preview
-                </div>
-                <div className="flex space-x-2">
-                  <button
-                    onClick={handleZoomOut}
-                    className="bg-brand-teal/80 hover:bg-brand-teal text-white p-2 rounded-lg zoom-control-btn flex items-center space-x-1"
-                    disabled={zoomLevel <= 1}
-                  >
-                    <ZoomOut className="w-4 h-4" />
-                    <span className="text-sm">Out</span>
-                  </button>
-                  <button
-                    onClick={handleZoomIn}
-                    className="bg-brand-teal/80 hover:bg-brand-teal text-white p-2 rounded-lg zoom-control-btn flex items-center space-x-1"
-                    disabled={zoomLevel >= 4}
-                  >
-                    <ZoomIn className="w-4 h-4" />
-                    <span className="text-sm">In</span>
-                  </button>
-                  <div className="bg-black/60 text-white px-3 py-2 rounded-lg border border-brand-mint/30 text-sm">
-                    {Math.round(zoomLevel * 100)}%
-                  </div>
-                </div>
+          <div className="relative max-w-6xl max-h-screen p-4">
+            {/* Close button */}
+            <button
+              onClick={handleZoomClose}
+              className="absolute -top-12 right-0 text-white hover:text-brand-mint text-xl bg-black/50 rounded-full w-10 h-10 flex items-center justify-center transition-colors duration-200"
+            >
+              ✕
+            </button>
+            
+            {/* Zoom controls */}
+            <div className="absolute -top-12 left-0 flex space-x-2">
+              <div className="text-white text-sm bg-black/50 px-3 py-1 rounded-md">
+                Master Fees Dashboard Preview
               </div>
-              
-              <button
-                onClick={handleZoomClose}
-                className="text-white hover:text-brand-mint bg-red-600/80 hover:bg-red-600 rounded-full w-12 h-12 flex items-center justify-center transition-colors duration-200 border border-red-500/50"
-              >
-                <X className="w-6 h-6" />
-              </button>
+              <div className="text-brand-mint text-sm bg-black/50 px-3 py-1 rounded-md">
+                Click anywhere to close
+              </div>
             </div>
             
-            {/* Zoomed dashboard image container */}
+            {/* Zoomed dashboard image */}
             <div 
-              ref={zoomModalRef}
-              className="relative overflow-hidden rounded-xl shadow-2xl border border-brand-mint/20 bg-white"
-              style={{ 
-                width: '90vw', 
-                height: '80vh',
-                cursor: isDragging ? 'grabbing' : 'grab'
-              }}
-              onMouseDown={handleMouseDown}
-              onMouseMove={handleMouseMove}
-              onMouseUp={handleMouseUp}
-              onMouseLeave={handleMouseUp}
-              onWheel={handleWheel}
+              className="relative overflow-hidden rounded-lg shadow-2xl cursor-move"
+              onMouseMove={handleZoomMove}
             >
               <img 
                 src={dashboardImage} 
                 alt="Master Fees Dashboard Interface - Full View" 
-                className="w-full h-auto max-w-none transition-transform duration-200 select-none"
+                className="w-full h-auto max-w-none transition-transform duration-200"
                 style={{
-                  transform: `scale(${zoomLevel}) translate(${panPosition.x}px, ${panPosition.y}px)`,
-                  transformOrigin: 'center center'
+                  transform: `scale(1.5) translate(${(50 - zoomPosition.x) * 0.3}%, ${(50 - zoomPosition.y) * 0.3}%)`,
+                  transformOrigin: `${zoomPosition.x}% ${zoomPosition.y}%`
                 }}
-                draggable={false}
               />
               
-              {/* Interactive overlay hints */}
-              <div className="absolute top-6 left-6 bg-brand-teal/90 text-white px-4 py-3 rounded-xl text-sm shadow-lg border border-brand-mint/30 animate-pulse">
-                <div className="flex items-center space-x-2">
-                  <Move className="w-4 h-4" />
-                  <span>Drag to pan • Scroll to zoom</span>
-                </div>
+              {/* Interactive hotspots */}
+              <div className="absolute top-4 left-4 bg-brand-teal/90 text-white px-3 py-2 rounded-lg text-sm animate-pulse">
+                💰 Revenue Analytics
               </div>
-              
-              {/* Feature highlights */}
-              <div className="absolute top-20 right-6 bg-gradient-to-br from-brand-mint/90 to-brand-teal/90 text-white px-4 py-3 rounded-xl text-sm shadow-lg border border-white/20">
-                <div className="font-semibold mb-1">Dashboard Features:</div>
-                <div className="text-xs space-y-1">
-                  <div>• Real-time payment tracking</div>
-                  <div>• Student fee management</div>
-                  <div>• Revenue analytics</div>
-                  <div>• Payment reminders</div>
-                </div>
+              <div className="absolute top-1/3 right-4 bg-brand-mint/90 text-black px-3 py-2 rounded-lg text-sm animate-pulse">
+                📊 Payment Reports
               </div>
-              
-              {/* Bottom instruction bar */}
-              <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 bg-black/80 text-white px-6 py-3 rounded-full text-sm border border-brand-mint/30">
-                Click outside or press ESC to close
+              <div className="absolute bottom-1/4 left-1/4 bg-blue-500/90 text-white px-3 py-2 rounded-lg text-sm animate-pulse">
+                👥 Student Records
               </div>
             </div>
           </div>

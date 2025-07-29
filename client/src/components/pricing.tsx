@@ -56,17 +56,17 @@ const plans = [
 
 export default function Pricing() {
   return (
-    <section id="pricing" className="py-12 sm:py-16 md:py-20 lg:py-24 bg-white transition-colors duration-300">
+    <section id="pricing" className="py-12 sm:py-16 md:py-20 lg:py-24 bg-white dark:bg-black transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-4xl mx-auto mb-12 sm:mb-16 lg:mb-20">
           <div className="inline-flex items-center justify-center px-4 py-2 bg-brand-mint/10 rounded-full text-brand-teal font-semibold text-sm tracking-wide uppercase mb-6">
             Pricing
           </div>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-4 sm:mb-6 tracking-tight">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white mb-4 sm:mb-6 tracking-tight">
             Simple, transparent pricing
           </h2>
-          <p className="text-lg sm:text-xl text-slate-600 leading-relaxed px-4 sm:px-0">
+          <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-300 leading-relaxed px-4 sm:px-0">
             Choose the perfect plan for your school. All plans include core features with no hidden fees.
           </p>
         </div>
@@ -76,10 +76,10 @@ export default function Pricing() {
           {plans.map((plan, index) => (
             <div
               key={index}
-              className={`group bg-white/90 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 transition-all duration-300 relative hover:-translate-y-1 cursor-pointer overflow-hidden ${
+              className={`group bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 transition-all duration-300 relative hover:-translate-y-1 cursor-pointer overflow-hidden ${
                 plan.popular
-                  ? "bg-gradient-to-br from-brand-mint/5 to-brand-teal/5 border-2 border-brand-teal md:scale-102 lg:scale-102 shadow-lg"
-                  : "border-2 border-slate-200/60 hover:border-brand-mint/50 hover:shadow-lg"
+                  ? "bg-gradient-to-br from-brand-mint/5 to-brand-teal/5 dark:from-brand-mint/15 dark:to-brand-teal/15 border-2 border-brand-teal md:scale-102 lg:scale-102 shadow-lg dark:shadow-brand-teal/20"
+                  : "border-2 border-slate-200/60 dark:border-gray-700/60 hover:border-brand-mint/50 dark:hover:border-brand-mint/70 hover:shadow-lg dark:hover:shadow-brand-mint/10"
               } animate-fade-in-up delay-${(index + 1) * 200}`}
             >
               {plan.popular && (
@@ -91,11 +91,11 @@ export default function Pricing() {
               )}
               
               <div className="text-center">
-                <h3 className="text-2xl font-bold text-slate-900 mb-2">{plan.name}</h3>
-                <p className="text-slate-600 mb-6">{plan.description}</p>
+                <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">{plan.name}</h3>
+                <p className="text-slate-600 dark:text-slate-300 mb-6">{plan.description}</p>
                 <div className="mb-8">
-                  <span className="text-4xl font-bold text-slate-900">{plan.price}</span>
-                  <span className="text-slate-600">{plan.period}</span>
+                  <span className="text-4xl font-bold text-slate-900 dark:text-white">{plan.price}</span>
+                  <span className="text-slate-600 dark:text-slate-300">{plan.period}</span>
                 </div>
               </div>
               
