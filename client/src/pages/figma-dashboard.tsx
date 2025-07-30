@@ -22,6 +22,7 @@ import {
   Eye,
   Menu
 } from "lucide-react";
+import dashboardImage from "@assets/Dashboard_1753900251517.png";
 
 interface DashboardStats {
   totalStudents: number;
@@ -90,243 +91,107 @@ export default function FigmaDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 flex">
-      {/* Sidebar */}
-      <div className={`bg-white border-r border-slate-200 ${sidebarOpen ? 'w-64' : 'w-16'} transition-all duration-300 flex flex-col`}>
-        {/* Logo */}
-        <div className="p-6 border-b border-slate-200">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-teal-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">fM</span>
-            </div>
-            {sidebarOpen && <span className="font-semibold text-slate-900">fee Master</span>}
-          </div>
-        </div>
-
-        {/* Navigation */}
-        <div className="flex-1 py-6">
-          <div className="px-4 mb-6">
-            {sidebarOpen && <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">GENERAL</p>}
-          </div>
-          <nav className="space-y-1 px-3">
-            <a href="#" className="flex items-center gap-3 px-3 py-2 bg-teal-50 text-teal-700 rounded-lg">
-              <BarChart3 className="w-5 h-5" />
-              {sidebarOpen && <span className="font-medium">Dashboard</span>}
-            </a>
-            <a href="#" className="flex items-center gap-3 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg">
-              <TrendingUp className="w-5 h-5" />
-              {sidebarOpen && <span>Transactions</span>}
-            </a>
-            <a href="#" className="flex items-center gap-3 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg">
-              <Users className="w-5 h-5" />
-              {sidebarOpen && <span>Customer Management</span>}
-            </a>
-            <a href="#" className="flex items-center gap-3 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg">
-              <CheckCircle className="w-5 h-5" />
-              {sidebarOpen && <span>Tasks</span>}
-            </a>
-            <a href="#" className="flex items-center gap-3 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg">
-              <Wallet className="w-5 h-5" />
-              {sidebarOpen && <span>Wallet</span>}
-            </a>
-          </nav>
-
-          <div className="px-4 mt-8 mb-4">
-            {sidebarOpen && <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">SUPPORT</p>}
-          </div>
-          <nav className="space-y-1 px-3">
-            <a href="#" className="flex items-center gap-3 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg">
-              <ExternalLink className="w-5 h-5" />
-              {sidebarOpen && <span>Integrations</span>}
-            </a>
-            <a href="#" className="flex items-center gap-3 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg">
-              <HelpCircle className="w-5 h-5" />
-              {sidebarOpen && <span>Customer Care & Help</span>}
-            </a>
-            <a href="#" className="flex items-center gap-3 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg">
-              <Settings className="w-5 h-5" />
-              {sidebarOpen && <span>Settings</span>}
-            </a>
-          </nav>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col">
-        {/* Top Header */}
-        <div className="bg-white border-b border-slate-200 px-6 py-4">
-          <div className="flex items-center justify-between">
+    <div className="min-h-screen bg-slate-50">
+      {/* Full Dashboard Image Overlay */}
+      <div className="relative w-full h-screen">
+        <img 
+          src={dashboardImage} 
+          alt="Master Fees Dashboard" 
+          className="w-full h-full object-cover object-top"
+        />
+        
+        {/* Interactive Overlay Elements */}
+        <div className="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-10 transition-all duration-300">
+          {/* Top Balance Area - Interactive */}
+          <div className="absolute top-4 right-6 bg-white bg-opacity-90 rounded-lg p-3 shadow-lg">
             <div className="flex items-center gap-4">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setSidebarOpen(!sidebarOpen)}
-                className="lg:hidden"
-              >
-                <Menu className="w-5 h-5" />
-              </Button>
-              <h1 className="text-xl font-semibold text-slate-900">Twalumbu Education Centre</h1>
-            </div>
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2 text-sm text-slate-600">
-                <span>ZMW 1,532,000.54</span>
-                <span className="text-xs text-slate-500">ZMW (K) Kwacha</span>
+              <div className="text-right">
+                <div className="text-lg font-semibold text-slate-900">ZMW 1,532,000.54</div>
+                <div className="text-xs text-slate-500">ZMW (K) Kwacha</div>
               </div>
               <Button size="sm" className="bg-teal-700 hover:bg-teal-800">
                 Withdraw
               </Button>
             </div>
           </div>
-        </div>
 
-        <div className="flex-1 flex">
-          {/* Main Dashboard Content */}
-          <div className="flex-1 p-6 space-y-6">
-            {/* Revenue Recovery Chart */}
-            <Card>
-              <CardHeader className="pb-3">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <CardTitle className="text-lg font-semibold text-slate-900">Revenue Recovery</CardTitle>
-                    <div className="flex items-center gap-4 mt-2">
-                      <div className="flex items-center gap-2">
-                        <div className="w-3 h-3 bg-teal-200 rounded-full"></div>
-                        <span className="text-sm text-slate-600">Revenue Collection Goal</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-lg font-semibold text-slate-900">{revenueData.term}</div>
-                    <div className="text-sm text-slate-600">Continue</div>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {/* Chart Area - Simplified representation */}
-                  <div className="h-48 bg-slate-50 rounded-lg flex items-end justify-center p-4">
-                    <div className="flex items-end gap-4 w-full max-w-md">
-                      {[20, 30, 25, 35, 45, 40, 85].map((height, i) => (
-                        <div key={i} className="flex-1 flex flex-col items-center">
-                          <div 
-                            className={`w-full rounded-t ${i === 6 ? 'bg-teal-600' : 'bg-slate-300'} transition-all duration-500`}
-                            style={{ height: `${height}%` }}
-                          ></div>
-                          <span className="text-xs text-slate-500 mt-2">
-                            {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'][i]}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  <div className="text-center">
-                    <div className="text-sm text-slate-600">
-                      Progress: <span className="font-semibold">{revenueData.progress}%</span>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Revenue Breakdown */}
-            <Card className="bg-teal-700 text-white">
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <CardTitle className="text-xl font-semibold">Revenue Breakdown</CardTitle>
-                  <Badge variant="secondary" className="bg-teal-600 text-white">
-                    +8%
-                  </Badge>
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="grid grid-cols-2 gap-6">
-                  <div>
-                    <p className="text-teal-100 text-sm mb-1">Revenue Collected</p>
-                    <p className="text-2xl font-bold">ZMW 1,500,000.00</p>
-                  </div>
-                  <div>
-                    <p className="text-teal-100 text-sm mb-1">Balance</p>
-                    <p className="text-2xl font-bold">ZMW 797,000.00</p>  
-                  </div>
-                </div>
-                
-                <div className="space-y-3">
-                  <div className="w-full bg-teal-600 rounded-full h-2">
-                    <div className="bg-teal-300 h-2 rounded-full" style={{ width: '65%' }}></div>
-                  </div>
-                  <div className="text-right">
-                    <Button 
-                      variant="secondary" 
-                      size="sm"
-                      className="bg-white text-teal-700 hover:bg-teal-50"
-                    >
-                      View all Transactions
-                    </Button>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+          {/* Revenue Breakdown Card - Interactive */}
+          <div className="absolute bottom-6 left-6 bg-teal-700 text-white rounded-lg p-6 shadow-xl max-w-md">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-xl font-semibold">Revenue Breakdown</h3>
+              <Badge variant="secondary" className="bg-teal-600 text-white">
+                +8%
+              </Badge>
+            </div>
+            <div className="grid grid-cols-2 gap-4 mb-4">
+              <div>
+                <p className="text-teal-100 text-sm mb-1">Revenue Collected</p>
+                <p className="text-xl font-bold">ZMW 1,500,000.00</p>
+              </div>
+              <div>
+                <p className="text-teal-100 text-sm mb-1">Balance</p>
+                <p className="text-xl font-bold">ZMW 734,000.00</p>
+              </div>
+            </div>
+            <div className="space-y-3">
+              <div className="w-full bg-teal-600 rounded-full h-2">
+                <div className="bg-teal-300 h-2 rounded-full" style={{ width: '65%' }}></div>
+              </div>
+              <div className="text-right">
+                <Button 
+                  variant="secondary" 
+                  size="sm"
+                  className="bg-white text-teal-700 hover:bg-teal-50"
+                >
+                  View all Transactions
+                </Button>
+              </div>
+            </div>
           </div>
 
-          {/* Updates Panel */}
-          <div className="w-80 bg-white border-l border-slate-200 p-6">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="font-semibold text-slate-900">Updates</h2>
-              <Button variant="ghost" size="sm" className="text-white bg-red-500 hover:bg-red-600 text-xs px-2 py-1 h-6">
-                Mark all as read
-                <Badge variant="secondary" className="ml-2 bg-white text-red-500 text-xs">11</Badge>
-              </Button>
-            </div>
+          {/* Navigation Toggle */}
+          <div className="absolute top-4 left-6">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+              className="bg-white bg-opacity-90 hover:bg-opacity-100"
+            >
+              <Menu className="w-5 h-5" />
+            </Button>
+          </div>
 
-            <div className="space-y-4">
-              {notifications.map((notification) => (
-                <Card key={notification.id} className="border-l-4 border-l-teal-500">
-                  <CardContent className="p-4">
-                    <div className="flex items-start justify-between mb-2">
-                      <div className="flex items-center gap-2">
-                        {notification.type === 'success' && <CheckCircle className="w-4 h-4 text-green-500" />}
-                        {notification.type === 'error' && <AlertCircle className="w-4 h-4 text-red-500" />}
-                        {notification.type === 'info' && <Info className="w-4 h-4 text-blue-500" />}
-                        {notification.type === 'warning' && <AlertCircle className="w-4 h-4 text-orange-500" />}
-                        <h4 className="font-medium text-slate-900 text-sm">{notification.title}</h4>
-                      </div>
-                      <Button variant="ghost" size="sm" className="p-0 h-4 w-4">
-                        <X className="w-3 h-3" />
-                      </Button>
-                    </div>
-                    <p className="text-xs text-slate-600 mb-3">{notification.message}</p>
-                    <Button variant="outline" size="sm" className="text-xs h-7">
-                      {notification.action}
-                    </Button>
-                  </CardContent>
-                </Card>
-              ))}
-
-              {/* Visa Card */}
-              <Card className="border-l-4 border-l-blue-500">
-                <CardContent className="p-4">
-                  <div className="flex items-start justify-between mb-2">
-                    <div className="flex items-center gap-2">
-                      <CreditCard className="w-4 h-4 text-blue-500" />
-                      <h4 className="font-medium text-slate-900 text-sm">Visa ending in 1234</h4>
-                    </div>
-                    <Button variant="ghost" size="sm" className="p-0 h-4 w-4">
-                      <X className="w-3 h-3" />
-                    </Button>
-                  </div>
-                  <p className="text-xs text-slate-600 mb-3">Expiry 06/2024</p>
-                  <div className="flex gap-2">
-                    <Button variant="outline" size="sm" className="text-xs h-7">
-                      Set as default
-                    </Button>
-                    <Button variant="outline" size="sm" className="text-xs h-7">
-                      Edit
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
+          {/* Figma Integration Panel - Right Side */}
+          <div className="absolute top-16 right-6 bg-white bg-opacity-95 rounded-lg p-4 shadow-xl max-w-sm">
+            <div className="flex items-center gap-2 mb-3">
+              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+              <h4 className="font-semibold text-slate-900">Figma Integration Active</h4>
             </div>
+            <p className="text-sm text-slate-600 mb-3">
+              Dashboard imported from Figma Make file: iETcOYVOVX4YMS9eunNhqK
+            </p>
+            <div className="space-y-2">
+              <div className="flex items-center justify-between text-xs">
+                <span className="text-slate-500">Design System</span>
+                <Badge variant="secondary" className="text-xs">Synced</Badge>
+              </div>
+              <div className="flex items-center justify-between text-xs">
+                <span className="text-slate-500">Components</span>
+                <Badge variant="secondary" className="text-xs">Imported</Badge>
+              </div>
+              <div className="flex items-center justify-between text-xs">
+                <span className="text-slate-500">Layout</span>
+                <Badge variant="secondary" className="text-xs">Matched</Badge>
+              </div>
+            </div>
+            <Button 
+              size="sm" 
+              variant="outline" 
+              className="w-full mt-3"
+              onClick={() => window.location.href = '/dashboard'}
+            >
+              View Original Dashboard
+            </Button>
           </div>
         </div>
       </div>
