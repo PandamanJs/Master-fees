@@ -26,7 +26,7 @@ export default function Navigation() {
                 alt="Master Fees Logo" 
                 className="w-8 h-8 sm:w-10 sm:h-10 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12 animate-bounce-subtle group-hover:animate-rubber-band"
               />
-              <span className="ml-2 sm:ml-3 text-xl sm:text-2xl font-bold text-slate-900 transition-all duration-300 group-hover:text-brand-teal group-hover:animate-wiggle">Master Fees</span>
+              <span className="ml-2 sm:ml-3 text-xl sm:text-2xl font-bold transition-all duration-300 group-hover:text-brand-teal group-hover:animate-wiggle text-[#ffffff]">Master Fees</span>
             </div>
           </div>
           
@@ -80,7 +80,6 @@ export default function Navigation() {
           </div>
         </div>
       </div>
-      
       {/* Mobile Navigation Menu */}
       {isMenuOpen && (
         <div className="md:hidden">
