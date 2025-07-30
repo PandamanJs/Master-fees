@@ -31,10 +31,10 @@ export default function Hero() {
           
           {/* Perfect visual hierarchy with reduced spacing */}
           <div className="max-w-6xl mx-auto space-y-4 mb-8">
-            <h2 className="text-4xl md:text-5xl font-light text-slate-50 leading-[1.1] tracking-[-0.01em]">
+            <h2 className="text-2xl md:text-3xl font-light text-slate-50 leading-[1.2] tracking-[-0.01em]">
               The future of school fee management.
             </h2>
-            <h2 className="text-4xl md:text-5xl font-light text-emerald-300 leading-[1.1] tracking-[-0.01em]">
+            <h2 className="text-2xl md:text-3xl font-light text-emerald-300 leading-[1.2] tracking-[-0.01em]">
               Beautifully simple. Incredibly powerful.
             </h2>
           </div>
@@ -42,7 +42,7 @@ export default function Hero() {
         
         {/* Supporting content with compact spacing */}
         <div className="mb-16 max-w-5xl mx-auto">
-          <p className="text-2xl md:text-3xl font-light text-slate-200 leading-[1.4] tracking-[-0.005em] opacity-95">
+          <p className="text-lg md:text-xl font-light text-slate-200 leading-[1.5] tracking-[-0.005em] opacity-95">
             Join our exclusive test program and experience the easiest way to collect fees, 
             track revenue, and reduce admin work—all at zero cost.
           </p>
@@ -61,10 +61,10 @@ export default function Hero() {
         {/* Apple-style Device Showcase - What is Master Fees */}
         <div className="mt-16">
           <div className="text-center mb-20">
-            <h3 className="text-5xl md:text-6xl font-extralight text-white mb-8 tracking-[-0.03em] leading-[0.9]">
+            <h3 className="text-3xl md:text-4xl font-extralight text-white mb-8 tracking-[-0.02em] leading-[1.1]">
               What is Master Fees?
             </h3>
-            <p className="text-2xl md:text-3xl font-light text-slate-200 max-w-5xl mx-auto leading-[1.3] opacity-95">
+            <p className="text-lg md:text-xl font-light text-slate-200 max-w-4xl mx-auto leading-[1.4] opacity-95">
               A beautifully simple platform that transforms how schools manage fees.
             </p>
           </div>
@@ -96,10 +96,10 @@ export default function Hero() {
               </div>
               {/* Enhanced typography hierarchy */}
               <div className="space-y-6">
-                <h4 className={`text-3xl font-light text-white tracking-[-0.01em] transition-all duration-700 delay-300 ${
+                <h4 className={`text-xl font-light text-white tracking-[-0.01em] transition-all duration-700 delay-300 ${
                   isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
                 }`}>For Parents</h4>
-                <p className={`text-slate-200 font-light leading-[1.6] max-w-lg mx-auto text-xl transition-all duration-700 delay-400 ${
+                <p className={`text-slate-200 font-light leading-[1.6] max-w-lg mx-auto text-base transition-all duration-700 delay-400 ${
                   isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
                 }`}>
                   Simple, intuitive payments from any device. Real-time updates and instant receipts.
@@ -134,10 +134,10 @@ export default function Hero() {
               </div>
               {/* Enhanced typography hierarchy matching mobile section */}
               <div className="space-y-6">
-                <h4 className={`text-3xl font-light text-white tracking-[-0.01em] transition-all duration-700 delay-600 ${
+                <h4 className={`text-xl font-light text-white tracking-[-0.01em] transition-all duration-700 delay-600 ${
                   isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
                 }`}>For Schools</h4>
-                <p className={`text-slate-200 font-light leading-[1.6] max-w-lg mx-auto text-xl transition-all duration-700 delay-700 ${
+                <p className={`text-slate-200 font-light leading-[1.6] max-w-lg mx-auto text-base transition-all duration-700 delay-700 ${
                   isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
                 }`}>
                   Complete financial oversight with powerful analytics and automated workflows.
