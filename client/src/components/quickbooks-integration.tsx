@@ -9,7 +9,7 @@ import {
   Users, 
   FileText, 
   CreditCard, 
-  Sync, 
+  RefreshCw, 
   ExternalLink, 
   CheckCircle2, 
   AlertTriangle,
@@ -198,7 +198,7 @@ export function QuickBooksIntegration({ schoolId }: { schoolId: number }) {
                     </>
                   ) : (
                     <>
-                      <Sync className="w-4 h-4 mr-2" />
+                      <RefreshCw className="w-4 h-4 mr-2" />
                       Sync Data
                     </>
                   )}

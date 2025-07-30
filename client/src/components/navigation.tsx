@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { Link } from "wouter";
 import logoImage from "@assets/Group 15_1751377323388.png";
 
 export default function Navigation() {
@@ -58,14 +59,21 @@ export default function Navigation() {
               >
                 Contact
               </button>
+              <Link href="/dashboard">
+                <button className="text-slate-300 hover:text-emerald-400 text-sm font-light transition-all duration-300">
+                  Dashboard
+                </button>
+              </Link>
             </div>
           </div>
           
           {/* Apple-style CTA Button */}
           <div className="hidden md:flex items-center">
-            <Button className="bg-emerald-400 text-slate-900 hover:bg-emerald-300 px-8 py-2.5 rounded-full text-sm font-semibold transition-all duration-500 shadow-lg hover:shadow-emerald-400/25 hover:scale-105 tracking-wide backdrop-blur-sm border border-emerald-300/30">
-              Get Started
-            </Button>
+            <Link href="/dashboard">
+              <Button className="bg-emerald-400 text-slate-900 hover:bg-emerald-300 px-8 py-2.5 rounded-full text-sm font-semibold transition-all duration-500 shadow-lg hover:shadow-emerald-400/25 hover:scale-105 tracking-wide backdrop-blur-sm border border-emerald-300/30">
+                Get Started
+              </Button>
+            </Link>
           </div>
           
           {/* Mobile menu button */}
