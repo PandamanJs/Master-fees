@@ -31,13 +31,7 @@ export default function Testimonials() {
 
         {/* White Content Section */}
         <div className="bg-white rounded-3xl p-8 sm:p-12 text-slate-900 mt-16">
-          {/* What is master-fees? */}
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-8 text-black">
-              What is master-fees?
-            </h2>
-            
-            {/* Device Mockups */}
+          {/* Device Mockups */}
             <div className="flex flex-col lg:flex-row items-center justify-center gap-8 mb-8">
               {/* Mobile Mockup */}
               <div className="relative">
