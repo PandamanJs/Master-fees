@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import dashboardImage from "@assets/Dashboard_1753889879790.png";
+import mobileAppImage from "@assets/iPhone 16 - 46_1753890057035.png";
 
 export default function Home() {
   return (
@@ -56,27 +57,13 @@ export default function Home() {
                     
                     
                     
-                    {/* App content */}
-                    <div className="p-4 space-y-4">
-                      <div className="bg-slate-50 p-4 rounded-lg">
-                        <div className="text-xs text-gray-500 mb-1">Outstanding Balance</div>
-                        <div className="text-lg font-bold text-brand-teal">$1,250.00</div>
-                      </div>
-                      
-                      <div className="bg-brand-teal text-white p-3 rounded-lg text-center">
-                        <div className="text-sm font-semibold">Pay Now</div>
-                      </div>
-                      
-                      <div className="space-y-2">
-                        <div className="bg-gray-50 h-12 rounded-lg flex items-center px-3">
-                          <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
-                          <div className="text-xs">Payment History</div>
-                        </div>
-                        <div className="bg-gray-50 h-12 rounded-lg flex items-center px-3">
-                          <div className="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
-                          <div className="text-xs">Receipts</div>
-                        </div>
-                      </div>
+                    {/* Mobile app content - Real app image */}
+                    <div className="w-full h-full">
+                      <img 
+                        src={mobileAppImage} 
+                        alt="Master Fees Mobile App"
+                        className="w-full h-full object-cover rounded-[2.5rem]"
+                      />
                     </div>
                   </div>
                 </div>
