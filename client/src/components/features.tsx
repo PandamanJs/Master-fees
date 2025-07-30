@@ -90,25 +90,28 @@ export default function Features() {
         {/* Apple-style Device Showcase with Animations */}
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center mb-20">
           {/* iPhone-style Mobile Showcase */}
-          <div className="text-center lg:text-left">
+          <div className="text-center">
             <div className={`inline-block mb-8 transition-all duration-1000 ease-out ${
               mobileAnimated 
                 ? 'transform translate-y-0 opacity-100 rotate-0 scale-100' 
                 : 'transform translate-y-12 opacity-0 rotate-1 scale-95'
             }`}>
               <div className="relative group">
-                {/* iPhone-style device frame effect */}
-                <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-800 rounded-[3.5rem] transform rotate-1 group-hover:rotate-0 transition-transform duration-500"></div>
-                <div className="relative transform group-hover:scale-105 transition-all duration-500">
-                  <img 
-                    src={mobileImage} 
-                    alt="Master Fees Mobile Interface"
-                    className="w-72 h-auto shadow-2xl rounded-[3rem] relative z-10 group-hover:shadow-3xl transition-all duration-500"
-                  />
-                  {/* iPhone-style reflection effect */}
-                  <div className="absolute inset-0 bg-gradient-to-tr from-white/10 via-transparent to-transparent rounded-[3rem] z-20 pointer-events-none"></div>
-                  {/* Subtle glow effect */}
-                  <div className="absolute -inset-4 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-blue-500/20 rounded-[4rem] blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10"></div>
+                {/* iPhone Floating Animation */}
+                <div className="animate-float-slow">
+                  <div className="relative transform group-hover:scale-105 transition-all duration-700">
+                    <img 
+                      src={mobileImage} 
+                      alt="Master Fees Mobile Payment Interface"
+                      className="w-64 md:w-72 h-auto shadow-2xl rounded-[3rem] relative z-10 transition-all duration-700"
+                    />
+                    {/* iPhone Premium Glass Effect */}
+                    <div className="absolute inset-0 bg-gradient-to-tr from-white/15 via-white/5 to-transparent rounded-[3rem] z-20 pointer-events-none"></div>
+                    {/* Dynamic Color Glow */}
+                    <div className="absolute -inset-6 bg-gradient-to-r from-blue-500/30 via-purple-500/30 to-pink-500/30 rounded-[4rem] blur-2xl opacity-60 group-hover:opacity-80 transition-all duration-700 -z-10 animate-pulse-slow"></div>
+                    {/* Device Frame Shadow */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-gray-900/10 via-black/5 to-gray-800/10 rounded-[3.2rem] transform rotate-1 -z-5"></div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -123,25 +126,28 @@ export default function Features() {
           </div>
           
           {/* Mac-style Desktop Showcase */}
-          <div className="text-center lg:text-right">
+          <div className="text-center">
             <div className={`inline-block mb-8 transition-all duration-1000 ease-out delay-300 ${
               desktopAnimated 
                 ? 'transform translate-y-0 opacity-100 rotate-0 scale-100' 
                 : 'transform translate-y-12 opacity-0 -rotate-1 scale-95'
             }`}>
               <div className="relative group">
-                {/* Mac-style device frame effect */}
-                <div className="absolute inset-0 bg-gradient-to-br from-gray-800 via-gray-900 to-black rounded-3xl transform -rotate-1 group-hover:rotate-0 transition-transform duration-500"></div>
-                <div className="relative transform group-hover:scale-105 transition-all duration-500">
-                  <img 
-                    src={desktopImage} 
-                    alt="Master Fees Admin Dashboard"
-                    className="w-full max-w-lg h-auto shadow-2xl rounded-2xl relative z-10 group-hover:shadow-3xl transition-all duration-500"
-                  />
-                  {/* Mac-style screen reflection */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/15 via-transparent to-transparent rounded-2xl z-20 pointer-events-none"></div>
-                  {/* Mac-style ambient glow */}
-                  <div className="absolute -inset-6 bg-gradient-to-r from-emerald-500/20 via-blue-500/20 to-purple-500/20 rounded-3xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10"></div>
+                {/* Mac Floating Animation */}
+                <div className="animate-float-slow-reverse">
+                  <div className="relative transform group-hover:scale-105 transition-all duration-700">
+                    <img 
+                      src={desktopImage} 
+                      alt="Master Fees Admin Dashboard"
+                      className="w-full max-w-md h-auto shadow-2xl rounded-2xl relative z-10 transition-all duration-700"
+                    />
+                    {/* Mac Premium Screen Effect */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/15 via-white/5 to-transparent rounded-2xl z-20 pointer-events-none"></div>
+                    {/* Professional Ambient Glow */}
+                    <div className="absolute -inset-8 bg-gradient-to-r from-emerald-500/30 via-teal-500/30 to-blue-500/30 rounded-3xl blur-2xl opacity-60 group-hover:opacity-80 transition-all duration-700 -z-10 animate-pulse-slow"></div>
+                    {/* Mac Device Frame */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-gray-800/10 via-gray-900/5 to-black/10 rounded-2xl transform -rotate-1 -z-5"></div>
+                  </div>
                 </div>
               </div>
             </div>
