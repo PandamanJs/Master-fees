@@ -43,54 +43,91 @@ export default function Hero() {
           </Button>
         </div>
 
-        {/* Apple-style floating device preview */}
-        <div className="relative max-w-5xl mx-auto">
-          {/* iPhone floating animation */}
-          <div className={`absolute left-8 md:left-16 lg:left-24 top-0 transition-all duration-2000 ease-out ${
-            isLoaded ? 'transform translate-y-0 opacity-100' : 'transform translate-y-16 opacity-0'
-          }`}>
-            <div className="relative group">
-              {/* iPhone device mockup with floating animation */}
-              <div className="animate-float-slow">
-                <div className="relative transform group-hover:scale-105 transition-all duration-500">
-                  <img 
-                    src={mobileImage} 
-                    alt="Master Fees Mobile Interface"
-                    className="w-48 md:w-64 h-auto shadow-2xl rounded-[2.5rem] relative z-10 transition-all duration-500"
-                  />
-                  {/* iPhone glass reflection */}
-                  <div className="absolute inset-0 bg-gradient-to-tr from-white/20 via-white/5 to-transparent rounded-[2.5rem] z-20 pointer-events-none"></div>
-                  {/* Ambient glow */}
-                  <div className="absolute -inset-4 bg-gradient-to-r from-blue-500/30 via-purple-500/30 to-pink-500/30 rounded-[3rem] blur-xl opacity-60 group-hover:opacity-80 transition-opacity duration-500 -z-10 animate-pulse-slow"></div>
-                </div>
-              </div>
-            </div>
+        {/* Apple-style Device Showcase - What is Master Fees */}
+        <div className="mt-20">
+          <div className="text-center mb-16">
+            <h3 className="text-3xl md:text-4xl font-light text-white mb-4 tracking-tight">
+              What is Master Fees?
+            </h3>
+            <p className="text-xl font-light text-gray-300 max-w-3xl mx-auto leading-relaxed">
+              A beautifully simple platform that transforms how schools manage fees.
+            </p>
           </div>
 
-          {/* Mac/Desktop floating animation */}
-          <div className={`absolute right-8 md:right-16 lg:right-24 top-12 transition-all duration-2000 ease-out delay-500 ${
-            isLoaded ? 'transform translate-y-0 opacity-100' : 'transform translate-y-16 opacity-0'
-          }`}>
-            <div className="relative group">
-              {/* Mac device mockup with floating animation */}
-              <div className="animate-float-slow-reverse">
-                <div className="relative transform group-hover:scale-105 transition-all duration-500">
-                  <img 
-                    src={desktopImage} 
-                    alt="Master Fees Dashboard"
-                    className="w-64 md:w-80 h-auto shadow-2xl rounded-xl relative z-10 transition-all duration-500"
-                  />
-                  {/* Mac screen reflection */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/15 via-white/5 to-transparent rounded-xl z-20 pointer-events-none"></div>
-                  {/* Mac ambient glow */}
-                  <div className="absolute -inset-6 bg-gradient-to-r from-emerald-500/30 via-teal-500/30 to-blue-500/30 rounded-2xl blur-2xl opacity-60 group-hover:opacity-80 transition-opacity duration-500 -z-10 animate-pulse-slow"></div>
+          {/* Apple-style Device Showcase with Animations */}
+          <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center max-w-6xl mx-auto">
+            {/* iPhone-style Mobile Showcase */}
+            <div className="text-center">
+              <div className={`inline-block mb-8 transition-all duration-1000 ease-out ${
+                isLoaded 
+                  ? 'transform translate-y-0 opacity-100 rotate-0 scale-100' 
+                  : 'transform translate-y-12 opacity-0 rotate-1 scale-95'
+              }`}>
+                <div className="relative group">
+                  {/* iPhone Floating Animation */}
+                  <div className="animate-float-slow">
+                    <div className="relative transform group-hover:scale-105 transition-all duration-700">
+                      <img 
+                        src={mobileImage} 
+                        alt="Master Fees Mobile Payment Interface"
+                        className="w-64 md:w-72 h-auto shadow-2xl rounded-[3rem] relative z-10 transition-all duration-700"
+                      />
+                      {/* iPhone Premium Glass Effect */}
+                      <div className="absolute inset-0 bg-gradient-to-tr from-white/20 via-white/8 to-transparent rounded-[3rem] z-20 pointer-events-none"></div>
+                      {/* Dynamic Color Glow */}
+                      <div className="absolute -inset-6 bg-gradient-to-r from-blue-500/40 via-purple-500/40 to-pink-500/40 rounded-[4rem] blur-2xl opacity-70 group-hover:opacity-90 transition-all duration-700 -z-10 animate-pulse-slow"></div>
+                      {/* Device Frame Shadow */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-gray-900/15 via-black/8 to-gray-800/15 rounded-[3.2rem] transform rotate-1 -z-5"></div>
+                    </div>
+                  </div>
                 </div>
               </div>
+              <h4 className={`text-xl font-light text-white mb-3 transition-all duration-700 delay-200 ${
+                isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}>For Parents</h4>
+              <p className={`text-gray-300 font-light leading-relaxed max-w-sm mx-auto transition-all duration-700 delay-300 ${
+                isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}>
+                Simple, intuitive payments from any device. Real-time updates and instant receipts.
+              </p>
+            </div>
+            
+            {/* Mac-style Desktop Showcase */}
+            <div className="text-center">
+              <div className={`inline-block mb-8 transition-all duration-1000 ease-out delay-300 ${
+                isLoaded 
+                  ? 'transform translate-y-0 opacity-100 rotate-0 scale-100' 
+                  : 'transform translate-y-12 opacity-0 -rotate-1 scale-95'
+              }`}>
+                <div className="relative group">
+                  {/* Mac Floating Animation */}
+                  <div className="animate-float-slow-reverse">
+                    <div className="relative transform group-hover:scale-105 transition-all duration-700">
+                      <img 
+                        src={desktopImage} 
+                        alt="Master Fees Admin Dashboard"
+                        className="w-full max-w-md h-auto shadow-2xl rounded-2xl relative z-10 transition-all duration-700"
+                      />
+                      {/* Mac Premium Screen Effect */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-white/8 to-transparent rounded-2xl z-20 pointer-events-none"></div>
+                      {/* Professional Ambient Glow */}
+                      <div className="absolute -inset-8 bg-gradient-to-r from-emerald-500/40 via-teal-500/40 to-blue-500/40 rounded-3xl blur-2xl opacity-70 group-hover:opacity-90 transition-all duration-700 -z-10 animate-pulse-slow"></div>
+                      {/* Mac Device Frame */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-gray-800/15 via-gray-900/8 to-black/15 rounded-2xl transform -rotate-1 -z-5"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <h4 className={`text-xl font-light text-white mb-3 transition-all duration-700 delay-500 ${
+                isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}>For Schools</h4>
+              <p className={`text-gray-300 font-light leading-relaxed max-w-sm mx-auto transition-all duration-700 delay-600 ${
+                isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}>
+                Complete financial oversight with powerful analytics and automated workflows.
+              </p>
             </div>
           </div>
-
-          {/* Spacer for floating elements */}
-          <div className="h-64 md:h-80"></div>
         </div>
       </div>
     </section>
