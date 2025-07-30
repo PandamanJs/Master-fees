@@ -1,5 +1,6 @@
 import Navigation from "@/components/navigation";
 import Hero from "@/components/hero";
+import WhatIsSection from "@/components/what-is-section";
 import Features from "@/components/features";
 import About from "@/components/about";
 import Pricing from "@/components/pricing";
@@ -12,6 +13,7 @@ export default function Home() {
     <div className="min-h-screen bg-slate-50">
       <Navigation />
       <Hero />
+      <WhatIsSection />
       <Features />
       <About />
       <Pricing />
