@@ -25,9 +25,9 @@ export default function Testimonials() {
   }, []);
 
   return (
-    <section id="testimonials-section" className="py-32 bg-black text-white relative overflow-hidden">
+    <section id="testimonials-section" className="py-32 bg-gradient-to-br from-slate-900 via-slate-800 to-teal-900 text-white relative overflow-hidden">
       {/* Subtle background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black via-gray-900/50 to-black"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-900/70 via-slate-800/50 to-teal-900/70"></div>
       
       <div className="max-w-6xl mx-auto px-6 lg:px-8 relative z-10">
         {/* Apple-style header */}
@@ -39,7 +39,7 @@ export default function Testimonials() {
             The future of school fee management.<br />
             Beautifully simple. Incredibly powerful.
           </p>
-          <Button className="bg-white text-black hover:bg-gray-200 px-12 py-4 rounded-full text-lg font-medium transition-all duration-300 shadow-lg hover:shadow-xl">
+          <Button className="bg-emerald-400 text-slate-900 hover:bg-emerald-300 px-12 py-4 rounded-full text-lg font-medium transition-all duration-300 shadow-lg hover:shadow-xl font-semibold">
             Join the Program
           </Button>
         </div>
@@ -55,7 +55,7 @@ export default function Testimonials() {
             <div className="grid gap-16 max-w-5xl mx-auto">
               {/* Tailor-Made for You */}
               <div className="text-center">
-                <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-8 shadow-2xl">
+                <div className="w-20 h-20 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-full flex items-center justify-center mx-auto mb-8 shadow-2xl">
                   <div className="w-8 h-8 bg-white rounded-full"></div>
                 </div>
                 <h3 className="text-2xl font-light text-white mb-4">Tailor-Made for You</h3>
@@ -66,7 +66,7 @@ export default function Testimonials() {
               
               {/* Premium Access */}
               <div className="text-center">
-                <div className="w-20 h-20 bg-gradient-to-br from-orange-500 to-red-600 rounded-full flex items-center justify-center mx-auto mb-8 shadow-2xl">
+                <div className="w-20 h-20 bg-gradient-to-br from-emerald-400 to-cyan-500 rounded-full flex items-center justify-center mx-auto mb-8 shadow-2xl">
                   <div className="w-10 h-6 bg-white rounded-sm"></div>
                 </div>
                 <h3 className="text-2xl font-light text-white mb-4">Premium Access — Absolutely Free</h3>
@@ -77,7 +77,7 @@ export default function Testimonials() {
               
               {/* Perfect Revenue Records */}
               <div className="text-center">
-                <div className="w-20 h-20 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-8 shadow-2xl">
+                <div className="w-20 h-20 bg-gradient-to-br from-teal-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-8 shadow-2xl">
                   <div className="w-6 h-8 bg-white rounded-sm transform rotate-45"></div>
                 </div>
                 <h3 className="text-2xl font-light text-white mb-4">Perfect Revenue Records</h3>
@@ -88,7 +88,7 @@ export default function Testimonials() {
               
               {/* Limited Early Access */}
               <div className="text-center">
-                <div className="w-20 h-20 bg-gradient-to-br from-pink-500 to-rose-600 rounded-full flex items-center justify-center mx-auto mb-8 shadow-2xl">
+                <div className="w-20 h-20 bg-gradient-to-br from-cyan-500 to-teal-600 rounded-full flex items-center justify-center mx-auto mb-8 shadow-2xl">
                   <div className="w-8 h-8 border-2 border-white rounded-full bg-transparent"></div>
                 </div>
                 <h3 className="text-2xl font-light text-white mb-4">Limited Early Access</h3>

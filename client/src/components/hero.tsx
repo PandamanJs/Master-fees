@@ -11,9 +11,9 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative min-h-screen bg-black overflow-hidden flex items-center">
+    <section className="relative min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-teal-900 overflow-hidden flex items-center">
       {/* Apple-style subtle gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black via-gray-950 to-black"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-900/50 via-slate-800/30 to-teal-900/50"></div>
 
       {/* Apple-style main content */}
       <div className="relative z-10 max-w-6xl mx-auto px-6 lg:px-8 text-center">
@@ -35,10 +35,10 @@ export default function Hero() {
         
         {/* Apple-style CTA buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-20">
-          <Button className="bg-white text-black hover:bg-gray-200 px-8 py-4 rounded-full text-lg font-medium transition-all duration-300 shadow-lg hover:shadow-xl">
+          <Button className="bg-emerald-400 text-slate-900 hover:bg-emerald-300 px-8 py-4 rounded-full text-lg font-medium transition-all duration-300 shadow-lg hover:shadow-xl font-semibold">
             Join the Program
           </Button>
-          <Button className="bg-transparent border border-white/30 text-white hover:bg-white/10 px-8 py-4 rounded-full text-lg font-medium transition-all duration-300">
+          <Button className="bg-transparent border border-emerald-400/40 text-emerald-400 hover:bg-emerald-400/10 px-8 py-4 rounded-full text-lg font-medium transition-all duration-300">
             Learn More
           </Button>
         </div>
@@ -75,7 +75,7 @@ export default function Hero() {
                       {/* iPhone Premium Glass Effect */}
                       <div className="absolute inset-0 bg-gradient-to-tr from-white/20 via-white/8 to-transparent rounded-[3rem] z-20 pointer-events-none"></div>
                       {/* Dynamic Color Glow */}
-                      <div className="absolute -inset-6 bg-gradient-to-r from-blue-500/40 via-purple-500/40 to-pink-500/40 rounded-[4rem] blur-2xl opacity-70 group-hover:opacity-90 transition-all duration-700 -z-10 animate-pulse-slow"></div>
+                      <div className="absolute -inset-6 bg-gradient-to-r from-emerald-500/40 via-teal-500/40 to-cyan-500/40 rounded-[4rem] blur-2xl opacity-70 group-hover:opacity-90 transition-all duration-700 -z-10 animate-pulse-slow"></div>
                       {/* Device Frame Shadow */}
                       <div className="absolute inset-0 bg-gradient-to-br from-gray-900/15 via-black/8 to-gray-800/15 rounded-[3.2rem] transform rotate-1 -z-5"></div>
                     </div>
@@ -111,7 +111,7 @@ export default function Hero() {
                       {/* Mac Premium Screen Effect */}
                       <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-white/8 to-transparent rounded-2xl z-20 pointer-events-none"></div>
                       {/* Professional Ambient Glow */}
-                      <div className="absolute -inset-8 bg-gradient-to-r from-emerald-500/40 via-teal-500/40 to-blue-500/40 rounded-3xl blur-2xl opacity-70 group-hover:opacity-90 transition-all duration-700 -z-10 animate-pulse-slow"></div>
+                      <div className="absolute -inset-8 bg-gradient-to-r from-emerald-400/40 via-teal-400/40 to-cyan-400/40 rounded-3xl blur-2xl opacity-70 group-hover:opacity-90 transition-all duration-700 -z-10 animate-pulse-slow"></div>
                       {/* Mac Device Frame */}
                       <div className="absolute inset-0 bg-gradient-to-br from-gray-800/15 via-gray-900/8 to-black/15 rounded-2xl transform -rotate-1 -z-5"></div>
                     </div>

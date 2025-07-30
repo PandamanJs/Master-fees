@@ -75,14 +75,14 @@ export default function Features() {
   }, []);
 
   return (
-    <section id="features" className="py-32 bg-gray-50 transition-all duration-300">
+    <section id="features" className="py-32 bg-gradient-to-br from-slate-50 via-white to-slate-100 transition-all duration-300">
       <div className="max-w-6xl mx-auto px-6 lg:px-8">
         {/* Apple-style Section Header */}
         <div className="text-center mb-20">
-          <h2 className="text-4xl md:text-5xl font-light text-black mb-6 tracking-tight">
+          <h2 className="text-4xl md:text-5xl font-light text-slate-900 mb-6 tracking-tight">
             What is Master Fees?
           </h2>
-          <p className="text-xl font-light text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl font-light text-slate-600 max-w-3xl mx-auto leading-relaxed">
             A beautifully simple platform that transforms how schools manage fees.
           </p>
         </div>
@@ -92,12 +92,12 @@ export default function Features() {
         {/* Apple-style feature grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.slice(0, 6).map((feature, index) => (
-            <div key={index} className="text-center p-8 bg-white rounded-3xl shadow-sm transition-all duration-300 hover:shadow-lg">
-              <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <feature.icon className="w-8 h-8 text-gray-700" />
+            <div key={index} className="text-center p-8 bg-white/80 backdrop-blur-sm rounded-3xl shadow-sm transition-all duration-300 hover:shadow-lg hover:bg-white/90 border border-slate-100">
+              <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <feature.icon className="w-8 h-8 text-emerald-600" />
               </div>
-              <h3 className="text-xl font-light text-black mb-4">{feature.title}</h3>
-              <p className="text-gray-600 font-light leading-relaxed">{feature.description}</p>
+              <h3 className="text-xl font-light text-slate-900 mb-4">{feature.title}</h3>
+              <p className="text-slate-600 font-light leading-relaxed">{feature.description}</p>
             </div>
           ))}
         </div>

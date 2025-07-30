@@ -9,7 +9,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-black text-white border-t border-white/10">
+    <footer className="bg-gradient-to-br from-slate-900 via-slate-800 to-teal-900 text-white border-t border-slate-700/30">
       <div className="max-w-6xl mx-auto px-6 lg:px-8 py-16">
         {/* Apple-style footer content */}
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-12 lg:space-y-0">
@@ -22,25 +22,25 @@ export default function Footer() {
           <div className="flex flex-wrap justify-center gap-x-8 gap-y-4">
             <button 
               onClick={() => scrollToSection('home')}
-              className="text-gray-400 hover:text-white transition-colors duration-300 text-sm font-light"
+              className="text-slate-400 hover:text-emerald-400 transition-colors duration-300 text-sm font-light"
             >
               Home
             </button>
             <button 
               onClick={() => scrollToSection('features')}
-              className="text-gray-400 hover:text-white transition-colors duration-300 text-sm font-light"
+              className="text-slate-400 hover:text-emerald-400 transition-colors duration-300 text-sm font-light"
             >
               Features
             </button>
             <button 
               onClick={() => scrollToSection('about')}
-              className="text-gray-400 hover:text-white transition-colors duration-300 text-sm font-light"
+              className="text-slate-400 hover:text-emerald-400 transition-colors duration-300 text-sm font-light"
             >
               About
             </button>
             <button 
               onClick={() => scrollToSection('contact')}
-              className="text-gray-400 hover:text-white transition-colors duration-300 text-sm font-light"
+              className="text-slate-400 hover:text-emerald-400 transition-colors duration-300 text-sm font-light"
             >
               Contact
             </button>
@@ -51,21 +51,21 @@ export default function Footer() {
             <div className="flex space-x-4">
               <a 
                 href="mailto:info@masterfees.com" 
-                className="text-gray-400 hover:text-white transition-colors duration-300"
+                className="text-slate-400 hover:text-emerald-400 transition-colors duration-300"
                 aria-label="Email"
               >
                 <Mail className="w-5 h-5" />
               </a>
               <a 
                 href="tel:+1234567890" 
-                className="text-gray-400 hover:text-white transition-colors duration-300"
+                className="text-slate-400 hover:text-emerald-400 transition-colors duration-300"
                 aria-label="Phone"
               >
                 <Phone className="w-5 h-5" />
               </a>
               <a 
                 href="#" 
-                className="text-gray-400 hover:text-white transition-colors duration-300"
+                className="text-slate-400 hover:text-emerald-400 transition-colors duration-300"
                 aria-label="Location"
               >
                 <MapPin className="w-5 h-5" />
