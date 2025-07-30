@@ -11,55 +11,66 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-teal-900 overflow-hidden flex items-center">
-      {/* Apple-style subtle gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-900/50 via-slate-800/30 to-teal-900/50"></div>
+    <section className="relative min-h-screen bg-slate-900 overflow-hidden flex items-center">
+      {/* Premium gradient overlay - 60% primary dark */}
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-900/95 via-slate-800/90 to-teal-900/85"></div>
+      
+      {/* Subtle accent pattern - 10% accent */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-400 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-teal-400 rounded-full blur-3xl"></div>
+      </div>
 
-      {/* Apple-style main content */}
-      <div className="relative z-10 max-w-6xl mx-auto px-6 lg:px-8 text-center">
-        {/* Apple-style hero heading with premium typography */}
-        <h1 className="text-6xl md:text-8xl lg:text-9xl font-normal tracking-[-0.02em] text-white mb-8 leading-[0.85] transform transition-all duration-1000 animate-apple-entrance">
-          Master Fees
-        </h1>
-        
-        {/* Apple-style subheading with enhanced hierarchy */}
-        <div className="mb-12 max-w-4xl mx-auto">
-          <h2 className="text-2xl md:text-3xl font-light text-slate-200 mb-2 leading-tight tracking-wide">
-            The future of school fee management.
-          </h2>
-          <h2 className="text-2xl md:text-3xl font-light text-slate-200 leading-tight tracking-wide">
-            Beautifully simple. Incredibly powerful.
-          </h2>
+      {/* Main content with enhanced visual hierarchy */}
+      <div className="relative z-10 max-w-7xl mx-auto px-8 lg:px-12 text-center">
+        {/* Hero heading - Premium typography with perfect spacing */}
+        <div className="mb-16">
+          <h1 className="text-7xl md:text-8xl lg:text-9xl font-light tracking-[-0.03em] text-white mb-6 leading-[0.82] transform transition-all duration-1000">
+            Master Fees
+          </h1>
+          
+          {/* Enhanced visual hierarchy with 30% supporting elements */}
+          <div className="max-w-5xl mx-auto space-y-4 mb-8">
+            <h2 className="text-3xl md:text-4xl font-light text-slate-100 leading-tight tracking-wide">
+              The future of school fee management.
+            </h2>
+            <h2 className="text-3xl md:text-4xl font-light text-emerald-300 leading-tight tracking-wide">
+              Beautifully simple. Incredibly powerful.
+            </h2>
+          </div>
         </div>
         
-        {/* Apple-style description with refined spacing */}
-        <p className="text-lg font-light text-slate-300 mb-20 max-w-3xl mx-auto leading-relaxed tracking-wide opacity-80">
-          Join our exclusive test program and experience the easiest way to collect fees, track revenue, and reduce admin work—all at zero cost.
-        </p>
+        {/* Supporting content with consistent 32px spacing */}
+        <div className="mb-16 max-w-4xl mx-auto">
+          <p className="text-xl md:text-2xl font-light text-slate-300 leading-relaxed tracking-wide opacity-90">
+            Join our exclusive test program and experience the easiest way to collect fees, 
+            track revenue, and reduce admin work—all at zero cost.
+          </p>
+        </div>
         
-        {/* Apple-style CTA buttons with premium design */}
-        <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-24">
-          <Button className="bg-white text-slate-900 hover:bg-slate-100 px-10 py-4 rounded-full text-lg font-medium transition-all duration-500 shadow-2xl hover:scale-105 tracking-wide">
+        {/* CTA section with enhanced balance */}
+        <div className="flex flex-col sm:flex-row gap-8 justify-center items-center mb-32">
+          <Button className="bg-emerald-400 text-slate-900 hover:bg-emerald-300 px-12 py-5 rounded-full text-xl font-medium transition-all duration-500 shadow-2xl hover:scale-105 tracking-wide min-w-[200px]">
             Join the Program
           </Button>
-          <Button className="border border-white/30 text-white hover:bg-white/10 hover:border-white/50 px-10 py-4 rounded-full text-lg font-medium transition-all duration-500 hover:scale-105 tracking-wide">
+          <Button className="border-2 border-emerald-400/60 text-emerald-300 hover:bg-emerald-400/10 hover:border-emerald-400 px-12 py-5 rounded-full text-xl font-medium transition-all duration-500 hover:scale-105 tracking-wide min-w-[200px]">
             Learn More
           </Button>
         </div>
 
         {/* Apple-style Device Showcase - What is Master Fees */}
         <div className="mt-20">
-          <div className="text-center mb-20">
-            <h3 className="text-4xl md:text-5xl font-extralight text-white mb-6 tracking-[-0.01em] leading-tight">
+          <div className="text-center mb-24">
+            <h3 className="text-4xl md:text-5xl font-light text-white mb-8 tracking-[-0.02em] leading-tight">
               What is Master Fees?
             </h3>
-            <p className="text-xl md:text-2xl font-light text-slate-200 max-w-4xl mx-auto leading-relaxed tracking-wide opacity-90">
+            <p className="text-xl md:text-2xl font-light text-slate-300 max-w-4xl mx-auto leading-relaxed opacity-90">
               A beautifully simple platform that transforms how schools manage fees.
             </p>
           </div>
 
-          {/* Apple-style Device Showcase with Animations */}
-          <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center max-w-6xl mx-auto">
+          {/* Premium Device Showcase with perfect spacing */}
+          <div className="grid lg:grid-cols-2 gap-20 lg:gap-32 items-center max-w-7xl mx-auto">
             {/* iPhone-style Mobile Showcase */}
             <div className="text-center">
               <div className={`inline-block mb-8 transition-all duration-1000 ease-out ${
@@ -80,10 +91,10 @@ export default function Hero() {
                   </div>
                 </div>
               </div>
-              <h4 className={`text-xl font-light text-white mb-3 transition-all duration-700 delay-200 ${
+              <h4 className={`text-2xl font-medium text-white mb-4 transition-all duration-700 delay-200 tracking-wide ${
                 isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`}>For Parents</h4>
-              <p className={`text-gray-300 font-light leading-relaxed max-w-sm mx-auto transition-all duration-700 delay-300 ${
+              <p className={`text-slate-300 font-light leading-relaxed max-w-md mx-auto text-lg transition-all duration-700 delay-300 ${
                 isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`}>
                 Simple, intuitive payments from any device. Real-time updates and instant receipts.

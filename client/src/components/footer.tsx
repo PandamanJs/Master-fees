@@ -9,38 +9,42 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-gradient-to-br from-slate-900 via-slate-800 to-teal-900 text-white border-t border-slate-700/30">
-      <div className="max-w-6xl mx-auto px-6 lg:px-8 py-16">
+    <footer className="relative bg-slate-900 text-white border-t border-emerald-400/20 overflow-hidden">
+      {/* Consistent background pattern */}
+      <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-800/30 to-slate-900"></div>
+      
+      <div className="relative max-w-7xl mx-auto px-8 lg:px-12 py-20">
         {/* Apple-style footer content */}
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-12 lg:space-y-0">
-          {/* Left Side - Logo */}
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-16 lg:space-y-0">
+          {/* Left Side - Enhanced Logo */}
           <div>
-            <span className="text-xl font-extralight text-white tracking-wide">Master Fees</span>
+            <span className="text-2xl font-light text-white tracking-wide">Master Fees</span>
+            <p className="text-slate-400 text-sm mt-2 font-light">Transforming education finance</p>
           </div>
           
-          {/* Center - Navigation Links */}
-          <div className="flex flex-wrap justify-center gap-x-8 gap-y-4">
+          {/* Center - Enhanced Navigation with balanced spacing */}
+          <div className="flex flex-wrap justify-center gap-x-12 gap-y-6">
             <button 
               onClick={() => scrollToSection('home')}
-              className="text-slate-400 hover:text-emerald-400 transition-colors duration-300 text-sm font-light"
+              className="text-slate-300 hover:text-emerald-400 transition-colors duration-300 text-base font-light tracking-wide"
             >
               Home
             </button>
             <button 
               onClick={() => scrollToSection('features')}
-              className="text-slate-400 hover:text-emerald-400 transition-colors duration-300 text-sm font-light"
+              className="text-slate-300 hover:text-emerald-400 transition-colors duration-300 text-base font-light tracking-wide"
             >
               Features
             </button>
             <button 
               onClick={() => scrollToSection('about')}
-              className="text-slate-400 hover:text-emerald-400 transition-colors duration-300 text-sm font-light"
+              className="text-slate-300 hover:text-emerald-400 transition-colors duration-300 text-base font-light tracking-wide"
             >
               About
             </button>
             <button 
               onClick={() => scrollToSection('contact')}
-              className="text-slate-400 hover:text-emerald-400 transition-colors duration-300 text-sm font-light"
+              className="text-slate-300 hover:text-emerald-400 transition-colors duration-300 text-base font-light tracking-wide"
             >
               Contact
             </button>

@@ -75,21 +75,23 @@ export default function Features() {
   }, []);
 
   return (
-    <section id="features" className="py-32 bg-gradient-to-br from-slate-900 via-slate-800 to-teal-900 transition-all duration-300">
+    <section id="features" className="relative py-32 bg-slate-900 overflow-hidden">
       <div className="max-w-6xl mx-auto px-6 lg:px-8">
         
 
 
 
         {/* Apple-style feature grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
           {features.slice(0, 6).map((feature, index) => (
-            <div key={index} className="apple-glass text-center p-10 rounded-[2rem] shadow-xl transition-all duration-500 hover:shadow-2xl hover:scale-105 border border-slate-700/30 group">
-              <div className="w-20 h-20 bg-gradient-to-br from-emerald-100 to-emerald-200 rounded-full flex items-center justify-center mx-auto mb-8 transition-all duration-500 group-hover:scale-110 shadow-lg">
-                <feature.icon className="w-10 h-10 text-emerald-600 transition-all duration-300" />
+            <div key={index} className="apple-glass text-center p-12 rounded-3xl shadow-2xl transition-all duration-500 hover:shadow-3xl hover:scale-[1.02] border border-slate-700/20 group bg-slate-800/30">
+              {/* Icon with 10% accent color implementation */}
+              <div className="w-24 h-24 bg-gradient-to-br from-emerald-400/20 to-teal-400/20 rounded-2xl flex items-center justify-center mx-auto mb-8 transition-all duration-500 group-hover:scale-110 border border-emerald-400/30">
+                <feature.icon className="w-12 h-12 text-emerald-400 transition-all duration-300" />
               </div>
-              <h3 className="text-xl font-light text-white mb-4 tracking-wide">{feature.title}</h3>
-              <p className="text-slate-300 font-light leading-relaxed tracking-wide opacity-80">{feature.description}</p>
+              {/* Typography hierarchy with consistent spacing */}
+              <h3 className="text-2xl font-medium text-white mb-6 tracking-wide">{feature.title}</h3>
+              <p className="text-slate-300 font-light leading-relaxed text-lg opacity-90">{feature.description}</p>
             </div>
           ))}
         </div>

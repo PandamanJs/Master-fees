@@ -41,20 +41,23 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="py-32 bg-gradient-to-br from-slate-900 via-slate-800 to-teal-900">
-      <div className="max-w-4xl mx-auto px-6 lg:px-8">
+    <section id="contact" className="relative py-32 bg-slate-900 overflow-hidden">
+      {/* Consistent background overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-900 via-slate-800/40 to-slate-900"></div>
+      
+      <div className="relative max-w-5xl mx-auto px-8 lg:px-12">
         {/* Apple-style Header with enhanced typography */}
-        <div className="text-center mb-24">
-          <h2 className="text-5xl md:text-6xl font-extralight text-white mb-8 tracking-[-0.01em] leading-tight">
+        <div className="text-center mb-32">
+          <h2 className="text-5xl md:text-6xl font-light text-white mb-8 tracking-[-0.02em] leading-tight">
             Get in Touch
           </h2>
-          <p className="text-xl md:text-2xl font-light text-slate-300 max-w-3xl mx-auto leading-relaxed tracking-wide opacity-90">
+          <p className="text-xl md:text-2xl font-light text-slate-300 max-w-4xl mx-auto leading-relaxed opacity-90">
             Ready to transform your school's fee management? Let's start the conversation.
           </p>
         </div>
 
         {/* Apple-style Contact Form with premium design */}
-        <div className="apple-glass rounded-[3rem] p-16 lg:p-20 border border-slate-700/30 shadow-2xl transition-all duration-500 hover:shadow-3xl">
+        <div className="apple-glass rounded-3xl p-20 lg:p-24 border border-slate-700/20 shadow-2xl transition-all duration-500 hover:shadow-3xl bg-slate-800/20">
           <form onSubmit={handleSubmit} className="space-y-8">
             {/* Name and Email Row */}
             <div className="grid md:grid-cols-2 gap-8">
