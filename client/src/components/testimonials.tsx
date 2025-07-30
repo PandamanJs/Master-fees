@@ -105,12 +105,120 @@ export default function Testimonials() {
               </div>
               
               {/* Desktop Mockup */}
-              <div className="bg-gray-50 rounded-2xl p-6 shadow-lg">
-                <div className="w-80 h-56 bg-white rounded-xl border-2 border-gray-200 flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="w-16 h-16 bg-brand-teal rounded-lg mx-auto mb-4"></div>
-                    <div className="text-sm font-semibold mb-2">Admin Dashboard</div>
-                    <div className="text-xs text-gray-500">Complete fee management system</div>
+              <div className="relative">
+                <div className="w-[500px] h-[320px] bg-gray-300 rounded-2xl p-1 shadow-2xl">
+                  <div className="w-full h-full bg-white rounded-xl overflow-hidden">
+                    {/* Browser header */}
+                    <div className="bg-gray-100 h-8 flex items-center px-3">
+                      <div className="flex space-x-1">
+                        <div className="w-3 h-3 bg-red-400 rounded-full"></div>
+                        <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
+                        <div className="w-3 h-3 bg-green-400 rounded-full"></div>
+                      </div>
+                    </div>
+                    
+                    {/* Dashboard content */}
+                    <div className="flex h-full">
+                      {/* Sidebar */}
+                      <div className="w-44 bg-gray-50 border-r">
+                        <div className="p-3">
+                          <div className="flex items-center mb-6">
+                            <div className="w-4 h-4 bg-slate-800 rounded mr-2 flex items-center justify-center">
+                              <div className="w-2 h-2 bg-brand-teal rounded-sm"></div>
+                            </div>
+                            <span className="text-slate-800 font-bold text-xs">fee Master</span>
+                          </div>
+                          
+                          <div className="space-y-1 text-xs">
+                            <div className="text-gray-500 font-semibold mb-2">GENERAL</div>
+                            <div className="bg-slate-800 text-white p-2 rounded text-xs">Dashboard</div>
+                            <div className="text-gray-600 p-2">Transactions</div>
+                            <div className="text-gray-600 p-2">Customer Management</div>
+                            <div className="text-gray-600 p-2">Tasks</div>
+                            <div className="text-gray-600 p-2">Wallet</div>
+                            
+                            <div className="text-gray-500 font-semibold mt-4 mb-2">SUPPORT</div>
+                            <div className="text-gray-600 p-2">Integrations</div>
+                            <div className="text-gray-600 p-2">Customer Care & Help</div>
+                            <div className="text-gray-600 p-2">Settings</div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {/* Main content */}
+                      <div className="flex-1 p-3">
+                        {/* Header */}
+                        <div className="flex justify-between items-center mb-4">
+                          <h1 className="text-lg font-bold">Twalumbu Education Centre</h1>
+                          <div className="flex items-center gap-2">
+                            <span className="text-xs">ZMW 1,532,000.54</span>
+                            <button className="bg-slate-800 text-white px-3 py-1 rounded text-xs">Withdraw</button>
+                          </div>
+                        </div>
+                        
+                        <div className="grid grid-cols-3 gap-3 h-60">
+                          {/* Revenue Recovery Chart */}
+                          <div className="col-span-2 bg-white border rounded-lg p-3">
+                            <div className="flex justify-between items-center mb-2">
+                              <h3 className="font-semibold text-sm">Revenue Recovery</h3>
+                              <span className="text-xs text-gray-500">Term 2 2025</span>
+                            </div>
+                            <div className="h-32 bg-gray-50 rounded flex items-end justify-center">
+                              <div className="bg-brand-teal w-8 h-20 rounded-t"></div>
+                            </div>
+                          </div>
+                          
+                          {/* Updates Panel */}
+                          <div className="bg-white border rounded-lg p-3">
+                            <h3 className="font-semibold text-sm mb-2">Updates</h3>
+                            <div className="space-y-2 text-xs">
+                              <div className="flex items-start gap-2">
+                                <div className="w-2 h-2 bg-green-500 rounded-full mt-1"></div>
+                                <div>
+                                  <div className="font-medium">Payment Received</div>
+                                  <div className="text-gray-500 text-xs">Your payment has been received</div>
+                                </div>
+                              </div>
+                              <div className="flex items-start gap-2">
+                                <div className="w-2 h-2 bg-red-500 rounded-full mt-1"></div>
+                                <div>
+                                  <div className="font-medium">Database connection Failure</div>
+                                  <div className="text-gray-500 text-xs">Connection issues</div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          {/* Revenue Breakdown - spans full width */}
+                          <div className="col-span-2 bg-slate-800 text-white rounded-lg p-3">
+                            <div className="flex justify-between items-center mb-2">
+                              <h3 className="font-semibold text-sm">Revenue Breakdown</h3>
+                              <span className="text-xs bg-green-500 px-2 py-1 rounded">+8%</span>
+                            </div>
+                            <div className="grid grid-cols-2 gap-4 text-xs">
+                              <div>
+                                <div className="text-gray-300">Revenue Collected</div>
+                                <div className="font-bold">ZMW 1,500,000.00</div>
+                                <div className="text-gray-300 mt-2">Balance</div>
+                                <div className="font-bold">734,000.00</div>
+                              </div>
+                              <div className="bg-brand-teal/20 rounded p-2">
+                                <div className="h-12 bg-brand-teal rounded"></div>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          {/* Additional info panel */}
+                          <div className="bg-white border rounded-lg p-2">
+                            <div className="text-xs space-y-1">
+                              <div className="font-medium">Visa ending in 1234</div>
+                              <div className="text-gray-500">Expiry 06/2024</div>
+                              <button className="text-blue-600 underline">Edit</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
