@@ -17,8 +17,8 @@ export default function Navigation() {
 
   return (
     <nav className="backdrop-blur-xl sticky top-0 z-50 transition-all duration-500 bg-slate-900/95 border-b border-emerald-400/20 shadow-2xl">
-      <div className="max-w-7xl mx-auto px-8 lg:px-12">
-        <div className="flex justify-between items-center h-16">
+      <div className="max-w-8xl mx-auto px-12 lg:px-16">
+        <div className="flex justify-between items-center h-20">
           {/* Apple-style Logo */}
           <div className="flex items-center">
             <div className="flex-shrink-0 flex items-center group cursor-pointer">

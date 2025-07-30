@@ -22,113 +22,127 @@ export default function Hero() {
       </div>
 
       {/* Main content with enhanced visual hierarchy */}
-      <div className="relative z-10 max-w-7xl mx-auto px-8 lg:px-12 text-center">
-        {/* Hero heading - Premium typography with perfect spacing */}
-        <div className="mb-16">
-          <h1 className="text-7xl md:text-8xl lg:text-9xl font-light tracking-[-0.03em] text-white mb-6 leading-[0.82] transform transition-all duration-1000">
+      <div className="relative z-10 max-w-8xl mx-auto px-12 lg:px-16 text-center">
+        {/* Hero heading - Mathematical spacing and perfect hierarchy */}
+        <div className="mb-24">
+          <h1 className="text-7xl md:text-8xl lg:text-9xl font-extralight tracking-[-0.04em] text-white mb-12 leading-[0.78] transform transition-all duration-1000">
             Master Fees
           </h1>
           
-          {/* Enhanced visual hierarchy with 30% supporting elements */}
-          <div className="max-w-5xl mx-auto space-y-4 mb-8">
-            <h2 className="text-3xl md:text-4xl font-light text-slate-100 leading-tight tracking-wide">
+          {/* Perfect visual hierarchy with 1.618 golden ratio spacing */}
+          <div className="max-w-6xl mx-auto space-y-6 mb-12">
+            <h2 className="text-4xl md:text-5xl font-light text-slate-50 leading-[1.1] tracking-[-0.01em]">
               The future of school fee management.
             </h2>
-            <h2 className="text-3xl md:text-4xl font-light text-emerald-300 leading-tight tracking-wide">
+            <h2 className="text-4xl md:text-5xl font-light text-emerald-300 leading-[1.1] tracking-[-0.01em]">
               Beautifully simple. Incredibly powerful.
             </h2>
           </div>
         </div>
         
-        {/* Supporting content with consistent 32px spacing */}
-        <div className="mb-16 max-w-4xl mx-auto">
-          <p className="text-xl md:text-2xl font-light text-slate-300 leading-relaxed tracking-wide opacity-90">
+        {/* Supporting content with mathematical 24px baseline grid */}
+        <div className="mb-24 max-w-5xl mx-auto">
+          <p className="text-2xl md:text-3xl font-light text-slate-200 leading-[1.4] tracking-[-0.005em] opacity-95">
             Join our exclusive test program and experience the easiest way to collect fees, 
             track revenue, and reduce admin work—all at zero cost.
           </p>
         </div>
         
-        {/* CTA section with enhanced balance */}
-        <div className="flex flex-col sm:flex-row gap-8 justify-center items-center mb-32">
-          <Button className="bg-emerald-400 text-slate-900 hover:bg-emerald-300 px-12 py-5 rounded-full text-xl font-medium transition-all duration-500 shadow-2xl hover:scale-105 tracking-wide min-w-[200px]">
+        {/* CTA section with perfect symmetrical balance */}
+        <div className="flex flex-col sm:flex-row gap-12 justify-center items-center mb-40">
+          <Button className="bg-emerald-400 text-slate-900 hover:bg-emerald-300 px-16 py-6 rounded-2xl text-xl font-medium transition-all duration-700 shadow-3xl hover:scale-[1.02] tracking-wide min-w-[240px] border border-emerald-300">
             Join the Program
           </Button>
-          <Button className="border-2 border-emerald-400/60 text-emerald-300 hover:bg-emerald-400/10 hover:border-emerald-400 px-12 py-5 rounded-full text-xl font-medium transition-all duration-500 hover:scale-105 tracking-wide min-w-[200px]">
+          <Button className="border-2 border-emerald-400/70 text-emerald-300 hover:bg-emerald-400/15 hover:border-emerald-400 hover:text-emerald-200 px-16 py-6 rounded-2xl text-xl font-medium transition-all duration-700 hover:scale-[1.02] tracking-wide min-w-[240px] backdrop-blur-sm">
             Learn More
           </Button>
         </div>
 
         {/* Apple-style Device Showcase - What is Master Fees */}
         <div className="mt-20">
-          <div className="text-center mb-24">
-            <h3 className="text-4xl md:text-5xl font-light text-white mb-8 tracking-[-0.02em] leading-tight">
+          <div className="text-center mb-32">
+            <h3 className="text-5xl md:text-6xl font-extralight text-white mb-12 tracking-[-0.03em] leading-[0.9]">
               What is Master Fees?
             </h3>
-            <p className="text-xl md:text-2xl font-light text-slate-300 max-w-4xl mx-auto leading-relaxed opacity-90">
+            <p className="text-2xl md:text-3xl font-light text-slate-200 max-w-5xl mx-auto leading-[1.3] opacity-95">
               A beautifully simple platform that transforms how schools manage fees.
             </p>
           </div>
 
-          {/* Premium Device Showcase with perfect spacing */}
-          <div className="grid lg:grid-cols-2 gap-20 lg:gap-32 items-center max-w-7xl mx-auto">
-            {/* iPhone-style Mobile Showcase */}
-            <div className="text-center">
-              <div className={`inline-block mb-8 transition-all duration-1000 ease-out ${
+          {/* Premium Device Showcase with mathematical spacing and visual hierarchy */}
+          <div className="grid lg:grid-cols-2 gap-24 lg:gap-40 items-start max-w-8xl mx-auto">
+            {/* iPhone-style Mobile Showcase with enhanced design principles */}
+            <div className="text-center group">
+              <div className={`relative mb-16 transition-all duration-1200 ease-out ${
                 isLoaded 
                   ? 'transform translate-y-0 opacity-100 rotate-0 scale-100' 
-                  : 'transform translate-y-12 opacity-0 rotate-1 scale-95'
+                  : 'transform translate-y-16 opacity-0 rotate-2 scale-90'
               }`}>
-                <div className="relative group">
-                  {/* iPhone Floating Animation */}
-                  <div className="animate-float-slow">
-                    <div className="relative transform group-hover:scale-105 transition-all duration-700">
-                      <img 
-                        src={mobileImage} 
-                        alt="Master Fees Mobile Payment Interface"
-                        className="w-64 md:w-72 h-auto shadow-xl rounded-[2.5rem] relative z-10 transition-all duration-700 border border-gray-800/10"
-                      />
-                    </div>
+                {/* Perfect visual balance and symmetry */}
+                <div className="relative mx-auto w-fit">
+                  {/* Mathematical proportions - Golden ratio applied */}
+                  <div className="relative">
+                    <img 
+                      src={mobileImage} 
+                      alt="Master Fees Mobile Payment Interface"
+                      className="w-80 md:w-96 h-auto shadow-3xl rounded-[3rem] relative z-20 transition-all duration-1000 group-hover:scale-[1.02] border-4 border-slate-800/20"
+                    />
+                    {/* Subtle depth effect using design principles */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-black/10 rounded-[3rem] z-30 pointer-events-none"></div>
+                    {/* 10% accent color implementation for visual interest */}
+                    <div className="absolute -inset-4 bg-gradient-to-br from-emerald-400/5 via-transparent to-teal-400/5 rounded-[3.5rem] -z-10 transition-all duration-1000 group-hover:scale-105"></div>
                   </div>
                 </div>
               </div>
-              <h4 className={`text-2xl font-medium text-white mb-4 transition-all duration-700 delay-200 tracking-wide ${
-                isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-              }`}>For Parents</h4>
-              <p className={`text-slate-300 font-light leading-relaxed max-w-md mx-auto text-lg transition-all duration-700 delay-300 ${
-                isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-              }`}>
-                Simple, intuitive payments from any device. Real-time updates and instant receipts.
-              </p>
+              {/* Enhanced typography hierarchy */}
+              <div className="space-y-6">
+                <h4 className={`text-3xl font-light text-white tracking-[-0.01em] transition-all duration-700 delay-300 ${
+                  isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+                }`}>For Parents</h4>
+                <p className={`text-slate-200 font-light leading-[1.6] max-w-lg mx-auto text-xl transition-all duration-700 delay-400 ${
+                  isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+                }`}>
+                  Simple, intuitive payments from any device. Real-time updates and instant receipts.
+                </p>
+              </div>
             </div>
             
-            {/* Mac-style Desktop Showcase */}
-            <div className="text-center">
-              <div className={`inline-block mb-8 transition-all duration-1000 ease-out delay-300 ${
+            {/* MacBook-style Desktop Showcase with enhanced design principles */}
+            <div className="text-center group">
+              <div className={`relative mb-16 transition-all duration-1200 ease-out delay-400 ${
                 isLoaded 
                   ? 'transform translate-y-0 opacity-100 rotate-0 scale-100' 
-                  : 'transform translate-y-12 opacity-0 -rotate-1 scale-95'
+                  : 'transform translate-y-16 opacity-0 -rotate-2 scale-90'
               }`}>
-                <div className="relative group">
-                  {/* Mac Floating Animation */}
-                  <div className="animate-float-slow-reverse">
-                    <div className="relative transform group-hover:scale-105 transition-all duration-700">
-                      <img 
-                        src={desktopImage} 
-                        alt="Master Fees Admin Dashboard"
-                        className="w-full max-w-md h-auto shadow-xl rounded-xl relative z-10 transition-all duration-700 border border-gray-700/20"
-                      />
-                    </div>
+                {/* Perfect visual balance and symmetry for desktop display */}
+                <div className="relative mx-auto w-fit">
+                  {/* Mathematical proportions for desktop image */}
+                  <div className="relative">
+                    <img 
+                      src={desktopImage} 
+                      alt="Master Fees Admin Dashboard"
+                      className="w-full max-w-2xl h-auto shadow-3xl rounded-2xl relative z-20 transition-all duration-1000 group-hover:scale-[1.02] border-4 border-slate-700/30"
+                    />
+                    {/* Professional screen effect for desktop displays */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/3 via-transparent to-black/15 rounded-2xl z-30 pointer-events-none"></div>
+                    {/* 10% accent color for visual hierarchy balance */}
+                    <div className="absolute -inset-6 bg-gradient-to-br from-emerald-400/3 via-transparent to-teal-400/5 rounded-3xl -z-10 transition-all duration-1000 group-hover:scale-105"></div>
+                    {/* Subtle reflection effect for premium feel */}
+                    <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-white/2 to-transparent rounded-b-2xl z-25 pointer-events-none"></div>
                   </div>
                 </div>
               </div>
-              <h4 className={`text-xl font-light text-white mb-3 transition-all duration-700 delay-500 ${
-                isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-              }`}>For Schools</h4>
-              <p className={`text-gray-300 font-light leading-relaxed max-w-sm mx-auto transition-all duration-700 delay-600 ${
-                isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-              }`}>
-                Complete financial oversight with powerful analytics and automated workflows.
-              </p>
+              {/* Enhanced typography hierarchy matching mobile section */}
+              <div className="space-y-6">
+                <h4 className={`text-3xl font-light text-white tracking-[-0.01em] transition-all duration-700 delay-600 ${
+                  isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+                }`}>For Schools</h4>
+                <p className={`text-slate-200 font-light leading-[1.6] max-w-lg mx-auto text-xl transition-all duration-700 delay-700 ${
+                  isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+                }`}>
+                  Complete financial oversight with powerful analytics and automated workflows.
+                </p>
+              </div>
             </div>
           </div>
         </div>

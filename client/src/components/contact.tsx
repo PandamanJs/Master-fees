@@ -47,17 +47,17 @@ export default function Contact() {
       
       <div className="relative max-w-5xl mx-auto px-8 lg:px-12">
         {/* Apple-style Header with enhanced typography */}
-        <div className="text-center mb-32">
-          <h2 className="text-5xl md:text-6xl font-light text-white mb-8 tracking-[-0.02em] leading-tight">
+        <div className="text-center mb-40">
+          <h2 className="text-6xl md:text-7xl font-extralight text-white mb-12 tracking-[-0.03em] leading-[0.9]">
             Get in Touch
           </h2>
-          <p className="text-xl md:text-2xl font-light text-slate-300 max-w-4xl mx-auto leading-relaxed opacity-90">
+          <p className="text-2xl md:text-3xl font-light text-slate-200 max-w-5xl mx-auto leading-[1.3] opacity-95">
             Ready to transform your school's fee management? Let's start the conversation.
           </p>
         </div>
 
         {/* Apple-style Contact Form with premium design */}
-        <div className="apple-glass rounded-3xl p-20 lg:p-24 border border-slate-700/20 shadow-2xl transition-all duration-500 hover:shadow-3xl bg-slate-800/20">
+        <div className="apple-glass rounded-[2rem] p-24 lg:p-32 border border-slate-700/15 shadow-3xl transition-all duration-700 hover:shadow-4xl bg-slate-800/25 backdrop-blur-xl">
           <form onSubmit={handleSubmit} className="space-y-8">
             {/* Name and Email Row */}
             <div className="grid md:grid-cols-2 gap-8">

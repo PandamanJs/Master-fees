@@ -13,13 +13,13 @@ export default function Footer() {
       {/* Consistent background pattern */}
       <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-800/30 to-slate-900"></div>
       
-      <div className="relative max-w-7xl mx-auto px-8 lg:px-12 py-20">
+      <div className="relative max-w-8xl mx-auto px-12 lg:px-16 py-24">
         {/* Apple-style footer content */}
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-16 lg:space-y-0">
-          {/* Left Side - Enhanced Logo */}
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-20 lg:space-y-0">
+          {/* Left Side - Enhanced Logo with perfect typography */}
           <div>
-            <span className="text-2xl font-light text-white tracking-wide">Master Fees</span>
-            <p className="text-slate-400 text-sm mt-2 font-light">Transforming education finance</p>
+            <span className="text-3xl font-extralight text-white tracking-wide">Master Fees</span>
+            <p className="text-slate-300 text-lg mt-3 font-light">Transforming education finance</p>
           </div>
           
           {/* Center - Enhanced Navigation with balanced spacing */}
