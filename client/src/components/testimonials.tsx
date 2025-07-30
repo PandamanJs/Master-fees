@@ -39,9 +39,11 @@ export default function Testimonials() {
             The future of school fee management.<br />
             <span className="text-emerald-300">Beautifully simple.</span> <span className="text-slate-400">Incredibly powerful.</span>
           </p>
-          <Button className="bg-emerald-400 text-slate-900 hover:bg-emerald-300 px-14 py-5 rounded-full text-lg font-semibold transition-all duration-500 shadow-2xl hover:shadow-emerald-400/25 hover:scale-105 tracking-wide backdrop-blur-sm border border-emerald-300/50">
-            Join the Program
-          </Button>
+          <a href="https://master-fees.com/" target="_blank" rel="noopener noreferrer">
+            <Button className="bg-emerald-400 text-slate-900 hover:bg-emerald-300 px-14 py-5 rounded-full text-lg font-semibold transition-all duration-500 shadow-2xl hover:shadow-emerald-400/25 hover:scale-105 tracking-wide backdrop-blur-sm border border-emerald-300/50">
+              Get Started
+            </Button>
+          </a>
         </div>
 
         {/* Apple-style content section with premium glassmorphism */}

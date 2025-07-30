@@ -69,11 +69,11 @@ export default function Navigation() {
           
           {/* Apple-style CTA Button */}
           <div className="hidden md:flex items-center">
-            <Link href="/dashboard">
+            <a href="https://master-fees.com/" target="_blank" rel="noopener noreferrer">
               <Button className="bg-emerald-400 text-slate-900 hover:bg-emerald-300 px-8 py-2.5 rounded-full text-sm font-semibold transition-all duration-500 shadow-lg hover:shadow-emerald-400/25 hover:scale-105 tracking-wide backdrop-blur-sm border border-emerald-300/30">
                 Get Started
               </Button>
-            </Link>
+            </a>
           </div>
           
           {/* Mobile menu button */}
@@ -118,9 +118,11 @@ export default function Navigation() {
               Contact
             </button>
             <div className="pt-4">
-              <Button className={cn("w-full bg-emerald-400 hover:bg-emerald-300 text-slate-900 font-semibold")}>
-                Get Started
-              </Button>
+              <a href="https://master-fees.com/" target="_blank" rel="noopener noreferrer">
+                <Button className={cn("w-full bg-emerald-400 hover:bg-emerald-300 text-slate-900 font-semibold")}>
+                  Get Started
+                </Button>
+              </a>
             </div>
           </div>
         </div>
