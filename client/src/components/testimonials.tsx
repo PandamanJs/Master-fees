@@ -59,9 +59,9 @@ export default function Testimonials() {
             </div>
             
             {/* Description */}
-            <div className="max-w-4xl mx-auto text-left">
-              <p className="text-gray-700 leading-relaxed mb-4">
-                Master-Fees is a smart, <span className="font-semibold">automated fee collection platform</span> designed for schools. It simplifies tuition payments by enabling guardians to pay online instantly, generating and distributing invoices and receipts. All transactions are monitored in one place through the user-friendly dashboard. With seamless integration to mobile money <span className="font-semibold">and student balances</span> wherever you are, Say goodbye to the delays and manual errors of cash and bank payments.
+            <div className="max-w-4xl mx-auto text-center">
+              <p className="text-gray-700 leading-relaxed mb-4 text-lg">
+                Master-Fees is a smart, <span className="font-semibold">automated fee collection platform</span> designed for schools. It simplifies tuition payments by enabling guardians to pay online, instantly generating and distributing invoices and receipts. All transactions are automatically updated in a centralised dashboard—giving you <span className="font-semibold">real-time access to revenue, collections, and student balances</span> wherever you are. Say goodbye to the delays and manual errors of cash and bank payments.
               </p>
             </div>
           </div>
