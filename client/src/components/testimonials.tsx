@@ -67,10 +67,82 @@ export default function Testimonials() {
           </div>
 
           {/* Why Join the Program? */}
-          <div className="text-center">
-            <h3 className="text-2xl sm:text-3xl font-bold text-black">
+          <div className="mt-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-black text-center mb-12">
               Why Join the Program?
-            </h3>
+            </h2>
+            
+            <div className="grid gap-8 md:gap-12 max-w-4xl mx-auto">
+              {/* Tailor-Made for You */}
+              <div className="flex items-start gap-6">
+                <div className="flex-shrink-0">
+                  <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center">
+                    <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center">
+                      <div className="w-4 h-4 bg-white rounded-full"></div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-black mb-2">Tailor-Made for You</h3>
+                  <p className="text-gray-700 leading-relaxed">
+                    <span className="font-semibold">Help Shape the Perfect Tool—Built Around Your School's Needs</span><br />
+                    You're not getting a generic solution. With fewer than 30 schools slated to join over the next 12 years, the feedback will directly shape how Master-Fees evolves, ensuring that the final product solves your exact fee collection challenges. This kind of tailor-made software could easily cost thousands of thousands for a team to develop independently—but you'll get it for free, just for sharing your experience.
+                  </p>
+                </div>
+              </div>
+              
+              {/* Premium Access */}
+              <div className="flex items-start gap-6">
+                <div className="flex-shrink-0">
+                  <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center">
+                    <div className="w-10 h-10 bg-yellow-500 rounded-lg flex items-center justify-center">
+                      <div className="w-6 h-4 bg-white rounded-sm"></div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-black mb-2">Premium Access – Absolutely Free</h3>
+                  <p className="text-gray-700 leading-relaxed">
+                    <span className="font-semibold">K7,500 Worth of Value Per Term – Yours Free for a Full Year</span><br />
+                    Get one full year of Master-Fees Premium—our highest-tier product—for zero cost. Normally priced at K7,500 per term, this package includes the full suite of features, updates, and support. You'll use it risk-free and decide later if it's right for your school. No hidden costs. No pressure. Just real results.
+                  </p>
+                </div>
+              </div>
+              
+              {/* Perfect Revenue Records */}
+              <div className="flex items-start gap-6">
+                <div className="flex-shrink-0">
+                  <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center">
+                    <div className="w-10 h-6 bg-red-500 rounded-sm transform rotate-45"></div>
+                  </div>
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-black mb-2">Perfect revenue records</h3>
+                  <p className="text-gray-700 leading-relaxed">
+                    <span className="font-semibold">Instant Reconciliation. Automated Follow-Ups. No More Disputes.</span><br />
+                    From day one, you'll experience seamless fee tracking and automated revenue recovery. Master-Fees drastically reduces your team's workload while improving accuracy. No manual reconciliation. No balance disputes. Just smooth, stress-free fee collection with detailed insights and reporting at your fingertips.
+                  </p>
+                </div>
+              </div>
+              
+              {/* Limited Early Access */}
+              <div className="flex items-start gap-6">
+                <div className="flex-shrink-0">
+                  <div className="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center">
+                    <div className="w-10 h-10 bg-pink-500 rounded-full flex items-center justify-center">
+                      <div className="w-6 h-6 border-2 border-white rounded-full"></div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-black mb-2">Limited early access</h3>
+                  <p className="text-gray-700 leading-relaxed">
+                    <span className="font-semibold">Only 10 Schools. Once It's Full, It's Gone.</span><br />
+                    This program is intentionally capped at 10 schools to ensure dedicated support and true partnership. Once the slots are filled, you may have to wait several additional months for this access again. So you still have a chance—but time and space are running out.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
