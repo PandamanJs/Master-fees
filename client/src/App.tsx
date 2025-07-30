@@ -4,16 +4,14 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/theme-provider";
-import Navigation from "@/components/navigation";
+import MascotGuide from "@/components/mascot-guide";
 import Home from "@/pages/home";
-import Dashboard from "@/pages/dashboard";
 import NotFound from "@/pages/not-found";
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
-      <Route path="/dashboard" component={Dashboard} />
       <Route component={NotFound} />
     </Switch>
   );
@@ -24,7 +22,7 @@ function App() {
     <ThemeProvider defaultTheme="light" storageKey="masterfees-ui-theme">
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
-          <Navigation />
+          <MascotGuide />
           <Toaster />
           <Router />
         </TooltipProvider>
