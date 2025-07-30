@@ -1,11 +1,31 @@
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
-import mobileImage from "@assets/iPhone 16 - 46_1753890892151.png";
-import desktopImage from "@assets/Dashboard_1753890963584.png";
+import mobileImage from "@assets/iPhone 16 - 46_1753900251503.png";
+import desktopImage from "@assets/Dashboard_1753900251517.png";
 
 export default function Testimonials() {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    const element = document.querySelector('#testimonials-section');
+    if (element) observer.observe(element);
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section className="py-32 bg-black text-white relative overflow-hidden">
+    <section id="testimonials-section" className="py-32 bg-black text-white relative overflow-hidden">
       {/* Subtle background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-black via-gray-900/50 to-black"></div>
       
@@ -75,6 +95,87 @@ export default function Testimonials() {
                 <p className="text-lg font-light text-gray-300 leading-relaxed max-w-2xl mx-auto">
                   Only 10 schools. Once it's full, it's gone. Intentionally capped to ensure dedicated support and true partnership.
                 </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Apple-style Device Showcase */}
+          <div className="mt-20 relative">
+            <h3 className="text-3xl md:text-4xl font-light text-center text-white mb-16 tracking-tight">
+              Experience Master Fees
+            </h3>
+            
+            <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center max-w-6xl mx-auto">
+              {/* iPhone Animation */}
+              <div className="text-center">
+                <div className={`transition-all duration-1500 ease-out ${
+                  isVisible 
+                    ? 'transform translate-y-0 opacity-100 scale-100 rotate-0' 
+                    : 'transform translate-y-20 opacity-0 scale-90 rotate-3'
+                }`}>
+                  <div className="relative group inline-block">
+                    {/* iPhone Floating Animation */}
+                    <div className="animate-float-slow">
+                      <div className="relative transform group-hover:scale-105 transition-all duration-700">
+                        <img 
+                          src={mobileImage} 
+                          alt="Master Fees Mobile Payment Interface"
+                          className="w-64 md:w-72 h-auto shadow-2xl rounded-[3rem] relative z-10 transition-all duration-700"
+                        />
+                        {/* iPhone Premium Glass Effect */}
+                        <div className="absolute inset-0 bg-gradient-to-tr from-white/25 via-white/10 to-transparent rounded-[3rem] z-20 pointer-events-none"></div>
+                        {/* Dynamic Color Glow */}
+                        <div className="absolute -inset-6 bg-gradient-to-r from-blue-600/40 via-purple-600/40 to-pink-600/40 rounded-[4rem] blur-2xl opacity-70 group-hover:opacity-90 transition-all duration-700 -z-10 animate-pulse-slow"></div>
+                        {/* Device Frame Shadow */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-gray-900/20 via-black/10 to-gray-800/20 rounded-[3.2rem] transform rotate-1 -z-5"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className={`mt-8 transition-all duration-1000 delay-300 ${
+                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                }`}>
+                  <h4 className="text-xl font-light text-white mb-3">Mobile Experience</h4>
+                  <p className="text-gray-300 font-light leading-relaxed max-w-sm mx-auto">
+                    Parents can pay fees instantly with a simple, intuitive interface
+                  </p>
+                </div>
+              </div>
+
+              {/* Mac Dashboard Animation */}
+              <div className="text-center">
+                <div className={`transition-all duration-1500 ease-out delay-500 ${
+                  isVisible 
+                    ? 'transform translate-y-0 opacity-100 scale-100 rotate-0' 
+                    : 'transform translate-y-20 opacity-0 scale-90 -rotate-3'
+                }`}>
+                  <div className="relative group inline-block">
+                    {/* Mac Floating Animation */}
+                    <div className="animate-float-slow-reverse">
+                      <div className="relative transform group-hover:scale-105 transition-all duration-700">
+                        <img 
+                          src={desktopImage} 
+                          alt="Master Fees Admin Dashboard"
+                          className="w-full max-w-md h-auto shadow-2xl rounded-2xl relative z-10 transition-all duration-700"
+                        />
+                        {/* Mac Premium Screen Effect */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-white/5 to-transparent rounded-2xl z-20 pointer-events-none"></div>
+                        {/* Professional Ambient Glow */}
+                        <div className="absolute -inset-8 bg-gradient-to-r from-emerald-600/40 via-teal-600/40 to-blue-600/40 rounded-3xl blur-2xl opacity-70 group-hover:opacity-90 transition-all duration-700 -z-10 animate-pulse-slow"></div>
+                        {/* Mac Device Frame */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-gray-800/15 via-gray-900/10 to-black/15 rounded-2xl transform -rotate-1 -z-5"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className={`mt-8 transition-all duration-1000 delay-700 ${
+                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                }`}>
+                  <h4 className="text-xl font-light text-white mb-3">Admin Dashboard</h4>
+                  <p className="text-gray-300 font-light leading-relaxed max-w-sm mx-auto">
+                    Complete revenue tracking with real-time insights and analytics
+                  </p>
+                </div>
               </div>
             </div>
           </div>

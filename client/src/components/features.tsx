@@ -1,7 +1,7 @@
 import { Zap, FileText, User, Bell, BarChart3, Building2 } from "lucide-react";
 import { useEffect, useState } from "react";
-import mobileImage from "@assets/iPhone 16 - 46_1753890892151.png";
-import desktopImage from "@assets/Dashboard_1753890963584.png";
+import mobileImage from "@assets/iPhone 16 - 46_1753900251503.png";
+import desktopImage from "@assets/Dashboard_1753900251517.png";
 
 const features = [
   {
