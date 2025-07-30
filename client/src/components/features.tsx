@@ -51,6 +51,13 @@ export default function Features() {
   return (
     <section id="features" className="py-12 sm:py-16 md:py-20 lg:py-24 bg-slate-50/80 transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-8">
+            What is master-fees?
+          </h2>
+        </div>
+
         {/* Device Mockups Display */}
         <div className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-16">
           {/* Mobile Mockup */}

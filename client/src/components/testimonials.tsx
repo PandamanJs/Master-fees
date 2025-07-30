@@ -33,9 +33,9 @@ export default function Testimonials() {
         <div className="bg-white rounded-3xl p-8 sm:p-12 text-slate-900 mt-16">
           {/* What is master-fees? */}
           <div className="text-center mb-12">
-            <h3 className="text-2xl sm:text-3xl font-bold mb-8 text-black">
+            <h2 className="text-3xl md:text-4xl font-bold mb-8 text-black">
               What is master-fees?
-            </h3>
+            </h2>
             
             {/* Device Mockups */}
             <div className="flex flex-col lg:flex-row items-center justify-center gap-8 mb-8">
