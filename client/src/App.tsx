@@ -6,7 +6,6 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { AIAssistant } from "@/components/ai-assistant";
 import Home from "@/pages/home";
 import Dashboard from "./pages/dashboard";
-import FigmaDashboard from "@/pages/figma-dashboard";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -14,7 +13,6 @@ function Router() {
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/dashboard" component={Dashboard} />
-      <Route path="/figma-dashboard" component={FigmaDashboard} />
       <Route component={NotFound} />
     </Switch>
   );
