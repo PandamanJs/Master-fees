@@ -50,15 +50,7 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Bottom white mockup section matching reference exactly */}
-      <div className="absolute bottom-0 left-0 right-0">
-        <div className="bg-white rounded-t-[3rem] h-32 md:h-40 relative">
-          {/* Simple dashboard mockup */}
-          <div className="absolute top-6 left-6 right-6 bottom-6 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200 flex items-center justify-center">
-            <div className="text-gray-400 text-sm">Platform Preview</div>
-          </div>
-        </div>
-      </div>
+
     </section>
   );
 }
