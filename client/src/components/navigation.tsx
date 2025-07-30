@@ -18,7 +18,7 @@ export default function Navigation() {
   return (
     <nav className="backdrop-blur-xl shadow-lg border-b border-white/20 sticky top-0 z-50 transition-all duration-300 glass-effect bg-[#1c2739]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-[#1c2739]">
-        <div className="flex justify-between items-center h-16 sm:h-18 lg:h-20 bg-[#1c2739]">
+        <div className="flex justify-between items-center h-16 sm:h-18 lg:h-20 bg-[#182234]">
           {/* Logo */}
           <div className="flex items-center">
             <div className="flex-shrink-0 flex items-center group cursor-pointer hover-lift cursor-magic">
