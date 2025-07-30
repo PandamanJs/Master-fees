@@ -63,7 +63,7 @@ export default function Navigation() {
           
           {/* CTA Button */}
           <div className="hidden md:flex items-center">
-            <Button className="bg-brand-teal hover:bg-opacity-90 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200">
+            <Button className="bg-[#98fbcb] hover:bg-opacity-90 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200">
               Get Started
             </Button>
           </div>
@@ -110,7 +110,7 @@ export default function Navigation() {
               Contact
             </button>
             <div className="pt-4">
-              <Button className="w-full bg-brand-teal hover:bg-opacity-90 text-white px-4 py-3 rounded-lg text-base font-medium transition-all duration-200">
+              <Button className="w-full bg-[#98fbcb] hover:bg-opacity-90 text-white px-4 py-3 rounded-lg text-base font-medium transition-all duration-200">
                 Get Started
               </Button>
             </div>
