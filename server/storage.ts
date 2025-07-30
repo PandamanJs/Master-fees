@@ -65,6 +65,9 @@ export interface IStorage {
   getContactMessageById(id: number): Promise<ContactMessage | null>;
   updateContactMessage(id: number, updates: Partial<ContactMessage>): Promise<ContactMessage | null>;
   markContactMessageAsRead(id: number): Promise<boolean>;
+
+  // Additional student fee methods
+  getStudentFeeById(id: number): Promise<StudentFee | null>;
 }
 
 export class MemStorage implements IStorage {
@@ -388,6 +391,10 @@ export class MemStorage implements IStorage {
     const updatedFee = { ...fee, ...updates };
     this.studentFees.set(id, updatedFee);
     return updatedFee;
+  }
+
+  async getStudentFeeById(id: number): Promise<StudentFee | null> {
+    return this.studentFees.get(id) || null;
   }
 
   // Payment operations

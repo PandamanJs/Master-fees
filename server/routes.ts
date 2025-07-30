@@ -14,6 +14,8 @@ import {
 } from "@shared/schema";
 import { storage } from "./storage";
 import { sendContactNotification, sendContactConfirmation } from "./email";
+import { sendContactFormSMS, sendAdminNotificationSMS, sendPaymentConfirmationSMS } from "./sms";
+import { quickbooksRouter } from "./quickbooks-routes";
 
 const router = Router();
 
@@ -171,9 +173,29 @@ router.post("/payments", async (req, res) => {
 
     await storage.updateStudentFee(payment.studentFeeId, { status: 'paid' });
 
+    // Send SMS payment confirmation if phone number is available
+    try {
+      // Get student and parent details for SMS
+      const studentFee = await storage.getStudentFeeById(payment.studentFeeId);
+      if (studentFee) {
+        const student = await storage.getStudentById(studentFee.studentId);
+        if (student && student.guardianPhone) {
+          await sendPaymentConfirmationSMS(
+            student.guardianPhone,
+            `${student.firstName} ${student.lastName}`,
+            parseFloat(paymentData.amount),
+            receiptNumber
+          );
+        }
+      }
+    } catch (smsError) {
+      console.error("Payment SMS notification error:", smsError);
+      // Continue even if SMS fails
+    }
+
     res.status(201).json({ 
       payment,
-      message: "Payment processed successfully"
+      message: "Payment processed successfully! SMS confirmation will be sent if phone number is available."
     });
   } catch (error) {
     if (error instanceof z.ZodError) {
@@ -223,19 +245,43 @@ router.post("/contact", async (req, res) => {
       isRead: false
     });
 
-    // Send email notifications
+    // Send email and SMS notifications
     try {
-      await Promise.all([
+      const emailPromises = [
         sendContactNotification(contactData),
         sendContactConfirmation(contactData)
-      ]);
-    } catch (emailError) {
-      console.error("Email notification error:", emailError);
-      // Continue even if emails fail
+      ];
+
+      const smsPromises = [];
+      
+      // Send SMS confirmation to user if phone provided
+      if (contactData.phone) {
+        smsPromises.push(
+          sendContactFormSMS(contactData.name, contactData.phone, contactData.subject)
+        );
+      }
+
+      // Send SMS notification to admin (if admin phone is configured)
+      const adminPhone = process.env.ADMIN_PHONE;
+      if (adminPhone) {
+        smsPromises.push(
+          sendAdminNotificationSMS(
+            adminPhone, 
+            `New contact form submission from ${contactData.name} about "${contactData.subject}"`
+          )
+        );
+      }
+
+      await Promise.all([...emailPromises, ...smsPromises]);
+    } catch (notificationError) {
+      console.error("Notification error:", notificationError);
+      // Continue even if notifications fail
     }
 
     res.status(201).json({ 
-      message: "Thank you for your message! We'll get back to you within 24 hours.",
+      message: contactData.phone 
+        ? "Thank you for your message! We'll get back to you within 24 hours. Check your phone for SMS confirmation."
+        : "Thank you for your message! We'll get back to you within 24 hours.",
       contactId: contactMessage.id
     });
   } catch (error) {
@@ -307,6 +353,9 @@ router.put("/admin/contact-messages/:id", async (req, res) => {
     res.status(500).json({ error: "Failed to update contact message" });
   }
 });
+
+// Register QuickBooks routes
+router.use(quickbooksRouter);
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Register all API routes with /api prefix
