@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import DashboardPreviewEnhanced from "@/components/dashboard-preview-enhanced";
 
 export default function Hero() {
   return (
@@ -54,11 +53,9 @@ export default function Hero() {
       {/* Bottom white mockup section matching reference exactly */}
       <div className="absolute bottom-0 left-0 right-0">
         <div className="bg-white rounded-t-[3rem] h-32 md:h-40 relative">
-          {/* Enhanced dashboard preview with easter eggs */}
-          <div className="absolute top-6 left-6 right-6 bottom-6 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200 flex items-center justify-center overflow-hidden">
-            <div className="scale-[0.2] transform-gpu origin-center -mt-24 opacity-90 hover:opacity-100 transition-opacity duration-300">
-              <DashboardPreviewEnhanced />
-            </div>
+          {/* Simple dashboard mockup */}
+          <div className="absolute top-6 left-6 right-6 bottom-6 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200 flex items-center justify-center">
+            <div className="text-gray-400 text-sm">Platform Preview</div>
           </div>
         </div>
       </div>

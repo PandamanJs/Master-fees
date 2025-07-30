@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ThemeToggle } from "@/components/theme-toggle";
 import logoImage from "@assets/Group 15_1751377323388.png";
 
 export default function Navigation() {
@@ -16,7 +15,7 @@ export default function Navigation() {
   };
 
   return (
-    <nav className="bg-white/80 dark:bg-black/80 backdrop-blur-xl shadow-lg border-b border-white/20 dark:border-gray-800/50 sticky top-0 z-50 transition-all duration-300 glass-effect">
+    <nav className="bg-white/80 backdrop-blur-xl shadow-lg border-b border-white/20 sticky top-0 z-50 transition-all duration-300 glass-effect">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16 sm:h-18 lg:h-20">
           {/* Logo */}
@@ -27,7 +26,7 @@ export default function Navigation() {
                 alt="Master Fees Logo" 
                 className="w-8 h-8 sm:w-10 sm:h-10 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12 animate-bounce-subtle group-hover:animate-rubber-band"
               />
-              <span className="ml-2 sm:ml-3 text-xl sm:text-2xl font-bold text-slate-900 dark:text-white transition-all duration-300 group-hover:text-brand-teal group-hover:animate-wiggle">Master Fees</span>
+              <span className="ml-2 sm:ml-3 text-xl sm:text-2xl font-bold text-slate-900 transition-all duration-300 group-hover:text-brand-teal group-hover:animate-wiggle">Master Fees</span>
             </div>
           </div>
           
@@ -36,43 +35,41 @@ export default function Navigation() {
             <div className="ml-10 flex items-baseline space-x-1">
               <button
                 onClick={() => scrollToSection('home')}
-                className="text-slate-900 dark:text-white hover:text-brand-teal px-4 py-2 rounded-lg text-base font-medium transition-all duration-200 hover:bg-brand-mint/10 dark:hover:bg-brand-mint/20 focus:ring-2 focus:ring-brand-teal/30 hover-lift cursor-magic hover:animate-bounce-subtle"
+                className="text-slate-900 hover:text-brand-teal px-4 py-2 rounded-lg text-base font-medium transition-all duration-200 hover:bg-brand-mint/10 focus:ring-2 focus:ring-brand-teal/30 hover-lift"
               >
                 Home
               </button>
               <button
                 onClick={() => scrollToSection('features')}
-                className="text-slate-600 dark:text-slate-300 hover:text-brand-teal px-4 py-2 rounded-lg text-base font-medium transition-all duration-200 hover:bg-brand-mint/10 dark:hover:bg-brand-mint/20 focus:ring-2 focus:ring-brand-teal/30 hover-lift cursor-magic hover:animate-bounce-subtle"
+                className="text-slate-600 hover:text-brand-teal px-4 py-2 rounded-lg text-base font-medium transition-all duration-200 hover:bg-brand-mint/10 focus:ring-2 focus:ring-brand-teal/30 hover-lift"
               >
                 Features
               </button>
               <button
                 onClick={() => scrollToSection('about')}
-                className="text-slate-600 dark:text-slate-300 hover:text-brand-teal px-4 py-2 rounded-lg text-base font-medium transition-all duration-200 hover:bg-brand-mint/10 dark:hover:bg-brand-mint/20 focus:ring-2 focus:ring-brand-teal/30 hover-lift cursor-magic hover:animate-bounce-subtle"
+                className="text-slate-600 hover:text-brand-teal px-4 py-2 rounded-lg text-base font-medium transition-all duration-200 hover:bg-brand-mint/10 focus:ring-2 focus:ring-brand-teal/30 hover-lift"
               >
                 About
               </button>
 
               <button
                 onClick={() => scrollToSection('contact')}
-                className="text-slate-600 dark:text-slate-300 hover:text-brand-teal px-4 py-2 rounded-lg text-base font-medium transition-all duration-200 hover:bg-brand-mint/10 dark:hover:bg-brand-mint/20 focus:ring-2 focus:ring-brand-teal/30"
+                className="text-slate-600 hover:text-brand-teal px-4 py-2 rounded-lg text-base font-medium transition-all duration-200 hover:bg-brand-mint/10 focus:ring-2 focus:ring-brand-teal/30"
               >
                 Contact
               </button>
             </div>
           </div>
           
-          {/* CTA Button and Theme Toggle */}
-          <div className="hidden md:flex items-center space-x-3">
-            <ThemeToggle />
+          {/* CTA Button */}
+          <div className="hidden md:flex items-center">
             <Button className="bg-brand-teal hover:bg-opacity-90 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200">
               Get Started
             </Button>
           </div>
           
-          {/* Mobile menu button and theme toggle */}
-          <div className="md:hidden flex items-center space-x-2">
-            <ThemeToggle />
+          {/* Mobile menu button */}
+          <div className="md:hidden">
             <button
               type="button"
               className="text-slate-600 hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 rounded-md p-2"
@@ -87,29 +84,29 @@ export default function Navigation() {
       {/* Mobile Navigation Menu */}
       {isMenuOpen && (
         <div className="md:hidden">
-          <div className="px-3 sm:px-4 pt-3 pb-4 space-y-2 bg-white dark:bg-black border-t border-slate-200 dark:border-gray-800">
+          <div className="px-3 sm:px-4 pt-3 pb-4 space-y-2 bg-white border-t border-slate-200">
             <button
               onClick={() => scrollToSection('home')}
-              className="text-slate-900 dark:text-white hover:text-brand-teal block px-3 py-2 text-base font-medium w-full text-left rounded-lg hover:bg-brand-mint/10 dark:hover:bg-brand-mint/20 transition-all duration-200"
+              className="text-slate-900 hover:text-brand-teal block px-3 py-2 text-base font-medium w-full text-left rounded-lg hover:bg-brand-mint/10 transition-all duration-200"
             >
               Home
             </button>
             <button
               onClick={() => scrollToSection('features')}
-              className="text-slate-600 dark:text-slate-300 hover:text-brand-teal block px-3 py-2 text-base font-medium w-full text-left rounded-lg hover:bg-brand-mint/10 dark:hover:bg-brand-mint/20 transition-all duration-200"
+              className="text-slate-600 hover:text-brand-teal block px-3 py-2 text-base font-medium w-full text-left rounded-lg hover:bg-brand-mint/10 transition-all duration-200"
             >
               Features
             </button>
             <button
               onClick={() => scrollToSection('about')}
-              className="text-slate-600 dark:text-slate-300 hover:text-brand-teal block px-3 py-2 text-base font-medium w-full text-left rounded-lg hover:bg-brand-mint/10 dark:hover:bg-brand-mint/20 transition-all duration-200"
+              className="text-slate-600 hover:text-brand-teal block px-3 py-2 text-base font-medium w-full text-left rounded-lg hover:bg-brand-mint/10 transition-all duration-200"
             >
               About
             </button>
 
             <button
               onClick={() => scrollToSection('contact')}
-              className="text-slate-600 dark:text-slate-300 hover:text-brand-teal block px-3 py-2 text-base font-medium w-full text-left rounded-lg hover:bg-brand-mint/10 dark:hover:bg-brand-mint/20 transition-all duration-200"
+              className="text-slate-600 hover:text-brand-teal block px-3 py-2 text-base font-medium w-full text-left rounded-lg hover:bg-brand-mint/10 transition-all duration-200"
             >
               Contact
             </button>
