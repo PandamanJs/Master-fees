@@ -29,11 +29,7 @@ export default function Testimonials() {
           </Button>
         </div>
 
-        {/* White Content Section */}
-        <div className="bg-white rounded-3xl p-8 sm:p-12 text-slate-900 mt-16">
-
-
-        </div>
+        
       </div>
     </section>
   );
