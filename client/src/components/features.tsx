@@ -1,4 +1,5 @@
 import { Zap, FileText, User, Bell, BarChart3, Building2 } from "lucide-react";
+import { useEffect, useState } from "react";
 import mobileImage from "@assets/iPhone 16 - 46_1753890892151.png";
 import desktopImage from "@assets/Dashboard_1753890963584.png";
 
@@ -48,6 +49,31 @@ const features = [
 ];
 
 export default function Features() {
+  const [isVisible, setIsVisible] = useState(false);
+  const [mobileAnimated, setMobileAnimated] = useState(false);
+  const [desktopAnimated, setDesktopAnimated] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+            // Stagger the animations
+            setTimeout(() => setMobileAnimated(true), 300);
+            setTimeout(() => setDesktopAnimated(true), 600);
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    const element = document.getElementById('features');
+    if (element) observer.observe(element);
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section id="features" className="py-32 bg-gray-50 transition-all duration-300">
       <div className="max-w-6xl mx-auto px-6 lg:px-8">
@@ -61,34 +87,70 @@ export default function Features() {
           </p>
         </div>
 
-        {/* Apple-style Device Showcase */}
+        {/* Apple-style Device Showcase with Animations */}
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center mb-20">
-          {/* Mobile Showcase */}
+          {/* iPhone-style Mobile Showcase */}
           <div className="text-center lg:text-left">
-            <div className="inline-block mb-8">
-              <img 
-                src={mobileImage} 
-                alt="Master Fees Mobile Interface"
-                className="w-72 h-auto shadow-2xl rounded-[3rem] transition-all duration-700"
-              />
+            <div className={`inline-block mb-8 transition-all duration-1000 ease-out ${
+              mobileAnimated 
+                ? 'transform translate-y-0 opacity-100 rotate-0 scale-100' 
+                : 'transform translate-y-12 opacity-0 rotate-1 scale-95'
+            }`}>
+              <div className="relative group">
+                {/* iPhone-style device frame effect */}
+                <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-800 rounded-[3.5rem] transform rotate-1 group-hover:rotate-0 transition-transform duration-500"></div>
+                <div className="relative transform group-hover:scale-105 transition-all duration-500">
+                  <img 
+                    src={mobileImage} 
+                    alt="Master Fees Mobile Interface"
+                    className="w-72 h-auto shadow-2xl rounded-[3rem] relative z-10 group-hover:shadow-3xl transition-all duration-500"
+                  />
+                  {/* iPhone-style reflection effect */}
+                  <div className="absolute inset-0 bg-gradient-to-tr from-white/10 via-transparent to-transparent rounded-[3rem] z-20 pointer-events-none"></div>
+                  {/* Subtle glow effect */}
+                  <div className="absolute -inset-4 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-blue-500/20 rounded-[4rem] blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10"></div>
+                </div>
+              </div>
             </div>
-            <h3 className="text-2xl font-light text-black mb-4">For Parents</h3>
-            <p className="text-lg font-light text-gray-600 leading-relaxed">
+            <h3 className={`text-2xl font-light text-black mb-4 transition-all duration-700 delay-200 ${
+              mobileAnimated ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            }`}>For Parents</h3>
+            <p className={`text-lg font-light text-gray-600 leading-relaxed transition-all duration-700 delay-300 ${
+              mobileAnimated ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            }`}>
               Simple, intuitive payments from any device. Real-time updates and instant receipts.
             </p>
           </div>
           
-          {/* Desktop Showcase */}
+          {/* Mac-style Desktop Showcase */}
           <div className="text-center lg:text-right">
-            <div className="inline-block mb-8">
-              <img 
-                src={desktopImage} 
-                alt="Master Fees Admin Dashboard"
-                className="w-full max-w-lg h-auto shadow-2xl rounded-2xl transition-all duration-700"
-              />
+            <div className={`inline-block mb-8 transition-all duration-1000 ease-out delay-300 ${
+              desktopAnimated 
+                ? 'transform translate-y-0 opacity-100 rotate-0 scale-100' 
+                : 'transform translate-y-12 opacity-0 -rotate-1 scale-95'
+            }`}>
+              <div className="relative group">
+                {/* Mac-style device frame effect */}
+                <div className="absolute inset-0 bg-gradient-to-br from-gray-800 via-gray-900 to-black rounded-3xl transform -rotate-1 group-hover:rotate-0 transition-transform duration-500"></div>
+                <div className="relative transform group-hover:scale-105 transition-all duration-500">
+                  <img 
+                    src={desktopImage} 
+                    alt="Master Fees Admin Dashboard"
+                    className="w-full max-w-lg h-auto shadow-2xl rounded-2xl relative z-10 group-hover:shadow-3xl transition-all duration-500"
+                  />
+                  {/* Mac-style screen reflection */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/15 via-transparent to-transparent rounded-2xl z-20 pointer-events-none"></div>
+                  {/* Mac-style ambient glow */}
+                  <div className="absolute -inset-6 bg-gradient-to-r from-emerald-500/20 via-blue-500/20 to-purple-500/20 rounded-3xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10"></div>
+                </div>
+              </div>
             </div>
-            <h3 className="text-2xl font-light text-black mb-4">For Schools</h3>
-            <p className="text-lg font-light text-gray-600 leading-relaxed">
+            <h3 className={`text-2xl font-light text-black mb-4 transition-all duration-700 delay-500 ${
+              desktopAnimated ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            }`}>For Schools</h3>
+            <p className={`text-lg font-light text-gray-600 leading-relaxed transition-all duration-700 delay-600 ${
+              desktopAnimated ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            }`}>
               Complete financial oversight with powerful analytics and automated workflows.
             </p>
           </div>

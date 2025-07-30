@@ -1,6 +1,15 @@
 import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
+import mobileImage from "@assets/iPhone 16 - 46_1753890892151.png";
+import desktopImage from "@assets/Dashboard_1753890963584.png";
 
 export default function Hero() {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    setIsLoaded(true);
+  }, []);
+
   return (
     <section className="relative min-h-screen bg-black overflow-hidden flex items-center">
       {/* Apple-style subtle gradient background */}
