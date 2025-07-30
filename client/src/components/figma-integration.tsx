@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { apiRequest, queryClient } from '@/lib/queryClient';
 import { useToast } from '@/hooks/use-toast';
+import { CodeImport } from '@/components/code-import';
 
 export function FigmaIntegration() {
   const [fileKey, setFileKey] = useState('');
@@ -237,9 +238,10 @@ export function FigmaIntegration() {
       {/* Integration Actions */}
       {fileData?.success && (
         <Tabs defaultValue="sync" className="space-y-4">
-          <TabsList className="grid w-full grid-cols-3">
+          <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="sync">Sync Design</TabsTrigger>
             <TabsTrigger value="components">Components</TabsTrigger>
+            <TabsTrigger value="code">Import Code</TabsTrigger>
             <TabsTrigger value="generate">Generate</TabsTrigger>
           </TabsList>
 
@@ -332,6 +334,10 @@ export function FigmaIntegration() {
               </CardContent>
             </Card>
           </TabsContent>
+
+          <TabsContent value="code" className="space-y-4">
+            <CodeImport />
+          </TabsContent>
         </Tabs>
       )}
 
@@ -362,15 +368,31 @@ export function FigmaIntegration() {
             <span>Generate components by copying node IDs from Figma</span>
           </div>
           
-          <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+          <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg">
             <div className="flex items-start gap-2">
-              <CheckCircle2 className="w-4 h-4 text-blue-600 mt-0.5" />
+              <CheckCircle2 className="w-4 h-4 text-green-600 mt-0.5" />
               <div>
-                <p className="text-blue-800 font-medium text-sm">Figma Make Support</p>
-                <p className="text-blue-700 text-sm">
-                  Your file (iETcOYVOVX4YMS9eunNhqK) is a Figma Make prototype. 
-                  The integration now supports both design files and Figma Make files.
+                <p className="text-green-800 font-medium text-sm">Dashboard Code Import Ready</p>
+                <p className="text-green-700 text-sm">
+                  Master-Fees.zip uploaded successfully! The dashboard code from your Figma Make project 
+                  can now be integrated into the application.
                 </p>
+                <div className="mt-3 flex gap-2">
+                  <Button 
+                    size="sm" 
+                    className="bg-green-600 hover:bg-green-700"
+                    onClick={() => window.location.href = '/figma-dashboard'}
+                  >
+                    View Imported Dashboard
+                  </Button>
+                  <Button 
+                    size="sm" 
+                    variant="outline"
+                    onClick={() => setFileKey('demo-dashboard')}
+                  >
+                    Test Integration
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
