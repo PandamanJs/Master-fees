@@ -15,7 +15,7 @@ export default function Footer() {
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-12 lg:space-y-0">
           {/* Left Side - Logo */}
           <div>
-            <span className="text-xl font-light text-white">Master Fees</span>
+            <span className="text-xl font-extralight text-white tracking-wide">Master Fees</span>
           </div>
           
           {/* Center - Navigation Links */}
