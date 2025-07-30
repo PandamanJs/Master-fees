@@ -41,7 +41,7 @@ export default function Navigation() {
               </button>
               <button
                 onClick={() => scrollToSection('features')}
-                className="text-slate-600 hover:text-brand-teal px-4 py-2 rounded-lg text-base font-medium transition-all duration-200 hover:bg-brand-mint/10 focus:ring-2 focus:ring-brand-teal/30 hover-lift"
+                className="hover:text-brand-teal px-4 py-2 rounded-lg text-base font-medium transition-all duration-200 hover:bg-brand-mint/10 focus:ring-2 focus:ring-brand-teal/30 hover-lift text-[#ffffff]"
               >
                 Features
               </button>
