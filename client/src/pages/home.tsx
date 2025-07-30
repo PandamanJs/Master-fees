@@ -24,7 +24,7 @@ export default function Home() {
           <p className="text-lg sm:text-xl text-white/90 leading-relaxed mb-8 max-w-xl">
             Unlock the easiest way to collect fees, track revenue, and reduce admin workload at your own school from day one. School loan programs, online payment processing, and analytics—the complete solution for schools like yours.
           </p>
-          <Button className="bg-brand-mint hover:bg-brand-mint/90 text-slate-900 px-8 py-3 rounded-full text-lg font-semibold transition-all duration-200 hover:scale-105">
+          <Button className="bg-brand-mint hover:bg-brand-mint/90 text-slate-900 px-12 py-4 rounded-full text-xl font-bold transition-all duration-200 hover:scale-105 shadow-lg">
             Sign Up Now!
           </Button>
         </div>
