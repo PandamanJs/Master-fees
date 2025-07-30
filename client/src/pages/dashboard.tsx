@@ -7,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { QuickBooksIntegration } from '@/components/quickbooks-integration';
 import { SMSSettings } from '@/components/sms-settings';
 import { ContactForm } from '@/components/contact-form';
+import { FigmaIntegration } from '@/components/figma-integration';
 import { 
   Building2, 
   MessageSquare, 
@@ -103,7 +104,7 @@ export default function Dashboard() {
 
       <div className="max-w-7xl mx-auto p-6">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-5">
+          <TabsList className="grid w-full grid-cols-6">
             <TabsTrigger value="overview" className="flex items-center gap-2">
               <TrendingUp className="w-4 h-4" />
               Overview
@@ -115,6 +116,10 @@ export default function Dashboard() {
             <TabsTrigger value="sms" className="flex items-center gap-2">
               <MessageSquare className="w-4 h-4" />
               SMS
+            </TabsTrigger>
+            <TabsTrigger value="figma" className="flex items-center gap-2">
+              <FileText className="w-4 h-4" />
+              Figma
             </TabsTrigger>
             <TabsTrigger value="ai-assistant" className="flex items-center gap-2">
               <Bot className="w-4 h-4" />
@@ -303,6 +308,10 @@ export default function Dashboard() {
 
           <TabsContent value="sms">
             <SMSSettings />
+          </TabsContent>
+
+          <TabsContent value="figma" className="space-y-6">
+            <FigmaIntegration />
           </TabsContent>
 
           <TabsContent value="ai-assistant">

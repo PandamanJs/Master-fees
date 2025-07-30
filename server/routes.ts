@@ -1,6 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { Router } from "express";
+import figmaRoutes from "./figma-routes";
 import { z } from "zod";
 import { 
   loginSchema, 
@@ -360,6 +361,7 @@ router.use(quickbooksRouter);
 export async function registerRoutes(app: Express): Promise<Server> {
   // Register all API routes with /api prefix
   app.use("/api", router);
+  app.use("/api", figmaRoutes);
 
   const httpServer = createServer(app);
   return httpServer;
