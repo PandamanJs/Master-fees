@@ -6,7 +6,6 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { AIAssistant } from "@/components/ai-assistant";
 import Home from "@/pages/home";
 import Dashboard from "./pages/dashboard";
-import MasterDashboard from "@/pages/master-dashboard";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -14,7 +13,6 @@ function Router() {
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/dashboard" component={Dashboard} />
-      <Route path="/master-dashboard" component={MasterDashboard} />
       <Route component={NotFound} />
     </Switch>
   );
