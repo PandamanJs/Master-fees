@@ -51,8 +51,8 @@ export default function Dashboard() {
     qbSyncStatus: 'Disconnected'
   };
 
-  const recentPayments = dashboardData?.recentPayments || [];
-  const smsActivity = dashboardData?.smsActivity || [];
+  const recentPayments: any[] = dashboardData?.recentPayments || [];
+  const smsActivity: any[] = dashboardData?.smsActivity || [];
 
   const handleRefresh = () => {
     refetch();
@@ -150,7 +150,7 @@ export default function Dashboard() {
                       <CreditCard className="w-6 h-6 text-emerald-600" />
                     </div>
                     <div>
-                      <p className="text-2xl font-semibold text-slate-800">₹{(schoolStats.completedPayments / 100000).toFixed(1)}L</p>
+                      <p className="text-2xl font-semibold text-slate-800">₹{(schoolStats.completedPaymentsAmount / 100000).toFixed(1)}L</p>
                       <p className="text-sm text-slate-600">Fees Collected</p>
                     </div>
                   </div>
@@ -164,7 +164,7 @@ export default function Dashboard() {
                       <Clock className="w-6 h-6 text-orange-600" />
                     </div>
                     <div>
-                      <p className="text-2xl font-semibold text-slate-800">₹{(schoolStats.pendingPayments / 1000).toFixed(0)}K</p>
+                      <p className="text-2xl font-semibold text-slate-800">₹{(schoolStats.pendingPaymentsAmount / 1000).toFixed(0)}K</p>
                       <p className="text-sm text-slate-600">Pending Payments</p>
                     </div>
                   </div>
@@ -195,7 +195,7 @@ export default function Dashboard() {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    {recentPayments.map((payment) => (
+                    {recentPayments.map((payment: any) => (
                       <div key={payment.id} className="flex items-center justify-between">
                         <div>
                           <p className="font-medium text-slate-800">{payment.student}</p>
@@ -235,7 +235,7 @@ export default function Dashboard() {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    {smsActivity.map((sms, index) => (
+                    {smsActivity.map((sms: any, index: number) => (
                       <div key={index} className="flex items-center justify-between">
                         <div>
                           <p className="font-medium text-slate-800">{sms.type}</p>

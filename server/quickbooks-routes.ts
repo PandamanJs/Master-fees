@@ -85,16 +85,16 @@ router.get("/dashboard/data", async (req, res) => {
     
     // Calculate real statistics
     const totalStudents = users.length;
-    const totalFees = payments.reduce((sum, payment) => sum + payment.amount, 0);
-    const completedPayments = payments.filter(p => p.status === 'completed');
-    const pendingPayments = payments.filter(p => p.status === 'pending');
+    const totalFees = payments.reduce((sum: number, payment: any) => sum + parseFloat(payment.amount || '0'), 0);
+    const completedPayments = payments.filter((p: any) => p.status === 'completed');
+    const pendingPayments = payments.filter((p: any) => p.status === 'pending');
     
     const dashboardData = {
       stats: {
         totalStudents,
         totalFees,
-        completedPaymentsAmount: completedPayments.reduce((sum, p) => sum + p.amount, 0),
-        pendingPaymentsAmount: pendingPayments.reduce((sum, p) => sum + p.amount, 0),
+        completedPaymentsAmount: completedPayments.reduce((sum: number, p: any) => sum + parseFloat(p.amount || '0'), 0),
+        pendingPaymentsAmount: pendingPayments.reduce((sum: number, p: any) => sum + parseFloat(p.amount || '0'), 0),
         completedPaymentsCount: completedPayments.length,
         pendingPaymentsCount: pendingPayments.length,
         totalContacts: contacts.length,
@@ -161,7 +161,7 @@ router.get("/quickbooks/live-data/:schoolId", async (req, res) => {
     res.json({
       connected: false,
       message: "Error fetching QuickBooks data",
-      error: error.message
+      error: error instanceof Error ? error.message : 'Unknown error'
     });
   }
 });

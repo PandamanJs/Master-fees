@@ -68,6 +68,12 @@ export interface IStorage {
 
   // Additional student fee methods
   getStudentFeeById(id: number): Promise<StudentFee | null>;
+  
+  // Dashboard data methods
+  getUsers(): Promise<User[]>;
+  getPayments(): Promise<Payment[]>;
+  getContacts(): Promise<ContactMessage[]>;
+  getSMSSettings(): Promise<any[]>;
 }
 
 export class MemStorage implements IStorage {
@@ -235,6 +241,53 @@ export class MemStorage implements IStorage {
     };
     this.studentFees.set(2, studentTransportFee);
     this.currentStudentFeeId = 3;
+
+    // Demo payments for dashboard visualization
+    const payment1: Payment = {
+      id: 1,
+      studentId: 1,
+      amount: "5000.00",
+      paymentMethod: "upi",
+      transactionId: "TXN001",
+      status: "completed",
+      paymentDate: new Date(),
+      academicYear: "2024-25",
+      feeType: "tuition",
+      receiptNumber: "REC001",
+      createdAt: new Date()
+    };
+    this.payments.set(1, payment1);
+
+    const payment2: Payment = {
+      id: 2,
+      studentId: 1,
+      amount: "1500.00",
+      paymentMethod: "card",
+      transactionId: "TXN002",
+      status: "completed",
+      paymentDate: new Date(),
+      academicYear: "2024-25",
+      feeType: "transport",
+      receiptNumber: "REC002",
+      createdAt: new Date()
+    };
+    this.payments.set(2, payment2);
+
+    const payment3: Payment = {
+      id: 3,
+      studentId: 1,
+      amount: "2500.00",
+      paymentMethod: "upi",
+      transactionId: "TXN003", 
+      status: "pending",
+      paymentDate: new Date(),
+      academicYear: "2024-25",
+      feeType: "tuition",
+      receiptNumber: "REC003",
+      createdAt: new Date()
+    };
+    this.payments.set(3, payment3);
+    this.currentPaymentId = 4;
   }
 
   // User operations
@@ -517,6 +570,28 @@ export class MemStorage implements IStorage {
     const updatedMessage = { ...message, isRead: true, status: 'read' as const };
     this.contactMessages.set(id, updatedMessage);
     return true;
+  }
+
+  async getStudentFeeById(id: number): Promise<StudentFee | null> {
+    return this.studentFees.get(id) || null;
+  }
+
+  // Dashboard data methods
+  async getUsers(): Promise<User[]> {
+    return Array.from(this.users.values());
+  }
+
+  async getPayments(): Promise<Payment[]> {
+    return Array.from(this.payments.values());
+  }
+
+  async getContacts(): Promise<ContactMessage[]> {
+    return Array.from(this.contactMessages.values());
+  }
+
+  async getSMSSettings(): Promise<any[]> {
+    // Return empty array for now, can be expanded when SMS settings are implemented
+    return [];
   }
 }
 
