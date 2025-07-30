@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import dashboardImage from "@assets/Dashboard_1753889879790.png";
 
 export default function Home() {
   return (
@@ -101,43 +102,13 @@ export default function Home() {
                       </div>
                     </div>
                     
-                    {/* Dashboard content */}
-                    <div className="p-4">
-                      {/* Top nav */}
-                      <div className="flex justify-between items-center mb-4">
-                        <div className="text-sm font-bold">Dashboard</div>
-                        <div className="flex gap-2">
-                          <div className="w-6 h-6 bg-brand-teal rounded"></div>
-                          <div className="w-6 h-6 bg-gray-200 rounded"></div>
-                        </div>
-                      </div>
-                      
-                      {/* Stats cards */}
-                      <div className="grid grid-cols-3 gap-3 mb-4">
-                        <div className="bg-slate-50 p-3 rounded text-center">
-                          <div className="text-xs text-gray-500">Total Revenue</div>
-                          <div className="text-sm font-bold text-brand-teal">$45,230</div>
-                        </div>
-                        <div className="bg-brand-teal p-3 rounded text-center text-white">
-                          <div className="text-xs opacity-90">Pending</div>
-                          <div className="text-sm font-bold">$3,450</div>
-                        </div>
-                        <div className="bg-slate-50 p-3 rounded text-center">
-                          <div className="text-xs text-gray-500">Students</div>
-                          <div className="text-sm font-bold">1,247</div>
-                        </div>
-                      </div>
-                      
-                      {/* Chart area */}
-                      <div className="bg-slate-800 rounded-lg p-4 h-24">
-                        <div className="flex items-end gap-1 h-full">
-                          <div className="bg-brand-teal w-4 h-8 rounded-sm"></div>
-                          <div className="bg-brand-mint w-4 h-12 rounded-sm"></div>
-                          <div className="bg-brand-teal w-4 h-6 rounded-sm"></div>
-                          <div className="bg-brand-mint w-4 h-16 rounded-sm"></div>
-                          <div className="bg-brand-teal w-4 h-10 rounded-sm"></div>
-                        </div>
-                      </div>
+                    {/* Dashboard content - Real dashboard image */}
+                    <div className="w-full h-full">
+                      <img 
+                        src={dashboardImage} 
+                        alt="Master Fees Dashboard"
+                        className="w-full h-full object-cover rounded-xl"
+                      />
                     </div>
                   </div>
                 </div>
