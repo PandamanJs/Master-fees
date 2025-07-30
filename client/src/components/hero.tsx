@@ -70,14 +70,8 @@ export default function Hero() {
                       <img 
                         src={mobileImage} 
                         alt="Master Fees Mobile Payment Interface"
-                        className="w-64 md:w-72 h-auto shadow-2xl rounded-[3rem] relative z-10 transition-all duration-700"
+                        className="w-64 md:w-72 h-auto shadow-xl rounded-[2.5rem] relative z-10 transition-all duration-700 border border-gray-800/10"
                       />
-                      {/* iPhone Premium Glass Effect */}
-                      <div className="absolute inset-0 bg-gradient-to-tr from-white/20 via-white/8 to-transparent rounded-[3rem] z-20 pointer-events-none"></div>
-                      {/* Dynamic Color Glow */}
-                      <div className="absolute -inset-6 bg-gradient-to-r from-emerald-500/40 via-teal-500/40 to-cyan-500/40 rounded-[4rem] blur-2xl opacity-70 group-hover:opacity-90 transition-all duration-700 -z-10 animate-pulse-slow"></div>
-                      {/* Device Frame Shadow */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-gray-900/15 via-black/8 to-gray-800/15 rounded-[3.2rem] transform rotate-1 -z-5"></div>
                     </div>
                   </div>
                 </div>
@@ -106,14 +100,8 @@ export default function Hero() {
                       <img 
                         src={desktopImage} 
                         alt="Master Fees Admin Dashboard"
-                        className="w-full max-w-md h-auto shadow-2xl rounded-2xl relative z-10 transition-all duration-700"
+                        className="w-full max-w-md h-auto shadow-xl rounded-xl relative z-10 transition-all duration-700 border border-gray-700/20"
                       />
-                      {/* Mac Premium Screen Effect */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-white/8 to-transparent rounded-2xl z-20 pointer-events-none"></div>
-                      {/* Professional Ambient Glow */}
-                      <div className="absolute -inset-8 bg-gradient-to-r from-emerald-400/40 via-teal-400/40 to-cyan-400/40 rounded-3xl blur-2xl opacity-70 group-hover:opacity-90 transition-all duration-700 -z-10 animate-pulse-slow"></div>
-                      {/* Mac Device Frame */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-gray-800/15 via-gray-900/8 to-black/15 rounded-2xl transform -rotate-1 -z-5"></div>
                     </div>
                   </div>
                 </div>
