@@ -54,11 +54,7 @@ export default function Home() {
                       </div>
                     </div>
                     
-                    {/* App header */}
-                    <div className="bg-brand-teal text-white p-4 text-center">
-                      <div className="text-sm font-bold">Master Fees</div>
-                      <div className="text-xs opacity-90">Student Portal</div>
-                    </div>
+                    
                     
                     {/* App content */}
                     <div className="p-4 space-y-4">
