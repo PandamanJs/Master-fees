@@ -4,93 +4,76 @@ import desktopImage from "@assets/Dashboard_1753890963584.png";
 
 export default function Testimonials() {
   return (
-    <section className="py-20 bg-gradient-to-br from-slate-800 via-slate-900 to-brand-teal text-white relative overflow-hidden">
-      {/* Background decorative elements */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-20 right-20 w-64 h-64 bg-brand-mint rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 left-20 w-80 h-80 bg-brand-light-mint rounded-full blur-3xl"></div>
-      </div>
+    <section className="py-32 bg-black text-white relative overflow-hidden">
+      {/* Subtle background gradient */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black via-gray-900/50 to-black"></div>
       
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
+      <div className="max-w-6xl mx-auto px-6 lg:px-8 relative z-10">
+        {/* Apple-style header */}
+        <div className="text-center mb-20">
+          <h1 className="text-6xl md:text-8xl font-light tracking-tight mb-8 bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent">
+            Master Fees
+          </h1>
+          <p className="text-xl md:text-2xl font-light text-gray-300 mb-12 max-w-4xl mx-auto leading-relaxed">
+            The future of school fee management.<br />
+            Beautifully simple. Incredibly powerful.
+          </p>
+          <Button className="bg-white text-black hover:bg-gray-200 px-12 py-4 rounded-full text-lg font-medium transition-all duration-300 shadow-lg hover:shadow-xl">
+            Join the Program
+          </Button>
+        </div>
 
-        {/* White Content Section */}
-        <div className="bg-white rounded-3xl p-8 sm:p-12 text-slate-900 mt-16">
-          {/* Why Join the Program? */}
-          <div>
-            <h2 className="text-3xl md:text-4xl font-bold text-black text-center mb-12">
-              Why Join the Program?
+        {/* Apple-style content section */}
+        <div className="bg-white/5 backdrop-blur-xl rounded-[2.5rem] p-12 lg:p-16 border border-white/10">
+          {/* Apple-style Why Join section */}
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-light text-white mb-16 tracking-tight">
+              Why join the program?
             </h2>
             
-            <div className="grid gap-8 md:gap-12 max-w-4xl mx-auto">
+            <div className="grid gap-16 max-w-5xl mx-auto">
               {/* Tailor-Made for You */}
-              <div className="flex items-start gap-6">
-                <div className="flex-shrink-0">
-                  <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center">
-                    <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center">
-                      <div className="w-4 h-4 bg-white rounded-full"></div>
-                    </div>
-                  </div>
+              <div className="text-center">
+                <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-8 shadow-2xl">
+                  <div className="w-8 h-8 bg-white rounded-full"></div>
                 </div>
-                <div>
-                  <h3 className="text-xl font-bold text-black mb-2">Tailor-Made for You</h3>
-                  <p className="text-gray-700 leading-relaxed">
-                    <span className="font-semibold">Help Shape the Perfect Tool—Built Around Your School's Needs</span><br />
-                    You're not getting a generic solution. With fewer than 30 schools slated to join over the next 12 years, the feedback will directly shape how Master-Fees evolves, ensuring that the final product solves your exact fee collection challenges. This kind of tailor-made software could easily cost thousands of thousands for a team to develop independently—but you'll get it for free, just for sharing your experience.
-                  </p>
-                </div>
+                <h3 className="text-2xl font-light text-white mb-4">Tailor-Made for You</h3>
+                <p className="text-lg font-light text-gray-300 leading-relaxed max-w-2xl mx-auto">
+                  Help shape the perfect tool—built around your school's needs. With fewer than 30 schools joining over 12 years, your feedback directly influences Master-Fees evolution.
+                </p>
               </div>
               
               {/* Premium Access */}
-              <div className="flex items-start gap-6">
-                <div className="flex-shrink-0">
-                  <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center">
-                    <div className="w-10 h-10 bg-yellow-500 rounded-lg flex items-center justify-center">
-                      <div className="w-6 h-4 bg-white rounded-sm"></div>
-                    </div>
-                  </div>
+              <div className="text-center">
+                <div className="w-20 h-20 bg-gradient-to-br from-orange-500 to-red-600 rounded-full flex items-center justify-center mx-auto mb-8 shadow-2xl">
+                  <div className="w-10 h-6 bg-white rounded-sm"></div>
                 </div>
-                <div>
-                  <h3 className="text-xl font-bold text-black mb-2">Premium Access – Absolutely Free</h3>
-                  <p className="text-gray-700 leading-relaxed">
-                    <span className="font-semibold">K7,500 Worth of Value Per Term – Yours Free for a Full Year</span><br />
-                    Get one full year of Master-Fees Premium—our highest-tier product—for zero cost. Normally priced at K7,500 per term, this package includes the full suite of features, updates, and support. You'll use it risk-free and decide later if it's right for your school. No hidden costs. No pressure. Just real results.
-                  </p>
-                </div>
+                <h3 className="text-2xl font-light text-white mb-4">Premium Access — Absolutely Free</h3>
+                <p className="text-lg font-light text-gray-300 leading-relaxed max-w-2xl mx-auto">
+                  K7,500 worth of value per term for a full year. Get Master-Fees Premium at zero cost with complete features, updates, and support.
+                </p>
               </div>
               
               {/* Perfect Revenue Records */}
-              <div className="flex items-start gap-6">
-                <div className="flex-shrink-0">
-                  <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center">
-                    <div className="w-10 h-6 bg-red-500 rounded-sm transform rotate-45"></div>
-                  </div>
+              <div className="text-center">
+                <div className="w-20 h-20 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-8 shadow-2xl">
+                  <div className="w-6 h-8 bg-white rounded-sm transform rotate-45"></div>
                 </div>
-                <div>
-                  <h3 className="text-xl font-bold text-black mb-2">Perfect revenue records</h3>
-                  <p className="text-gray-700 leading-relaxed">
-                    <span className="font-semibold">Instant Reconciliation. Automated Follow-Ups. No More Disputes.</span><br />
-                    From day one, you'll experience seamless fee tracking and automated revenue recovery. Master-Fees drastically reduces your team's workload while improving accuracy. No manual reconciliation. No balance disputes. Just smooth, stress-free fee collection with detailed insights and reporting at your fingertips.
-                  </p>
-                </div>
+                <h3 className="text-2xl font-light text-white mb-4">Perfect Revenue Records</h3>
+                <p className="text-lg font-light text-gray-300 leading-relaxed max-w-2xl mx-auto">
+                  Instant reconciliation. Automated follow-ups. No more disputes. Experience seamless fee tracking with detailed insights at your fingertips.
+                </p>
               </div>
               
               {/* Limited Early Access */}
-              <div className="flex items-start gap-6">
-                <div className="flex-shrink-0">
-                  <div className="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center">
-                    <div className="w-10 h-10 bg-pink-500 rounded-full flex items-center justify-center">
-                      <div className="w-6 h-6 border-2 border-white rounded-full"></div>
-                    </div>
-                  </div>
+              <div className="text-center">
+                <div className="w-20 h-20 bg-gradient-to-br from-pink-500 to-rose-600 rounded-full flex items-center justify-center mx-auto mb-8 shadow-2xl">
+                  <div className="w-8 h-8 border-2 border-white rounded-full bg-transparent"></div>
                 </div>
-                <div>
-                  <h3 className="text-xl font-bold text-black mb-2">Limited early access</h3>
-                  <p className="text-gray-700 leading-relaxed">
-                    <span className="font-semibold">Only 10 Schools. Once It's Full, It's Gone.</span><br />
-                    This program is intentionally capped at 10 schools to ensure dedicated support and true partnership. Once the slots are filled, you may have to wait several additional months for this access again. So you still have a chance—but time and space are running out.
-                  </p>
-                </div>
+                <h3 className="text-2xl font-light text-white mb-4">Limited Early Access</h3>
+                <p className="text-lg font-light text-gray-300 leading-relaxed max-w-2xl mx-auto">
+                  Only 10 schools. Once it's full, it's gone. Intentionally capped to ensure dedicated support and true partnership.
+                </p>
               </div>
             </div>
           </div>

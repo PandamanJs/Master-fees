@@ -49,41 +49,62 @@ const features = [
 
 export default function Features() {
   return (
-    <section id="features" className="py-12 sm:py-16 md:py-20 lg:py-24 bg-slate-50/80 transition-all duration-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-8">
-            What is master-fees?
+    <section id="features" className="py-32 bg-gray-50 transition-all duration-300">
+      <div className="max-w-6xl mx-auto px-6 lg:px-8">
+        {/* Apple-style Section Header */}
+        <div className="text-center mb-20">
+          <h2 className="text-4xl md:text-5xl font-light text-black mb-6 tracking-tight">
+            What is Master Fees?
           </h2>
-        </div>
-
-        {/* Device Mockups Display */}
-        <div className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-16">
-          {/* Mobile Mockup */}
-          <div className="relative">
-            <img 
-              src={mobileImage} 
-              alt="fee Master Mobile Interface - Twalumbu Education Centre Payment Flow"
-              className="w-72 h-auto shadow-2xl rounded-[3rem]"
-            />
-          </div>
-
-          {/* Desktop Mockup */}
-          <div className="relative">
-            <img 
-              src={desktopImage} 
-              alt="fee Master Admin Dashboard - Revenue Recovery and Financial Management"
-              className="w-[600px] h-auto shadow-2xl rounded-2xl"
-            />
-          </div>
-        </div>
-
-        {/* Description below images */}
-        <div className="text-center mt-12 max-w-4xl mx-auto">
-          <p className="text-gray-700 leading-relaxed text-lg">
-            Master-Fees is a smart, <span className="font-semibold">automated fee collection platform</span> designed for schools. It simplifies tuition payments by enabling guardians to pay online, instantly generating and distributing invoices and receipts. All transactions are automatically updated in a centralised dashboard—giving you <span className="font-semibold">real-time access to revenue, collections, and student balances</span> wherever you are. Say goodbye to the delays and manual errors of cash and bank payments.
+          <p className="text-xl font-light text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            A beautifully simple platform that transforms how schools manage fees.
           </p>
+        </div>
+
+        {/* Apple-style Device Showcase */}
+        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center mb-20">
+          {/* Mobile Showcase */}
+          <div className="text-center lg:text-left">
+            <div className="inline-block mb-8">
+              <img 
+                src={mobileImage} 
+                alt="Master Fees Mobile Interface"
+                className="w-72 h-auto shadow-2xl rounded-[3rem] transition-all duration-700"
+              />
+            </div>
+            <h3 className="text-2xl font-light text-black mb-4">For Parents</h3>
+            <p className="text-lg font-light text-gray-600 leading-relaxed">
+              Simple, intuitive payments from any device. Real-time updates and instant receipts.
+            </p>
+          </div>
+          
+          {/* Desktop Showcase */}
+          <div className="text-center lg:text-right">
+            <div className="inline-block mb-8">
+              <img 
+                src={desktopImage} 
+                alt="Master Fees Admin Dashboard"
+                className="w-full max-w-lg h-auto shadow-2xl rounded-2xl transition-all duration-700"
+              />
+            </div>
+            <h3 className="text-2xl font-light text-black mb-4">For Schools</h3>
+            <p className="text-lg font-light text-gray-600 leading-relaxed">
+              Complete financial oversight with powerful analytics and automated workflows.
+            </p>
+          </div>
+        </div>
+
+        {/* Apple-style feature grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {features.slice(0, 6).map((feature, index) => (
+            <div key={index} className="text-center p-8 bg-white rounded-3xl shadow-sm transition-all duration-300 hover:shadow-lg">
+              <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <feature.icon className="w-8 h-8 text-gray-700" />
+              </div>
+              <h3 className="text-xl font-light text-black mb-4">{feature.title}</h3>
+              <p className="text-gray-600 font-light leading-relaxed">{feature.description}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>

@@ -16,55 +16,54 @@ export default function Navigation() {
   };
 
   return (
-    <nav className="backdrop-blur-xl sticky top-0 z-50 transition-all duration-300 bg-transparent">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16 sm:h-18 lg:h-20">
-          {/* Logo */}
+    <nav className="backdrop-blur-2xl sticky top-0 z-50 transition-all duration-300 bg-black/80 border-b border-white/10">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          {/* Apple-style Logo */}
           <div className="flex items-center">
-            <div className="flex-shrink-0 flex items-center group cursor-pointer hover-lift cursor-magic">
+            <div className="flex-shrink-0 flex items-center group cursor-pointer">
               <img 
                 src={logoImage} 
                 alt="Master Fees Logo" 
-                className="w-8 h-8 sm:w-10 sm:h-10 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12 animate-bounce-subtle group-hover:animate-rubber-band"
+                className="w-8 h-8 transition-all duration-300"
               />
-              <span className="ml-2 sm:ml-3 text-xl sm:text-2xl font-bold transition-all duration-300 group-hover:text-brand-teal group-hover:animate-wiggle text-[#ffffff]">Master Fees</span>
+              <span className="ml-3 text-xl font-light text-white transition-all duration-300">Master Fees</span>
             </div>
           </div>
           
-          {/* Desktop Navigation */}
+          {/* Apple-style Desktop Navigation */}
           <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-1 text-[#f2f5f7]">
+            <div className="flex items-center space-x-8">
               <button
                 onClick={() => scrollToSection('home')}
-                className="hover:text-brand-teal px-4 py-2 rounded-lg text-base font-medium transition-all duration-200 hover:bg-brand-mint/10 focus:ring-2 focus:ring-brand-teal/30 hover-lift text-[#ffffff]"
+                className="text-white/90 hover:text-white text-sm font-light transition-all duration-300"
               >
                 Home
               </button>
               <button
                 onClick={() => scrollToSection('features')}
-                className="hover:text-brand-teal px-4 py-2 rounded-lg text-base font-medium transition-all duration-200 hover:bg-brand-mint/10 focus:ring-2 focus:ring-brand-teal/30 hover-lift text-[#ffffff]"
+                className="text-white/90 hover:text-white text-sm font-light transition-all duration-300"
               >
                 Features
               </button>
               <button
                 onClick={() => scrollToSection('about')}
-                className="hover:text-brand-teal px-4 py-2 rounded-lg text-base font-medium transition-all duration-200 hover:bg-brand-mint/10 focus:ring-2 focus:ring-brand-teal/30 hover-lift text-[#ffffff]"
+                className="text-white/90 hover:text-white text-sm font-light transition-all duration-300"
               >
                 About
               </button>
-
               <button
                 onClick={() => scrollToSection('contact')}
-                className="hover:text-brand-teal px-4 py-2 rounded-lg text-base font-medium transition-all duration-200 hover:bg-brand-mint/10 focus:ring-2 focus:ring-brand-teal/30 text-[#ffffff]"
+                className="text-white/90 hover:text-white text-sm font-light transition-all duration-300"
               >
                 Contact
               </button>
             </div>
           </div>
           
-          {/* CTA Button */}
+          {/* Apple-style CTA Button */}
           <div className="hidden md:flex items-center">
-            <Button className={cn("bg-[#98fbcb] hover:bg-opacity-90 text-white")}>
+            <Button className="bg-white text-black hover:bg-gray-200 px-6 py-2 rounded-full text-sm font-medium transition-all duration-300">
               Get Started
             </Button>
           </div>
