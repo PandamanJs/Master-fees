@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import logoImage from "@assets/Group 15_1751377323388.png";
 
 export default function Navigation() {
@@ -63,7 +64,7 @@ export default function Navigation() {
           
           {/* CTA Button */}
           <div className="hidden md:flex items-center">
-            <Button className="bg-[#98fbcb] hover:bg-opacity-90 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200">
+            <Button className={cn("bg-[#98fbcb] hover:bg-opacity-90 text-white")}>
               Get Started
             </Button>
           </div>
@@ -110,7 +111,7 @@ export default function Navigation() {
               Contact
             </button>
             <div className="pt-4">
-              <Button className="w-full bg-[#98fbcb] hover:bg-opacity-90 text-white px-4 py-3 rounded-lg text-base font-medium transition-all duration-200">
+              <Button className={cn("w-full bg-[#98fbcb] hover:bg-opacity-90 text-white")}>
                 Get Started
               </Button>
             </div>
