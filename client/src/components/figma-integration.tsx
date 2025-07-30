@@ -181,6 +181,38 @@ export function FigmaIntegration() {
               </p>
             </div>
           )}
+          
+          {fileData?.success === false && (
+            <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
+              <div className="flex items-start gap-2">
+                <AlertTriangle className="w-5 h-5 text-red-500 mt-0.5" />
+                <div className="flex-1">
+                  <h4 className="font-medium text-red-800 mb-1">File Access Error</h4>
+                  <p className="text-sm text-red-700 mb-3">{fileData.error}</p>
+                  
+                  {fileData.error?.includes("File type not supported") && (
+                    <div className="bg-red-100 rounded-lg p-3 mb-3">
+                      <p className="text-sm text-red-800 font-medium mb-2">This appears to be a FigJam or prototype file</p>
+                      <p className="text-sm text-red-700">
+                        The file key points to a file type that isn't supported for design import. 
+                        Please use a regular Figma design file instead.
+                      </p>
+                    </div>
+                  )}
+                  
+                  <div className="text-sm text-red-700">
+                    <p className="font-medium mb-1">To fix this issue:</p>
+                    <ul className="list-disc list-inside space-y-1 ml-2">
+                      <li>Make sure you're using a regular Figma design file (not FigJam)</li>
+                      <li>Check that the file key is correct (from the URL after /file/)</li>
+                      <li>Ensure the file is public or you have access to it</li>
+                      <li>Try creating a new Figma design file if needed</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </CardContent>
       </Card>
 
@@ -293,20 +325,38 @@ export function FigmaIntegration() {
         <CardContent className="space-y-3 text-sm text-slate-600">
           <div className="flex items-start gap-2">
             <span className="font-medium text-slate-800">1.</span>
-            <span>Get your Figma file key from the URL (after /file/)</span>
+            <span>Create or open a regular Figma design file (not FigJam)</span>
           </div>
           <div className="flex items-start gap-2">
             <span className="font-medium text-slate-800">2.</span>
-            <span>Enter the file key above and click download</span>
+            <span>Get your file key from the URL (after /file/)</span>
           </div>
           <div className="flex items-start gap-2">
             <span className="font-medium text-slate-800">3.</span>
-            <span>Use "Sync Design" to extract colors and styles</span>
+            <span>Enter the file key above and click download</span>
           </div>
           <div className="flex items-start gap-2">
             <span className="font-medium text-slate-800">4.</span>
+            <span>Use "Sync Design" to extract colors and styles</span>
+          </div>
+          <div className="flex items-start gap-2">
+            <span className="font-medium text-slate-800">5.</span>
             <span>Generate components by copying node IDs from Figma</span>
           </div>
+          
+          <div className="mt-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
+            <div className="flex items-start gap-2">
+              <AlertTriangle className="w-4 h-4 text-amber-600 mt-0.5" />
+              <div>
+                <p className="text-amber-800 font-medium text-sm">Current File Issue</p>
+                <p className="text-amber-700 text-sm">
+                  The file key you provided (iETcOYVOVX4YMS9eunNhqK) points to a FigJam or prototype file. 
+                  Please use a regular Figma design file instead.
+                </p>
+              </div>
+            </div>
+          </div>
+          
           <div className="mt-4 p-3 bg-blue-50 rounded-lg">
             <a 
               href="https://help.figma.com/hc/en-us/articles/360040328273-Finding-node-IDs" 

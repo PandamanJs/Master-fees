@@ -21,10 +21,31 @@ router.get("/figma/file/:fileKey", async (req, res) => {
     });
   } catch (error) {
     console.error("Figma file error:", error);
+    
+    // Provide more detailed error information
+    let errorMessage = "Failed to retrieve file";
+    let errorCode = "FIGMA_FILE_ERROR";
+    
+    if (error instanceof Error) {
+      if (error.message.includes("400")) {
+        errorMessage = "File not found or access denied. Please check: 1) File key is correct, 2) File is public or you have access, 3) File exists in your Figma account";
+        errorCode = "FIGMA_ACCESS_DENIED";
+      } else if (error.message.includes("401")) {
+        errorMessage = "Invalid Figma access token. Please check your API credentials";
+        errorCode = "FIGMA_AUTH_ERROR";
+      } else if (error.message.includes("403")) {
+        errorMessage = "Insufficient permissions to access this file";
+        errorCode = "FIGMA_PERMISSION_ERROR";
+      } else {
+        errorMessage = error.message;
+      }
+    }
+    
     res.status(500).json({
       success: false,
-      error: error instanceof Error ? error.message : "Failed to retrieve file",
-      code: "FIGMA_FILE_ERROR"
+      error: errorMessage,
+      code: errorCode,
+      fileKey: fileKey
     });
   }
 });
@@ -210,6 +231,41 @@ router.get("/figma/test-connection", async (req, res) => {
       success: false,
       error: error instanceof Error ? error.message : "Connection test failed",
       code: "FIGMA_CONNECTION_ERROR"
+    });
+  }
+});
+
+// Debug file access
+router.get("/figma/debug-file/:fileKey", async (req, res) => {
+  try {
+    const fileKey = req.params.fileKey;
+    console.log(`Attempting to access Figma file: ${fileKey}`);
+    
+    // Test direct API call to understand the exact error
+    const response = await fetch(`https://api.figma.com/v1/files/${fileKey}`, {
+      headers: {
+        'X-Figma-Token': process.env.FIGMA_ACCESS_TOKEN || '',
+      },
+    });
+    
+    const responseText = await response.text();
+    console.log(`Response status: ${response.status}`);
+    console.log(`Response text: ${responseText}`);
+    
+    res.json({
+      success: response.ok,
+      status: response.status,
+      statusText: response.statusText,
+      response: responseText,
+      fileKey: fileKey,
+      message: response.ok ? "File accessible" : "File access failed"
+    });
+  } catch (error) {
+    console.error("Debug file access error:", error);
+    res.status(500).json({
+      success: false,
+      error: error instanceof Error ? error.message : "Debug failed",
+      code: "FIGMA_DEBUG_ERROR"
     });
   }
 });

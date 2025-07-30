@@ -120,7 +120,9 @@ export class FigmaService {
     });
 
     if (!response.ok) {
-      throw new Error(`Figma API error: ${response.status} ${response.statusText}`);
+      const errorText = await response.text();
+      console.error(`Figma API error details: ${response.status} ${response.statusText}`, errorText);
+      throw new Error(`Figma API error: ${response.status} ${response.statusText} - ${errorText}`);
     }
 
     return response.json();
