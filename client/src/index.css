@@ -274,30 +274,7 @@ html {
   transform: perspective(1000px) rotateX(10deg) rotateY(-10deg) scale(1.05);
 }
 
-.cursor-magic {
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-}
 
-.cursor-magic::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  background: radial-gradient(circle, rgba(20, 184, 166, 0.3) 0%, transparent 70%);
-  transition: all 0.5s ease;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  pointer-events: none;
-}
-
-.cursor-magic:hover::before {
-  width: 300px;
-  height: 300px;
-}
 
 /* Hover scale utilities */
 .hover\:scale-102:hover {
@@ -731,73 +708,7 @@ html {
   cursor: zoom-in;
 }
 
-/* Custom cursor styles */
-* {
-  cursor: none;
-}
 
-@keyframes cursor-pulse {
-  0%, 100% { 
-    transform: scale(1);
-    opacity: 1;
-  }
-  50% { 
-    transform: scale(1.2);
-    opacity: 0.8;
-  }
-}
-
-@keyframes cursor-rotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-.custom-cursor {
-  position: fixed;
-  width: 12px;
-  height: 12px;
-  background: hsl(151, 93%, 79%);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9999;
-  transition: all 0.1s ease;
-}
-
-.custom-cursor-follower {
-  position: fixed;
-  width: 24px;
-  height: 24px;
-  border: 1px solid hsl(151, 93%, 79%);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9998;
-  transition: all 0.2s ease;
-  opacity: 0.5;
-}
-
-.custom-cursor-hover {
-  transform: scale(1.5);
-  background: hsl(201, 100%, 14%);
-}
-
-.custom-cursor-follower-hover {
-  transform: scale(1.2);
-  border-color: hsl(201, 100%, 14%);
-  opacity: 0.8;
-}
-
-/* Cursor for different elements */
-button, a, [role="button"] {
-  cursor: none !important;
-}
-
-input, textarea, select {
-  cursor: none !important;
-}
-
-.cursor-text {
-  cursor: none !important;
-}
 
 /* Mascot animations */
 @keyframes mascot-idle {
