@@ -123,7 +123,7 @@ class QuickBooksService {
       sandboxBaseUrl: 'https://sandbox-quickbooks.api.intuit.com',
       discoveryDocument: 'https://appcenter.intuit.com/api/v1/connection/oauth2',
       scope: 'com.intuit.quickbooks.accounting',
-      redirectUri: process.env.QUICKBOOKS_REDIRECT_URI || 'https://developer.intuit.com/v2/OAuth2Playground/RedirectUrl'
+      redirectUri: process.env.QUICKBOOKS_REDIRECT_URI || 'https://master-fees.com/dashboard'
     };
   }
 
