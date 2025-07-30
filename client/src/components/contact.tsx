@@ -41,37 +41,37 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="py-12 sm:py-16 bg-slate-50">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-3">
+    <section id="contact" className="py-32 bg-black">
+      <div className="max-w-4xl mx-auto px-6 lg:px-8">
+        {/* Apple-style Header */}
+        <div className="text-center mb-20">
+          <h2 className="text-4xl md:text-5xl font-light text-white mb-6 tracking-tight">
             Get in Touch
           </h2>
-          <p className="text-lg text-slate-600">
-            Ready to transform your school's fee management? Contact us today.
+          <p className="text-xl font-light text-gray-300 max-w-2xl mx-auto leading-relaxed">
+            Ready to transform your school's fee management? Let's start the conversation.
           </p>
         </div>
 
-        {/* Contact Form */}
-        <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8 border border-slate-200">
-          <form onSubmit={handleSubmit} className="space-y-4">
+        {/* Apple-style Contact Form */}
+        <div className="bg-white/5 backdrop-blur-xl rounded-[2.5rem] p-12 lg:p-16 border border-white/10">
+          <form onSubmit={handleSubmit} className="space-y-8">
             {/* Name and Email Row */}
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="space-y-1">
-                <label className="text-slate-700 font-medium text-sm">
+            <div className="grid md:grid-cols-2 gap-8">
+              <div className="space-y-3">
+                <label className="text-white font-light text-sm">
                   Full Name
                 </label>
                 <Input
                   type="text"
-                  placeholder="Type here"
+                  placeholder="Enter your name"
                   value={formData.fullName}
                   onChange={(e) => handleInputChange("fullName", e.target.value)}
-                  className="bg-white border border-slate-300 text-slate-900 placeholder:text-slate-400 h-10 focus:border-brand-teal hover-lift"
+                  className="bg-white/10 border border-white/20 text-white placeholder:text-gray-400 h-12 rounded-xl focus:border-white/40 focus:bg-white/15 transition-all duration-300"
                 />
               </div>
-              <div className="space-y-1">
-                <label className="text-slate-700 font-medium text-sm">
+              <div className="space-y-3">
+                <label className="text-white font-light text-sm">
                   Email
                 </label>
                 <Input
