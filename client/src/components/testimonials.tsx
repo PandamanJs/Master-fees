@@ -31,34 +31,6 @@ export default function Testimonials() {
 
         {/* White Content Section */}
         <div className="bg-white rounded-3xl p-8 sm:p-12 text-slate-900 mt-16">
-          {/* Device Mockups */}
-            <div className="flex flex-col lg:flex-row items-center justify-center gap-8 mb-8">
-              {/* Mobile Mockup */}
-              <div className="relative">
-                <img 
-                  src={mobileImage} 
-                  alt="fee Master Mobile Interface - Twalumbu Education Centre Payment Flow"
-                  className="w-72 h-auto shadow-2xl rounded-[3rem]"
-                />
-              </div>
-              
-              {/* Desktop Mockup */}
-              <div className="relative">
-                <img 
-                  src={desktopImage} 
-                  alt="fee Master Admin Dashboard - Revenue Recovery and Financial Management"
-                  className="w-[500px] h-auto shadow-2xl rounded-2xl"
-                />
-              </div>
-            </div>
-            
-            {/* Description */}
-            <div className="max-w-4xl mx-auto text-center">
-              <p className="text-gray-700 leading-relaxed mb-4 text-lg">
-                Master-Fees is a smart, <span className="font-semibold">automated fee collection platform</span> designed for schools. It simplifies tuition payments by enabling guardians to pay online, instantly generating and distributing invoices and receipts. All transactions are automatically updated in a centralised dashboard—giving you <span className="font-semibold">real-time access to revenue, collections, and student balances</span> wherever you are. Say goodbye to the delays and manual errors of cash and bank payments.
-              </p>
-            </div>
-          </div>
 
           {/* Why Join the Program? */}
           <div className="mt-16">
