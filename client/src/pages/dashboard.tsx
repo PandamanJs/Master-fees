@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -23,33 +24,40 @@ import {
   RefreshCw
 } from 'lucide-react';
 import { Link } from 'wouter';
+import { queryClient } from '@/lib/queryClient';
 
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState('overview');
 
-  // Demo data for dashboard
-  const schoolStats = {
-    totalStudents: 847,
-    totalFees: 2543600,
-    pendingPayments: 156400,
-    completedPayments: 2387200,
-    smsNotifications: 1240,
-    qbSyncStatus: 'Connected'
+  // Fetch real-time dashboard data
+  const { data: dashboardData, isLoading, refetch } = useQuery({
+    queryKey: ['/api/dashboard/data'],
+    refetchInterval: 30000, // Refresh every 30 seconds
+  });
+
+  // Fetch QuickBooks live data
+  const { data: qbLiveData } = useQuery({
+    queryKey: ['/api/quickbooks/live-data/1'],
+    refetchInterval: 60000, // Refresh every minute
+  });
+
+  // Use real data or fallback to demo data
+  const schoolStats = dashboardData?.stats || {
+    totalStudents: 0,
+    totalFees: 0,
+    pendingPaymentsAmount: 0,
+    completedPaymentsAmount: 0,
+    smsNotifications: 0,
+    qbSyncStatus: 'Disconnected'
   };
 
-  const recentPayments = [
-    { id: 1, student: 'Rahul Sharma', amount: 2500, status: 'completed', date: '2025-07-30' },
-    { id: 2, student: 'Priya Patel', amount: 3000, status: 'completed', date: '2025-07-30' },
-    { id: 3, student: 'Arjun Singh', amount: 2200, status: 'pending', date: '2025-07-29' },
-    { id: 4, student: 'Sneha Gupta', amount: 2800, status: 'completed', date: '2025-07-29' },
-  ];
+  const recentPayments = dashboardData?.recentPayments || [];
+  const smsActivity = dashboardData?.smsActivity || [];
 
-  const smsActivity = [
-    { type: 'Payment Confirmation', count: 45, status: 'sent' },
-    { type: 'Fee Reminder', count: 23, status: 'sent' },
-    { type: 'Contact Form', count: 8, status: 'sent' },
-    { type: 'Welcome Message', count: 12, status: 'sent' },
-  ];
+  const handleRefresh = () => {
+    refetch();
+    queryClient.invalidateQueries({ queryKey: ['/api/quickbooks/live-data/1'] });
+  };
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -74,10 +82,21 @@ export default function Dashboard() {
                 </div>
               </div>
             </div>
-            <Badge className="bg-emerald-100 text-emerald-700 border-emerald-200">
-              <CheckCircle2 className="w-3 h-3 mr-1" />
-              All Systems Active
-            </Badge>
+            <div className="flex items-center gap-3">
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={handleRefresh}
+                disabled={isLoading}
+              >
+                <RefreshCw className={`w-4 h-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
+                Sync Data
+              </Button>
+              <Badge className="bg-emerald-100 text-emerald-700 border-emerald-200">
+                <CheckCircle2 className="w-3 h-3 mr-1" />
+                {isLoading ? 'Syncing...' : 'Live Data'}
+              </Badge>
+            </div>
           </div>
         </div>
       </div>
