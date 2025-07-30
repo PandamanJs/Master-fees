@@ -23,14 +23,14 @@ export default function Hero() {
 
       {/* Main content with enhanced visual hierarchy */}
       <div className="relative z-10 max-w-8xl mx-auto px-12 lg:px-16 text-center">
-        {/* Hero heading - Mathematical spacing and perfect hierarchy */}
-        <div className="mb-24">
-          <h1 className="text-7xl md:text-8xl lg:text-9xl font-extralight tracking-[-0.04em] text-white mb-12 leading-[0.78] transform transition-all duration-1000">
+        {/* Hero heading - Compact spacing with perfect hierarchy */}
+        <div className="mb-16">
+          <h1 className="text-7xl md:text-8xl lg:text-9xl font-extralight tracking-[-0.04em] text-white mb-8 leading-[0.78] transform transition-all duration-1000">
             Master Fees
           </h1>
           
-          {/* Perfect visual hierarchy with 1.618 golden ratio spacing */}
-          <div className="max-w-6xl mx-auto space-y-6 mb-12">
+          {/* Perfect visual hierarchy with reduced spacing */}
+          <div className="max-w-6xl mx-auto space-y-4 mb-8">
             <h2 className="text-4xl md:text-5xl font-light text-slate-50 leading-[1.1] tracking-[-0.01em]">
               The future of school fee management.
             </h2>
@@ -40,8 +40,8 @@ export default function Hero() {
           </div>
         </div>
         
-        {/* Supporting content with mathematical 24px baseline grid */}
-        <div className="mb-24 max-w-5xl mx-auto">
+        {/* Supporting content with compact spacing */}
+        <div className="mb-16 max-w-5xl mx-auto">
           <p className="text-2xl md:text-3xl font-light text-slate-200 leading-[1.4] tracking-[-0.005em] opacity-95">
             Join our exclusive test program and experience the easiest way to collect fees, 
             track revenue, and reduce admin work—all at zero cost.
@@ -49,7 +49,7 @@ export default function Hero() {
         </div>
         
         {/* CTA section with perfect symmetrical balance */}
-        <div className="flex flex-col sm:flex-row gap-12 justify-center items-center mb-40">
+        <div className="flex flex-col sm:flex-row gap-8 justify-center items-center mb-24">
           <Button className="bg-emerald-400 text-slate-900 hover:bg-emerald-300 px-16 py-6 rounded-2xl text-xl font-medium transition-all duration-700 shadow-3xl hover:scale-[1.02] tracking-wide min-w-[240px] border border-emerald-300">
             Join the Program
           </Button>
@@ -59,9 +59,9 @@ export default function Hero() {
         </div>
 
         {/* Apple-style Device Showcase - What is Master Fees */}
-        <div className="mt-20">
-          <div className="text-center mb-32">
-            <h3 className="text-5xl md:text-6xl font-extralight text-white mb-12 tracking-[-0.03em] leading-[0.9]">
+        <div className="mt-16">
+          <div className="text-center mb-20">
+            <h3 className="text-5xl md:text-6xl font-extralight text-white mb-8 tracking-[-0.03em] leading-[0.9]">
               What is Master Fees?
             </h3>
             <p className="text-2xl md:text-3xl font-light text-slate-200 max-w-5xl mx-auto leading-[1.3] opacity-95">
@@ -69,11 +69,11 @@ export default function Hero() {
             </p>
           </div>
 
-          {/* Premium Device Showcase with mathematical spacing and visual hierarchy */}
-          <div className="grid lg:grid-cols-2 gap-24 lg:gap-40 items-start max-w-8xl mx-auto">
+          {/* Premium Device Showcase with reduced spacing and visual hierarchy */}
+          <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-start max-w-8xl mx-auto">
             {/* iPhone-style Mobile Showcase with enhanced design principles */}
             <div className="text-center group">
-              <div className={`relative mb-16 transition-all duration-1200 ease-out ${
+              <div className={`relative mb-12 transition-all duration-1200 ease-out ${
                 isLoaded 
                   ? 'transform translate-y-0 opacity-100 rotate-0 scale-100' 
                   : 'transform translate-y-16 opacity-0 rotate-2 scale-90'
@@ -109,7 +109,7 @@ export default function Hero() {
             
             {/* MacBook-style Desktop Showcase with enhanced design principles */}
             <div className="text-center group">
-              <div className={`relative mb-16 transition-all duration-1200 ease-out delay-400 ${
+              <div className={`relative mb-12 transition-all duration-1200 ease-out delay-400 ${
                 isLoaded 
                   ? 'transform translate-y-0 opacity-100 rotate-0 scale-100' 
                   : 'transform translate-y-16 opacity-0 -rotate-2 scale-90'
