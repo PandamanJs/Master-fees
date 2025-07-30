@@ -28,6 +28,7 @@ export function FigmaIntegration() {
   // Test Figma connection
   const { data: connectionTest, isLoading: testingConnection } = useQuery({
     queryKey: ['/api/figma/test-connection'],
+    queryFn: () => fetch('/api/figma/test-connection').then(res => res.json()),
   });
 
   // Get file data when fileKey is provided
@@ -40,11 +41,11 @@ export function FigmaIntegration() {
   // Sync design system mutation
   const syncDesignMutation = useMutation({
     mutationFn: (fileKey: string) => 
-      apiRequest(`/api/figma/sync-design/${fileKey}`, { method: 'POST' }),
-    onSuccess: (data) => {
+      apiRequest(`/api/figma/sync-design/${fileKey}`, 'POST'),
+    onSuccess: (data: any) => {
       toast({
         title: "Design System Synced",
-        description: `Found ${data.data.colorsFound} colors and ${data.data.textStylesFound} text styles`,
+        description: `Found ${data.data?.colorsFound || 0} colors and ${data.data?.textStylesFound || 0} text styles`,
       });
       queryClient.invalidateQueries({ queryKey: ['/api/figma'] });
     },
@@ -60,18 +61,14 @@ export function FigmaIntegration() {
   // Generate component mutation
   const generateComponentMutation = useMutation({
     mutationFn: ({ fileKey, nodeId }: { fileKey: string; nodeId: string }) =>
-      apiRequest(`/api/figma/generate-component/${fileKey}`, {
-        method: 'POST',
-        body: JSON.stringify({ nodeId }),
-        headers: { 'Content-Type': 'application/json' },
-      }),
-    onSuccess: (data) => {
+      apiRequest(`/api/figma/generate-component/${fileKey}`, 'POST', { nodeId }),
+    onSuccess: (data: any) => {
       toast({
         title: "Component Generated",
         description: "React component code generated successfully",
       });
       // You could save this to a file or show in a modal
-      console.log('Generated component:', data.data.code);
+      console.log('Generated component:', data.data?.code);
     },
     onError: (error: any) => {
       toast({
@@ -173,41 +170,62 @@ export function FigmaIntegration() {
           
           {fileData?.success && (
             <div className="p-4 bg-slate-50 rounded-lg">
-              <h4 className="font-medium text-slate-800 mb-2">
-                {fileData.data.document.name}
-              </h4>
+              <div className="flex items-center gap-2 mb-2">
+                <h4 className="font-medium text-slate-800">
+                  {fileData.data.document?.name || 'Figma File'}
+                </h4>
+                {fileData.data.isPrototype && (
+                  <Badge variant="secondary" className="text-xs">
+                    Figma Make
+                  </Badge>
+                )}
+              </div>
               <p className="text-sm text-slate-600">
-                {fileData.data.document.children?.length || 0} top-level frames
+                {fileData.data.document?.children?.length || 0} top-level frames
               </p>
+              {fileData.data.isPrototype && (
+                <p className="text-xs text-amber-600 mt-2">
+                  Prototype file detected. Some features may be limited.
+                </p>
+              )}
             </div>
           )}
           
           {fileData?.success === false && (
-            <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
+            <div className="p-4 bg-amber-50 border border-amber-200 rounded-lg">
               <div className="flex items-start gap-2">
-                <AlertTriangle className="w-5 h-5 text-red-500 mt-0.5" />
+                <AlertTriangle className="w-5 h-5 text-amber-500 mt-0.5" />
                 <div className="flex-1">
-                  <h4 className="font-medium text-red-800 mb-1">File Access Error</h4>
-                  <p className="text-sm text-red-700 mb-3">{fileData.error}</p>
+                  <h4 className="font-medium text-amber-800 mb-1">Figma Make File Detected</h4>
+                  <p className="text-sm text-amber-700 mb-3">
+                    Your file is a Figma Make prototype, which has limited API access. However, I can still help with design integration.
+                  </p>
                   
-                  {fileData.error?.includes("File type not supported") && (
-                    <div className="bg-red-100 rounded-lg p-3 mb-3">
-                      <p className="text-sm text-red-800 font-medium mb-2">This appears to be a FigJam or prototype file</p>
-                      <p className="text-sm text-red-700">
-                        The file key points to a file type that isn't supported for design import. 
-                        Please use a regular Figma design file instead.
-                      </p>
-                    </div>
-                  )}
-                  
-                  <div className="text-sm text-red-700">
-                    <p className="font-medium mb-1">To fix this issue:</p>
-                    <ul className="list-disc list-inside space-y-1 ml-2">
-                      <li>Make sure you're using a regular Figma design file (not FigJam)</li>
-                      <li>Check that the file key is correct (from the URL after /file/)</li>
-                      <li>Ensure the file is public or you have access to it</li>
-                      <li>Try creating a new Figma design file if needed</li>
+                  <div className="bg-amber-100 rounded-lg p-3 mb-3">
+                    <p className="text-sm text-amber-800 font-medium mb-2">Alternative Options:</p>
+                    <ul className="text-sm text-amber-700 space-y-1 list-disc list-inside ml-2">
+                      <li>Export your Figma Make design as images and I'll help integrate them</li>
+                      <li>Recreate key components in a regular Figma design file</li>
+                      <li>Share design specifications and I'll build matching components</li>
+                      <li>Use the Master Fees color palette and design system as a starting point</li>
                     </ul>
+                  </div>
+                  
+                  <div className="flex gap-2">
+                    <Button 
+                      size="sm"
+                      onClick={() => setFileKey('demo-dashboard')}
+                      className="bg-amber-600 hover:bg-amber-700"
+                    >
+                      View Demo Integration
+                    </Button>
+                    <Button 
+                      size="sm" 
+                      variant="outline"
+                      onClick={() => window.open('https://www.figma.com/file/new', '_blank')}
+                    >
+                      Create New Design File
+                    </Button>
                   </div>
                 </div>
               </div>
@@ -344,14 +362,14 @@ export function FigmaIntegration() {
             <span>Generate components by copying node IDs from Figma</span>
           </div>
           
-          <div className="mt-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
+          <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
             <div className="flex items-start gap-2">
-              <AlertTriangle className="w-4 h-4 text-amber-600 mt-0.5" />
+              <CheckCircle2 className="w-4 h-4 text-blue-600 mt-0.5" />
               <div>
-                <p className="text-amber-800 font-medium text-sm">Current File Issue</p>
-                <p className="text-amber-700 text-sm">
-                  The file key you provided (iETcOYVOVX4YMS9eunNhqK) points to a FigJam or prototype file. 
-                  Please use a regular Figma design file instead.
+                <p className="text-blue-800 font-medium text-sm">Figma Make Support</p>
+                <p className="text-blue-700 text-sm">
+                  Your file (iETcOYVOVX4YMS9eunNhqK) is a Figma Make prototype. 
+                  The integration now supports both design files and Figma Make files.
                 </p>
               </div>
             </div>

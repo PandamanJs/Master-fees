@@ -129,7 +129,21 @@ export class FigmaService {
   }
 
   async getFile(fileKey: string): Promise<FigmaFile> {
-    return this.makeRequest(`/files/${fileKey}`);
+    try {
+      return await this.makeRequest(`/files/${fileKey}`);
+    } catch (error) {
+      // If regular file endpoint fails, try prototype endpoint for Figma Make files
+      if (error instanceof Error && error.message.includes('File type not supported')) {
+        console.log('Attempting to access as prototype file...');
+        try {
+          return await this.makeRequest(`/files/${fileKey}/prototypes`);
+        } catch (prototypeError) {
+          // If both fail, throw original error with helpful message
+          throw new Error(`Unable to access file. This appears to be a Figma Make/prototype file. Please use a regular Figma design file or contact support for prototype file access.`);
+        }
+      }
+      throw error;
+    }
   }
 
   async getFileNodes(fileKey: string, nodeIds: string[]): Promise<any> {

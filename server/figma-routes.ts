@@ -8,33 +8,63 @@ const router = Router();
 const fileKeySchema = z.string().min(1, "File key is required");
 const nodeIdsSchema = z.array(z.string()).min(1, "At least one node ID is required");
 
-// Get Figma file information
+// Get Figma file information (supports both design files and demo mode)
 router.get("/figma/file/:fileKey", async (req, res) => {
   try {
     const fileKey = fileKeySchema.parse(req.params.fileKey);
-    const file = await figmaService.getFile(fileKey);
     
+    // Handle demo mode
+    if (fileKey === 'demo-dashboard') {
+      return res.json({
+        success: true,
+        data: {
+          document: {
+            name: "Master Fees Dashboard Demo",
+            children: [
+              { id: "1:1", name: "Dashboard Overview", type: "FRAME" },
+              { id: "1:2", name: "Payment Cards", type: "FRAME" },
+              { id: "1:3", name: "Student List", type: "FRAME" },
+              { id: "1:4", name: "Analytics Charts", type: "FRAME" }
+            ]
+          },
+          fileType: 'demo',
+          isDemo: true
+        },
+        message: "Demo dashboard loaded successfully"
+      });
+    }
+    
+    // Try to access regular Figma file
+    const file = await figmaService.getFile(fileKey);
     res.json({
       success: true,
-      data: file,
-      message: "File retrieved successfully"
+      data: {
+        ...file,
+        fileType: 'design',
+        isPrototype: false
+      },
+      message: "Design file retrieved successfully"
     });
   } catch (error) {
+
     console.error("Figma file error:", error);
     
-    // Provide more detailed error information
-    let errorMessage = "Failed to retrieve file";
+    // Provide helpful error information
+    let errorMessage = "Unable to access this file";
     let errorCode = "FIGMA_FILE_ERROR";
     
     if (error instanceof Error) {
-      if (error.message.includes("400")) {
-        errorMessage = "File not found or access denied. Please check: 1) File key is correct, 2) File is public or you have access, 3) File exists in your Figma account";
+      if (error.message.includes("File type not supported")) {
+        errorMessage = "This appears to be a Figma Make/prototype file. These files have limited API access. Try creating a regular Figma design file or use our demo integration.";
+        errorCode = "FIGMA_MAKE_FILE";
+      } else if (error.message.includes("400")) {
+        errorMessage = "File not accessible. Please ensure: 1) File key is correct, 2) File is public or you have access, 3) File exists in your account";
         errorCode = "FIGMA_ACCESS_DENIED";
       } else if (error.message.includes("401")) {
-        errorMessage = "Invalid Figma access token. Please check your API credentials";
+        errorMessage = "Authentication failed. Please check API credentials";
         errorCode = "FIGMA_AUTH_ERROR";
       } else if (error.message.includes("403")) {
-        errorMessage = "Insufficient permissions to access this file";
+        errorMessage = "Permission denied. You don't have access to this file";
         errorCode = "FIGMA_PERMISSION_ERROR";
       } else {
         errorMessage = error.message;
@@ -45,7 +75,7 @@ router.get("/figma/file/:fileKey", async (req, res) => {
       success: false,
       error: errorMessage,
       code: errorCode,
-      fileKey: fileKey
+      fileKey: req.params.fileKey
     });
   }
 });
@@ -144,6 +174,35 @@ router.get("/figma/file/:fileKey/styles", async (req, res) => {
 router.post("/figma/sync-design/:fileKey", async (req, res) => {
   try {
     const fileKey = fileKeySchema.parse(req.params.fileKey);
+    
+    // Handle demo mode
+    if (fileKey === 'demo-dashboard') {
+      const demoDesignSystem = {
+        colors: ['#1e293b', '#0f172a', '#10b981', '#06b6d4', '#f59e0b', '#ef4444'],
+        textStyles: [
+          { fontFamily: 'DM Sans', fontSize: 32, fontWeight: 700 },
+          { fontFamily: 'DM Sans', fontSize: 24, fontWeight: 600 },
+          { fontFamily: 'DM Sans', fontSize: 16, fontWeight: 400 }
+        ],
+        components: [
+          { name: 'Dashboard Card', type: 'COMPONENT' },
+          { name: 'Payment Button', type: 'COMPONENT' },
+          { name: 'Student Row', type: 'COMPONENT' }
+        ]
+      };
+      
+      return res.json({
+        success: true,
+        data: demoDesignSystem,
+        message: "Demo design system synced successfully",
+        summary: {
+          colorsFound: demoDesignSystem.colors.length,
+          textStylesFound: demoDesignSystem.textStyles.length,
+          componentsFound: demoDesignSystem.components.length
+        }
+      });
+    }
+    
     const designSystem = await figmaService.syncDesignSystem(fileKey);
     
     res.json({
