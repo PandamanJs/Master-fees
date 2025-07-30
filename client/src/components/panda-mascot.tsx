@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { PandaGames } from './panda-games';
+import { AIAssistant } from './ai-assistant';
 
 export function PandaMascot() {
   const [isVisible, setIsVisible] = useState(false);
-  const [isGamesOpen, setIsGamesOpen] = useState(false);
+  const [isAssistantOpen, setIsAssistantOpen] = useState(false);
   const [pandaState, setPandaState] = useState<'idle' | 'waving' | 'happy'>('idle');
   const [showMessage, setShowMessage] = useState(false);
   const [currentMessage, setCurrentMessage] = useState('');
 
   const messages = [
-    "Hi! I'm Panda Fee! 🐼",
-    "Need a break? Let's play!",
-    "Click me for mini-games!",
-    "Making school payments fun! 🎓",
-    "Ready for some panda fun?"
+    "Hi! I'm your Master Fees AI assistant! 🤖",
+    "Need help with payments? Ask me!",
+    "Click me for instant support!",
+    "I can help with fees and payments! 💳",
+    "Got questions? I'm here to help!"
   ];
 
   useEffect(() => {
@@ -31,7 +31,7 @@ export function PandaMascot() {
   useEffect(() => {
     // Random message display
     const messageTimer = setInterval(() => {
-      if (!isGamesOpen && Math.random() > 0.7) {
+      if (!isAssistantOpen && Math.random() > 0.7) {
         const randomMessage = messages[Math.floor(Math.random() * messages.length)];
         setCurrentMessage(randomMessage);
         setShowMessage(true);
@@ -45,16 +45,16 @@ export function PandaMascot() {
     }, 10000);
 
     return () => clearInterval(messageTimer);
-  }, [isGamesOpen]);
+  }, [isAssistantOpen]);
 
   const handlePandaClick = () => {
-    setIsGamesOpen(true);
+    setIsAssistantOpen(true);
     setShowMessage(false);
     setPandaState('happy');
   };
 
-  const closePandaGames = () => {
-    setIsGamesOpen(false);
+  const closeAssistant = () => {
+    setIsAssistantOpen(false);
     setPandaState('waving');
     setTimeout(() => setPandaState('idle'), 1000);
   };
@@ -83,8 +83,8 @@ export function PandaMascot() {
           }`}
         >
           <span className="text-2xl">
-            {pandaState === 'waving' ? '👋🐼' : 
-             pandaState === 'happy' ? '😊🐼' : '🐼'}
+            {pandaState === 'waving' ? '👋🤖' : 
+             pandaState === 'happy' ? '😊🤖' : '🤖'}
           </span>
         </Button>
 
@@ -92,8 +92,8 @@ export function PandaMascot() {
         <div className="absolute inset-0 rounded-full bg-gradient-to-br from-emerald-400/20 to-teal-400/20 animate-ping pointer-events-none"></div>
       </div>
 
-      {/* Games Modal */}
-      <PandaGames isOpen={isGamesOpen} onClose={closePandaGames} />
+      {/* AI Assistant Modal */}
+      <AIAssistant isOpen={isAssistantOpen} onClose={closeAssistant} />
     </>
   );
 }
