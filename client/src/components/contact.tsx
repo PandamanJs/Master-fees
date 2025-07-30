@@ -41,25 +41,25 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="py-32 bg-gradient-to-br from-slate-50 via-white to-slate-100">
+    <section id="contact" className="py-32 bg-gradient-to-br from-slate-900 via-slate-800 to-teal-900">
       <div className="max-w-4xl mx-auto px-6 lg:px-8">
         {/* Apple-style Header with enhanced typography */}
         <div className="text-center mb-24">
-          <h2 className="text-5xl md:text-6xl font-extralight text-slate-900 mb-8 tracking-[-0.01em] leading-tight">
+          <h2 className="text-5xl md:text-6xl font-extralight text-white mb-8 tracking-[-0.01em] leading-tight">
             Get in Touch
           </h2>
-          <p className="text-xl md:text-2xl font-light text-slate-600 max-w-3xl mx-auto leading-relaxed tracking-wide opacity-90">
+          <p className="text-xl md:text-2xl font-light text-slate-300 max-w-3xl mx-auto leading-relaxed tracking-wide opacity-90">
             Ready to transform your school's fee management? Let's start the conversation.
           </p>
         </div>
 
         {/* Apple-style Contact Form with premium design */}
-        <div className="apple-glass-light rounded-[3rem] p-16 lg:p-20 border border-slate-200/50 shadow-2xl transition-all duration-500 hover:shadow-3xl">
+        <div className="apple-glass rounded-[3rem] p-16 lg:p-20 border border-slate-700/30 shadow-2xl transition-all duration-500 hover:shadow-3xl">
           <form onSubmit={handleSubmit} className="space-y-8">
             {/* Name and Email Row */}
             <div className="grid md:grid-cols-2 gap-8">
               <div className="space-y-3">
-                <label className="text-slate-700 font-light text-sm">
+                <label className="text-slate-300 font-light text-sm">
                   Full Name
                 </label>
                 <Input
@@ -71,7 +71,7 @@ export default function Contact() {
                 />
               </div>
               <div className="space-y-3">
-                <label className="text-slate-700 font-light text-sm">
+                <label className="text-slate-300 font-light text-sm">
                   Email
                 </label>
                 <Input
@@ -86,7 +86,7 @@ export default function Contact() {
 
             {/* Message Text Area */}
             <div className="space-y-3">
-              <label className="text-slate-700 font-light text-sm">
+              <label className="text-slate-300 font-light text-sm">
                 Message
               </label>
               <Textarea
@@ -99,7 +99,7 @@ export default function Contact() {
 
             {/* Apple-style Contact Reasons */}
             <div className="space-y-6">
-              <label className="text-slate-700 font-light text-sm">
+              <label className="text-slate-300 font-light text-sm">
                 What are you interested in?
               </label>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -118,7 +118,7 @@ export default function Contact() {
                     />
                     <label
                       htmlFor={reason.key}
-                      className="text-slate-700 font-light cursor-pointer"
+                      className="text-slate-300 font-light cursor-pointer"
                     >
                       {reason.label}
                     </label>

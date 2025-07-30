@@ -75,7 +75,7 @@ export default function Features() {
   }, []);
 
   return (
-    <section id="features" className="py-32 bg-gradient-to-br from-slate-50 via-white to-slate-100 transition-all duration-300">
+    <section id="features" className="py-32 bg-gradient-to-br from-slate-900 via-slate-800 to-teal-900 transition-all duration-300">
       <div className="max-w-6xl mx-auto px-6 lg:px-8">
         
 
@@ -84,12 +84,12 @@ export default function Features() {
         {/* Apple-style feature grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.slice(0, 6).map((feature, index) => (
-            <div key={index} className="apple-glass-light text-center p-10 rounded-[2rem] shadow-xl transition-all duration-500 hover:shadow-2xl hover:scale-105 border border-slate-200/50 group">
+            <div key={index} className="apple-glass text-center p-10 rounded-[2rem] shadow-xl transition-all duration-500 hover:shadow-2xl hover:scale-105 border border-slate-700/30 group">
               <div className="w-20 h-20 bg-gradient-to-br from-emerald-100 to-emerald-200 rounded-full flex items-center justify-center mx-auto mb-8 transition-all duration-500 group-hover:scale-110 shadow-lg">
                 <feature.icon className="w-10 h-10 text-emerald-600 transition-all duration-300" />
               </div>
-              <h3 className="text-xl font-light text-slate-900 mb-4 tracking-wide">{feature.title}</h3>
-              <p className="text-slate-600 font-light leading-relaxed tracking-wide opacity-80">{feature.description}</p>
+              <h3 className="text-xl font-light text-white mb-4 tracking-wide">{feature.title}</h3>
+              <p className="text-slate-300 font-light leading-relaxed tracking-wide opacity-80">{feature.description}</p>
             </div>
           ))}
         </div>
