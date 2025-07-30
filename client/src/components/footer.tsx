@@ -34,12 +34,7 @@ export default function Footer() {
               >
                 Services
               </button>
-              <button 
-                onClick={() => scrollToSection('pricing')}
-                className="text-slate-300 hover:text-white transition-colors duration-200 text-base"
-              >
-                Process
-              </button>
+
               <button 
                 onClick={() => scrollToSection('about')}
                 className="text-slate-300 hover:text-white transition-colors duration-200 text-base"

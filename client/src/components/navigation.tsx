@@ -52,12 +52,7 @@ export default function Navigation() {
               >
                 About
               </button>
-              <button
-                onClick={() => scrollToSection('pricing')}
-                className="text-slate-600 dark:text-slate-300 hover:text-brand-teal px-4 py-2 rounded-lg text-base font-medium transition-all duration-200 hover:bg-brand-mint/10 dark:hover:bg-brand-mint/20 focus:ring-2 focus:ring-brand-teal/30"
-              >
-                Pricing
-              </button>
+
               <button
                 onClick={() => scrollToSection('contact')}
                 className="text-slate-600 dark:text-slate-300 hover:text-brand-teal px-4 py-2 rounded-lg text-base font-medium transition-all duration-200 hover:bg-brand-mint/10 dark:hover:bg-brand-mint/20 focus:ring-2 focus:ring-brand-teal/30"
@@ -111,12 +106,7 @@ export default function Navigation() {
             >
               About
             </button>
-            <button
-              onClick={() => scrollToSection('pricing')}
-              className="text-slate-600 dark:text-slate-300 hover:text-brand-teal block px-3 py-2 text-base font-medium w-full text-left rounded-lg hover:bg-brand-mint/10 dark:hover:bg-brand-mint/20 transition-all duration-200"
-            >
-              Pricing
-            </button>
+
             <button
               onClick={() => scrollToSection('contact')}
               className="text-slate-600 dark:text-slate-300 hover:text-brand-teal block px-3 py-2 text-base font-medium w-full text-left rounded-lg hover:bg-brand-mint/10 dark:hover:bg-brand-mint/20 transition-all duration-200"
