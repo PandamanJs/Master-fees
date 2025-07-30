@@ -35,7 +35,7 @@ export default function Navigation() {
             <div className="ml-10 flex items-baseline space-x-1 text-[#f2f5f7]">
               <button
                 onClick={() => scrollToSection('home')}
-                className="text-slate-900 hover:text-brand-teal px-4 py-2 rounded-lg text-base font-medium transition-all duration-200 hover:bg-brand-mint/10 focus:ring-2 focus:ring-brand-teal/30 hover-lift"
+                className="hover:text-brand-teal px-4 py-2 rounded-lg text-base font-medium transition-all duration-200 hover:bg-brand-mint/10 focus:ring-2 focus:ring-brand-teal/30 hover-lift text-[#ffffff]"
               >
                 Home
               </button>
