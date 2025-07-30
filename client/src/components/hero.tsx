@@ -18,27 +18,31 @@ export default function Hero() {
       {/* Apple-style main content */}
       <div className="relative z-10 max-w-6xl mx-auto px-6 lg:px-8 text-center">
         {/* Apple-style hero heading with premium typography */}
-        <h1 className="text-6xl md:text-8xl lg:text-9xl font-extralight tracking-[-0.02em] text-white mb-8 leading-[0.85] transform transition-all duration-1000 animate-apple-entrance">
+        <h1 className="text-6xl md:text-8xl lg:text-9xl font-normal tracking-[-0.02em] text-white mb-8 leading-[0.85] transform transition-all duration-1000 animate-apple-entrance">
           Master Fees
         </h1>
         
         {/* Apple-style subheading with enhanced hierarchy */}
-        <h2 className="text-2xl md:text-3xl font-light text-slate-200 mb-12 max-w-4xl mx-auto leading-relaxed tracking-wide">
-          The future of school fee management.<br />
-          <span className="text-emerald-300 font-normal">Beautifully simple.</span> <span className="text-slate-400">Incredibly powerful.</span>
-        </h2>
+        <div className="mb-12 max-w-4xl mx-auto">
+          <h2 className="text-2xl md:text-3xl font-light text-slate-200 mb-2 leading-tight tracking-wide">
+            The future of school fee management.
+          </h2>
+          <h2 className="text-2xl md:text-3xl font-light text-slate-200 leading-tight tracking-wide">
+            Beautifully simple. Incredibly powerful.
+          </h2>
+        </div>
         
         {/* Apple-style description with refined spacing */}
-        <p className="text-lg font-light text-slate-300 mb-20 max-w-2xl mx-auto leading-relaxed tracking-wide opacity-90">
+        <p className="text-lg font-light text-slate-300 mb-20 max-w-3xl mx-auto leading-relaxed tracking-wide opacity-80">
           Join our exclusive test program and experience the easiest way to collect fees, track revenue, and reduce admin work—all at zero cost.
         </p>
         
         {/* Apple-style CTA buttons with premium design */}
         <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-24">
-          <Button className="bg-emerald-400 text-slate-900 hover:bg-emerald-300 px-10 py-4 rounded-full text-lg font-semibold transition-all duration-500 shadow-2xl hover:shadow-emerald-400/25 hover:scale-105 tracking-wide backdrop-blur-sm border border-emerald-300/50">
+          <Button className="bg-white text-slate-900 hover:bg-slate-100 px-10 py-4 rounded-full text-lg font-medium transition-all duration-500 shadow-2xl hover:scale-105 tracking-wide">
             Join the Program
           </Button>
-          <Button className="apple-glass border border-emerald-400/30 text-emerald-300 hover:bg-emerald-400/10 hover:border-emerald-400/50 px-10 py-4 rounded-full text-lg font-medium transition-all duration-500 hover:scale-105 tracking-wide">
+          <Button className="border border-white/30 text-white hover:bg-white/10 hover:border-white/50 px-10 py-4 rounded-full text-lg font-medium transition-all duration-500 hover:scale-105 tracking-wide">
             Learn More
           </Button>
         </div>
