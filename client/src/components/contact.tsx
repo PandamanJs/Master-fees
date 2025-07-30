@@ -1,45 +1,6 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Checkbox } from "@/components/ui/checkbox";
+import { ContactForm } from "./contact-form";
 
 export default function Contact() {
-  const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    message: "",
-    reasons: {
-      schoolPay: true,
-      integration: false,
-      learnMore: false,
-      others: false
-    }
-  });
-
-  const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({
-      ...prev,
-      [field]: value
-    }));
-  };
-
-  const handleReasonChange = (reason: string, checked: boolean) => {
-    setFormData(prev => ({
-      ...prev,
-      reasons: {
-        ...prev.reasons,
-        [reason]: checked
-      }
-    }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Form submitted:", formData);
-    // Handle form submission here
-  };
-
   return (
     <section id="contact" className="relative py-32 bg-slate-900 overflow-hidden">
       {/* Consistent background overlay */}
@@ -47,32 +8,23 @@ export default function Contact() {
       
       <div className="relative max-w-5xl mx-auto px-8 lg:px-12">
         {/* Apple-style Header with enhanced typography */}
-        <div className="text-center mb-40">
-          <h2 className="text-6xl md:text-7xl font-extralight text-white mb-12 tracking-[-0.03em] leading-[0.9]">
+        <div className="text-center mb-20">
+          <h2 className="text-5xl md:text-6xl font-extralight text-white mb-8 tracking-[-0.03em] leading-[0.9]">
             Get in Touch
           </h2>
-          <p className="text-2xl md:text-3xl font-light text-slate-200 max-w-5xl mx-auto leading-[1.3] opacity-95">
+          <p className="text-lg md:text-xl font-light text-slate-200 max-w-4xl mx-auto leading-[1.4] opacity-95">
             Ready to transform your school's fee management? Let's start the conversation.
           </p>
         </div>
 
-        {/* Apple-style Contact Form with premium design */}
-        <div className="apple-glass rounded-[2rem] p-24 lg:p-32 border border-slate-700/15 shadow-3xl transition-all duration-700 hover:shadow-4xl bg-slate-800/25 backdrop-blur-xl">
-          <form onSubmit={handleSubmit} className="space-y-8">
-            {/* Name and Email Row */}
-            <div className="grid md:grid-cols-2 gap-8">
-              <div className="space-y-3">
-                <label className="text-slate-300 font-light text-sm">
-                  Full Name
-                </label>
-                <Input
-                  type="text"
-                  placeholder="Enter your name"
-                  value={formData.fullName}
-                  onChange={(e) => handleInputChange("fullName", e.target.value)}
-                  className="bg-white/70 border border-slate-300/50 text-slate-900 placeholder:text-slate-500 h-12 rounded-xl focus:border-emerald-400 focus:bg-white/90 focus:ring-2 focus:ring-emerald-400/20 transition-all duration-300"
-                />
-              </div>
+        {/* Enhanced Contact Form */}
+        <div className="flex justify-center">
+          <ContactForm />
+        </div>
+      </div>
+    </section>
+  );
+}
               <div className="space-y-3">
                 <label className="text-slate-300 font-light text-sm">
                   Email

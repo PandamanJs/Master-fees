@@ -117,6 +117,20 @@ export const academicYears = pgTable("academic_years", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
+// Contact messages
+export const contactMessages = pgTable("contact_messages", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  email: text("email").notNull(),
+  phone: text("phone"),
+  schoolName: text("school_name"),
+  subject: text("subject").notNull(),
+  message: text("message").notNull(),
+  status: text("status").$type<'new' | 'read' | 'replied' | 'resolved'>().default('new'),
+  isRead: boolean("is_read").default(false),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
 // Zod schemas for validation
 export const insertUserSchema = createInsertSchema(users).omit({
   id: true,
@@ -159,6 +173,11 @@ export const insertAcademicYearSchema = createInsertSchema(academicYears).omit({
   createdAt: true,
 });
 
+export const insertContactMessageSchema = createInsertSchema(contactMessages).omit({
+  id: true,
+  createdAt: true,
+});
+
 // Types
 export type User = typeof users.$inferSelect;
 export type NewUser = z.infer<typeof insertUserSchema>;
@@ -176,6 +195,8 @@ export type Notification = typeof notifications.$inferSelect;
 export type NewNotification = z.infer<typeof insertNotificationSchema>;
 export type AcademicYear = typeof academicYears.$inferSelect;
 export type NewAcademicYear = z.infer<typeof insertAcademicYearSchema>;
+export type ContactMessage = typeof contactMessages.$inferSelect;
+export type NewContactMessage = z.infer<typeof insertContactMessageSchema>;
 
 // Auth schemas
 export const loginSchema = z.object({
@@ -192,3 +213,15 @@ export const registerSchema = insertUserSchema.extend({
 
 export type LoginRequest = z.infer<typeof loginSchema>;
 export type RegisterRequest = z.infer<typeof registerSchema>;
+
+// Contact form schema
+export const contactFormSchema = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters"),
+  email: z.string().email("Please enter a valid email address"),
+  phone: z.string().optional(),
+  schoolName: z.string().optional(),
+  subject: z.string().min(5, "Subject must be at least 5 characters"),
+  message: z.string().min(10, "Message must be at least 10 characters"),
+});
+
+export type ContactFormData = z.infer<typeof contactFormSchema>;

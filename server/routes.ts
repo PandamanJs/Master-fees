@@ -9,9 +9,11 @@ import {
   insertFeeCategorySchema,
   insertStudentFeeSchema,
   insertPaymentSchema,
+  contactFormSchema,
   type User 
 } from "@shared/schema";
 import { storage } from "./storage";
+import { sendContactNotification, sendContactConfirmation } from "./email";
 
 const router = Router();
 
@@ -201,6 +203,108 @@ router.get("/schools", async (req, res) => {
   } catch (error) {
     console.error("Error getting schools:", error);
     res.status(500).json({ error: "Failed to get schools" });
+  }
+});
+
+// Contact form routes
+router.post("/contact", async (req, res) => {
+  try {
+    const contactData = contactFormSchema.parse(req.body);
+    
+    // Save contact message to database
+    const contactMessage = await storage.createContactMessage({
+      name: contactData.name,
+      email: contactData.email,
+      phone: contactData.phone || null,
+      schoolName: contactData.schoolName || null,
+      subject: contactData.subject,
+      message: contactData.message,
+      status: 'new',
+      isRead: false
+    });
+
+    // Send email notifications
+    try {
+      await Promise.all([
+        sendContactNotification(contactData),
+        sendContactConfirmation(contactData)
+      ]);
+    } catch (emailError) {
+      console.error("Email notification error:", emailError);
+      // Continue even if emails fail
+    }
+
+    res.status(201).json({ 
+      message: "Thank you for your message! We'll get back to you within 24 hours.",
+      contactId: contactMessage.id
+    });
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return res.status(400).json({ error: error.errors });
+    }
+    console.error("Contact form error:", error);
+    res.status(500).json({ error: "Failed to submit contact form" });
+  }
+});
+
+// Admin routes for managing contact messages
+router.get("/admin/contact-messages", async (req, res) => {
+  try {
+    const messages = await storage.getAllContactMessages();
+    res.json({ messages });
+  } catch (error) {
+    console.error("Error getting contact messages:", error);
+    res.status(500).json({ error: "Failed to get contact messages" });
+  }
+});
+
+router.get("/admin/contact-messages/:id", async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    const message = await storage.getContactMessageById(id);
+    
+    if (!message) {
+      return res.status(404).json({ error: "Contact message not found" });
+    }
+    
+    res.json({ message });
+  } catch (error) {
+    console.error("Error getting contact message:", error);
+    res.status(500).json({ error: "Failed to get contact message" });
+  }
+});
+
+router.put("/admin/contact-messages/:id/read", async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    const success = await storage.markContactMessageAsRead(id);
+    
+    if (!success) {
+      return res.status(404).json({ error: "Contact message not found" });
+    }
+    
+    res.json({ message: "Contact message marked as read" });
+  } catch (error) {
+    console.error("Error marking contact message as read:", error);
+    res.status(500).json({ error: "Failed to mark contact message as read" });
+  }
+});
+
+router.put("/admin/contact-messages/:id", async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    const { status } = req.body;
+    
+    const updatedMessage = await storage.updateContactMessage(id, { status });
+    
+    if (!updatedMessage) {
+      return res.status(404).json({ error: "Contact message not found" });
+    }
+    
+    res.json({ message: updatedMessage });
+  } catch (error) {
+    console.error("Error updating contact message:", error);
+    res.status(500).json({ error: "Failed to update contact message" });
   }
 });
 

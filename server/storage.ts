@@ -6,7 +6,8 @@ import type {
   StudentFee, NewStudentFee,
   Payment, NewPayment,
   Notification, NewNotification,
-  AcademicYear, NewAcademicYear
+  AcademicYear, NewAcademicYear,
+  ContactMessage, NewContactMessage
 } from "@shared/schema";
 
 export interface IStorage {
@@ -57,6 +58,13 @@ export interface IStorage {
   createAcademicYear(year: NewAcademicYear): Promise<AcademicYear>;
   getAcademicYearsBySchool(schoolId: number): Promise<AcademicYear[]>;
   getActiveAcademicYear(schoolId: number): Promise<AcademicYear | null>;
+
+  // Contact message operations
+  createContactMessage(message: NewContactMessage): Promise<ContactMessage>;
+  getAllContactMessages(): Promise<ContactMessage[]>;
+  getContactMessageById(id: number): Promise<ContactMessage | null>;
+  updateContactMessage(id: number, updates: Partial<ContactMessage>): Promise<ContactMessage | null>;
+  markContactMessageAsRead(id: number): Promise<boolean>;
 }
 
 export class MemStorage implements IStorage {
@@ -68,6 +76,7 @@ export class MemStorage implements IStorage {
   private payments: Map<number, Payment> = new Map();
   private notifications: Map<number, Notification> = new Map();
   private academicYears: Map<number, AcademicYear> = new Map();
+  private contactMessages: Map<number, ContactMessage> = new Map();
   private currentUserId = 1;
   private currentSchoolId = 1;
   private currentStudentId = 1;
@@ -76,6 +85,7 @@ export class MemStorage implements IStorage {
   private currentPaymentId = 1;
   private currentNotificationId = 1;
   private currentAcademicYearId = 1;
+  private currentContactMessageId = 1;
 
   constructor() {
     this.seedInitialData();
@@ -460,6 +470,46 @@ export class MemStorage implements IStorage {
     return Array.from(this.academicYears.values()).find(
       year => year.schoolId === schoolId && year.isActive
     ) || null;
+  }
+
+  // Contact message operations
+  async createContactMessage(message: NewContactMessage): Promise<ContactMessage> {
+    const id = this.currentContactMessageId++;
+    const newMessage: ContactMessage = {
+      ...message,
+      id,
+      createdAt: new Date()
+    };
+    this.contactMessages.set(id, newMessage);
+    return newMessage;
+  }
+
+  async getAllContactMessages(): Promise<ContactMessage[]> {
+    return Array.from(this.contactMessages.values()).sort(
+      (a, b) => b.createdAt.getTime() - a.createdAt.getTime()
+    );
+  }
+
+  async getContactMessageById(id: number): Promise<ContactMessage | null> {
+    return this.contactMessages.get(id) || null;
+  }
+
+  async updateContactMessage(id: number, updates: Partial<ContactMessage>): Promise<ContactMessage | null> {
+    const message = this.contactMessages.get(id);
+    if (!message) return null;
+    
+    const updatedMessage = { ...message, ...updates };
+    this.contactMessages.set(id, updatedMessage);
+    return updatedMessage;
+  }
+
+  async markContactMessageAsRead(id: number): Promise<boolean> {
+    const message = this.contactMessages.get(id);
+    if (!message) return false;
+    
+    const updatedMessage = { ...message, isRead: true, status: 'read' as const };
+    this.contactMessages.set(id, updatedMessage);
+    return true;
   }
 }
 
