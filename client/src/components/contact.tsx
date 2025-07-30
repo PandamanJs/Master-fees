@@ -76,88 +76,62 @@ export default function Contact() {
                 </label>
                 <Input
                   type="email"
-                  placeholder="Type here"
+                  placeholder="Enter your email"
                   value={formData.email}
                   onChange={(e) => handleInputChange("email", e.target.value)}
-                  className="bg-white border border-slate-300 text-slate-900 placeholder:text-slate-400 h-10 focus:border-brand-teal hover-lift"
+                  className="bg-white/10 border border-white/20 text-white placeholder:text-gray-400 h-12 rounded-xl focus:border-white/40 focus:bg-white/15 transition-all duration-300"
                 />
               </div>
             </div>
 
-            {/* Contact Reason */}
-            <div className="space-y-2">
-              <label className="text-slate-700 font-medium text-sm block">
-                Why are you contacting us?
-              </label>
-              <div className="bg-slate-50 border border-slate-200 rounded-lg p-4">
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="schoolPay"
-                      checked={formData.reasons.schoolPay}
-                      onCheckedChange={(checked) => handleReasonChange("schoolPay", checked as boolean)}
-                      className="border-slate-400 data-[state=checked]:bg-brand-teal data-[state=checked]:border-brand-teal"
-                    />
-                    <label htmlFor="schoolPay" className="text-slate-700 font-medium text-sm">
-                      School Pay
-                    </label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="learnMore"
-                      checked={formData.reasons.learnMore}
-                      onCheckedChange={(checked) => handleReasonChange("learnMore", checked as boolean)}
-                      className="border-slate-400 data-[state=checked]:bg-brand-teal data-[state=checked]:border-brand-teal"
-                    />
-                    <label htmlFor="learnMore" className="text-slate-700 font-medium text-sm">
-                      Learn more
-                    </label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="integration"
-                      checked={formData.reasons.integration}
-                      onCheckedChange={(checked) => handleReasonChange("integration", checked as boolean)}
-                      className="border-slate-400 data-[state=checked]:bg-brand-teal data-[state=checked]:border-brand-teal"
-                    />
-                    <label htmlFor="integration" className="text-slate-700 font-medium text-sm">
-                      Integration
-                    </label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="others"
-                      checked={formData.reasons.others}
-                      onCheckedChange={(checked) => handleReasonChange("others", checked as boolean)}
-                      className="border-slate-400 data-[state=checked]:bg-brand-teal data-[state=checked]:border-brand-teal"
-                    />
-                    <label htmlFor="others" className="text-slate-700 font-medium text-sm">
-                      Others
-                    </label>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Message */}
-            <div className="space-y-1">
-              <label className="text-slate-700 font-medium text-sm">
-                Your Message
+            {/* Message Text Area */}
+            <div className="space-y-3">
+              <label className="text-white font-light text-sm">
+                Message
               </label>
               <Textarea
-                placeholder="Tell us about your school's needs"
+                placeholder="Tell us about your school's fee management needs..."
                 value={formData.message}
                 onChange={(e) => handleInputChange("message", e.target.value)}
-                className="bg-white border border-slate-300 text-slate-900 placeholder:text-slate-400 min-h-24 focus:border-brand-teal resize-none hover-lift"
-                rows={3}
+                className="bg-white/10 border border-white/20 text-white placeholder:text-gray-400 min-h-[120px] rounded-xl focus:border-white/40 focus:bg-white/15 resize-none transition-all duration-300"
               />
             </div>
 
-            {/* Submit Button */}
-            <div className="text-center pt-2">
-              <Button
+            {/* Apple-style Contact Reasons */}
+            <div className="space-y-6">
+              <label className="text-white font-light text-sm">
+                What are you interested in?
+              </label>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {[
+                  { key: 'schoolPay', label: 'School Payment Solutions' },
+                  { key: 'integration', label: 'System Integration' },
+                  { key: 'learnMore', label: 'Learn More About Features' },
+                  { key: 'others', label: 'Other Services' }
+                ].map((reason) => (
+                  <div key={reason.key} className="flex items-center space-x-3 p-4 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-all duration-300">
+                    <Checkbox
+                      id={reason.key}
+                      checked={formData.reasons[reason.key as keyof typeof formData.reasons]}
+                      onCheckedChange={(checked) => handleReasonChange(reason.key, !!checked)}
+                      className="border-white/30 data-[state=checked]:bg-white data-[state=checked]:border-white data-[state=checked]:text-black"
+                    />
+                    <label
+                      htmlFor={reason.key}
+                      className="text-gray-300 font-light cursor-pointer"
+                    >
+                      {reason.label}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Apple-style Submit Button */}
+            <div className="pt-4">
+              <Button 
                 type="submit"
-                className="bg-brand-teal hover:bg-brand-teal/90 text-white px-8 py-2.5 rounded-lg font-semibold transition-all duration-200 hover-lift cursor-magic hover:animate-heartbeat"
+                className="w-full bg-white text-black hover:bg-gray-200 h-14 font-medium text-lg rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl"
               >
                 Send Message
               </Button>
