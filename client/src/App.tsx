@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/theme-provider";
 import MascotGuide from "@/components/mascot-guide";
+import DashboardEasterEggs from "@/components/dashboard-easter-eggs";
 import Home from "@/pages/home";
 import NotFound from "@/pages/not-found";
 
@@ -23,6 +24,7 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           <MascotGuide />
+          <DashboardEasterEggs onReaction={(type) => console.log(`Panda reaction: ${type}`)} />
           <Toaster />
           <Router />
         </TooltipProvider>
