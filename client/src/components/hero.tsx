@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
+import { Link } from "wouter";
 import mobileImage from "@assets/iPhone 16 - 46_1753900251503.png";
 import desktopImage from "@assets/Dashboard_1753900251517.png";
 
@@ -50,11 +51,11 @@ export default function Hero() {
         
         {/* CTA section with perfect symmetrical balance */}
         <div className="flex flex-col sm:flex-row gap-8 justify-center items-center mb-24">
-          <a href="https://master-fees.com/" target="_blank" rel="noopener noreferrer">
+          <Link href="/onboarding">
             <Button className="bg-emerald-400 text-slate-900 hover:bg-emerald-300 px-16 py-6 rounded-2xl text-xl font-medium transition-all duration-700 shadow-3xl hover:scale-[1.02] tracking-wide min-w-[240px] border border-emerald-300">
               Get Started
             </Button>
-          </a>
+          </Link>
           <Button className="border-2 border-emerald-400/70 text-emerald-300 hover:bg-emerald-400/15 hover:border-emerald-400 hover:text-emerald-200 px-16 py-6 rounded-2xl text-xl font-medium transition-all duration-700 hover:scale-[1.02] tracking-wide min-w-[240px] backdrop-blur-sm">
             Learn More
           </Button>

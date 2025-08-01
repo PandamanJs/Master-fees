@@ -1,6 +1,7 @@
 import Navigation from "@/components/navigation";
 import Hero from "@/components/hero";
 import Features from "@/components/features";
+import DashboardAccess from "@/components/dashboard-access";
 import About from "@/components/about";
 import Testimonials from "@/components/testimonials";
 import Contact from "@/components/contact";
@@ -13,6 +14,7 @@ export default function Home() {
       <Navigation />
       <Hero />
       <Features />
+      <DashboardAccess />
       <About />
       <Testimonials />
       <Contact />
