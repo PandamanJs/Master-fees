@@ -170,7 +170,11 @@ export default function OnboardingPage() {
               <label className="block text-slate-200 mb-3 font-medium text-center">
                 Select Country of operation
               </label>
-              <Select value={country} onValueChange={setCountry}>
+              <Select value={country} onValueChange={(value) => {
+                setCountry(value);
+                setStateProvince(''); // Reset state/province when country changes
+                setTownDistrict(''); // Reset town/district when country changes
+              }}>
                 <SelectTrigger className="border-0 bg-slate-700/30 backdrop-blur-sm text-white focus:bg-slate-600/30 focus:ring-2 focus:ring-emerald-400/30 rounded-xl h-12">
                   <SelectValue placeholder="Select country" />
                 </SelectTrigger>
@@ -191,7 +195,10 @@ export default function OnboardingPage() {
                 <label className="block text-slate-200 mb-3 font-medium text-center">
                   Select State/province
                 </label>
-                <Select value={stateProvince} onValueChange={setStateProvince}>
+                <Select value={stateProvince} onValueChange={(value) => {
+                  setStateProvince(value);
+                  setTownDistrict(''); // Reset town/district when province changes
+                }}>
                   <SelectTrigger className="border-0 bg-slate-700/30 backdrop-blur-sm text-white focus:bg-slate-600/30 focus:ring-2 focus:ring-emerald-400/30 rounded-xl h-12">
                     <SelectValue placeholder="Select state/province" />
                   </SelectTrigger>
@@ -215,7 +222,7 @@ export default function OnboardingPage() {
                     <SelectValue placeholder="Select town/district" />
                   </SelectTrigger>
                   <SelectContent className="bg-slate-800 border-slate-600">
-                    {(townsByProvince[stateProvince] || ['Other']).map((town) => (
+                    {(stateProvince && townsByProvince[stateProvince] ? townsByProvince[stateProvince] : ['Other']).map((town) => (
                       <SelectItem key={town} value={town} className="text-white hover:bg-slate-700">
                         {town}
                       </SelectItem>
