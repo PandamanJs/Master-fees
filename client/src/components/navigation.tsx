@@ -65,6 +65,9 @@ export default function Navigation() {
               >
                 Careers
               </button>
+              <Link href="/admin/aptitude-results" className="text-slate-300 hover:text-emerald-400 text-sm font-light transition-all duration-300">
+                Admin
+              </Link>
 
             </div>
           </div>
