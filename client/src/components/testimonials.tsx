@@ -40,14 +40,14 @@ export default function Testimonials() {
             <span className="text-emerald-300">Beautifully simple.</span> <span className="text-slate-400">Incredibly powerful.</span>
           </p>
           <a href="https://master-fees.com/" target="_blank" rel="noopener noreferrer">
-            <Button className="bg-emerald-400 text-slate-900 hover:bg-emerald-300 px-14 py-5 rounded-full text-lg font-semibold transition-all duration-500 shadow-2xl hover:shadow-emerald-400/25 hover:scale-105 tracking-wide backdrop-blur-sm border border-emerald-300/50">
+            <Button className="ultra-glass-dark text-white hover:text-emerald-100 px-14 py-5 rounded-full text-lg font-semibold transition-all duration-500 shadow-2xl hover:scale-105 tracking-wide border border-emerald-400/30">
               Get Started
             </Button>
           </a>
         </div>
 
         {/* Apple-style content section with premium glassmorphism */}
-        <div className="apple-glass rounded-[3rem] p-16 lg:p-20 border border-white/10 shadow-2xl">
+        <div className="ultra-glass-light rounded-[3rem] p-16 lg:p-20 shadow-2xl">
           {/* Apple-style Why Join section */}
           <div className="text-center mb-16">
             <h2 className="text-5xl md:text-6xl font-extralight text-white mb-20 tracking-[-0.01em] leading-tight">

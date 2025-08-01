@@ -52,11 +52,11 @@ export default function Hero() {
         {/* CTA section with perfect symmetrical balance */}
         <div className="flex flex-col sm:flex-row gap-8 justify-center items-center mb-24">
           <Link href="/onboarding">
-            <Button className="bg-emerald-400 text-slate-900 hover:bg-emerald-300 px-16 py-6 rounded-2xl text-xl font-medium transition-all duration-700 shadow-3xl hover:scale-[1.02] tracking-wide min-w-[240px] border border-emerald-300">
+            <Button className="ultra-glass-dark text-white hover:text-emerald-100 px-16 py-6 rounded-2xl text-xl font-medium transition-all duration-700 shadow-3xl hover:scale-[1.02] tracking-wide min-w-[240px] border border-emerald-400/30">
               Get Started
             </Button>
           </Link>
-          <Button className="border-2 border-emerald-400/70 text-emerald-300 hover:bg-emerald-400/15 hover:border-emerald-400 hover:text-emerald-200 px-16 py-6 rounded-2xl text-xl font-medium transition-all duration-700 hover:scale-[1.02] tracking-wide min-w-[240px] backdrop-blur-sm">
+          <Button className="ultra-glass-light text-slate-200 hover:text-white px-16 py-6 rounded-2xl text-xl font-medium transition-all duration-700 hover:scale-[1.02] tracking-wide min-w-[240px] border border-slate-400/30">
             Learn More
           </Button>
         </div>

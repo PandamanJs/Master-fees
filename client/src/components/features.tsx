@@ -84,9 +84,9 @@ export default function Features() {
         {/* Apple-style feature grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
           {features.slice(0, 6).map((feature, index) => (
-            <div key={index} className="apple-glass text-center p-12 rounded-3xl shadow-2xl transition-all duration-500 hover:shadow-3xl hover:scale-[1.02] border border-slate-700/20 group bg-slate-800/30">
+            <div key={index} className="ultra-glass-light text-center p-12 rounded-3xl shadow-2xl transition-all duration-500 hover:shadow-3xl hover:scale-[1.02] group">
               {/* Icon with 10% accent color implementation */}
-              <div className="w-24 h-24 bg-gradient-to-br from-emerald-400/20 to-teal-400/20 rounded-2xl flex items-center justify-center mx-auto mb-8 transition-all duration-500 group-hover:scale-110 border border-emerald-400/30">
+              <div className="w-24 h-24 ultra-glass-dark rounded-2xl flex items-center justify-center mx-auto mb-8 transition-all duration-500 group-hover:scale-110 border border-emerald-400/30">
                 <feature.icon className="w-12 h-12 text-emerald-400 transition-all duration-300" />
               </div>
               {/* Typography hierarchy with consistent spacing */}

@@ -66,7 +66,7 @@ export function ContactForm() {
 
   if (isSubmitted) {
     return (
-      <Card className="w-full max-w-2xl mx-auto bg-gradient-to-br from-emerald-50 to-teal-50 border-emerald-200">
+      <Card className="w-full max-w-2xl mx-auto ultra-glass-light border-emerald-400/30">
         <CardContent className="p-8 text-center">
           <div className="flex justify-center mb-6">
             <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center">
@@ -99,12 +99,12 @@ export function ContactForm() {
   }
 
   return (
-    <Card className="w-full max-w-2xl mx-auto bg-white/95 backdrop-blur-sm border-slate-200 shadow-xl">
+    <Card className="w-full max-w-2xl mx-auto ultra-glass-light shadow-xl border-slate-400/30">
       <CardHeader className="text-center pb-6">
-        <CardTitle className="text-2xl font-light text-slate-800">
+        <CardTitle className="text-2xl font-light text-white">
           Get in Touch with Us
         </CardTitle>
-        <CardDescription className="text-slate-600 text-base">
+        <CardDescription className="text-slate-200 text-base">
           Ready to transform your school's fee management? Let's start the conversation.
         </CardDescription>
       </CardHeader>
@@ -114,14 +114,14 @@ export function ContactForm() {
           {/* Personal Information */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="name" className="text-slate-700 font-medium">
+              <Label htmlFor="name" className="text-slate-200 font-medium">
                 Full Name *
               </Label>
               <Input
                 id="name"
                 placeholder="Your full name"
                 {...form.register('name')}
-                className="border-slate-300 focus:border-emerald-400 focus:ring-emerald-400"
+                className="ultra-glass-light border-slate-400/30 focus:border-emerald-400 focus:ring-emerald-400 text-white placeholder:text-slate-400"
               />
               {form.formState.errors.name && (
                 <p className="text-red-500 text-sm">{form.formState.errors.name.message}</p>
@@ -129,7 +129,7 @@ export function ContactForm() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="email" className="text-slate-700 font-medium">
+              <Label htmlFor="email" className="text-slate-200 font-medium">
                 Email Address *
               </Label>
               <div className="relative">
@@ -138,7 +138,7 @@ export function ContactForm() {
                   id="email"
                   type="email"
                   placeholder="your@email.com"
-                  className="pl-10 border-slate-300 focus:border-emerald-400 focus:ring-emerald-400"
+                  className="pl-10 ultra-glass-light border-slate-400/30 focus:border-emerald-400 focus:ring-emerald-400 text-white placeholder:text-slate-400"
                   {...form.register('email')}
                 />
               </div>
@@ -151,7 +151,7 @@ export function ContactForm() {
           {/* Contact Information */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="phone" className="text-slate-700 font-medium">
+              <Label htmlFor="phone" className="text-slate-200 font-medium">
                 Phone Number
               </Label>
               <div className="relative">
@@ -159,7 +159,7 @@ export function ContactForm() {
                 <Input
                   id="phone"
                   placeholder="+91 98765 43210"
-                  className="pl-10 border-slate-300 focus:border-emerald-400 focus:ring-emerald-400"
+                  className="pl-10 ultra-glass-light border-slate-400/30 focus:border-emerald-400 focus:ring-emerald-400 text-white placeholder:text-slate-400"
                   {...form.register('phone')}
                 />
               </div>
@@ -169,7 +169,7 @@ export function ContactForm() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="schoolName" className="text-slate-700 font-medium">
+              <Label htmlFor="schoolName" className="text-slate-200 font-medium">
                 School/Institution Name
               </Label>
               <div className="relative">
@@ -177,7 +177,7 @@ export function ContactForm() {
                 <Input
                   id="schoolName"
                   placeholder="Your school name"
-                  className="pl-10 border-slate-300 focus:border-emerald-400 focus:ring-emerald-400"
+                  className="pl-10 ultra-glass-light border-slate-400/30 focus:border-emerald-400 focus:ring-emerald-400 text-white placeholder:text-slate-400"
                   {...form.register('schoolName')}
                 />
               </div>
@@ -189,14 +189,14 @@ export function ContactForm() {
 
           {/* Subject */}
           <div className="space-y-2">
-            <Label htmlFor="subject" className="text-slate-700 font-medium">
+            <Label htmlFor="subject" className="text-slate-200 font-medium">
               Subject *
             </Label>
             <Input
               id="subject"
               placeholder="What would you like to discuss?"
               {...form.register('subject')}
-              className="border-slate-300 focus:border-emerald-400 focus:ring-emerald-400"
+              className="ultra-glass-light border-slate-400/30 focus:border-emerald-400 focus:ring-emerald-400 text-white placeholder:text-slate-400"
             />
             {form.formState.errors.subject && (
               <p className="text-red-500 text-sm">{form.formState.errors.subject.message}</p>
@@ -205,7 +205,7 @@ export function ContactForm() {
 
           {/* Message */}
           <div className="space-y-2">
-            <Label htmlFor="message" className="text-slate-700 font-medium">
+            <Label htmlFor="message" className="text-slate-200 font-medium">
               Message *
             </Label>
             <Textarea
@@ -213,7 +213,7 @@ export function ContactForm() {
               placeholder="Tell us about your school's fee management needs, challenges, or any questions you have about Master Fees..."
               rows={5}
               {...form.register('message')}
-              className="border-slate-300 focus:border-emerald-400 focus:ring-emerald-400 resize-none"
+              className="ultra-glass-light border-slate-400/30 focus:border-emerald-400 focus:ring-emerald-400 resize-none text-white placeholder:text-slate-400"
             />
             {form.formState.errors.message && (
               <p className="text-red-500 text-sm">{form.formState.errors.message.message}</p>
@@ -225,7 +225,7 @@ export function ContactForm() {
             <Button
               type="submit"
               disabled={contactMutation.isPending}
-              className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 font-medium transition-all duration-300 shadow-lg hover:shadow-xl"
+              className="w-full ultra-glass-dark text-white hover:text-emerald-100 py-3 font-medium transition-all duration-300 shadow-lg hover:shadow-xl border border-emerald-400/30"
             >
               {contactMutation.isPending ? (
                 <div className="flex items-center justify-center">
@@ -242,7 +242,7 @@ export function ContactForm() {
           </div>
 
           {/* Privacy Note */}
-          <p className="text-sm text-slate-500 text-center leading-relaxed">
+          <p className="text-sm text-slate-400 text-center leading-relaxed">
             By submitting this form, you agree to our privacy policy. We'll only use your information 
             to respond to your inquiry and provide relevant updates about Master Fees.
           </p>

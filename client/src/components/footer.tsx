@@ -10,9 +10,12 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative bg-slate-900 text-white border-t border-emerald-400/20 overflow-hidden">
-      {/* Consistent background pattern */}
-      <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-800/30 to-slate-900"></div>
+    <footer className="relative bg-slate-900 text-white border-t border-slate-700/30 overflow-hidden">
+      {/* Refined Liquid Glass Background Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 left-10 w-32 h-32 ultra-glass-dark rounded-full opacity-8 animate-float"></div>
+        <div className="absolute bottom-20 right-10 w-40 h-40 ultra-glass-light rounded-full opacity-6 animate-float delay-1000"></div>
+      </div>
       
       <div className="relative max-w-8xl mx-auto px-12 lg:px-16 py-24">
         {/* Apple-style footer content */}
@@ -27,25 +30,25 @@ export default function Footer() {
           <div className="flex flex-wrap justify-center gap-x-12 gap-y-6">
             <button 
               onClick={() => scrollToSection('home')}
-              className="text-slate-300 hover:text-emerald-400 transition-colors duration-300 text-base font-light tracking-wide"
+              className="px-4 py-2 ultra-glass-light text-slate-300 hover:text-white transition-all duration-300 text-base font-light tracking-wide rounded-lg"
             >
               Home
             </button>
             <button 
               onClick={() => scrollToSection('features')}
-              className="text-slate-300 hover:text-emerald-400 transition-colors duration-300 text-base font-light tracking-wide"
+              className="px-4 py-2 ultra-glass-light text-slate-300 hover:text-white transition-all duration-300 text-base font-light tracking-wide rounded-lg"
             >
               Features
             </button>
             <button 
               onClick={() => scrollToSection('about')}
-              className="text-slate-300 hover:text-emerald-400 transition-colors duration-300 text-base font-light tracking-wide"
+              className="px-4 py-2 ultra-glass-light text-slate-300 hover:text-white transition-all duration-300 text-base font-light tracking-wide rounded-lg"
             >
               About
             </button>
             <button 
               onClick={() => scrollToSection('contact')}
-              className="text-slate-300 hover:text-emerald-400 transition-colors duration-300 text-base font-light tracking-wide"
+              className="px-4 py-2 ultra-glass-light text-slate-300 hover:text-white transition-all duration-300 text-base font-light tracking-wide rounded-lg"
             >
               Contact
             </button>

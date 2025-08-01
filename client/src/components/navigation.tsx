@@ -17,7 +17,7 @@ export default function Navigation() {
   };
 
   return (
-    <nav className="backdrop-blur-xl sticky top-0 z-50 transition-all duration-500 bg-slate-900/95 border-b border-emerald-400/20 shadow-2xl">
+    <nav className="ultra-glass-dark sticky top-0 z-50 transition-all duration-500 border-b border-slate-700/30 shadow-2xl">
       <div className="max-w-8xl mx-auto px-12 lg:px-16">
         <div className="flex justify-between items-center h-20">
           {/* Apple-style Logo */}
@@ -37,35 +37,35 @@ export default function Navigation() {
             <div className="flex items-center space-x-8">
               <button
                 onClick={() => scrollToSection('home')}
-                className="text-slate-300 hover:text-emerald-400 text-sm font-light transition-all duration-300"
+                className="px-4 py-2 ultra-glass-light text-slate-200 hover:text-white text-sm font-light transition-all duration-300 rounded-lg"
               >
                 Home
               </button>
               <button
                 onClick={() => scrollToSection('features')}
-                className="text-slate-300 hover:text-emerald-400 text-sm font-light transition-all duration-300"
+                className="px-4 py-2 ultra-glass-light text-slate-200 hover:text-white text-sm font-light transition-all duration-300 rounded-lg"
               >
                 Features
               </button>
               <button
                 onClick={() => scrollToSection('about')}
-                className="text-slate-300 hover:text-emerald-400 text-sm font-light transition-all duration-300"
+                className="px-4 py-2 ultra-glass-light text-slate-200 hover:text-white text-sm font-light transition-all duration-300 rounded-lg"
               >
                 About
               </button>
               <button
                 onClick={() => scrollToSection('contact')}
-                className="text-slate-300 hover:text-emerald-400 text-sm font-light transition-all duration-300"
+                className="px-4 py-2 ultra-glass-light text-slate-200 hover:text-white text-sm font-light transition-all duration-300 rounded-lg"
               >
                 Contact
               </button>
               <button
                 onClick={() => scrollToSection('careers')}
-                className="text-slate-300 hover:text-emerald-400 text-sm font-light transition-all duration-300"
+                className="px-4 py-2 ultra-glass-light text-slate-200 hover:text-white text-sm font-light transition-all duration-300 rounded-lg"
               >
                 Careers
               </button>
-              <Link href="/admin/aptitude-results" className="text-slate-300 hover:text-emerald-400 text-sm font-light transition-all duration-300">
+              <Link href="/admin/aptitude-results" className="px-4 py-2 ultra-glass-light text-slate-200 hover:text-white text-sm font-light transition-all duration-300 rounded-lg">
                 Admin
               </Link>
 
@@ -75,7 +75,7 @@ export default function Navigation() {
           {/* Apple-style CTA Button */}
           <div className="hidden md:flex items-center">
             <a href="https://master-fees.com/" target="_blank" rel="noopener noreferrer">
-              <Button className="bg-emerald-400 text-slate-900 hover:bg-emerald-300 px-8 py-2.5 rounded-full text-sm font-semibold transition-all duration-500 shadow-lg hover:shadow-emerald-400/25 hover:scale-105 tracking-wide backdrop-blur-sm border border-emerald-300/30">
+              <Button className="ultra-glass-dark text-white hover:text-emerald-100 px-8 py-2.5 rounded-full text-sm font-semibold transition-all duration-500 shadow-lg hover:shadow-emerald-400/25 hover:scale-105 tracking-wide border border-emerald-400/30">
                 Get Started
               </Button>
             </a>
@@ -96,41 +96,41 @@ export default function Navigation() {
       {/* Mobile Navigation Menu */}
       {isMenuOpen && (
         <div className="md:hidden">
-          <div className="px-3 sm:px-4 pt-3 pb-4 space-y-2 bg-slate-800 border-t border-slate-700">
+          <div className="px-3 sm:px-4 pt-3 pb-4 space-y-2 ultra-glass-dark border-t border-slate-700/30">
             <button
               onClick={() => scrollToSection('home')}
-              className="text-white hover:text-emerald-400 block px-3 py-2 text-base font-medium w-full text-left rounded-lg hover:bg-emerald-400/10 transition-all duration-200"
+              className="text-white hover:text-emerald-400 block px-3 py-2 text-base font-medium w-full text-left rounded-lg ultra-glass-light transition-all duration-200"
             >
               Home
             </button>
             <button
               onClick={() => scrollToSection('features')}
-              className="text-slate-300 hover:text-emerald-400 block px-3 py-2 text-base font-medium w-full text-left rounded-lg hover:bg-emerald-400/10 transition-all duration-200"
+              className="text-slate-300 hover:text-emerald-400 block px-3 py-2 text-base font-medium w-full text-left rounded-lg ultra-glass-light transition-all duration-200"
             >
               Features
             </button>
             <button
               onClick={() => scrollToSection('about')}
-              className="text-slate-300 hover:text-emerald-400 block px-3 py-2 text-base font-medium w-full text-left rounded-lg hover:bg-emerald-400/10 transition-all duration-200"
+              className="text-slate-300 hover:text-emerald-400 block px-3 py-2 text-base font-medium w-full text-left rounded-lg ultra-glass-light transition-all duration-200"
             >
               About
             </button>
 
             <button
               onClick={() => scrollToSection('contact')}
-              className="text-slate-300 hover:text-emerald-400 block px-3 py-2 text-base font-medium w-full text-left rounded-lg hover:bg-emerald-400/10 transition-all duration-200"
+              className="text-slate-300 hover:text-emerald-400 block px-3 py-2 text-base font-medium w-full text-left rounded-lg ultra-glass-light transition-all duration-200"
             >
               Contact
             </button>
             <button
               onClick={() => scrollToSection('careers')}
-              className="text-slate-300 hover:text-emerald-400 block px-3 py-2 text-base font-medium w-full text-left rounded-lg hover:bg-emerald-400/10 transition-all duration-200"
+              className="text-slate-300 hover:text-emerald-400 block px-3 py-2 text-base font-medium w-full text-left rounded-lg ultra-glass-light transition-all duration-200"
             >
               Careers
             </button>
             <div className="pt-4">
               <a href="https://master-fees.com/" target="_blank" rel="noopener noreferrer">
-                <Button className={cn("w-full bg-emerald-400 hover:bg-emerald-300 text-slate-900 font-semibold")}>
+                <Button className={cn("w-full ultra-glass-dark text-white hover:text-emerald-100 font-semibold border border-emerald-400/30")}>
                   Get Started
                 </Button>
               </a>
