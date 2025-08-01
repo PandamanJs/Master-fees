@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { AIAssistant } from "@/components/ai-assistant";
 import Home from "@/pages/home";
 import Onboarding from "@/pages/onboarding";
+import OnboardingSimple from "@/pages/onboarding-simple";
 import AppleAptitudeTest from "@/pages/aptitude-apple";
 import AptitudeTest from "@/pages/aptitude";
 import AptitudeEnhanced from "@/pages/aptitude-enhanced";
@@ -17,6 +18,7 @@ function Router() {
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/onboarding" component={Onboarding} />
+      <Route path="/onboarding-simple" component={OnboardingSimple} />
       <Route path="/aptitude" component={AptitudeTest} />
       <Route path="/aptitude-enhanced" component={AptitudeEnhanced} />
       <Route path="/aptitude-apple" component={AppleAptitudeTest} />
