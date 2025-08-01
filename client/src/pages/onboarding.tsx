@@ -198,21 +198,29 @@ export default function OnboardingPage() {
               <label className="block text-slate-200 mb-3 font-medium text-center">
                 Select Country of operation
               </label>
-              <Select value={country} onValueChange={(value) => {
+              <Select value={country || ""} onValueChange={(value) => {
                 console.log('Country selected:', value);
-                setCountry(value);
-                setStateProvince(''); // Reset state/province when country changes
-                setTownDistrict(''); // Reset town/district when country changes
+                try {
+                  setCountry(value);
+                  setStateProvince(''); // Reset state/province when country changes
+                  setTownDistrict(''); // Reset town/district when country changes
+                } catch (error) {
+                  console.error('Error setting country:', error);
+                }
               }}>
                 <SelectTrigger className="border-0 bg-slate-700/30 backdrop-blur-sm text-white focus:bg-slate-600/30 focus:ring-2 focus:ring-emerald-400/30 rounded-xl h-12">
                   <SelectValue placeholder="Select country" />
                 </SelectTrigger>
                 <SelectContent className="bg-slate-800 border-slate-600">
-                  {countries.map((countryOption) => (
+                  {countries && countries.length > 0 ? countries.map((countryOption) => (
                     <SelectItem key={countryOption} value={countryOption} className="text-white hover:bg-slate-700">
                       {countryOption}
                     </SelectItem>
-                  ))}
+                  )) : (
+                    <SelectItem value="no-countries" className="text-white hover:bg-slate-700">
+                      No countries available
+                    </SelectItem>
+                  )}
                 </SelectContent>
               </Select>
             </div>
@@ -224,26 +232,38 @@ export default function OnboardingPage() {
                 <label className="block text-slate-200 mb-3 font-medium text-center">
                   Select State/province
                 </label>
-                <Select value={stateProvince} onValueChange={(value) => {
+                <Select value={stateProvince || ""} onValueChange={(value) => {
                   console.log('Province selected:', value);
-                  setStateProvince(value);
-                  setTownDistrict(''); // Reset town/district when province changes
+                  try {
+                    setStateProvince(value);
+                    setTownDistrict(''); // Reset town/district when province changes
+                  } catch (error) {
+                    console.error('Error setting province:', error);
+                  }
                 }}>
                   <SelectTrigger className="border-0 bg-slate-700/30 backdrop-blur-sm text-white focus:bg-slate-600/30 focus:ring-2 focus:ring-emerald-400/30 rounded-xl h-12">
                     <SelectValue placeholder="Select state/province" />
                   </SelectTrigger>
                   <SelectContent className="bg-slate-800 border-slate-600">
                     {country === 'Zambia' ? (
-                      zambianProvinces.map((province) => (
+                      zambianProvinces && zambianProvinces.length > 0 ? zambianProvinces.map((province) => (
                         <SelectItem key={province} value={province} className="text-white hover:bg-slate-700">
                           {province}
                         </SelectItem>
-                      ))
+                      )) : (
+                        <SelectItem value="no-provinces" className="text-white hover:bg-slate-700">
+                          No provinces available
+                        </SelectItem>
+                      )
                     ) : country ? (
                       <SelectItem value={`${country}-Province`} className="text-white hover:bg-slate-700">
                         {country} Province
                       </SelectItem>
-                    ) : null}
+                    ) : (
+                      <SelectItem value="select-country-first" className="text-white hover:bg-slate-700">
+                        Select country first
+                      </SelectItem>
+                    )}
                   </SelectContent>
                 </Select>
               </div>
@@ -253,20 +273,31 @@ export default function OnboardingPage() {
                 <label className="block text-slate-200 mb-3 font-medium text-center">
                   Select Town/District
                 </label>
-                <Select value={townDistrict} onValueChange={setTownDistrict}>
+                <Select value={townDistrict || ""} onValueChange={(value) => {
+                  console.log('District selected:', value);
+                  try {
+                    setTownDistrict(value);
+                  } catch (error) {
+                    console.error('Error setting district:', error);
+                  }
+                }}>
                   <SelectTrigger className="border-0 bg-slate-700/30 backdrop-blur-sm text-white focus:bg-slate-600/30 focus:ring-2 focus:ring-emerald-400/30 rounded-xl h-12">
                     <SelectValue placeholder="Select town/district" />
                   </SelectTrigger>
                   <SelectContent className="bg-slate-800 border-slate-600">
-                    {stateProvince && townsByProvince[stateProvince] ? (
+                    {stateProvince && townsByProvince[stateProvince] && townsByProvince[stateProvince].length > 0 ? (
                       townsByProvince[stateProvince].map((town) => (
                         <SelectItem key={town} value={town} className="text-white hover:bg-slate-700">
                           {town}
                         </SelectItem>
                       ))
-                    ) : (
+                    ) : stateProvince ? (
                       <SelectItem value="Other" className="text-white hover:bg-slate-700">
                         Other
+                      </SelectItem>
+                    ) : (
+                      <SelectItem value="select-province-first" className="text-white hover:bg-slate-700">
+                        Select province first
                       </SelectItem>
                     )}
                   </SelectContent>
