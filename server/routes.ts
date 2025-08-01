@@ -331,6 +331,44 @@ router.get("/schools", async (req, res) => {
   }
 });
 
+// Store school information for auto-fill purposes
+router.post("/schools", async (req, res) => {
+  try {
+    const schoolData = {
+      name: req.body.name,
+      country: req.body.country || null,
+      province: req.body.province || null,
+      district: req.body.district || null,
+      dataSource: req.body.dataSource || 'user_input',
+      verificationStatus: req.body.verificationStatus || 'unverified'
+    };
+
+    // Check if school already exists with same name and location
+    const existingSchool = await storage.findSchoolByNameAndLocation(
+      schoolData.name, 
+      schoolData.country, 
+      schoolData.province
+    );
+
+    let school;
+    if (existingSchool) {
+      // Update existing school with new information
+      school = await storage.updateSchool(existingSchool.id, schoolData);
+    } else {
+      // Create new school entry
+      school = await storage.createSchool(schoolData);
+    }
+
+    res.status(201).json({ 
+      message: "School information stored successfully",
+      school 
+    });
+  } catch (error) {
+    console.error("Error storing school data:", error);
+    res.status(500).json({ error: "Failed to store school information" });
+  }
+});
+
 // Contact form routes
 router.post("/contact", async (req, res) => {
   try {

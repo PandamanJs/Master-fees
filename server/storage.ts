@@ -27,6 +27,7 @@ export interface IStorage {
   getSchoolById(id: number): Promise<School | null>;
   getAllSchools(): Promise<School[]>;
   updateSchool(id: number, updates: Partial<School>): Promise<School | null>;
+  findSchoolByNameAndLocation(name: string, country?: string, province?: string): Promise<School | null>;
 
   // Student operations
   createStudent(student: NewStudent): Promise<Student>;
@@ -375,6 +376,18 @@ export class MemStorage implements IStorage {
     const updatedSchool = { ...school, ...updates };
     this.schools.set(id, updatedSchool);
     return updatedSchool;
+  }
+
+  async findSchoolByNameAndLocation(name: string, country?: string, province?: string): Promise<School | null> {
+    for (const school of this.schools.values()) {
+      if (school.name === name) {
+        // If location parameters are provided, match them too
+        if (country && school.country !== country) continue;
+        if (province && school.province !== province) continue;
+        return school;
+      }
+    }
+    return null;
   }
 
   // Student operations

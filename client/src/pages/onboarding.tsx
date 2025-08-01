@@ -35,11 +35,39 @@ export default function OnboardingPage() {
     }
   };
 
-  const handleStep2Submit = (e: React.FormEvent) => {
+  const handleStep2Submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (country && stateProvince && townDistrict) {
-      // Navigate to assessment or dashboard
-      navigate('/aptitude-apple');
+    if (country && stateProvince && townDistrict && schoolName) {
+      try {
+        // Store school information in database for auto-fill purposes
+        const schoolData = {
+          name: schoolName,
+          country: country,
+          province: stateProvince,
+          district: townDistrict,
+          dataSource: 'onboarding_form',
+          verificationStatus: 'unverified'
+        };
+
+        const response = await fetch('/api/schools', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(schoolData),
+        });
+
+        if (response.ok) {
+          console.log('School data stored successfully');
+        }
+        
+        // Navigate to assessment or dashboard
+        navigate('/aptitude-apple');
+      } catch (error) {
+        console.error('Failed to store school data:', error);
+        // Still navigate even if storage fails
+        navigate('/aptitude-apple');
+      }
     }
   };
 
@@ -170,7 +198,7 @@ export default function OnboardingPage() {
               <label className="block text-slate-200 mb-3 font-medium text-center">
                 Select Country of operation
               </label>
-              <Select value={country} onValueChange={(value) => {
+              <Select value={country} onValueChange={(value: string) => {
                 setCountry(value);
                 setStateProvince(''); // Reset state/province when country changes
                 setTownDistrict(''); // Reset town/district when country changes
@@ -195,7 +223,7 @@ export default function OnboardingPage() {
                 <label className="block text-slate-200 mb-3 font-medium text-center">
                   Select State/province
                 </label>
-                <Select value={stateProvince} onValueChange={(value) => {
+                <Select value={stateProvince} onValueChange={(value: string) => {
                   setStateProvince(value);
                   setTownDistrict(''); // Reset town/district when province changes
                 }}>

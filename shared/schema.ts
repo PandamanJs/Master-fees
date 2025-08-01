@@ -17,18 +17,66 @@ export const users = pgTable("users", {
   updatedAt: timestamp("updated_at").defaultNow(),
 });
 
-// Schools table
+// Schools table - Enhanced for comprehensive school information storage
 export const schools = pgTable("schools", {
   id: serial("id").primaryKey(),
   name: text("name").notNull(),
-  address: text("address").notNull(),
-  city: text("city").notNull(),
-  state: text("state").notNull(),
-  pincode: text("pincode").notNull(),
-  contactEmail: text("contact_email").notNull(),
-  contactPhone: text("contact_phone").notNull(),
+  address: text("address"),
+  city: text("city"),
+  state: text("state"),
+  country: text("country"),
+  pincode: text("pincode"),
+  district: text("district"),
+  province: text("province"),
+  
+  // Contact Information
+  contactEmail: text("contact_email"),
+  contactPhone: text("contact_phone"),
+  website: text("website"),
+  
+  // Administrative Details
   principalName: text("principal_name"),
+  vicesPrincipalName: text("vices_principal_name"),
   registrationNumber: text("registration_number"),
+  establishedYear: integer("established_year"),
+  
+  // School Type & Classification
+  schoolType: text("school_type"), // 'primary', 'secondary', 'university', 'college', 'vocational'
+  schoolCategory: text("school_category"), // 'public', 'private', 'government', 'missionary', 'community'
+  curriculumType: text("curriculum_type"), // 'zambian', 'cambridge', 'ib', 'american', 'other'
+  
+  // Capacity & Structure
+  totalStudents: integer("total_students"),
+  totalTeachers: integer("total_teachers"),
+  totalClasses: integer("total_classes"),
+  gradesOffered: text("grades_offered").array(), // ['grade1', 'grade2', etc.]
+  
+  // Facilities & Services
+  hasLibrary: boolean("has_library").default(false),
+  hasLaboratory: boolean("has_laboratory").default(false),
+  hasComputerLab: boolean("has_computer_lab").default(false),
+  hasSportsField: boolean("has_sports_field").default(false),
+  hasTransport: boolean("has_transport").default(false),
+  hasHostel: boolean("has_hostel").default(false),
+  hasCafeteria: boolean("has_cafeteria").default(false),
+  
+  // Financial Information
+  averageFeeStructure: jsonb("average_fee_structure"), // {tuition: 1000, transport: 200, etc.}
+  paymentMethods: text("payment_methods").array(), // ['cash', 'bank_transfer', 'mobile_money', etc.]
+  
+  // Academic Information
+  academicYearStart: text("academic_year_start"), // 'january', 'february', etc.
+  academicYearEnd: text("academic_year_end"),
+  examBoards: text("exam_boards").array(), // ['ece', 'grade7', 'grade9', 'grade12']
+  
+  // Location Coordinates (for mapping)
+  latitude: text("latitude"),
+  longitude: text("longitude"),
+  
+  // System Fields
+  dataSource: text("data_source").default("user_input"), // 'government_db', 'user_input', 'api_import'
+  verificationStatus: text("verification_status").default("unverified"), // 'verified', 'unverified', 'pending'
+  lastUpdated: timestamp("last_updated").defaultNow(),
   isActive: boolean("is_active").default(true),
   createdAt: timestamp("created_at").defaultNow(),
 });
@@ -227,8 +275,6 @@ export const insertAptitudeTestSchema = createInsertSchema(aptitudeTests).omit({
   status: true,
   adminNotes: true,
 });
-
-export type NewAptitudeTest = z.infer<typeof insertAptitudeTestSchema>;
 
 // Assessment Results table
 export const assessmentResults = pgTable("assessment_results", {
