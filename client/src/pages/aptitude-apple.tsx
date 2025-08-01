@@ -108,11 +108,7 @@ export default function AppleAptitudeTest() {
 
   const submitRegistration = useMutation({
     mutationFn: async (data: CandidateForm) => {
-      const response = await apiRequest('/api/aptitude/register', {
-        method: 'POST',
-        body: JSON.stringify(data)
-      });
-      return response;
+      return await apiRequest('/api/aptitude/register', data);
     },
     onSuccess: (data: any) => {
       if (data?.questions) {
