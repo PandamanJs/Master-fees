@@ -54,6 +54,12 @@ export default function Footer() {
             >
               Aptitude Tests
             </a>
+            <Link 
+              href="/admin/aptitude-results"
+              className="text-slate-300 hover:text-emerald-400 transition-colors duration-300 text-base font-light tracking-wide"
+            >
+              Admin Panel
+            </Link>
           </div>
           
           {/* Right Side - Contact Info */}
