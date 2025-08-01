@@ -59,23 +59,12 @@ export default function Navigation() {
               >
                 Contact
               </button>
-              <Link 
-                href="/aptitude"
-                className="px-5 py-2 text-slate-200 hover:text-white hover:bg-white/10 rounded-full transition-all duration-300 text-sm font-medium tracking-wide"
-              >
-                Aptitude Tests
-              </Link>
+
             </div>
           </div>
           
-          {/* Right Side Contact & Admin Buttons - Premium Style */}
-          <div className="hidden md:flex items-center space-x-4">
-            <Link 
-              href="/admin/aptitude-results"
-              className="ultra-glass-dark px-4 py-2 text-slate-200 hover:text-white rounded-full transition-all duration-300 text-sm font-medium tracking-wide border border-slate-600/30 shadow-lg"
-            >
-              Admin
-            </Link>
+          {/* Right Side Contact Button - Premium Style */}
+          <div className="hidden md:flex items-center">
             <a href="https://master-fees.com/" target="_blank" rel="noopener noreferrer">
               <Button className="ultra-glass-dark text-slate-200 hover:text-white px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-500 shadow-lg hover:scale-105 tracking-wide border border-emerald-400/30 flex items-center group">
                 Contact us
