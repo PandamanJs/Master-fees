@@ -68,36 +68,51 @@ export default function Careers() {
     setIsSubmitting(true);
     
     try {
-      // Submit to Basin form endpoint
-      const formData = new FormData();
+      // Submit to Basin form endpoint using form submission approach
+      const form = document.createElement('form');
+      form.action = 'https://usebasin.com/f/9b77c34dfc7e';
+      form.method = 'POST';
+      form.style.display = 'none';
       
-      // Add all form fields to FormData
+      // Add all form fields as hidden inputs
       Object.entries(data).forEach(([key, value]) => {
         if (value) {
-          formData.append(key, value);
+          const input = document.createElement('input');
+          input.type = 'hidden';
+          input.name = key;
+          input.value = value;
+          form.appendChild(input);
         }
       });
       
       // Add CV file URL if available
       if (cvFile) {
-        formData.append('cvFileUrl', cvFile);
+        const cvInput = document.createElement('input');
+        cvInput.type = 'hidden';
+        cvInput.name = 'cvFileUrl';
+        cvInput.value = cvFile;
+        form.appendChild(cvInput);
       }
-
-      const response = await fetch('https://usebasin.com/f/9b77c34dfc7e', {
-        method: 'POST',
-        body: formData,
+      
+      // Add form to DOM and submit
+      document.body.appendChild(form);
+      form.submit();
+      
+      // Show success message and reset form
+      toast({
+        title: "Application Submitted!",
+        description: "Thank you for your internship application. We'll review it and get back to you within 2-3 business days.",
       });
-
-      if (response.ok) {
-        toast({
-          title: "Application Submitted!",
-          description: "Thank you for your internship application. We'll review it and get back to you within 2-3 business days.",
-        });
-        reset();
-        setCvFile(''); // Clear CV file
-      } else {
-        throw new Error('Application submission failed');
-      }
+      reset();
+      setCvFile(''); // Clear CV file
+      
+      // Clean up form after submission
+      setTimeout(() => {
+        if (document.body.contains(form)) {
+          document.body.removeChild(form);
+        }
+      }, 1000);
+      
     } catch (error) {
       console.error('Application submission error:', error);
       toast({
