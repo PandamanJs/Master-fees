@@ -248,7 +248,8 @@ export default function AppleAptitudeTest() {
             "To handle routing"
           ],
           correct: 0,
-          category: "Frontend"
+          category: "Frontend",
+          type: "multiple-choice"
         },
         {
           id: 2,
@@ -260,7 +261,25 @@ export default function AppleAptitudeTest() {
             "display: inline"
           ],
           correct: 1,
-          category: "Frontend"
+          category: "Frontend",
+          type: "multiple-choice"
+        },
+        {
+          id: 11,
+          question: "Create a React component that displays a counter with increment and decrement buttons.",
+          code: `// Complete this React component
+function Counter() {
+  // Your code here
+  
+  return (
+    <div>
+      {/* Display counter and buttons */}
+    </div>
+  );
+}`,
+          expected: "useState hook with counter state, increment/decrement functions, proper JSX structure",
+          category: "Frontend",
+          type: "coding"
         }
       ],
       backend: [
@@ -274,7 +293,8 @@ export default function AppleAptitudeTest() {
             "To manage file uploads"
           ],
           correct: 1,
-          category: "Backend"
+          category: "Backend",
+          type: "multiple-choice"
         },
         {
           id: 4,
@@ -286,7 +306,21 @@ export default function AppleAptitudeTest() {
             "DELETE"
           ],
           correct: 2,
-          category: "Backend"
+          category: "Backend",
+          type: "multiple-choice"
+        },
+        {
+          id: 12,
+          question: "Create an Express.js API endpoint that accepts POST requests and validates user data.",
+          code: `// Complete this Express.js route
+app.post('/api/users', (req, res) => {
+  // Your code here
+  // Validate: name (required), email (valid format), age (number > 0)
+  
+});`,
+          expected: "Request body validation, error handling, proper response status codes, data structure validation",
+          category: "Backend",
+          type: "coding"
         }
       ],
       marketing: [
@@ -538,10 +572,8 @@ export default function AppleAptitudeTest() {
     // Clear any existing testTypes error
     form.clearErrors('testTypes');
     
-    // Submit with selected test types
-    const submissionData = { ...data, testTypes: selectedTestTypes };
-    console.log('Submitting data:', submissionData);
-    submitRegistration.mutate(submissionData);
+    // Store candidate data and proceed to instructions
+    setStep('instructions');
   };
 
   if (step === 'registration') {
@@ -823,7 +855,24 @@ export default function AppleAptitudeTest() {
   }
 
   // Test interface with real-time performance visualization
-  if (step === 'test' && questions.length > 0) {
+  if (step === 'test') {
+    console.log('Test step - Questions available:', questions.length);
+    
+    if (questions.length === 0) {
+      return (
+        <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-teal-900 p-4 flex items-center justify-center">
+          <div className="text-center text-white">
+            <p className="text-lg mb-4">Loading questions...</p>
+            <Button onClick={() => {
+              const sampleQuestions = generateSampleQuestions(selectedTestTypes);
+              setQuestions(sampleQuestions);
+            }}>
+              Generate Questions
+            </Button>
+          </div>
+        </div>
+      );
+    }
     const currentQ = questions[currentQuestion];
     
     return (
@@ -862,23 +911,25 @@ export default function AppleAptitudeTest() {
                   </h2>
                 </div>
 
-                <div className="space-y-3">
-                  {currentQ.options.map((option: string, index: number) => (
-                    <button
-                      key={index}
-                      onClick={() => {
-                        const answerId = index.toString();
-                        setAnswers(prev => ({ ...prev, [currentQ.id]: answerId }));
-                        updatePerformanceMetrics(currentQ.id, answerId);
-                        
-                        // Auto-advance to next question after brief delay
-                        setTimeout(() => {
-                          if (currentQuestion < questions.length - 1) {
-                            setCurrentQuestion(prev => prev + 1);
-                          } else {
-                            setStep('complete');
-                          }
-                        }, 800);
+                {/* Question Content Based on Type */}
+                {currentQ.type === 'multiple-choice' ? (
+                  <div className="space-y-3">
+                    {currentQ.options.map((option: string, index: number) => (
+                      <button
+                        key={index}
+                        onClick={() => {
+                          const answerId = index.toString();
+                          setAnswers(prev => ({ ...prev, [currentQ.id]: answerId }));
+                          updatePerformanceMetrics(currentQ.id, answerId);
+                          
+                          // Auto-advance to next question after brief delay
+                          setTimeout(() => {
+                            if (currentQuestion < questions.length - 1) {
+                              setCurrentQuestion(prev => prev + 1);
+                            } else {
+                              setStep('complete');
+                            }
+                          }, 800);
                       }}
                       className={`w-full p-4 text-left rounded-2xl border-2 transition-all duration-200 ${
                         answers[currentQ.id] === index.toString()
@@ -898,6 +949,66 @@ export default function AppleAptitudeTest() {
                       </div>
                     </button>
                   ))}
+                  </div>
+                ) : (
+                  /* Coding Question Interface */
+                  <div className="space-y-4">
+                    <div className="bg-slate-900 rounded-xl p-4 border border-slate-700">
+                      <pre className="text-green-400 text-sm font-mono overflow-x-auto">
+                        <code>{currentQ.code}</code>
+                      </pre>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-slate-700">Your Solution:</label>
+                      <textarea
+                        value={answers[currentQ.id] || ''}
+                        onChange={(e) => {
+                          setAnswers(prev => ({ ...prev, [currentQ.id]: e.target.value }));
+                          updatePerformanceMetrics(currentQ.id, e.target.value);
+                        }}
+                        placeholder="Write your code here..."
+                        className="w-full h-32 p-3 border border-slate-300 rounded-lg font-mono text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                      />
+                    </div>
+                    
+                    <div className="flex gap-3">
+                      <Button
+                        onClick={() => {
+                          if (currentQuestion < questions.length - 1) {
+                            setCurrentQuestion(prev => prev + 1);
+                          } else {
+                            setStep('complete');
+                          }
+                        }}
+                        className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-lg"
+                      >
+                        Next Question
+                      </Button>
+                      <Button
+                        variant="outline"
+                        onClick={() => {
+                          // AI Code Analysis simulation
+                          alert('Code analysis: Good approach! Consider adding error handling.');
+                        }}
+                        className="px-6 py-2 rounded-lg"
+                      >
+                        Get AI Hint
+                      </Button>
+                    </div>
+                  </div>
+                )}
+
+                {/* AI Monitoring Alert */}
+                <div className="mt-6 p-4 bg-gradient-to-r from-purple-50 to-blue-50 border border-purple-200 rounded-xl">
+                  <div className="flex items-center gap-3">
+                    <Eye className="w-5 h-5 text-purple-600" />
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-purple-900">AI Monitoring Active</p>
+                      <p className="text-xs text-purple-700">Focus score: {performanceMetrics.focusScore}% | Confidence: {performanceMetrics.confidenceScore}%</p>
+                    </div>
+                    <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                  </div>
                 </div>
               </CardContent>
             </Card>
