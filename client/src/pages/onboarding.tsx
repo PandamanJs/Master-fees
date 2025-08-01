@@ -198,7 +198,8 @@ export default function OnboardingPage() {
               <label className="block text-slate-200 mb-3 font-medium text-center">
                 Select Country of operation
               </label>
-              <Select value={country} onValueChange={(value: string) => {
+              <Select value={country} onValueChange={(value) => {
+                console.log('Country selected:', value);
                 setCountry(value);
                 setStateProvince(''); // Reset state/province when country changes
                 setTownDistrict(''); // Reset town/district when country changes
@@ -223,7 +224,8 @@ export default function OnboardingPage() {
                 <label className="block text-slate-200 mb-3 font-medium text-center">
                   Select State/province
                 </label>
-                <Select value={stateProvince} onValueChange={(value: string) => {
+                <Select value={stateProvince} onValueChange={(value) => {
+                  console.log('Province selected:', value);
                   setStateProvince(value);
                   setTownDistrict(''); // Reset town/district when province changes
                 }}>
@@ -231,11 +233,17 @@ export default function OnboardingPage() {
                     <SelectValue placeholder="Select state/province" />
                   </SelectTrigger>
                   <SelectContent className="bg-slate-800 border-slate-600">
-                    {(country === 'Zambia' ? zambianProvinces : ['Other']).map((province) => (
-                      <SelectItem key={province} value={province} className="text-white hover:bg-slate-700">
-                        {province}
+                    {country === 'Zambia' ? (
+                      zambianProvinces.map((province) => (
+                        <SelectItem key={province} value={province} className="text-white hover:bg-slate-700">
+                          {province}
+                        </SelectItem>
+                      ))
+                    ) : country ? (
+                      <SelectItem value={`${country}-Province`} className="text-white hover:bg-slate-700">
+                        {country} Province
                       </SelectItem>
-                    ))}
+                    ) : null}
                   </SelectContent>
                 </Select>
               </div>
@@ -250,11 +258,17 @@ export default function OnboardingPage() {
                     <SelectValue placeholder="Select town/district" />
                   </SelectTrigger>
                   <SelectContent className="bg-slate-800 border-slate-600">
-                    {(stateProvince && townsByProvince[stateProvince] ? townsByProvince[stateProvince] : ['Other']).map((town) => (
-                      <SelectItem key={town} value={town} className="text-white hover:bg-slate-700">
-                        {town}
+                    {stateProvince && townsByProvince[stateProvince] ? (
+                      townsByProvince[stateProvince].map((town) => (
+                        <SelectItem key={town} value={town} className="text-white hover:bg-slate-700">
+                          {town}
+                        </SelectItem>
+                      ))
+                    ) : (
+                      <SelectItem value="Other" className="text-white hover:bg-slate-700">
+                        Other
                       </SelectItem>
-                    ))}
+                    )}
                   </SelectContent>
                 </Select>
               </div>
