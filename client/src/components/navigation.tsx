@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Link } from "wouter";
@@ -32,51 +32,54 @@ export default function Navigation() {
             </div>
           </div>
           
-          {/* Apple-style Desktop Navigation */}
-          <div className="hidden md:block">
-            <div className="flex items-center space-x-8">
+          {/* Premium Center Navigation Pill - Real Estate Style */}
+          <div className="hidden md:flex items-center">
+            <div className="flex items-center space-x-1 ultra-glass-light rounded-full px-3 py-2 border border-slate-600/20 shadow-2xl">
               <button
                 onClick={() => scrollToSection('home')}
-                className="px-4 py-2 ultra-glass-light text-slate-200 hover:text-white text-sm font-light transition-all duration-300 rounded-lg"
+                className="px-5 py-2 text-slate-200 hover:text-white hover:bg-white/10 rounded-full transition-all duration-300 text-sm font-medium tracking-wide"
               >
                 Home
               </button>
               <button
                 onClick={() => scrollToSection('features')}
-                className="px-4 py-2 ultra-glass-light text-slate-200 hover:text-white text-sm font-light transition-all duration-300 rounded-lg"
+                className="px-5 py-2 text-slate-200 hover:text-white hover:bg-white/10 rounded-full transition-all duration-300 text-sm font-medium tracking-wide"
               >
                 Features
               </button>
               <button
                 onClick={() => scrollToSection('about')}
-                className="px-4 py-2 ultra-glass-light text-slate-200 hover:text-white text-sm font-light transition-all duration-300 rounded-lg"
+                className="px-5 py-2 text-slate-200 hover:text-white hover:bg-white/10 rounded-full transition-all duration-300 text-sm font-medium tracking-wide"
               >
                 About
               </button>
               <button
                 onClick={() => scrollToSection('contact')}
-                className="px-4 py-2 ultra-glass-light text-slate-200 hover:text-white text-sm font-light transition-all duration-300 rounded-lg"
+                className="px-5 py-2 text-slate-200 hover:text-white hover:bg-white/10 rounded-full transition-all duration-300 text-sm font-medium tracking-wide"
               >
                 Contact
               </button>
-              <button
-                onClick={() => scrollToSection('careers')}
-                className="px-4 py-2 ultra-glass-light text-slate-200 hover:text-white text-sm font-light transition-all duration-300 rounded-lg"
+              <Link 
+                href="/aptitude"
+                className="px-5 py-2 text-slate-200 hover:text-white hover:bg-white/10 rounded-full transition-all duration-300 text-sm font-medium tracking-wide"
               >
-                Careers
-              </button>
-              <Link href="/admin/aptitude-results" className="px-4 py-2 ultra-glass-light text-slate-200 hover:text-white text-sm font-light transition-all duration-300 rounded-lg">
-                Admin
+                Aptitude Tests
               </Link>
-
             </div>
           </div>
           
-          {/* Apple-style CTA Button */}
-          <div className="hidden md:flex items-center">
+          {/* Right Side Contact & Admin Buttons - Premium Style */}
+          <div className="hidden md:flex items-center space-x-4">
+            <Link 
+              href="/admin/aptitude-results"
+              className="ultra-glass-dark px-4 py-2 text-slate-200 hover:text-white rounded-full transition-all duration-300 text-sm font-medium tracking-wide border border-slate-600/30 shadow-lg"
+            >
+              Admin
+            </Link>
             <a href="https://master-fees.com/" target="_blank" rel="noopener noreferrer">
-              <Button className="ultra-glass-dark text-white hover:text-emerald-100 px-8 py-2.5 rounded-full text-sm font-semibold transition-all duration-500 shadow-lg hover:shadow-emerald-400/25 hover:scale-105 tracking-wide border border-emerald-400/30">
-                Get Started
+              <Button className="ultra-glass-dark text-slate-200 hover:text-white px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-500 shadow-lg hover:scale-105 tracking-wide border border-emerald-400/30 flex items-center group">
+                Contact us
+                <ArrowRight className="w-4 h-4 ml-2 transition-transform duration-300 group-hover:translate-x-1" />
               </Button>
             </a>
           </div>
