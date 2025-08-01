@@ -653,50 +653,87 @@ export default function AppleAptitudeTest() {
                   <h3 className="text-xl font-light text-slate-900 border-b border-slate-200 pb-4">
                     Select Assessment Areas
                   </h3>
+                  {/* Available Tests - Frontend and Backend Only */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {Object.entries(testTypeConfigs).map(([testType, config]) => {
-                      const Icon = config.icon;
-                      const isSelected = selectedTestTypes.includes(testType);
-                      
-                      return (
-                        <div 
-                          key={testType} 
-                          className={`relative p-6 rounded-2xl border-2 transition-all duration-300 cursor-pointer ${
-                            isSelected 
-                              ? 'border-emerald-400 bg-emerald-50 shadow-lg' 
-                              : 'border-slate-200 bg-white hover:border-emerald-200 hover:bg-emerald-50/50'
-                          }`}
-                          onClick={(e) => {
-                            // Prevent double triggering from checkbox
-                            if (e.target === e.currentTarget) {
-                              handleTestTypeChange(testType, !isSelected);
-                            }
-                          }}
-                        >
-                          <div className="flex items-start space-x-4">
-                            <div className={`p-3 rounded-xl bg-gradient-to-r ${config.color} text-white`}>
-                              <Icon className="w-6 h-6" />
+                    {Object.entries(testTypeConfigs)
+                      .filter(([testType]) => ['frontend', 'backend'].includes(testType))
+                      .map(([testType, config]) => {
+                        const Icon = config.icon;
+                        const isSelected = selectedTestTypes.includes(testType);
+                        
+                        return (
+                          <div 
+                            key={testType} 
+                            className={`relative p-6 rounded-2xl border-2 transition-all duration-300 cursor-pointer ${
+                              isSelected 
+                                ? 'border-emerald-400 bg-emerald-50 shadow-lg' 
+                                : 'border-slate-200 bg-white hover:border-emerald-200 hover:bg-emerald-50/50'
+                            }`}
+                            onClick={(e) => {
+                              // Prevent double triggering from checkbox
+                              if (e.target === e.currentTarget) {
+                                handleTestTypeChange(testType, !isSelected);
+                              }
+                            }}
+                          >
+                            <div className="flex items-start space-x-4">
+                              <div className={`p-3 rounded-xl bg-gradient-to-r ${config.color} text-white`}>
+                                <Icon className="w-6 h-6" />
+                              </div>
+                              <div className="flex-1">
+                                <div className="flex items-center space-x-2 mb-2">
+                                  <h4 className="font-medium text-slate-900">{config.label}</h4>
+                                  <Badge variant="secondary" className="text-xs">
+                                    {config.category}
+                                  </Badge>
+                                </div>
+                                <p className="text-sm text-slate-600 leading-relaxed">
+                                  {config.description}
+                                </p>
+                              </div>
+                              <Checkbox 
+                                checked={isSelected}
+                                onCheckedChange={(checked) => handleTestTypeChange(testType, checked as boolean)}
+                                className="mt-1"
+                              />
                             </div>
-                            <div className="flex-1">
-                              <div className="flex items-center space-x-2 mb-2">
-                                <h4 className="font-medium text-slate-900">{config.label}</h4>
-                                <Badge variant="secondary" className="text-xs">
-                                  {config.category}
+                          </div>
+                        );
+                      })}
+                  </div>
+
+                  {/* Coming Soon Tests */}
+                  <div className="mt-8">
+                    <h4 className="text-sm font-medium text-slate-600 mb-4">Coming Soon</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      {Object.entries(testTypeConfigs)
+                        .filter(([testType]) => ['marketing', 'business', 'intern'].includes(testType))
+                        .map(([testType, config]) => {
+                          const Icon = config.icon;
+                          
+                          return (
+                            <div 
+                              key={testType} 
+                              className="relative p-4 rounded-xl border border-slate-200 bg-slate-50/60 opacity-70"
+                            >
+                              <div className="flex items-center space-x-3">
+                                <div className={`p-2 rounded-lg bg-gradient-to-r ${config.color} text-white opacity-60`}>
+                                  <Icon className="w-4 h-4" />
+                                </div>
+                                <div className="flex-1">
+                                  <h4 className="text-sm font-medium text-slate-700">{config.label}</h4>
+                                  <p className="text-xs text-slate-500">{config.description}</p>
+                                </div>
+                              </div>
+                              <div className="absolute top-2 right-2">
+                                <Badge variant="outline" className="text-xs px-2 py-1 text-slate-500">
+                                  Coming Soon
                                 </Badge>
                               </div>
-                              <p className="text-sm text-slate-600 leading-relaxed">
-                                {config.description}
-                              </p>
                             </div>
-                            <Checkbox 
-                              checked={isSelected}
-                              onCheckedChange={(checked) => handleTestTypeChange(testType, checked as boolean)}
-                              className="mt-1"
-                            />
-                          </div>
-                        </div>
-                      );
-                    })}
+                          );
+                        })}
+                    </div>
                   </div>
 
                   {form.formState.errors.testTypes && selectedTestTypes.length === 0 && (
