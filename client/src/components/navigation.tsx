@@ -67,7 +67,7 @@ export default function Navigation() {
           <div className="hidden md:flex items-center">
             <a href="https://master-fees.com/" target="_blank" rel="noopener noreferrer">
               <Button className="ultra-glass-dark text-slate-200 hover:text-white px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-500 shadow-lg hover:scale-105 tracking-wide border border-emerald-400/30 flex items-center group">
-                Contact us
+                Login
                 <ArrowRight className="w-4 h-4 ml-2 transition-transform duration-300 group-hover:translate-x-1" />
               </Button>
             </a>
