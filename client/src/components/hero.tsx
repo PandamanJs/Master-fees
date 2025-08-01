@@ -86,12 +86,12 @@ export default function Hero() {
                     <img 
                       src={mobileImage} 
                       alt="Master Fees Mobile Payment Interface"
-                      className="w-32 md:w-40 h-auto shadow-3xl rounded-[3rem] relative z-20 transition-all duration-1000 group-hover:scale-[1.02] border-4 border-slate-800/20"
+                      className="w-28 md:w-36 h-auto shadow-3xl rounded-2xl relative z-20 transition-all duration-1000 group-hover:scale-[1.02] border-4 border-slate-800/20"
                     />
                     {/* Subtle depth effect using design principles */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-black/10 rounded-[3rem] z-30 pointer-events-none"></div>
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-black/10 rounded-2xl z-30 pointer-events-none"></div>
                     {/* 10% accent color implementation for visual interest */}
-                    <div className="absolute -inset-4 bg-gradient-to-br from-emerald-400/5 via-transparent to-teal-400/5 rounded-[3.5rem] -z-10 transition-all duration-1000 group-hover:scale-105"></div>
+                    <div className="absolute -inset-4 bg-gradient-to-br from-emerald-400/5 via-transparent to-teal-400/5 rounded-3xl -z-10 transition-all duration-1000 group-hover:scale-105"></div>
                   </div>
                 </div>
               </div>
