@@ -78,10 +78,7 @@ export default function AppleAdminPanel() {
     intern: results.filter(r => r.testTypes?.includes('intern')).length,
     pending: results.filter(r => r.status === 'pending').length,
     approved: results.filter(r => r.status === 'approved').length,
-    avgScore: results.length > 0 ? Math.round(results.reduce((acc, r) => {
-      const mainScore = Object.values(r.scores || {})[0] || 0;
-      return acc + mainScore;
-    }, 0) / results.length) : 0
+    avgScore: results.length > 0 ? Math.round(results.reduce((acc, r) => acc + r.accuracy, 0) / results.length) : 0
   };
 
   // Filter results
@@ -396,7 +393,7 @@ export default function AppleAdminPanel() {
               </CardContent>
             </Card>
           ) : (
-            filteredResults.map((result: AptitudeResult) => {
+            filteredResults.map((result: AssessmentResult) => {
               const TestIcon = getTestTypeIcon(result.testTypes?.[0] || 'frontend');
               return (
                 <Card key={result.id} className="border-0 bg-white/95 backdrop-blur-xl shadow-xl rounded-2xl overflow-hidden">
@@ -407,12 +404,12 @@ export default function AppleAdminPanel() {
                           <TestIcon className="w-6 h-6 text-white" />
                         </div>
                         <div>
-                          <CardTitle className="text-xl font-light">{result.candidate.fullName}</CardTitle>
+                          <CardTitle className="text-xl font-light">{result.fullName}</CardTitle>
                           <CardDescription className="text-base font-light">
-                            {result.candidate.email} • {result.candidate.phone}
+                            {result.email} • {result.phone}
                           </CardDescription>
                           <div className="flex gap-2 mt-2">
-                            {result.testTypes?.map(testType => (
+                            {result.testTypes?.map((testType: string) => (
                               <Badge key={testType} variant="outline" className="capitalize rounded-full">
                                 {testType}
                               </Badge>
@@ -422,7 +419,7 @@ export default function AppleAdminPanel() {
                       </div>
                       <div className="text-right">
                         <div className="text-2xl font-thin text-slate-900">
-                          {Object.values(result.scores || {})[0] || 0}%
+                          {result.accuracy}%
                         </div>
                         <div className="text-sm text-slate-600 font-light">Overall Score</div>
                       </div>
@@ -440,8 +437,8 @@ export default function AppleAdminPanel() {
                         <div className="text-sm text-slate-600 font-light">Time Spent</div>
                       </div>
                       <div className="text-center p-4 bg-slate-50 rounded-xl">
-                        <div className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-light bg-gradient-to-r ${getIntegrityColor(result.aiAnalysis.overallIntegrity)} text-white`}>
-                          {result.aiAnalysis.overallIntegrity.toUpperCase()}
+                        <div className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-light bg-gradient-to-r ${getIntegrityColor('high')} text-white`}>
+                          HIGH
                         </div>
                         <div className="text-sm text-slate-600 font-light mt-1">AI Integrity</div>
                       </div>

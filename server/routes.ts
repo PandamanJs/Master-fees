@@ -673,53 +673,29 @@ router.post("/assessment/submit", async (req, res) => {
 
 router.get("/assessment/results", async (req, res) => {
   try {
-    const results = await storage.getAllAssessmentResults();
+    const results = await storage.getAssessmentResults();
     res.json(results);
   } catch (error) {
-    console.error('Failed to fetch assessment results:', error);
-    res.status(500).json({ error: 'Failed to fetch results' });
+    console.error("Error getting assessment results:", error);
+    res.status(500).json({ error: "Failed to get assessment results" });
   }
 });
 
-router.get("/aptitude/results", async (req, res) => {
+// Assessment Results endpoints
+router.post("/assessment/submit", async (req, res) => {
   try {
-    // Fetch real aptitude test results from database
-    const results = await storage.getAllAptitudeTests();
-    
-    // Transform database results to match expected format
-    const transformedResults = results.map(result => ({
-      id: result.id,
-      candidate: {
-        fullName: result.candidateName,
-        email: result.candidateEmail,
-        phone: result.candidatePhone,
-        experience: result.experience
-      },
-      testTypes: Array.isArray(result.testType) ? result.testType : [result.testType],
-      scores: typeof result.score === 'number' ? { overall: result.score } : result.score || {},
-      totalQuestions: 20,
-      correctAnswers: Math.round((result.score || 0) * 20 / 100),
-      timeSpent: result.timeSpent || 0,
-      aiAnalysis: result.aiAnalysis || {
-        behaviorScore: 85,
-        focusScore: 90,
-        suspiciousActivity: [],
-        overallIntegrity: 'high'
-      },
-      submittedAt: result.submittedAt?.toISOString() || new Date().toISOString(),
-      status: result.status || 'pending',
-      adminNotes: result.adminNotes || ''
-    }));
-    
-    res.json(transformedResults);
+    const result = await storage.submitAssessmentResult(req.body);
+    res.status(201).json(result);
   } catch (error) {
-    console.error('Failed to fetch aptitude results:', error);
-    res.status(500).json({ error: 'Failed to fetch results' });
+    console.error("Error submitting assessment result:", error);
+    res.status(500).json({ error: "Failed to submit assessment result" });
   }
 });
 
 // Register QuickBooks routes
 router.use(quickbooksRouter);
+
+export { router as routes };
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Register all API routes with /api prefix

@@ -667,6 +667,14 @@ export class MemStorage implements IStorage {
   async getAssessmentResultById(id: number): Promise<AssessmentResult | null> {
     return this.assessmentResults.get(id) || null;
   }
+
+  async getAssessmentResults(): Promise<AssessmentResult[]> {
+    return this.getAllAssessmentResults();
+  }
+
+  async submitAssessmentResult(data: any): Promise<AssessmentResult> {
+    return this.createAssessmentResult(data);
+  }
 }
 
 export const storage = new MemStorage();

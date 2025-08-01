@@ -228,6 +228,31 @@ export const insertAptitudeTestSchema = createInsertSchema(aptitudeTests).omit({
   adminNotes: true,
 });
 
+export type NewAptitudeTest = z.infer<typeof insertAptitudeTestSchema>;
+
+// Assessment Results table
+export const assessmentResults = pgTable("assessment_results", {
+  id: serial("id").primaryKey(),
+  fullName: text("full_name").notNull(),
+  email: text("email").notNull(),
+  phone: text("phone").notNull(),
+  experience: text("experience").notNull(),
+  testTypes: text("test_types").array().notNull(),
+  answers: jsonb("answers").notNull(),
+  performanceMetrics: jsonb("performance_metrics").notNull(),
+  accuracy: integer("accuracy").notNull(),
+  correctAnswers: integer("correct_answers").notNull(),
+  totalQuestions: integer("total_questions").notNull(),
+  timeSpent: integer("time_spent").notNull(), // in seconds
+  status: text("status").notNull().default("completed"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const insertAssessmentResultSchema = createInsertSchema(assessmentResults).omit({
+  id: true,
+  createdAt: true,
+});
+
 // Types
 export type User = typeof users.$inferSelect;
 export type NewUser = z.infer<typeof insertUserSchema>;
@@ -251,6 +276,8 @@ export type JobApplication = typeof jobApplications.$inferSelect;
 export type NewJobApplication = z.infer<typeof insertJobApplicationSchema>;
 export type AptitudeTest = typeof aptitudeTests.$inferSelect;
 export type NewAptitudeTest = z.infer<typeof insertAptitudeTestSchema>;
+export type AssessmentResult = typeof assessmentResults.$inferSelect;
+export type InsertAssessmentResult = z.infer<typeof insertAssessmentResultSchema>;
 
 // Auth schemas
 export const loginSchema = z.object({
