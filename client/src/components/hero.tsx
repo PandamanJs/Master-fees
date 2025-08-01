@@ -74,7 +74,7 @@ export default function Hero() {
           <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-start max-w-8xl mx-auto">
             {/* iPhone-style Mobile Showcase with enhanced design principles */}
             <div className="text-center group">
-              <div className={`relative mb-12 transition-all duration-1200 ease-out ${
+              <div className={`relative mb-8 transition-all duration-1200 ease-out ${
                 isLoaded 
                   ? 'transform translate-y-0 opacity-100 rotate-0 scale-100' 
                   : 'transform translate-y-16 opacity-0 rotate-2 scale-90'
