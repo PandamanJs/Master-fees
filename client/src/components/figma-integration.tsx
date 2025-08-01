@@ -381,7 +381,7 @@ export function FigmaIntegration() {
                   <Button 
                     size="sm" 
                     className="bg-green-600 hover:bg-green-700"
-                    onClick={() => window.location.href = '/dashboard'}
+                    onClick={() => window.location.href = '/'}
                   >
                     View Dashboard
                   </Button>

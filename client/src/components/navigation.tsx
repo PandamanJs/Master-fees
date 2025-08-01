@@ -59,11 +59,7 @@ export default function Navigation() {
               >
                 Contact
               </button>
-              <Link href="/dashboard">
-                <button className="text-slate-300 hover:text-emerald-400 text-sm font-light transition-all duration-300">
-                  Dashboard
-                </button>
-              </Link>
+
             </div>
           </div>
           
