@@ -404,7 +404,7 @@ export default function AppleAptitudeTest() {
             </p>
           </div>
 
-          <Card className="border-0 liquid-glass-light shadow-2xl rounded-3xl overflow-hidden">
+          <Card className="border-0 ultra-glass-light shadow-2xl rounded-3xl overflow-hidden">
             <CardHeader className="text-center pb-8 pt-12 px-12">
               <CardTitle className="text-3xl font-light text-slate-900 mb-4">
                 Candidate Registration
@@ -622,7 +622,7 @@ export default function AppleAptitudeTest() {
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-teal-900 p-4">
         <div className="max-w-6xl mx-auto">
           {/* Header with Timer and Skill Metrics */}
-          <div className="liquid-glass-dark rounded-2xl p-6 mb-6">
+          <div className="ultra-glass-dark rounded-2xl p-6 mb-6">
             <div className="flex items-center justify-between mb-4">
               <div>
                 <h1 className="text-xl font-light text-white mb-1">Assessment in Progress</h1>
@@ -721,7 +721,7 @@ export default function AppleAptitudeTest() {
           </div>
 
           {/* Question Card */}
-          <Card className="border-0 liquid-glass-light shadow-2xl rounded-3xl">
+          <Card className="border-0 ultra-glass-light shadow-2xl rounded-3xl">
             <CardContent className="p-8">
               <div className="mb-6">
                 <div className="flex items-center justify-between mb-4">
@@ -811,7 +811,7 @@ export default function AppleAptitudeTest() {
                       setIsTestActive(false);
                     }
                   }}
-                  className="liquid-glass-button text-white"
+                  className="ultra-glass-light border-2 border-emerald-400 text-emerald-900 hover:bg-emerald-50 hover:border-emerald-500 transition-all duration-300"
                 >
                   {currentQuestion === questions.length - 1 ? 'Finish' : 'Next'}
                   <ArrowRight className="w-4 h-4 ml-2" />
@@ -828,7 +828,7 @@ export default function AppleAptitudeTest() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-teal-900 p-4 relative overflow-hidden">
         <div className="max-w-4xl mx-auto pt-12 relative z-10">
-          <Card className="border-0 liquid-glass-light shadow-2xl rounded-3xl">
+          <Card className="border-0 ultra-glass-light shadow-2xl rounded-3xl">
             <CardHeader className="text-center pb-8 pt-12">
               <Trophy className="w-16 h-16 text-teal-600 mx-auto mb-4" />
               <CardTitle className="text-3xl font-light text-slate-900 mb-4">
