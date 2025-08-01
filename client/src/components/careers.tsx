@@ -211,19 +211,26 @@ export default function Careers() {
   ];
 
   return (
-    <section id="careers" className="py-24 bg-gradient-to-br from-slate-50 to-slate-100">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+    <section id="careers" className="py-24 bg-slate-900 text-white relative overflow-hidden">
+      {/* Refined Liquid Glass Background Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 left-10 w-32 h-32 ultra-glass-dark rounded-full opacity-15 animate-float"></div>
+        <div className="absolute bottom-20 right-10 w-40 h-40 ultra-glass-light rounded-full opacity-10 animate-float delay-1000"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 ultra-glass-dark rounded-full opacity-5 animate-float delay-500"></div>
+      </div>
+      
+      <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 bg-emerald-50 text-emerald-700 px-4 py-2 rounded-full text-sm font-medium mb-6">
+          <div className="inline-flex items-center gap-2 ultra-glass-light text-emerald-400 px-6 py-3 rounded-full text-sm font-medium mb-6 border border-emerald-400/30">
             <Briefcase className="w-4 h-4" />
             Join Our Team
           </div>
-          <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 mb-6">
+          <h2 className="text-5xl lg:text-6xl font-extralight text-white mb-8 tracking-[-0.03em] leading-[0.9]">
             Build the Future of 
-            <span className="text-emerald-600"> Education Technology</span>
+            <span className="text-emerald-300"> Education Technology</span>
           </h2>
-          <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-lg md:text-xl font-light text-slate-200 max-w-4xl mx-auto leading-[1.4] opacity-95">
             Join our mission to make school fee management simple and accessible for every educational institution in Africa.
           </p>
         </div>
@@ -231,35 +238,33 @@ export default function Careers() {
         {/* Benefits */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
           {benefits.map((benefit, index) => (
-            <Card key={index} className="border-0 shadow-sm hover:shadow-md transition-all duration-300">
-              <CardContent className="p-6 text-center">
-                <div className="mb-4 flex justify-center">
-                  {benefit.icon}
-                </div>
-                <h3 className="font-semibold text-slate-900 mb-2">{benefit.title}</h3>
-                <p className="text-sm text-slate-600">{benefit.description}</p>
-              </CardContent>
-            </Card>
+            <div key={index} className="ultra-glass-light p-6 rounded-3xl shadow-2xl transition-all duration-500 hover:shadow-3xl hover:scale-[1.02] group text-center">
+              <div className="w-16 h-16 ultra-glass-dark rounded-2xl flex items-center justify-center mx-auto mb-4 transition-all duration-500 group-hover:scale-110 border border-emerald-400/30">
+                {benefit.icon}
+              </div>
+              <h3 className="font-medium text-white mb-2 tracking-wide">{benefit.title}</h3>
+              <p className="text-sm text-slate-300 font-light opacity-90">{benefit.description}</p>
+            </div>
           ))}
         </div>
 
         {/* Open Positions */}
         <div className="mb-16">
-          <h3 className="text-2xl font-bold text-slate-900 mb-8 text-center">Open Positions</h3>
+          <h3 className="text-3xl font-extralight text-white mb-8 text-center tracking-[-0.02em]">Open Positions</h3>
           <div className="grid lg:grid-cols-2 gap-6">
             {openPositions.map((position, index) => (
-              <Card key={index} className="border-0 shadow-sm hover:shadow-md transition-all duration-300">
-                <CardHeader>
+              <div key={index} className="ultra-glass-light p-8 rounded-3xl shadow-2xl transition-all duration-500 hover:shadow-3xl hover:scale-[1.02] group">
+                <div className="mb-6">
                   <div className="flex items-start justify-between">
                     <div>
-                      <CardTitle className="text-lg text-slate-900">{position.title}</CardTitle>
-                      <CardDescription className="text-emerald-600 font-medium">
+                      <h4 className="text-xl font-medium text-white mb-2 tracking-wide">{position.title}</h4>
+                      <p className="text-emerald-400 font-medium">
                         {position.department}
-                      </CardDescription>
+                      </p>
                     </div>
-                    <Badge variant="secondary" className="bg-emerald-50 text-emerald-700">
+                    <div className="ultra-glass-dark px-3 py-1 rounded-full text-emerald-400 text-sm border border-emerald-400/30">
                       {position.type}
-                    </Badge>
+                    </div>
                   </div>
                   <div className="flex flex-wrap gap-4 text-sm text-slate-600 mt-3">
                     <div className="flex items-center gap-1">
