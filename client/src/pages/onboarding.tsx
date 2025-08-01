@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { SchoolSearchDropdown } from '@/components/SchoolSearchDropdown';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { 
   GraduationCap, 
@@ -60,13 +60,11 @@ export default function OnboardingPage() {
               >
                 Enter the Name of Your School
               </label>
-              <Input
-                id="schoolName"
-                type="text"
+              <SchoolSearchDropdown
                 value={schoolName}
-                onChange={(e) => setSchoolName(e.target.value)}
-                placeholder=""
-                className="border-0 bg-slate-700/30 backdrop-blur-sm text-white placeholder:text-slate-400 focus:bg-slate-600/30 focus:ring-2 focus:ring-emerald-400/30 rounded-xl h-12 text-center"
+                onChange={setSchoolName}
+                placeholder="Select your school..."
+                className="text-center"
               />
             </div>
 

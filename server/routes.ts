@@ -784,6 +784,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Register all API routes with /api prefix
   app.use("/api", router);
   app.use("/api", figmaRoutes);
+  
+  // Import and register Lusaka schools API
+  const lusakaSchoolsRouter = await import('./lusaka-schools-api');
+  app.use("/api", lusakaSchoolsRouter.default);
 
   const httpServer = createServer(app);
   return httpServer;
