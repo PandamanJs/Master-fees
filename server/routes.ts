@@ -21,6 +21,102 @@ import { sendJobApplicationSMS } from "./job-application-sms";
 import { quickbooksRouter } from "./quickbooks-routes";
 import { ObjectStorageService } from "./objectStorage";
 
+// Test question generator
+function generateTestQuestions(testTypes: string[]) {
+  const questionsByType = {
+    frontend: [
+      {
+        id: 1,
+        question: "What is the virtual DOM in React?",
+        options: [
+          "A copy of the real DOM kept in memory",
+          "A database for storing component state",
+          "A CSS framework for styling",
+          "A testing framework"
+        ],
+        correct: 0
+      },
+      {
+        id: 2,
+        question: "Which CSS property is used for responsive design?",
+        options: ["position", "display", "media-query", "float"],
+        correct: 2
+      }
+    ],
+    backend: [
+      {
+        id: 3,
+        question: "What is REST API?",
+        options: [
+          "A type of database",
+          "An architectural style for web services",
+          "A programming language",
+          "A testing framework"
+        ],
+        correct: 1
+      },
+      {
+        id: 4,
+        question: "What is Node.js primarily used for?",
+        options: [
+          "Database management",
+          "Server-side JavaScript execution",
+          "Frontend styling",
+          "Image processing"
+        ],
+        correct: 1
+      }
+    ],
+    marketing: [
+      {
+        id: 5,
+        question: "What does SEO stand for?",
+        options: [
+          "Social Engine Optimization",
+          "Search Engine Optimization", 
+          "Site Enhancement Operations",
+          "Software Engineering Operations"
+        ],
+        correct: 1
+      }
+    ],
+    'business-analyst': [
+      {
+        id: 6,
+        question: "What is a user story in Agile methodology?",
+        options: [
+          "A biography of the user",
+          "A short description of a feature from user's perspective",
+          "A technical specification",
+          "A marketing campaign"
+        ],
+        correct: 1
+      }
+    ],
+    intern: [
+      {
+        id: 7,
+        question: "What is version control in software development?",
+        options: [
+          "Controlling software versions in production",
+          "A system for tracking changes in code",
+          "A way to control user access",
+          "A method for testing software"
+        ],
+        correct: 1
+      }
+    ]
+  };
+
+  let questions: any[] = [];
+  testTypes.forEach(type => {
+    const typeQuestions = questionsByType[type as keyof typeof questionsByType] || [];
+    questions = questions.concat(typeQuestions);
+  });
+
+  return questions.slice(0, 10); // Return max 10 questions
+}
+
 const router = Router();
 
 // Authentication routes
@@ -488,14 +584,18 @@ router.post("/aptitude/register", async (req, res) => {
     const registrationData = req.body;
     
     // Validate registration data
-    if (!registrationData.fullName || !registrationData.email || !registrationData.testType) {
+    if (!registrationData.fullName || !registrationData.email || !registrationData.phone || !registrationData.experience || !registrationData.testTypes || registrationData.testTypes.length === 0) {
       return res.status(400).json({ error: 'Missing required fields' });
     }
+
+    // Generate test questions based on selected test types
+    const questions = generateTestQuestions(registrationData.testTypes);
 
     res.status(200).json({ 
       success: true,
       message: 'Registration successful',
-      testId: `test_${Date.now()}`
+      testId: `test_${Date.now()}`,
+      questions: questions
     });
   } catch (error) {
     console.error('Aptitude registration error:', error);
