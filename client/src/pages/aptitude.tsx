@@ -188,7 +188,19 @@ export default function AptitudePage() {
 
   const submitRegistration = useMutation({
     mutationFn: async (data: CandidateForm) => {
-      return apiRequest('/api/aptitude/register', 'POST', data);
+      const response = await fetch('/api/aptitude/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+      
+      if (!response.ok) {
+        throw new Error('Registration failed');
+      }
+      
+      return response.json();
     },
     onSuccess: (data) => {
       setCandidate(form.getValues());
@@ -209,7 +221,19 @@ export default function AptitudePage() {
 
   const submitTest = useMutation({
     mutationFn: async (data: any) => {
-      return apiRequest('/api/aptitude/submit', 'POST', data);
+      const response = await fetch('/api/aptitude/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+      
+      if (!response.ok) {
+        throw new Error('Test submission failed');
+      }
+      
+      return response.json();
     },
     onSuccess: () => {
       setStep('completed');
