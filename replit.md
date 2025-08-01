@@ -187,6 +187,18 @@ Preferred communication style: Simple, everyday language.
   - Implemented secure test submission with AI analysis and automated scoring
   - Created professional results interface with filtering, search, and candidate management
 
+- August 01, 2025: Enhanced aptitude testing system with multi-category support and dual selection capability
+  - Added comprehensive test categories: Frontend, Backend, Marketing, Business Analyst, Software Engineering Intern
+  - Implemented intelligent dual selection allowing multiple tests within same job category (Technical or Business)
+  - Created separate question sets for each category: Marketing (SEO, Social Media, Analytics), Business Analyst (Requirements, Stakeholder Management, Process Analysis)
+  - Added Software Engineering Intern questions covering programming fundamentals and development tools
+  - Built smart category validation preventing cross-category multiple selections (Technical + Business blocked)
+  - Enhanced registration form with visual test type cards showing icons and descriptions
+  - Implemented combined question flow for multi-test candidates with proper categorization
+  - Added category-specific badges and progress tracking throughout test experience
+  - Created comprehensive test result analysis supporting multiple test type submissions
+  - Enhanced admin dashboard to handle and display multi-category test results
+
 ## Changelog
 
 Changelog:

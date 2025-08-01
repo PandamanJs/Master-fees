@@ -32,9 +32,7 @@ const candidateSchema = z.object({
   fullName: z.string().min(2, "Full name is required"),
   email: z.string().email("Valid email is required"),
   phone: z.string().min(10, "Valid phone number is required"),
-  testType: z.enum(["frontend", "backend"], {
-    required_error: "Please select a test type",
-  }),
+  testTypes: z.array(z.enum(["frontend", "backend", "marketing", "business-analyst", "software-engineering-intern"])).min(1, "Please select at least one test type"),
   experience: z.string().min(1, "Please select your experience level"),
 });
 
@@ -166,6 +164,210 @@ const backendQuestions = [
   }
 ];
 
+const marketingQuestions = [
+  {
+    id: 1,
+    question: "What is the primary goal of digital marketing?",
+    options: [
+      "To increase website traffic only",
+      "To build brand awareness and drive conversions",
+      "To reduce marketing costs",
+      "To collect customer data"
+    ],
+    correct: 1,
+    category: "Digital Marketing"
+  },
+  {
+    id: 2,
+    question: "What does SEO stand for?",
+    options: [
+      "Social Engagement Optimization",
+      "Search Engine Optimization",
+      "Sales Enhancement Operations",
+      "Strategic Email Outreach"
+    ],
+    correct: 1,
+    category: "SEO"
+  },
+  {
+    id: 3,
+    question: "Which metric is most important for measuring social media engagement?",
+    options: [
+      "Number of followers only",
+      "Likes, comments, shares, and saves combined",
+      "Post frequency",
+      "Account age"
+    ],
+    correct: 1,
+    category: "Social Media"
+  },
+  {
+    id: 4,
+    question: "What is A/B testing in marketing?",
+    options: [
+      "Testing two different audiences",
+      "Comparing two versions of content to see which performs better",
+      "Testing ad budgets",
+      "Analyzing competitor strategies"
+    ],
+    correct: 1,
+    category: "Analytics"
+  },
+  {
+    id: 5,
+    question: "What is the marketing funnel?",
+    options: [
+      "A tool for email marketing",
+      "The customer journey from awareness to purchase",
+      "A social media strategy",
+      "A budgeting method"
+    ],
+    correct: 1,
+    category: "Strategy"
+  }
+];
+
+const businessAnalystQuestions = [
+  {
+    id: 1,
+    question: "What is the primary role of a business analyst?",
+    options: [
+      "To manage company finances",
+      "To bridge the gap between business needs and IT solutions",
+      "To hire new employees",
+      "To handle customer complaints"
+    ],
+    correct: 1,
+    category: "Business Analysis"
+  },
+  {
+    id: 2,
+    question: "What is a stakeholder in business analysis?",
+    options: [
+      "Only company shareholders",
+      "Anyone who is affected by or can influence a project",
+      "Only the project manager",
+      "Only customers"
+    ],
+    correct: 1,
+    category: "Stakeholder Management"
+  },
+  {
+    id: 3,
+    question: "What is the purpose of requirements gathering?",
+    options: [
+      "To set project budgets",
+      "To understand what the business needs from a solution",
+      "To hire project team members",
+      "To design user interfaces"
+    ],
+    correct: 1,
+    category: "Requirements"
+  },
+  {
+    id: 4,
+    question: "What is a user story in agile methodology?",
+    options: [
+      "A biography of system users",
+      "A short description of a feature from the user's perspective",
+      "A technical specification document",
+      "A project timeline"
+    ],
+    correct: 1,
+    category: "Agile"
+  },
+  {
+    id: 5,
+    question: "What is process mapping used for?",
+    options: [
+      "Creating office floor plans",
+      "Visualizing and analyzing business workflows",
+      "Designing software architecture",
+      "Planning marketing campaigns"
+    ],
+    correct: 1,
+    category: "Process Analysis"
+  }
+];
+
+const softwareEngineeringQuestions = [
+  {
+    id: 1,
+    question: "What is version control in software development?",
+    options: [
+      "Controlling software versions for sale",
+      "A system for tracking changes in code over time",
+      "Testing different software versions",
+      "Managing software licenses"
+    ],
+    correct: 1,
+    category: "Development Tools"
+  },
+  {
+    id: 2,
+    question: "What does API stand for?",
+    options: [
+      "Advanced Programming Interface",
+      "Application Programming Interface",
+      "Automated Program Integration",
+      "Application Process Integration"
+    ],
+    correct: 1,
+    category: "Software Architecture"
+  },
+  {
+    id: 3,
+    question: "What is debugging in programming?",
+    options: [
+      "Removing bugs from computer hardware",
+      "The process of finding and fixing errors in code",
+      "Adding comments to code",
+      "Testing software performance"
+    ],
+    correct: 1,
+    category: "Programming"
+  },
+  {
+    id: 4,
+    question: "What is the difference between frontend and backend?",
+    options: [
+      "Frontend is visible to users, backend handles server-side logic",
+      "Frontend is for mobile, backend is for web",
+      "Frontend uses databases, backend uses interfaces",
+      "There is no difference"
+    ],
+    correct: 0,
+    category: "Web Development"
+  },
+  {
+    id: 5,
+    question: "What is object-oriented programming (OOP)?",
+    options: [
+      "Programming with physical objects",
+      "A programming paradigm based on objects and classes",
+      "Programming for mobile objects",
+      "A type of database design"
+    ],
+    correct: 1,
+    category: "Programming Concepts"
+  }
+];
+
+// Test type categories and their relationships
+const testTypeCategories = {
+  technical: ['frontend', 'backend', 'software-engineering-intern'],
+  business: ['marketing', 'business-analyst']
+};
+
+// Question mapping
+const questionsByType = {
+  frontend: frontendQuestions,
+  backend: backendQuestions,
+  marketing: marketingQuestions,
+  'business-analyst': businessAnalystQuestions,
+  'software-engineering-intern': softwareEngineeringQuestions
+};
+
 export default function AptitudePage() {
   const [step, setStep] = useState<'registration' | 'instructions' | 'test' | 'completed'>('registration');
   const [candidate, setCandidate] = useState<CandidateForm | null>(null);
@@ -174,6 +376,8 @@ export default function AptitudePage() {
   const [timeLeft, setTimeLeft] = useState(30 * 60); // 30 minutes
   const [isMonitoring, setIsMonitoring] = useState(false);
   const [codingAnswer, setCodingAnswer] = useState("");
+  const [selectedTestTypes, setSelectedTestTypes] = useState<string[]>([]);
+  const [allQuestions, setAllQuestions] = useState<any[]>([]);
   const { toast } = useToast();
 
   const form = useForm<CandidateForm>({
@@ -182,9 +386,44 @@ export default function AptitudePage() {
       fullName: '',
       email: '',
       phone: '',
+      testTypes: [],
       experience: '',
     },
   });
+
+  // Check if test types can be selected together
+  const canSelectTestTypes = (newTypes: string[]) => {
+    if (newTypes.length <= 1) return true;
+    
+    // Check if all selected types are in the same category
+    const technicalTypes = newTypes.filter(type => testTypeCategories.technical.includes(type));
+    const businessTypes = newTypes.filter(type => testTypeCategories.business.includes(type));
+    
+    // Allow multiple selections only within the same category
+    return (technicalTypes.length === newTypes.length) || (businessTypes.length === newTypes.length);
+  };
+
+  const handleTestTypeChange = (testType: string, checked: boolean) => {
+    const currentTypes = form.getValues('testTypes') || [];
+    let newTypes: string[];
+    
+    if (checked) {
+      newTypes = [...currentTypes, testType];
+    } else {
+      newTypes = currentTypes.filter(type => type !== testType);
+    }
+    
+    if (canSelectTestTypes(newTypes)) {
+      form.setValue('testTypes', newTypes);
+      setSelectedTestTypes(newTypes);
+    } else {
+      toast({
+        title: "Invalid Selection",
+        description: "You can only select multiple tests within the same job category (Technical or Business)",
+        variant: "destructive",
+      });
+    }
+  };
 
   const submitRegistration = useMutation({
     mutationFn: async (data: CandidateForm) => {

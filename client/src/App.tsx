@@ -5,7 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { AIAssistant } from "@/components/ai-assistant";
 import Home from "@/pages/home";
-import AptitudePage from "@/pages/aptitude";
+import AptitudePage from "@/pages/aptitude-enhanced";
 import AdminAptitudeResults from "@/pages/admin/aptitude-results";
 import NotFound from "@/pages/not-found";
 
