@@ -20,7 +20,9 @@ import {
   TrendingUp,
   Filter,
   Search,
-  Download
+  Download,
+  Lock,
+  Shield
 } from "lucide-react";
 
 interface AptitudeResult {
@@ -49,6 +51,9 @@ interface AptitudeResult {
 }
 
 export default function AdminAptitudeResults() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loginForm, setLoginForm] = useState({ username: '', password: '' });
+  const [loginError, setLoginError] = useState('');
   const [selectedTest, setSelectedTest] = useState<string | null>(null);
   const [filterType, setFilterType] = useState<'all' | 'frontend' | 'backend'>('all');
   const [searchTerm, setSearchTerm] = useState('');
@@ -120,6 +125,90 @@ export default function AdminAptitudeResults() {
     }
   };
 
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (loginForm.username === 'Masterfees' && loginForm.password === 'Pandamanjs007') {
+      setIsAuthenticated(true);
+      setLoginError('');
+    } else {
+      setLoginError('Invalid username or password');
+    }
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    setLoginForm({ username: '', password: '' });
+  };
+
+  // Show login form if not authenticated
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center p-4">
+        <Card className="w-full max-w-md shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
+          <CardHeader className="text-center pb-8">
+            <div className="flex justify-center mb-4">
+              <div className="p-3 bg-emerald-100 rounded-full">
+                <Shield className="w-8 h-8 text-emerald-600" />
+              </div>
+            </div>
+            <CardTitle className="text-2xl font-bold text-slate-800">Admin Login</CardTitle>
+            <CardDescription className="text-slate-600">
+              Access aptitude test results dashboard
+            </CardDescription>
+          </CardHeader>
+          
+          <CardContent>
+            <form onSubmit={handleLogin} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="username" className="text-sm font-medium text-slate-700">
+                  <User className="w-4 h-4 inline mr-2" />
+                  Username
+                </Label>
+                <Input
+                  id="username"
+                  type="text"
+                  value={loginForm.username}
+                  onChange={(e) => setLoginForm(prev => ({ ...prev, username: e.target.value }))}
+                  className="border-slate-200 focus:border-emerald-400"
+                  required
+                />
+              </div>
+              
+              <div className="space-y-2">
+                <Label htmlFor="password" className="text-sm font-medium text-slate-700">
+                  <Lock className="w-4 h-4 inline mr-2" />
+                  Password
+                </Label>
+                <Input
+                  id="password"
+                  type="password"
+                  value={loginForm.password}
+                  onChange={(e) => setLoginForm(prev => ({ ...prev, password: e.target.value }))}
+                  className="border-slate-200 focus:border-emerald-400"
+                  required
+                />
+              </div>
+
+              {loginError && (
+                <div className="text-red-500 text-sm text-center bg-red-50 p-2 rounded">
+                  {loginError}
+                </div>
+              )}
+
+              <Button
+                type="submit"
+                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2 rounded-lg transition-colors"
+              >
+                <Shield className="w-4 h-4 mr-2" />
+                Login to Admin Panel
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center">
@@ -132,12 +221,24 @@ export default function AdminAptitudeResults() {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 py-8">
       <div className="max-w-7xl mx-auto px-6">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-slate-900 mb-4">
-            Aptitude Test Results
-          </h1>
-          <p className="text-lg text-slate-600">
-            Review and manage developer aptitude test submissions
-          </p>
+          <div className="flex justify-between items-center">
+            <div>
+              <h1 className="text-4xl font-bold text-slate-900 mb-4">
+                Aptitude Test Results
+              </h1>
+              <p className="text-lg text-slate-600">
+                Review and manage developer aptitude test submissions
+              </p>
+            </div>
+            <Button 
+              onClick={handleLogout}
+              variant="outline"
+              className="flex items-center space-x-2 hover:bg-red-50 hover:border-red-200"
+            >
+              <Lock className="w-4 h-4" />
+              <span>Logout</span>
+            </Button>
+          </div>
         </div>
 
         {/* Statistics */}
