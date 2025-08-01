@@ -68,21 +68,33 @@ export default function Careers() {
     setIsSubmitting(true);
     
     try {
-      // Submit to Basin API
-      const response = await fetch('/api/apply', {
+      // Submit to Basin form endpoint
+      const formData = new FormData();
+      
+      // Add all form fields to FormData
+      Object.entries(data).forEach(([key, value]) => {
+        if (value) {
+          formData.append(key, value);
+        }
+      });
+      
+      // Add CV file URL if available
+      if (cvFile) {
+        formData.append('cvFileUrl', cvFile);
+      }
+
+      const response = await fetch('https://usebasin.com/f/9b77c34dfc7e', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
+        body: formData,
       });
 
       if (response.ok) {
         toast({
           title: "Application Submitted!",
-          description: "Thank you for your internship application. We'll review it and get back to you soon.",
+          description: "Thank you for your internship application. We'll review it and get back to you within 2-3 business days.",
         });
         reset();
+        setCvFile(''); // Clear CV file
       } else {
         throw new Error('Application submission failed');
       }
