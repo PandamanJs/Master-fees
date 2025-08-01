@@ -108,19 +108,30 @@ export default function AppleAptitudeTest() {
 
   const submitRegistration = useMutation({
     mutationFn: async (data: CandidateForm) => {
+      console.log('API request data:', data);
       const response = await fetch('/api/aptitude/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
       });
-      if (!response.ok) throw new Error('Registration failed');
-      return response.json();
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('API error:', errorText);
+        throw new Error(`Registration failed: ${errorText}`);
+      }
+      const result = await response.json();
+      console.log('API response:', result);
+      return result;
     },
     onSuccess: (data: any) => {
+      console.log('Registration successful, data:', data);
       if (data?.questions) {
         setQuestions(data.questions);
       }
       setStep('instructions');
+    },
+    onError: (error: any) => {
+      console.error('Registration error:', error);
     }
   });
 
@@ -155,13 +166,21 @@ export default function AppleAptitudeTest() {
   };
 
   const onSubmit = (data: CandidateForm) => {
+    console.log('Form submitted with data:', data);
+    console.log('Selected test types:', selectedTestTypes);
+    
     if (selectedTestTypes.length === 0) {
       form.setError('testTypes', { message: 'Please select at least one test category' });
       return;
     }
+    
     // Clear any existing testTypes error
     form.clearErrors('testTypes');
-    submitRegistration.mutate({ ...data, testTypes: selectedTestTypes });
+    
+    // Submit with selected test types
+    const submissionData = { ...data, testTypes: selectedTestTypes };
+    console.log('Submitting data:', submissionData);
+    submitRegistration.mutate(submissionData);
   };
 
   if (step === 'registration') {
