@@ -76,44 +76,36 @@ export default function Careers() {
 
   const openPositions = [
     {
-      title: "Full Stack Developer",
-      department: "Engineering",
-      location: "Remote / Lusaka, Zambia",
-      type: "Full-time",
-      experience: "2-5 years",
-      description: "Build and maintain our school fee management platform using React, Node.js, and modern web technologies."
-    },
-    {
-      title: "Product Manager",
-      department: "Product",
-      location: "Remote / Lusaka, Zambia", 
-      type: "Full-time",
-      experience: "3-6 years",
-      description: "Lead product strategy and development for our education technology solutions."
-    },
-    {
-      title: "Customer Success Manager",
-      department: "Customer Success",
-      location: "Lusaka, Zambia",
-      type: "Full-time",
-      experience: "2-4 years",
-      description: "Help schools successfully implement and maximize value from Master Fees platform."
-    },
-    {
-      title: "Marketing Specialist",
-      department: "Marketing",
-      location: "Remote / Lusaka, Zambia",
-      type: "Full-time",
-      experience: "2-4 years",
-      description: "Drive growth through digital marketing, content creation, and community engagement."
-    },
-    {
-      title: "Software Engineering Intern",
+      title: "Full Stack Developer Intern",
       department: "Engineering",
       location: "Remote / Lusaka, Zambia",
       type: "Internship",
-      experience: "0-1 years",
-      description: "Learn and contribute to building our education technology platform. Perfect for students and recent graduates."
+      experience: "Student/Graduate",
+      description: "Learn to build and maintain our school fee management platform using React, Node.js, and modern web technologies. Perfect for computer science students or recent graduates."
+    },
+    {
+      title: "Product Management Intern",
+      department: "Product",
+      location: "Remote / Lusaka, Zambia", 
+      type: "Internship",
+      experience: "Student/Graduate",
+      description: "Gain experience in product strategy and development for education technology solutions. Ideal for business or technology students."
+    },
+    {
+      title: "Customer Success Intern",
+      department: "Customer Success",
+      location: "Lusaka, Zambia",
+      type: "Internship",
+      experience: "Student/Graduate",
+      description: "Learn to help schools successfully implement and maximize value from Master Fees platform. Great for students interested in customer relations."
+    },
+    {
+      title: "Marketing Intern",
+      department: "Marketing",
+      location: "Remote / Lusaka, Zambia",
+      type: "Internship",
+      experience: "Student/Graduate",
+      description: "Develop marketing skills by helping create strategies to reach schools and education stakeholders. Perfect for marketing or communications students."
     }
   ];
 
@@ -178,9 +170,9 @@ export default function Careers() {
           ))}
         </div>
 
-        {/* Open Positions */}
+        {/* Open Internships */}
         <div className="mb-16">
-          <h3 className="text-3xl font-extralight text-white mb-8 text-center tracking-[-0.02em]">Open Positions</h3>
+          <h3 className="text-3xl font-extralight text-white mb-8 text-center tracking-[-0.02em]">Internship Opportunities</h3>
           <div className="grid lg:grid-cols-2 gap-6">
             {openPositions.map((position, index) => (
               <div key={index} className="ultra-glass-light p-8 rounded-3xl shadow-2xl transition-all duration-500 hover:shadow-3xl hover:scale-[1.02] group">
@@ -215,7 +207,7 @@ export default function Careers() {
                     onClick={() => setValue('position', position.title)}
                     className="border-emerald-400 text-emerald-400 hover:bg-emerald-400 hover:text-white transition-all duration-300 bg-transparent"
                   >
-                    Apply for this position
+                    Apply for this internship
                   </Button>
                 </div>
               </div>
@@ -226,9 +218,9 @@ export default function Careers() {
         {/* Application Form */}
         <div className="max-w-4xl mx-auto ultra-glass-light p-8 rounded-3xl shadow-2xl border border-emerald-400/20">
           <div className="text-center mb-8">
-            <h3 className="text-3xl font-extralight text-white mb-4 tracking-[-0.02em]">Apply for a Position</h3>
+            <h3 className="text-3xl font-extralight text-white mb-4 tracking-[-0.02em]">Apply for an Internship</h3>
             <p className="text-slate-300 font-light opacity-90">
-              We'd love to hear from you! Fill out the form below to apply for any of our open positions.
+              We'd love to hear from you! Fill out the form below to apply for any of our internship opportunities.
             </p>
           </div>
           <div>
@@ -239,10 +231,10 @@ export default function Careers() {
               className="space-y-6"
             >
               {/* FormSubmit Configuration */}
-              <input type="hidden" name="_subject" value="New Job Application - Master Fees" />
+              <input type="hidden" name="_subject" value="New Internship Application - Master Fees" />
               <input type="hidden" name="_template" value="table" />
               <input type="hidden" name="_captcha" value="false" />
-              <input type="hidden" name="_autoresponse" value="Thank you for your job application! We have received your submission and will review it shortly. We'll get back to you within 2-3 business days." />
+              <input type="hidden" name="_autoresponse" value="Thank you for your internship application! We have received your submission and will review it shortly. We'll get back to you within 2-3 business days." />
               {/* Personal Information */}
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
@@ -299,11 +291,11 @@ export default function Careers() {
                 <div className="space-y-2">
                   <Label htmlFor="position" className="flex items-center gap-2 text-white font-medium">
                     <Briefcase className="w-4 h-4 text-emerald-400" />
-                    Position Applying For *
+                    Internship Applying For *
                   </Label>
                   <Select onValueChange={(value) => setValue('position', value)}>
                     <SelectTrigger className="bg-white/10 border-emerald-400/30 text-white focus:border-emerald-400 focus:bg-white/15 backdrop-blur-sm">
-                      <SelectValue placeholder="Select a position" className="text-slate-400" />
+                      <SelectValue placeholder="Select an internship" className="text-slate-400" />
                     </SelectTrigger>
                     <SelectContent>
                       {openPositions.map((position) => (
@@ -311,7 +303,7 @@ export default function Careers() {
                           {position.title}
                         </SelectItem>
                       ))}
-                      <SelectItem value="other">Other / General Application</SelectItem>
+                      <SelectItem value="other">Other / General Internship</SelectItem>
                     </SelectContent>
                   </Select>
                   {errors.position && (
@@ -331,10 +323,10 @@ export default function Careers() {
                       <SelectValue placeholder="Select experience level" className="text-slate-400" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="entry">Entry Level (0-2 years)</SelectItem>
-                      <SelectItem value="mid">Mid Level (2-5 years)</SelectItem>
-                      <SelectItem value="senior">Senior Level (5+ years)</SelectItem>
-                      <SelectItem value="lead">Lead/Management (8+ years)</SelectItem>
+                      <SelectItem value="student">Current Student</SelectItem>
+                      <SelectItem value="graduate">Recent Graduate</SelectItem>
+                      <SelectItem value="entry">Some Experience (0-2 years)</SelectItem>
+                      <SelectItem value="career-change">Career Change</SelectItem>
                     </SelectContent>
                   </Select>
                   {errors.experience && (
@@ -463,7 +455,7 @@ export default function Careers() {
                   disabled={isSubmitting}
                   className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 text-lg font-semibold transition-all duration-300"
                 >
-                  {isSubmitting ? "Submitting Application..." : "Submit Application"}
+                  {isSubmitting ? "Submitting Application..." : "Submit Internship Application"}
                 </Button>
               </div>
             </form>
@@ -473,7 +465,7 @@ export default function Careers() {
         {/* Call to Action */}
         <div className="text-center mt-16">
           <p className="text-slate-300 mb-4">
-            Don't see a position that fits? We're always looking for talented individuals.
+            Don't see an internship that fits? We're always looking for talented students and recent graduates.
           </p>
           <p className="text-sm text-slate-400">
             Send us your resume at <a href="mailto:masterfees101@gmail.com" className="text-emerald-400 hover:text-emerald-300 transition-colors">masterfees101@gmail.com</a>
