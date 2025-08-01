@@ -652,6 +652,7 @@ export class MemStorage implements IStorage {
     const newResult: AssessmentResult = {
       ...result,
       id: this.currentAssessmentResultId++,
+      status: result.status || 'completed',
       createdAt: new Date()
     };
     this.assessmentResults.set(newResult.id, newResult);
@@ -660,7 +661,7 @@ export class MemStorage implements IStorage {
 
   async getAllAssessmentResults(): Promise<AssessmentResult[]> {
     return Array.from(this.assessmentResults.values()).sort(
-      (a, b) => b.createdAt.getTime() - a.createdAt.getTime()
+      (a, b) => (b.createdAt?.getTime() || 0) - (a.createdAt?.getTime() || 0)
     );
   }
 

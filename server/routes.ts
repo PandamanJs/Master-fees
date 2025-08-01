@@ -675,6 +675,7 @@ router.post("/aptitude/submit", async (req, res) => {
     });
     
     const score = questions.length > 0 ? Math.round((correctAnswers / questions.length) * 100) : 0;
+    const totalQuestions = questions.length;
 
     // AI Analysis simulation
     const aiAnalysis = {
@@ -684,11 +685,37 @@ router.post("/aptitude/submit", async (req, res) => {
       overallIntegrity: 'high' as const
     };
 
-    // Store test result - for now just return success
+    // Performance metrics calculation
+    const performanceMetrics = {
+      correctAnswers,
+      accuracy: score,
+      timePerQuestion: testData.timeSpent ? Math.round(testData.timeSpent / totalQuestions) : 0,
+      confidenceScore: aiAnalysis.behaviorScore,
+      focusScore: aiAnalysis.focusScore
+    };
+
+    // Store test result in database using the assessment results format
+    const result = await storage.createAssessmentResult({
+      fullName: testData.candidate.fullName,
+      email: testData.candidate.email,
+      phone: testData.candidate.phone,
+      experience: testData.candidate.experience,
+      testTypes: testData.candidate.testTypes,
+      answers: answers,
+      performanceMetrics: performanceMetrics,
+      accuracy: score,
+      correctAnswers: correctAnswers,
+      totalQuestions: totalQuestions,
+      timeSpent: testData.timeSpent || 0,
+      status: 'completed'
+    });
+
     res.status(201).json({ 
       success: true,
       message: 'Test submitted successfully',
-      testId: `result_${Date.now()}`
+      testId: result.id,
+      score: score,
+      accuracy: score
     });
   } catch (error) {
     console.error('Aptitude test submission error:', error);
