@@ -126,10 +126,27 @@ export default function Careers() {
   };
 
   const handleCVUpload = async () => {
-    return {
-      method: 'PUT' as const,
-      url: await apiRequest('/api/objects/upload', 'POST').then((res: any) => res.uploadURL),
-    };
+    try {
+      const response = await fetch('/api/objects/upload', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to get upload URL');
+      }
+      
+      const data = await response.json();
+      return {
+        method: 'PUT' as const,
+        url: data.uploadURL,
+      };
+    } catch (error) {
+      console.error('Error getting upload URL:', error);
+      throw error;
+    }
   };
 
   const handleCVComplete = async (result: UploadResult<Record<string, unknown>, Record<string, unknown>>) => {
