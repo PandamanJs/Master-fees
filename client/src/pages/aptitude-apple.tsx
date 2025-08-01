@@ -108,7 +108,11 @@ export default function AppleAptitudeTest() {
 
   const submitRegistration = useMutation({
     mutationFn: async (data: CandidateForm) => {
-      return await apiRequest('/api/aptitude/register', data);
+      return await apiRequest('/api/aptitude/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
     },
     onSuccess: (data: any) => {
       if (data?.questions) {
@@ -135,7 +139,14 @@ export default function AppleAptitudeTest() {
         return; // Prevent cross-category selection
       }
       
-      setSelectedTestTypes(prev => [...prev, testType]);
+      setSelectedTestTypes(prev => {
+        const newTypes = [...prev, testType];
+        // Clear any existing form error when user selects a test type
+        if (newTypes.length > 0) {
+          form.clearErrors('testTypes');
+        }
+        return newTypes;
+      });
     } else {
       setSelectedTestTypes(prev => prev.filter(t => t !== testType));
     }
@@ -143,9 +154,11 @@ export default function AppleAptitudeTest() {
 
   const onSubmit = (data: CandidateForm) => {
     if (selectedTestTypes.length === 0) {
-      form.setError('testTypes', { message: 'Please select at least one assessment area' });
+      form.setError('testTypes', { message: 'Please select at least one test category' });
       return;
     }
+    // Clear any existing testTypes error
+    form.clearErrors('testTypes');
     submitRegistration.mutate({ ...data, testTypes: selectedTestTypes });
   };
 
