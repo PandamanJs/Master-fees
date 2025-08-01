@@ -10,6 +10,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import { 
@@ -452,7 +453,7 @@ export default function AptitudePage() {
     }
     
     if (canSelectTestTypes(newTypes)) {
-      form.setValue('testTypes', newTypes);
+      form.setValue('testTypes', newTypes as any);
       setSelectedTestTypes(newTypes);
     } else {
       toast({
@@ -656,62 +657,62 @@ export default function AptitudePage() {
                   
                     <div className="space-y-3">
                       <Label htmlFor="email" className="text-sm font-medium text-slate-800 flex items-center">
-                      <Mail className="w-4 h-4 inline mr-2" />
-                      Email Address
-                    </Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      {...form.register('email')}
-                      className="border-slate-200 focus:border-emerald-400"
-                    />
-                    {form.formState.errors.email && (
-                      <p className="text-red-500 text-sm">{form.formState.errors.email.message}</p>
-                    )}
+                        <Mail className="w-4 h-4 mr-2 text-slate-500" />
+                        Email Address
+                      </Label>
+                      <Input
+                        id="email"
+                        type="email"
+                        {...form.register('email')}
+                        className="h-12 border-0 bg-slate-50 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-400/20 focus:ring-offset-0 transition-all duration-200"
+                        placeholder="Enter your email address"
+                      />
+                      {form.formState.errors.email && (
+                        <p className="text-red-500 text-sm font-light">{form.formState.errors.email.message}</p>
+                      )}
+                    </div>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="space-y-3">
+                      <Label htmlFor="phone" className="text-sm font-medium text-slate-800 flex items-center">
+                        <Phone className="w-4 h-4 mr-2 text-slate-500" />
+                        Phone Number
+                      </Label>
+                      <Input
+                        id="phone"
+                        {...form.register('phone')}
+                        className="h-12 border-0 bg-slate-50 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-400/20 focus:ring-offset-0 transition-all duration-200"
+                        placeholder="Enter your phone number"
+                      />
+                      {form.formState.errors.phone && (
+                        <p className="text-red-500 text-sm font-light">{form.formState.errors.phone.message}</p>
+                      )}
+                    </div>
+                    
+                    <div className="space-y-3">
+                      <Label htmlFor="experience" className="text-sm font-medium text-slate-800 flex items-center">
+                        <Briefcase className="w-4 h-4 mr-2 text-slate-500" />
+                        Experience Level
+                      </Label>
+                      <Select onValueChange={(value) => form.setValue('experience', value)}>
+                        <SelectTrigger className="h-12 border-0 bg-slate-50 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-400/20">
+                          <SelectValue placeholder="Select your experience level" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="entry">Entry Level (0-2 years)</SelectItem>
+                          <SelectItem value="mid">Mid Level (2-5 years)</SelectItem>
+                          <SelectItem value="senior">Senior Level (5+ years)</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      {form.formState.errors.experience && (
+                        <p className="text-red-500 text-sm font-light">{form.formState.errors.experience.message}</p>
+                      )}
+                    </div>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="phone" className="text-sm font-medium text-slate-700">
-                      <Phone className="w-4 h-4 inline mr-2" />
-                      Phone Number
-                    </Label>
-                    <Input
-                      id="phone"
-                      {...form.register('phone')}
-                      className="border-slate-200 focus:border-emerald-400"
-                    />
-                    {form.formState.errors.phone && (
-                      <p className="text-red-500 text-sm">{form.formState.errors.phone.message}</p>
-                    )}
-                  </div>
 
-                  <div className="space-y-2">
-                    <Label className="text-sm font-medium text-slate-700">Experience Level</Label>
-                    <RadioGroup
-                      value={form.watch('experience')}
-                      onValueChange={(value) => form.setValue('experience', value)}
-                      className="flex flex-col space-y-2"
-                    >
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="entry" id="entry" />
-                        <Label htmlFor="entry">Entry Level (0-2 years)</Label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="mid" id="mid" />
-                        <Label htmlFor="mid">Mid Level (2-5 years)</Label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="senior" id="senior" />
-                        <Label htmlFor="senior">Senior Level (5+ years)</Label>
-                      </div>
-                    </RadioGroup>
-                    {form.formState.errors.experience && (
-                      <p className="text-red-500 text-sm">{form.formState.errors.experience.message}</p>
-                    )}
-                  </div>
-                </div>
 
                 {/* Test Type Selection */}
                 <div className="space-y-4">
