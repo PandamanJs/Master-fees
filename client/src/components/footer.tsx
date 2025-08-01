@@ -54,14 +54,14 @@ export default function Footer() {
           <div className="flex items-center space-x-6">
             <div className="flex space-x-4">
               <a 
-                href="mailto:info@masterfees.com" 
+                href="mailto:masterfees101@gmail.com" 
                 className="text-slate-400 hover:text-emerald-400 transition-colors duration-300"
                 aria-label="Email"
               >
                 <Mail className="w-5 h-5" />
               </a>
               <a 
-                href="tel:+1234567890" 
+                href="tel:+260976813373" 
                 className="text-slate-400 hover:text-emerald-400 transition-colors duration-300"
                 aria-label="Phone"
               >
@@ -84,14 +84,22 @@ export default function Footer() {
         {/* Bottom Section - Apple style */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-6 sm:space-y-0">
           {/* Contact Information */}
-          <div className="flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-8">
+          <div className="flex flex-col sm:flex-row sm:items-start space-y-6 sm:space-y-0 sm:space-x-12">
             <div className="flex items-center space-x-2 text-gray-400">
               <Mail className="w-4 h-4" />
-              <span className="text-sm font-light">feemaster@gmail.com</span>
+              <span className="text-sm font-light">masterfees101@gmail.com</span>
             </div>
-            <div className="flex items-center space-x-2 text-gray-400">
-              <Phone className="w-4 h-4" />
-              <span className="text-sm font-light">+260 766 699 3729</span>
+            <div className="flex flex-col space-y-2">
+              <div className="flex items-center space-x-2 text-gray-400">
+                <Phone className="w-4 h-4" />
+                <span className="text-sm font-light">+260 976 813 373</span>
+              </div>
+              <div className="flex items-center space-x-2 text-gray-400 ml-6">
+                <span className="text-sm font-light">+260 953 110 184</span>
+              </div>
+              <div className="flex items-center space-x-2 text-gray-400 ml-6">
+                <span className="text-sm font-light">+260 772 530 093</span>
+              </div>
             </div>
             <div className="flex items-center space-x-2 text-gray-400">
               <MapPin className="w-4 h-4" />

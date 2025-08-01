@@ -164,6 +164,17 @@ Preferred communication style: Simple, everyday language.
   - Built dashboard asset management and code integration tools
   - Enhanced project with professional design workflow integration
 
+- August 01, 2025: Enhanced careers section and updated contact information
+  - Added Software Engineering Intern position to job listings (5 total positions)
+  - Implemented smart CV upload functionality with AI-powered automatic form filling
+  - Created CV processing system that extracts information from uploaded documents
+  - Added professional CV upload interface with drag-and-drop support and file validation
+  - Integrated object storage for secure CV file handling (PDF, DOC, DOCX, 5MB limit)
+  - Updated all contact information to use masterfees101@gmail.com
+  - Added comprehensive phone number support: +260 976 813 373, +260 953 110 184, +260 772 530 093
+  - Enhanced footer with all contact numbers and updated email references
+  - Updated email notifications across all forms to use masterfees101@gmail.com
+
 ## Changelog
 
 Changelog:

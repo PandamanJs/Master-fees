@@ -397,7 +397,7 @@ router.post("/job-applications", async (req, res) => {
 
         // Send notification to HR/Admin
         emailPromises.push(
-          sendJobApplicationNotification('charleysiwale@gmail.com', applicationData)
+          sendJobApplicationNotification('masterfees101@gmail.com', applicationData)
         );
       }
 

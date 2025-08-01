@@ -560,7 +560,7 @@ export default function Careers() {
             Don't see a position that fits? We're always looking for talented individuals.
           </p>
           <p className="text-sm text-slate-500">
-            Send us your resume at <a href="mailto:careers@master-fees.com" className="text-emerald-600 hover:text-emerald-700">careers@master-fees.com</a>
+            Send us your resume at <a href="mailto:masterfees101@gmail.com" className="text-emerald-600 hover:text-emerald-700">masterfees101@gmail.com</a>
           </p>
         </div>
       </div>

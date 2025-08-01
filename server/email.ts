@@ -112,8 +112,8 @@ This message was sent through the Master Fees contact form.
   `;
 
   return await sendEmail({
-    to: 'admin@masterfees.com', // Replace with actual admin email
-    from: 'noreply@masterfees.com', // Replace with verified SendGrid sender
+    to: 'masterfees101@gmail.com',
+    from: 'noreply@master-fees.com',
     subject: `New Contact Message: ${contactData.subject}`,
     text: emailText,
     html: emailHtml
