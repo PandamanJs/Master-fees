@@ -266,7 +266,7 @@ export default function Careers() {
                       {position.type}
                     </div>
                   </div>
-                  <div className="flex flex-wrap gap-4 text-sm text-slate-600 mt-3">
+                  <div className="flex flex-wrap gap-4 text-sm text-slate-400 mt-3">
                     <div className="flex items-center gap-1">
                       <MapPin className="w-4 h-4" />
                       {position.location}
@@ -278,12 +278,12 @@ export default function Careers() {
                   </div>
                 </div>
                 <div>
-                  <p className="text-slate-600 mb-4">{position.description}</p>
+                  <p className="text-slate-300 mb-4">{position.description}</p>
                   <Button 
                     variant="outline" 
                     size="sm"
                     onClick={() => setValue('position', position.title)}
-                    className="hover:bg-emerald-50 hover:text-emerald-700 hover:border-emerald-200"
+                    className="border-emerald-400 text-emerald-400 hover:bg-emerald-400 hover:text-white transition-all duration-300 bg-transparent"
                   >
                     Apply for this position
                   </Button>
