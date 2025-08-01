@@ -580,8 +580,15 @@ app.post('/api/users', (req, res) => {
 
   if (step === 'registration') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-teal-900 p-4">
-        <div className="max-w-4xl mx-auto pt-12">
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-teal-900 p-4 relative overflow-hidden">
+        {/* Liquid Glass Background Elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 right-1/4 w-96 h-96 liquid-glass-dark rounded-full opacity-20 animate-float"></div>
+          <div className="absolute bottom-1/3 left-1/4 w-64 h-64 liquid-glass-dark rounded-full opacity-15 animate-float delay-1000"></div>
+          <div className="absolute top-2/3 right-1/3 w-48 h-48 liquid-glass-dark rounded-full opacity-25 animate-float delay-500"></div>
+        </div>
+        
+        <div className="max-w-4xl mx-auto pt-12 relative z-10">
           {/* Hero Section */}
           <div className="text-center mb-12">
             <div className="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-white/20 to-white/5 rounded-3xl backdrop-blur-xl border border-white/10 mb-8">
@@ -595,7 +602,7 @@ app.post('/api/users', (req, res) => {
             </p>
           </div>
 
-          <Card className="border-0 bg-white/95 backdrop-blur-2xl shadow-2xl rounded-3xl overflow-hidden">
+          <Card className="border-0 liquid-glass-light shadow-2xl rounded-3xl overflow-hidden">
             <CardHeader className="text-center pb-8 pt-12 px-12">
               <CardTitle className="text-3xl font-light text-slate-900 mb-3">
                 Application Registration
@@ -843,7 +850,7 @@ app.post('/api/users', (req, res) => {
                     setQuestions(sampleQuestions);
                     setStep('test');
                   }}
-                  className="w-full h-14 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-medium rounded-2xl"
+                  className="w-full h-14 liquid-glass-button text-white font-medium rounded-2xl"
                 >
                   <Rocket className="w-5 h-5 mr-2" />
                   Start Assessment
@@ -883,7 +890,7 @@ app.post('/api/users', (req, res) => {
           {/* Main Test Area */}
           <div className="flex-1 space-y-6">
             {/* Header with Timer */}
-            <div className="bg-white/10 backdrop-blur-xl rounded-2xl p-6 border border-white/20">
+            <div className="liquid-glass-dark rounded-2xl p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <h1 className="text-xl font-light text-white mb-1">Assessment in Progress</h1>
@@ -902,7 +909,7 @@ app.post('/api/users', (req, res) => {
             </div>
 
             {/* Question Card */}
-            <Card className="border-0 bg-white/95 backdrop-blur-2xl shadow-2xl rounded-3xl overflow-hidden">
+            <Card className="border-0 liquid-glass-light shadow-2xl rounded-3xl overflow-hidden">
               <CardContent className="p-8">
                 <div className="mb-6">
                   <Badge className="mb-4" variant="secondary">
