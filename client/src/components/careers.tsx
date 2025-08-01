@@ -140,7 +140,6 @@ export default function Careers() {
         <div className="absolute bottom-20 right-10 w-40 h-40 ultra-glass-light rounded-full opacity-10 animate-float delay-1000"></div>
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 ultra-glass-dark rounded-full opacity-5 animate-float delay-500"></div>
       </div>
-      
       <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16">
@@ -218,7 +217,7 @@ export default function Careers() {
         {/* Application Form */}
         <div className="max-w-4xl mx-auto ultra-glass-light p-8 rounded-3xl shadow-2xl border border-emerald-400/20">
           <div className="text-center mb-8">
-            <h3 className="text-3xl font-extralight text-white mb-4 tracking-[-0.02em]">Apply for an Internship</h3>
+            <h3 className="text-3xl font-extralight text-white mb-4 tracking-[-0.02em]">Apply for a Position</h3>
             <p className="text-slate-300 font-light opacity-90">
               We'd love to hear from you! Fill out the form below to apply for any of our internship opportunities.
             </p>
