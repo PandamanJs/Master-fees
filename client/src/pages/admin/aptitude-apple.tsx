@@ -25,7 +25,10 @@ import {
   Users,
   Award,
   BarChart3,
-  Target
+  Target,
+  PieChart,
+  Code,
+  MessageSquare
 } from "lucide-react";
 
 interface AptitudeResult {
@@ -60,6 +63,36 @@ export default function AppleAdminPanel() {
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [selectedCandidate, setSelectedCandidate] = useState<any>(null);
 
+  // Fetch aptitude test results
+  const { data: results = [], isLoading } = useQuery<AptitudeResult[]>({
+    queryKey: ['/api/aptitude/results'],
+    enabled: isAuthenticated,
+  });
+
+  // Calculate statistics
+  const stats = {
+    total: results.length,
+    frontend: results.filter(r => r.testTypes?.includes('frontend')).length,
+    backend: results.filter(r => r.testTypes?.includes('backend')).length,
+    marketing: results.filter(r => r.testTypes?.includes('marketing')).length,
+    business: results.filter(r => r.testTypes?.includes('business')).length,
+    intern: results.filter(r => r.testTypes?.includes('intern')).length,
+    pending: results.filter(r => r.status === 'pending').length,
+    approved: results.filter(r => r.status === 'approved').length,
+    avgScore: results.length > 0 ? Math.round(results.reduce((acc, r) => {
+      const mainScore = Object.values(r.scores || {})[0] || 0;
+      return acc + mainScore;
+    }, 0) / results.length) : 0
+  };
+
+  // Filter results
+  const filteredResults = results.filter((result: AptitudeResult) => {
+    const matchesSearch = result.candidate.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         result.candidate.email.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesStatus = statusFilter === 'all' || result.status === statusFilter;
+    return matchesSearch && matchesStatus;
+  });
+
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     if (loginForm.username === 'Masterfees' && loginForm.password === 'Pandamanjs007') {
@@ -73,6 +106,32 @@ export default function AppleAdminPanel() {
   const handleLogout = () => {
     setIsAuthenticated(false);
     setLoginForm({ username: '', password: '' });
+  };
+
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  };
+
+  const getIntegrityColor = (integrity: string) => {
+    switch (integrity) {
+      case 'high': return 'from-emerald-500 to-green-500';
+      case 'medium': return 'from-amber-500 to-orange-500';
+      case 'low': return 'from-red-500 to-pink-500';
+      default: return 'from-slate-500 to-gray-500';
+    }
+  };
+
+  const getTestTypeIcon = (testType: string) => {
+    switch (testType) {
+      case 'frontend': return Monitor;
+      case 'backend': return Database;
+      case 'marketing': return TrendingUp;
+      case 'business': return PieChart;
+      case 'intern': return Code;
+      default: return Brain;
+    }
   };
 
   // Show login form if not authenticated
@@ -158,43 +217,18 @@ export default function AppleAdminPanel() {
     );
   }
 
-  // Fetch real aptitude test results
-  const { data: results, isLoading } = useQuery({
-    queryKey: ['/api/aptitude/results'],
-    queryFn: () => fetch('/api/aptitude/results').then(res => res.json()),
-    enabled: isAuthenticated
-  });
-
-  const aptitudeResults: AptitudeResult[] = results || [];
-
-  const stats = {
-    total: aptitudeResults.length,
-    frontend: aptitudeResults.filter(r => r.testTypes?.includes('frontend')).length,
-    backend: aptitudeResults.filter(r => r.testTypes?.includes('backend')).length,
-    marketing: aptitudeResults.filter(r => r.testTypes?.includes('marketing')).length,
-    business: aptitudeResults.filter(r => r.testTypes?.includes('business')).length,
-    intern: aptitudeResults.filter(r => r.testTypes?.includes('intern')).length,
-    pending: aptitudeResults.filter(r => r.status === 'pending').length,
-    approved: aptitudeResults.filter(r => r.status === 'approved').length,
-    avgScore: aptitudeResults.length > 0 ? Math.round(aptitudeResults.reduce((acc, r) => 
-      acc + (Object.values(r.scores || {}).reduce((sum, s) => sum + s, 0) / Math.max(Object.keys(r.scores || {}).length, 1)), 0
-    ) / aptitudeResults.length) : 0
-  };
-
-  const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
-  };
-
-  const getIntegrityColor = (integrity: string) => {
-    switch (integrity) {
-      case 'high': return 'from-emerald-500 to-green-500';
-      case 'medium': return 'from-amber-500 to-orange-500';
-      case 'low': return 'from-red-500 to-pink-500';
-      default: return 'from-slate-500 to-gray-500';
-    }
-  };
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-teal-900 flex items-center justify-center">
+        <div className="text-center">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-white/20 to-white/5 rounded-2xl backdrop-blur-xl border border-white/10 mb-4">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
+          </div>
+          <p className="text-white font-light">Loading dashboard...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-teal-900">
@@ -224,198 +258,200 @@ export default function AppleAdminPanel() {
 
       {/* Main content area */}
       <div className="max-w-7xl mx-auto px-8 pb-12">
-        {/* Statistics Cards */}
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 mb-8">
-          <Card className="border-0 bg-white/95 backdrop-blur-xl rounded-2xl overflow-hidden">
+        {/* Statistics Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4 mb-8">
+          <Card className="border-0 bg-white/95 backdrop-blur-xl shadow-xl rounded-2xl overflow-hidden">
             <CardContent className="p-6 text-center">
-              <div className="flex items-center justify-center w-12 h-12 bg-gradient-to-r from-slate-500 to-gray-500 rounded-xl mx-auto mb-3">
+              <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl mb-3">
                 <Users className="w-6 h-6 text-white" />
               </div>
-              <div className="text-2xl font-light text-slate-900 mb-1">{stats.total}</div>
-              <div className="text-sm text-slate-600 font-light">Total Tests</div>
+              <div className="text-2xl font-thin text-slate-900 mb-1">{stats.total}</div>
+              <div className="text-sm text-slate-600 font-light">Total</div>
             </CardContent>
           </Card>
           
-          <Card className="border-0 bg-white/95 backdrop-blur-xl rounded-2xl overflow-hidden">
+          <Card className="border-0 bg-white/95 backdrop-blur-xl shadow-xl rounded-2xl overflow-hidden">
             <CardContent className="p-6 text-center">
-              <div className="flex items-center justify-center w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl mx-auto mb-3">
+              <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-blue-500 to-violet-500 rounded-xl mb-3">
                 <Monitor className="w-6 h-6 text-white" />
               </div>
-              <div className="text-2xl font-light text-slate-900 mb-1">{stats.frontend}</div>
+              <div className="text-2xl font-thin text-slate-900 mb-1">{stats.frontend}</div>
               <div className="text-sm text-slate-600 font-light">Frontend</div>
             </CardContent>
           </Card>
           
-          <Card className="border-0 bg-white/95 backdrop-blur-xl rounded-2xl overflow-hidden">
+          <Card className="border-0 bg-white/95 backdrop-blur-xl shadow-xl rounded-2xl overflow-hidden">
             <CardContent className="p-6 text-center">
-              <div className="flex items-center justify-center w-12 h-12 bg-gradient-to-r from-purple-500 to-violet-500 rounded-xl mx-auto mb-3">
+              <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-purple-500 to-violet-500 rounded-xl mb-3">
                 <Database className="w-6 h-6 text-white" />
               </div>
-              <div className="text-2xl font-light text-slate-900 mb-1">{stats.backend}</div>
+              <div className="text-2xl font-thin text-slate-900 mb-1">{stats.backend}</div>
               <div className="text-sm text-slate-600 font-light">Backend</div>
             </CardContent>
           </Card>
           
-          <Card className="border-0 bg-white/95 backdrop-blur-xl rounded-2xl overflow-hidden">
+          <Card className="border-0 bg-white/95 backdrop-blur-xl shadow-xl rounded-2xl overflow-hidden">
             <CardContent className="p-6 text-center">
-              <div className="flex items-center justify-center w-12 h-12 bg-gradient-to-r from-pink-500 to-rose-500 rounded-xl mx-auto mb-3">
+              <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-pink-500 to-rose-500 rounded-xl mb-3">
                 <TrendingUp className="w-6 h-6 text-white" />
               </div>
-              <div className="text-2xl font-light text-slate-900 mb-1">{stats.marketing}</div>
+              <div className="text-2xl font-thin text-slate-900 mb-1">{stats.marketing}</div>
               <div className="text-sm text-slate-600 font-light">Marketing</div>
             </CardContent>
           </Card>
           
-          <Card className="border-0 bg-white/95 backdrop-blur-xl rounded-2xl overflow-hidden">
+          <Card className="border-0 bg-white/95 backdrop-blur-xl shadow-xl rounded-2xl overflow-hidden">
             <CardContent className="p-6 text-center">
-              <div className="flex items-center justify-center w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl mx-auto mb-3">
-                <BarChart3 className="w-6 h-6 text-white" />
+              <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl mb-3">
+                <PieChart className="w-6 h-6 text-white" />
               </div>
-              <div className="text-2xl font-light text-slate-900 mb-1">{stats.business}</div>
+              <div className="text-2xl font-thin text-slate-900 mb-1">{stats.business}</div>
               <div className="text-sm text-slate-600 font-light">Business</div>
             </CardContent>
           </Card>
           
-          <Card className="border-0 bg-white/95 backdrop-blur-xl rounded-2xl overflow-hidden">
+          <Card className="border-0 bg-white/95 backdrop-blur-xl shadow-xl rounded-2xl overflow-hidden">
             <CardContent className="p-6 text-center">
-              <div className="flex items-center justify-center w-12 h-12 bg-gradient-to-r from-amber-500 to-orange-500 rounded-xl mx-auto mb-3">
+              <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-orange-500 to-amber-500 rounded-xl mb-3">
+                <Code className="w-6 h-6 text-white" />
+              </div>
+              <div className="text-2xl font-thin text-slate-900 mb-1">{stats.intern}</div>
+              <div className="text-sm text-slate-600 font-light">Intern</div>
+            </CardContent>
+          </Card>
+          
+          <Card className="border-0 bg-white/95 backdrop-blur-xl shadow-xl rounded-2xl overflow-hidden">
+            <CardContent className="p-6 text-center">
+              <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-amber-500 to-orange-500 rounded-xl mb-3">
                 <Clock className="w-6 h-6 text-white" />
               </div>
-              <div className="text-2xl font-light text-slate-900 mb-1">{stats.pending}</div>
+              <div className="text-2xl font-thin text-slate-900 mb-1">{stats.pending}</div>
               <div className="text-sm text-slate-600 font-light">Pending</div>
             </CardContent>
           </Card>
           
-          <Card className="border-0 bg-white/95 backdrop-blur-xl rounded-2xl overflow-hidden">
+          <Card className="border-0 bg-white/95 backdrop-blur-xl shadow-xl rounded-2xl overflow-hidden">
             <CardContent className="p-6 text-center">
-              <div className="flex items-center justify-center w-12 h-12 bg-gradient-to-r from-emerald-500 to-green-500 rounded-xl mx-auto mb-3">
+              <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-emerald-500 to-green-500 rounded-xl mb-3">
                 <CheckCircle className="w-6 h-6 text-white" />
               </div>
-              <div className="text-2xl font-light text-slate-900 mb-1">{stats.approved}</div>
+              <div className="text-2xl font-thin text-slate-900 mb-1">{stats.approved}</div>
               <div className="text-sm text-slate-600 font-light">Approved</div>
-            </CardContent>
-          </Card>
-          
-          <Card className="border-0 bg-white/95 backdrop-blur-xl rounded-2xl overflow-hidden">
-            <CardContent className="p-6 text-center">
-              <div className="flex items-center justify-center w-12 h-12 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-xl mx-auto mb-3">
-                <Target className="w-6 h-6 text-white" />
-              </div>
-              <div className="text-2xl font-light text-slate-900 mb-1">{stats.avgScore}%</div>
-              <div className="text-sm text-slate-600 font-light">Avg Score</div>
             </CardContent>
           </Card>
         </div>
 
         {/* Search and Filters */}
-        <Card className="border-0 bg-white/95 backdrop-blur-xl rounded-2xl overflow-hidden mb-6">
+        <Card className="border-0 bg-white/95 backdrop-blur-xl shadow-xl rounded-2xl overflow-hidden mb-8">
           <CardContent className="p-6">
             <div className="flex flex-col md:flex-row gap-4">
               <div className="flex-1">
-                <Label htmlFor="search" className="text-sm font-medium text-slate-800 mb-2 block">
-                  Search Candidates
-                </Label>
                 <div className="relative">
-                  <Search className="absolute left-3 top-3 h-5 w-5 text-slate-400" />
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
                   <Input
-                    id="search"
-                    placeholder="Search by name, email, or phone..."
+                    placeholder="Search candidates..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10 h-12 border-0 bg-slate-50 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-400/20"
+                    className="pl-10 border-0 bg-slate-50 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-400/20"
                   />
                 </div>
               </div>
-              
-              <div className="min-w-[200px]">
-                <Label htmlFor="status" className="text-sm font-medium text-slate-800 mb-2 block">
-                  Filter by Status
-                </Label>
-                <select
-                  id="status"
-                  value={statusFilter}
-                  onChange={(e) => setStatusFilter(e.target.value)}
-                  className="w-full h-12 border-0 bg-slate-50 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-400/20 px-4"
+              <div className="flex gap-2">
+                <Button
+                  variant={statusFilter === 'all' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setStatusFilter('all')}
+                  className="rounded-xl"
                 >
-                  <option value="all">All Status</option>
-                  <option value="pending">Pending</option>
-                  <option value="approved">Approved</option>
-                  <option value="rejected">Rejected</option>
-                </select>
+                  All
+                </Button>
+                <Button
+                  variant={statusFilter === 'pending' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setStatusFilter('pending')}
+                  className="rounded-xl"
+                >
+                  Pending
+                </Button>
+                <Button
+                  variant={statusFilter === 'approved' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setStatusFilter('approved')}
+                  className="rounded-xl"
+                >
+                  Approved
+                </Button>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        {/* Loading State */}
-        {isLoading && (
-          <div className="flex items-center justify-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600"></div>
-          </div>
-        )}
-
         {/* Results List */}
-        <div className="space-y-4">
-          {!isLoading && aptitudeResults.length === 0 && (
-            <Card className="border-0 bg-white/95 backdrop-blur-xl rounded-2xl overflow-hidden">
+        <div className="space-y-6">
+          {filteredResults.length === 0 ? (
+            <Card className="border-0 bg-white/95 backdrop-blur-xl shadow-xl rounded-2xl overflow-hidden">
               <CardContent className="p-12 text-center">
-                <div className="flex items-center justify-center w-16 h-16 bg-slate-100 rounded-2xl mx-auto mb-4">
-                  <Users className="w-8 h-8 text-slate-400" />
-                </div>
-                <h3 className="text-lg font-medium text-slate-900 mb-2">No Test Results Yet</h3>
-                <p className="text-slate-600 font-light">Candidate test submissions will appear here once they complete their assessments.</p>
+                <Brain className="w-12 h-12 text-slate-400 mx-auto mb-4" />
+                <h3 className="text-lg font-light text-slate-900 mb-2">No Test Results</h3>
+                <p className="text-slate-600 font-light">No aptitude test results match your current filters.</p>
               </CardContent>
             </Card>
-          )}
-
-          {aptitudeResults.filter(result => {
-            const matchesSearch = searchTerm === '' || 
-              result.candidate.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-              result.candidate.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-              result.candidate.phone.includes(searchTerm);
-            const matchesStatus = statusFilter === 'all' || result.status === statusFilter;
-            return matchesSearch && matchesStatus;
-          }).map((result) => (
-            <Card key={result.id} className="border-0 bg-white/95 backdrop-blur-xl rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-200">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-xl flex items-center justify-center">
-                      <User className="w-6 h-6 text-white" />
+          ) : (
+            filteredResults.map((result: AptitudeResult) => {
+              const TestIcon = getTestTypeIcon(result.testTypes?.[0] || 'frontend');
+              return (
+                <Card key={result.id} className="border-0 bg-white/95 backdrop-blur-xl shadow-xl rounded-2xl overflow-hidden">
+                  <CardHeader className="pb-4">
+                    <div className="flex justify-between items-start">
+                      <div className="flex items-start gap-4">
+                        <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-xl">
+                          <TestIcon className="w-6 h-6 text-white" />
+                        </div>
+                        <div>
+                          <CardTitle className="text-xl font-light">{result.candidate.fullName}</CardTitle>
+                          <CardDescription className="text-base font-light">
+                            {result.candidate.email} • {result.candidate.phone}
+                          </CardDescription>
+                          <div className="flex gap-2 mt-2">
+                            {result.testTypes?.map(testType => (
+                              <Badge key={testType} variant="outline" className="capitalize rounded-full">
+                                {testType}
+                              </Badge>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-2xl font-thin text-slate-900">
+                          {Object.values(result.scores || {})[0] || 0}%
+                        </div>
+                        <div className="text-sm text-slate-600 font-light">Overall Score</div>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="font-medium text-slate-900">{result.candidate.fullName}</h3>
-                      <p className="text-sm text-slate-600">{result.candidate.email}</p>
-                    </div>
-                  </div>
+                  </CardHeader>
                   
-                  <div className="flex items-center space-x-4">
-                    <div className="text-center">
-                      <div className="text-lg font-medium text-slate-900">
-                        {result.scores && Object.keys(result.scores).length > 0 
-                          ? Math.round(Object.values(result.scores).reduce((sum, s) => sum + s, 0) / Object.keys(result.scores).length)
-                          : 0}%
+                  <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <div className="text-center p-4 bg-slate-50 rounded-xl">
+                        <div className="text-lg font-light text-slate-900">{result.correctAnswers}/{result.totalQuestions}</div>
+                        <div className="text-sm text-slate-600 font-light">Correct Answers</div>
                       </div>
-                      <div className="text-xs text-slate-600">Overall Score</div>
-                    </div>
-                    
-                    <div className="text-center">
-                      <div className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r ${getIntegrityColor(result.aiAnalysis.overallIntegrity)} text-white`}>
-                        {result.aiAnalysis.overallIntegrity.charAt(0).toUpperCase() + result.aiAnalysis.overallIntegrity.slice(1)} Integrity
+                      <div className="text-center p-4 bg-slate-50 rounded-xl">
+                        <div className="text-lg font-light text-slate-900">{formatTime(result.timeSpent)}</div>
+                        <div className="text-sm text-slate-600 font-light">Time Spent</div>
+                      </div>
+                      <div className="text-center p-4 bg-slate-50 rounded-xl">
+                        <div className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-light bg-gradient-to-r ${getIntegrityColor(result.aiAnalysis.overallIntegrity)} text-white`}>
+                          {result.aiAnalysis.overallIntegrity.toUpperCase()}
+                        </div>
+                        <div className="text-sm text-slate-600 font-light mt-1">AI Integrity</div>
                       </div>
                     </div>
-                    
-                    <Badge 
-                      variant={result.status === 'approved' ? 'default' : result.status === 'pending' ? 'secondary' : 'destructive'}
-                      className="capitalize"
-                    >
-                      {result.status}
-                    </Badge>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+                  </CardContent>
+                </Card>
+              );
+            })
+          )}
         </div>
       </div>
     </div>

@@ -107,12 +107,17 @@ export default function AppleAptitudeTest() {
   }, [step, timeLeft]);
 
   const submitRegistration = useMutation({
-    mutationFn: (data: CandidateForm) => apiRequest('/api/aptitude/register', {
-      method: 'POST',
-      body: JSON.stringify(data)
-    }),
-    onSuccess: (data) => {
-      setQuestions(data.questions);
+    mutationFn: async (data: CandidateForm) => {
+      const response = await apiRequest('/api/aptitude/register', {
+        method: 'POST',
+        body: JSON.stringify(data)
+      });
+      return response;
+    },
+    onSuccess: (data: any) => {
+      if (data?.questions) {
+        setQuestions(data.questions);
+      }
       setStep('instructions');
     }
   });
@@ -141,6 +146,10 @@ export default function AppleAptitudeTest() {
   };
 
   const onSubmit = (data: CandidateForm) => {
+    if (selectedTestTypes.length === 0) {
+      form.setError('testTypes', { message: 'Please select at least one assessment area' });
+      return;
+    }
     submitRegistration.mutate({ ...data, testTypes: selectedTestTypes });
   };
 
