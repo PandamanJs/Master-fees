@@ -271,7 +271,12 @@ export default function AppleAptitudeTest() {
                               ? 'border-emerald-400 bg-emerald-50 shadow-lg' 
                               : 'border-slate-200 bg-white hover:border-emerald-200 hover:bg-emerald-50/50'
                           }`}
-                          onClick={() => handleTestTypeChange(testType, !isSelected)}
+                          onClick={(e) => {
+                            // Prevent double triggering from checkbox
+                            if (e.target === e.currentTarget) {
+                              handleTestTypeChange(testType, !isSelected);
+                            }
+                          }}
                         >
                           <div className="flex items-start space-x-4">
                             <div className={`p-3 rounded-xl bg-gradient-to-r ${config.color} text-white`}>
@@ -290,7 +295,7 @@ export default function AppleAptitudeTest() {
                             </div>
                             <Checkbox 
                               checked={isSelected}
-                              onChange={() => {}}
+                              onCheckedChange={(checked) => handleTestTypeChange(testType, checked as boolean)}
                               className="mt-1"
                             />
                           </div>
