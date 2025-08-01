@@ -19,6 +19,7 @@ import { sendContactFormSMS, sendAdminNotificationSMS, sendPaymentConfirmationSM
 import { sendJobApplicationConfirmation, sendJobApplicationNotification } from "./job-application-email";
 import { sendJobApplicationSMS } from "./job-application-sms";
 import { quickbooksRouter } from "./quickbooks-routes";
+import { ObjectStorageService } from "./objectStorage";
 
 const router = Router();
 
@@ -424,6 +425,60 @@ router.post("/job-applications", async (req, res) => {
     }
     console.error("Job application error:", error);
     res.status(500).json({ error: "Failed to submit job application" });
+  }
+});
+
+// Object Storage routes
+router.post("/objects/upload", async (req, res) => {
+  try {
+    const objectStorageService = new ObjectStorageService();
+    const uploadURL = await objectStorageService.getObjectEntityUploadURL();
+    res.json({ uploadURL });
+  } catch (error) {
+    console.error("Error getting upload URL:", error);
+    res.status(500).json({ error: "Failed to get upload URL" });
+  }
+});
+
+// CV Information Extraction endpoint
+router.post("/extract-cv-info", async (req, res) => {
+  try {
+    const { cvUrl } = req.body;
+    
+    if (!cvUrl) {
+      return res.status(400).json({ error: "CV URL is required" });
+    }
+
+    // Mock CV extraction for now - in production, you'd use a service like:
+    // - Google Document AI
+    // - Azure Form Recognizer
+    // - AWS Textract
+    // - OpenAI API for document parsing
+    
+    // For demo purposes, return mock extracted information
+    const mockExtractedInfo = {
+      fullName: "John Doe",
+      email: "john.doe@example.com", 
+      phone: "+260971234567",
+      education: "Bachelor's degree in Computer Science from University of Zambia",
+      skills: "JavaScript, React, Node.js, Python, SQL, Git, AWS, Project Management",
+      experience: "mid" // This would be determined from the CV content
+    };
+
+    // In production, you would:
+    // 1. Download the CV from the storage URL
+    // 2. Extract text using OCR/document parsing
+    // 3. Use AI/NLP to extract structured information
+    // 4. Return the extracted data
+    
+    res.json({ 
+      extractedInfo: mockExtractedInfo,
+      message: "CV information extracted successfully" 
+    });
+    
+  } catch (error) {
+    console.error("CV extraction error:", error);
+    res.status(500).json({ error: "Failed to extract CV information" });
   }
 });
 

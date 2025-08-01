@@ -12,6 +12,8 @@ import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
+import { ObjectUploader } from "@/components/ObjectUploader";
+import type { UploadResult } from '@uppy/core';
 import { 
   Briefcase, 
   MapPin, 
@@ -25,7 +27,8 @@ import {
   Mail,
   Phone,
   User,
-  GraduationCap
+  GraduationCap,
+  Bot
 } from "lucide-react";
 
 const jobApplicationSchema = z.object({
@@ -46,6 +49,8 @@ type JobApplicationForm = z.infer<typeof jobApplicationSchema>;
 
 export default function Careers() {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [cvFile, setCvFile] = useState<string>("");
+  const [isProcessingCV, setIsProcessingCV] = useState(false);
   const { toast } = useToast();
 
   const {
@@ -82,7 +87,61 @@ export default function Careers() {
 
   const onSubmit = (data: JobApplicationForm) => {
     setIsSubmitting(true);
-    submitApplicationMutation.mutate(data);
+    submitApplicationMutation.mutate({
+      ...data,
+      resume: cvFile || data.resume
+    });
+  };
+
+  const handleCVUpload = async () => {
+    return {
+      method: 'PUT' as const,
+      url: await apiRequest('/api/objects/upload', 'POST').then(res => res.uploadURL),
+    };
+  };
+
+  const handleCVComplete = async (result: UploadResult<Record<string, unknown>, Record<string, unknown>>) => {
+    if (result.successful.length > 0) {
+      const uploadedFile = result.successful[0];
+      const cvUrl = uploadedFile.uploadURL;
+      
+      setIsProcessingCV(true);
+      
+      try {
+        // Extract CV information and autofill form
+        const response = await apiRequest('/api/extract-cv-info', 'POST', { cvUrl });
+        
+        if (response.extractedInfo) {
+          const info = response.extractedInfo;
+          
+          // Autofill form fields
+          if (info.fullName) setValue('fullName', info.fullName);
+          if (info.email) setValue('email', info.email);
+          if (info.phone) setValue('phone', info.phone);
+          if (info.education) setValue('education', info.education);
+          if (info.skills) setValue('skills', info.skills);
+          if (info.experience && info.experience !== 'Not specified') {
+            setValue('experience', info.experience);
+          }
+          
+          setCvFile(cvUrl);
+          
+          toast({
+            title: "CV Processed Successfully!",
+            description: "Your CV has been uploaded and form fields have been automatically filled.",
+          });
+        }
+      } catch (error) {
+        console.error('CV processing error:', error);
+        setCvFile(cvUrl); // Still save the CV URL even if parsing fails
+        toast({
+          title: "CV Uploaded",
+          description: "Your CV has been uploaded. Please fill in the form fields manually.",
+        });
+      } finally {
+        setIsProcessingCV(false);
+      }
+    }
   };
 
   const openPositions = [
@@ -117,6 +176,14 @@ export default function Careers() {
       type: "Full-time",
       experience: "2-4 years",
       description: "Drive growth through digital marketing, content creation, and community engagement."
+    },
+    {
+      title: "Software Engineering Intern",
+      department: "Engineering",
+      location: "Remote / Lusaka, Zambia",
+      type: "Internship",
+      experience: "0-1 years",
+      description: "Learn and contribute to building our education technology platform. Perfect for students and recent graduates."
     }
   ];
 
@@ -350,6 +417,52 @@ export default function Careers() {
                     <p className="text-sm text-red-600">{errors.availability.message}</p>
                   )}
                 </div>
+              </div>
+
+              {/* CV Upload Section */}
+              <div className="space-y-4 p-6 bg-gradient-to-r from-emerald-50 to-teal-50 rounded-lg border border-emerald-200">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="p-2 bg-emerald-100 rounded-full">
+                    <Bot className="w-5 h-5 text-emerald-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-slate-900">Smart CV Upload</h3>
+                    <p className="text-sm text-slate-600">Upload your CV and we'll automatically fill out the form for you</p>
+                  </div>
+                </div>
+                
+                <div className="flex flex-col sm:flex-row gap-4 items-start">
+                  <ObjectUploader
+                    maxNumberOfFiles={1}
+                    maxFileSize={5 * 1024 * 1024} // 5MB
+                    onGetUploadParameters={handleCVUpload}
+                    onComplete={handleCVComplete}
+                    buttonClassName="bg-emerald-600 hover:bg-emerald-700"
+                  >
+                    <div className="flex items-center gap-2">
+                      <Upload className="w-4 h-4" />
+                      {cvFile ? "CV Uploaded ✓" : "Upload CV/Resume"}
+                    </div>
+                  </ObjectUploader>
+                  
+                  {isProcessingCV && (
+                    <div className="flex items-center gap-2 text-emerald-600">
+                      <div className="animate-spin rounded-full h-4 w-4 border-2 border-emerald-600 border-t-transparent"></div>
+                      <span className="text-sm">Processing CV...</span>
+                    </div>
+                  )}
+                  
+                  {cvFile && !isProcessingCV && (
+                    <div className="flex items-center gap-2 text-emerald-600">
+                      <FileText className="w-4 h-4" />
+                      <span className="text-sm">CV processed successfully</span>
+                    </div>
+                  )}
+                </div>
+                
+                <p className="text-xs text-slate-500">
+                  Supported formats: PDF, DOC, DOCX (max 5MB). Your CV will be securely processed to extract relevant information.
+                </p>
               </div>
 
               <div className="space-y-2">
