@@ -27,7 +27,7 @@ export function SchoolSearchDropdown({
 
   // Fetch schools data with search query
   const { data: schoolsData, isLoading } = useQuery({
-    queryKey: ['/api/schools/lusaka', searchQuery],
+    queryKey: ['/api/schools/zambia', searchQuery],
     enabled: isOpen || searchQuery.length > 0,
   });
 
@@ -79,7 +79,7 @@ export function SchoolSearchDropdown({
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Type to search schools..."
+                  placeholder="Search by school name, city, or type..."
                   className="w-full pl-10 pr-4 py-2 bg-slate-700/50 border-0 rounded-lg text-white placeholder:text-slate-400 focus:bg-slate-600/50 focus:ring-2 focus:ring-emerald-400/30 text-sm"
                   autoFocus
                 />
@@ -118,11 +118,11 @@ export function SchoolSearchDropdown({
               ) : searchQuery ? (
                 <div className="p-4 text-center text-slate-400">
                   <div className="text-sm">No schools found matching "{searchQuery}"</div>
-                  <div className="text-xs mt-1">Try a different search term</div>
+                  <div className="text-xs mt-1">Try searching by school name, city, or type (primary, secondary, university, etc.)</div>
                 </div>
               ) : (
                 <div className="p-4 text-center text-slate-400 text-sm">
-                  Start typing to search for schools
+                  Search from 150+ schools across Zambia
                 </div>
               )}
             </div>
