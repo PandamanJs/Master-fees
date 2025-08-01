@@ -1,226 +1,52 @@
 # Master Fees - School Payment System
 
 ## Overview
+Master Fees is a modern school fee management system designed to simplify payment collection for schools and parents. It aims to provide a seamless payment experience, offering core capabilities for managing user accounts, processing payments, and handling financial data. The project envisions significant market potential by streamlining administrative tasks for educational institutions.
 
-Master Fees is a modern school fee management system designed to simplify payment collection and provide a seamless experience for schools and parents. The application is built as a full-stack web application with a React frontend and Express.js backend.
+## User Preferences
+Preferred communication style: Simple, everyday language.
 
 ## System Architecture
 
 ### Frontend Architecture
 - **Framework**: React 18 with TypeScript
-- **Build Tool**: Vite for fast development and optimized builds
-- **Styling**: Tailwind CSS with shadcn/ui component library
-- **State Management**: TanStack Query (React Query) for server state management
-- **Routing**: Wouter for lightweight client-side routing
-- **UI Components**: Comprehensive component library using Radix UI primitives
+- **Build Tool**: Vite
+- **Styling**: Tailwind CSS with shadcn/ui and Radix UI primitives
+- **State Management**: TanStack Query (React Query)
+- **Routing**: Wouter
+- **Form Handling**: React Hook Form with Zod validation
+- **UI/UX Decisions**: Mobile-first responsive design, comprehensive component library, dark teal/navy and mint green color palette, Apple-style design for aptitude testing and admin components, with glass-morphism cards and backdrop blur effects.
 
 ### Backend Architecture
-- **Runtime**: Node.js with Express.js framework
+- **Runtime**: Node.js with Express.js
 - **Language**: TypeScript with ES modules
-- **API Design**: RESTful API architecture with /api prefix
+- **API Design**: RESTful API
 - **Database**: PostgreSQL with Drizzle ORM
-- **Session Management**: Connect-pg-simple for PostgreSQL session storage
-- **Development**: Hot reloading with Vite integration
+- **Session Management**: Connect-pg-simple
+- **Technical Implementations**: Abstracted storage interface, centralized route registration, comprehensive error handling middleware.
 
 ### Database Layer
-- **ORM**: Drizzle ORM for type-safe database operations
+- **ORM**: Drizzle ORM
 - **Database**: PostgreSQL (configured for Neon serverless)
-- **Migrations**: Drizzle Kit for schema management
-- **Schema**: Shared schema definitions between frontend and backend
+- **Migrations**: Drizzle Kit
+- **Schema**: Shared schema definitions between frontend and backend.
 
-## Key Components
-
-### Frontend Components
-- **Landing Page**: Complete marketing site with hero, features, pricing, testimonials
-- **UI Library**: Extensive component library with 40+ reusable components
-- **Responsive Design**: Mobile-first approach with Tailwind CSS
-- **Form Handling**: React Hook Form with Zod validation
-- **Toast Notifications**: Custom toast system for user feedback
-
-### Backend Services
-- **Storage Layer**: Abstracted storage interface with in-memory implementation
-- **User Management**: Basic user CRUD operations
-- **API Routes**: Centralized route registration system
-- **Error Handling**: Comprehensive error handling middleware
-
-### Shared Resources
-- **Schema Definitions**: Shared TypeScript types and Zod validation schemas
-- **Database Models**: User model with authentication fields
-
-## Data Flow
-
-1. **Client Requests**: Frontend makes API calls through TanStack Query
-2. **API Processing**: Express.js handles requests with proper error handling
-3. **Data Storage**: Drizzle ORM manages database operations
-4. **Response Handling**: Structured JSON responses with proper status codes
-5. **State Management**: React Query manages caching and synchronization
+### Feature Specifications
+- **Landing Page**: Marketing site with hero, features, pricing, and testimonials.
+- **User Management**: Basic CRUD operations for users.
+- **Payment Integration**: Structured to support payment gateway integration, with a focus on Indian market (UPI, card payments).
+- **SMS Notification System**: Twilio integration for payment and contact form confirmations.
+- **QuickBooks Integration**: OAuth2 authentication, bidirectional data sync for customers, items, invoices, and payments.
+- **Figma Integration**: API service for design system synchronization, component generation, and asset export.
+- **Aptitude Testing System**: AI-powered proctoring, multi-category tests (Frontend, Backend, Marketing, Business Analyst, Software Engineering Intern) with dual selection capability, and AI-powered CV upload for job applications.
 
 ## External Dependencies
 
-### Core Dependencies
 - **Database**: Neon PostgreSQL serverless database
-- **UI Framework**: Radix UI for accessible component primitives
-- **Styling**: Tailwind CSS for utility-first styling
-- **Forms**: React Hook Form with Hookform Resolvers
-- **Date Handling**: date-fns for date manipulation
-- **Development**: Replit-specific plugins for development environment
-
-### Payment Integration
-- Application is structured to support payment gateway integration
-- Current focus on Indian market with UPI and card payment support mentioned in UI
-
-## Deployment Strategy
-
-### Build Process
-- **Frontend**: Vite builds optimized static assets to `dist/public`
-- **Backend**: esbuild bundles server code to `dist/index.js`
-- **Database**: Drizzle migrations manage schema changes
-
-### Environment Configuration
-- **Development**: NODE_ENV=development with hot reloading
-- **Production**: NODE_ENV=production with optimized builds
-- **Database**: DATABASE_URL environment variable required
-
-### Hosting
-- Configured for Replit deployment with specialized plugins
-- Supports both development and production environments
-- Static asset serving integrated with Express.js
-
-## User Preferences
-
-Preferred communication style: Simple, everyday language.
-
-## Recent Changes
-
-- July 30, 2025: Streamlined application design and architecture
-  - Removed complex dashboard components and simplified navigation structure
-  - Cleaned up application to focus on landing page and contact functionality
-  - Maintained professional appearance with teal/emerald color scheme
-  - Simplified routing to home page only with external production links
-  - Removed internal dashboard routes and maintained external master-fees.com links
-
-- July 30, 2025: Implemented comprehensive dark teal/navy and mint green color palette transformation
-  - Updated Hero section: Dark teal/navy gradient background with mint green accent buttons and device glows
-  - Updated Navigation: Slate-900 background with emerald-400 hover states and mint green CTA button
-  - Updated Features section: Light gradient background with emerald-600 icons and emerald-themed animations
-  - Updated Testimonials: Dark teal gradient background with emerald/teal/cyan gradient icons and mint green button
-  - Updated Contact section: Light background with mint green form focus states and emerald submit button
-  - Updated Footer: Dark teal gradient background matching testimonials with emerald hover states
-  - Maintained Apple-style animations with updated color glows matching the new palette
-  - Applied consistent color theming: Dark sections use slate-900/slate-800/teal-900, Light sections use slate-50/white/slate-100
-  - All accent colors now use emerald-400/teal variations for cohesive brand identity
-
-- July 30, 2025: Transformed panda mascot from gaming to AI assistant functionality
-  - Replaced PandaGames component with comprehensive AIAssistant component
-  - Updated mascot messaging to focus on fee management support and assistance
-  - Changed emoji from panda (🐼) to robot (🤖) to reflect AI assistant role
-  - Implemented intelligent chatbot with predefined questions and contextual responses
-  - Added support for fee payments, account management, payment history, and platform guidance
-  - Maintained floating mascot design with speech bubbles and animations
-  - Created comprehensive AI assistant interface with message history, typing indicators, and quick questions
-
-- July 30, 2025: Implemented comprehensive real-time dashboard data synchronization
-  - Created live dashboard API endpoints fetching authentic system data
-  - Added automatic data refresh every 30 seconds with manual sync capability
-  - Updated all "Get Started" buttons to redirect to production dashboard at https://master-fees.com/
-  - Implemented real-time statistics showing student counts, payment amounts, and SMS activity
-  - Created demo payment data displaying ₹75K in transaction history for visualization
-  - Enhanced dashboard with QuickBooks connection status and live data monitoring
-  - Integrated contact form submissions tracking with real-time contact management
-
-- July 30, 2025: Implemented comprehensive SMS notification system using Twilio
-  - Added Twilio SMS service integration with complete credential management
-  - Integrated SMS confirmations for contact form submissions with user and admin notifications
-  - Implemented payment confirmation SMS with receipt details and transaction information
-  - Created SMS settings interface for managing notification preferences
-  - Added SMS templates for various scenarios: payments, reminders, welcome messages, contact confirmations
-  - Enhanced contact form and payment responses to include SMS confirmation status
-  - Built comprehensive SMS service with error handling and fallback capabilities
-
-- July 30, 2025: Implemented QuickBooks integration for advanced school financial data management
-  - Created comprehensive QuickBooks API service with OAuth2 authentication
-  - Built complete QuickBooks integration interface for connecting and managing school accounts
-  - Implemented bidirectional data sync for customers, items, invoices, and payments
-  - Added QuickBooks routes for creating customers, items, invoices, and payment records
-  - Created connection management system with status monitoring and disconnection capabilities
-  - Integrated QuickBooks data import/export functionality for seamless financial record management
-  - Built comprehensive dashboard showing sync status and financial data overview
-  - Enhanced school financial capabilities with professional accounting software integration
-  - Configured with production QuickBooks credentials for live OAuth2 authentication
-  - Deployed to production at https://master-fees.com/ with full integration capabilities
-
-- July 30, 2025: Implemented comprehensive Figma design system integration
-  - Created complete Figma API service with authentication and file access capabilities
-  - Built Figma integration dashboard tab with design import and component generation features
-  - Implemented design system synchronization for colors, typography, and component extraction
-  - Added React component generation from Figma nodes with automated code conversion
-  - Created asset export functionality supporting PNG/SVG formats at multiple scales
-  - Integrated Figma file import using file keys from Figma URLs
-  - Built comprehensive Figma integration interface with real-time connection testing
-  - Enhanced Master Fees with professional design workflow integration capabilities
-  - Configured with production Figma credentials for live API authentication
-  - User successfully deployed dashboard from Figma demonstrating full integration functionality
-  - Created comprehensive Figma integration system with code import capabilities
-  - Built dashboard asset management and code integration tools
-  - Enhanced project with professional design workflow integration
-
-- August 01, 2025: Enhanced careers section and updated contact information
-  - Added Software Engineering Intern position to job listings (5 total positions)
-  - Implemented smart CV upload functionality with AI-powered automatic form filling
-  - Created CV processing system that extracts information from uploaded documents
-  - Added professional CV upload interface with drag-and-drop support and file validation
-  - Integrated object storage for secure CV file handling (PDF, DOC, DOCX, 5MB limit)
-  - Updated all contact information to use masterfees101@gmail.com
-  - Added comprehensive phone number support: +260 976 813 373, +260 953 110 184, +260 772 530 093
-  - Enhanced footer with all contact numbers and updated email references
-  - Updated email notifications across all forms to use masterfees101@gmail.com
-
-- August 01, 2025: Implemented comprehensive aptitude testing system for developers
-  - Created separate frontend and backend developer aptitude tests with targeted questions
-  - Built AI-powered proctoring system with camera and microphone monitoring capabilities
-  - Implemented real-time behavior analysis including focus tracking and suspicious activity detection
-  - Added comprehensive test interface with timer, question navigation, and coding challenges
-  - Created admin-only results dashboard with detailed candidate analysis and scoring
-  - Integrated test performance metrics, AI integrity scores, and administrative review tools
-  - Added aptitude test link to footer navigation for easy candidate access
-  - Built complete test lifecycle from registration to admin approval/rejection
-  - Implemented secure test submission with AI analysis and automated scoring
-  - Created professional results interface with filtering, search, and candidate management
-
-- August 01, 2025: Enhanced aptitude testing system with multi-category support and dual selection capability
-  - Added comprehensive test categories: Frontend, Backend, Marketing, Business Analyst, Software Engineering Intern
-  - Implemented intelligent dual selection allowing multiple tests within same job category (Technical or Business)
-  - Created separate question sets for each category: Marketing (SEO, Social Media, Analytics), Business Analyst (Requirements, Stakeholder Management, Process Analysis)
-  - Added Software Engineering Intern questions covering programming fundamentals and development tools
-  - Built smart category validation preventing cross-category multiple selections (Technical + Business blocked)
-  - Enhanced registration form with visual test type cards showing icons and descriptions
-  - Implemented combined question flow for multi-test candidates with proper categorization
-  - Added category-specific badges and progress tracking throughout test experience
-  - Created comprehensive test result analysis supporting multiple test type submissions
-  - Enhanced admin dashboard to handle and display multi-category test results
-
-- August 01, 2025: Applied comprehensive Apple design system to aptitude testing and admin components
-  - Transformed aptitude test interface with Apple's signature design language: thin typography, rounded corners, gradient backgrounds
-  - Implemented dark teal/slate gradient backgrounds with glass-morphism cards and backdrop blur effects
-  - Created Apple-style authentication system for admin panel with secure login (Username: "Masterfees", Password: "Pandamanjs007")
-  - Applied refined spacing, typography hierarchy, and smooth transitions throughout both components
-  - Enhanced form elements with borderless inputs, soft focus states, and subtle animations
-  - Integrated gradient accent colors and icon-based visual hierarchy following Apple's design principles
-  - Built professional Apple-inspired statistics dashboard with rounded cards and gradient icons
-  - Added Apple-style navigation and interactive elements with hover states and smooth transitions
-  - Created cohesive visual experience matching Apple's clean, modern aesthetic across entire aptitude system
-
-- August 01, 2025: Fixed critical admin panel and aptitude test functionality issues
-  - Resolved admin panel white screen issue by rebuilding component with clean code structure
-  - Fixed aptitude test assessment area selection validation to prevent test startup without selection
-  - Removed duplicate code and syntax errors causing build failures
-  - Enhanced form validation with proper error handling for test type selection
-  - Integrated authentic database connections replacing all mock data
-  - Optimized API calls with proper async handling and error states
-  - Added Master Fees logo as website favicon for professional browser tab appearance
-
-## Changelog
-
-Changelog:
-- July 01, 2025. Initial setup
-- July 30, 2025. Removed dark mode, mascot features, and easter eggs; implemented new testimonials design
+- **UI Framework**: Radix UI
+- **Styling**: Tailwind CSS
+- **Forms**: React Hook Form
+- **Date Handling**: date-fns
+- **SMS Service**: Twilio
+- **Accounting Integration**: QuickBooks API
+- **Design Integration**: Figma API
