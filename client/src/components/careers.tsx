@@ -62,57 +62,14 @@ export default function Careers() {
   });
 
   const onSubmit = (data: JobApplicationForm) => {
+    // Validation passed, form will submit naturally to FormSubmit
     setIsSubmitting(true);
     
-    // Create a temporary form element for FormSubmit
-    const form = document.createElement('form');
-    form.action = 'https://formsubmit.co/el/ruyeje';
-    form.method = 'POST';
-    form.style.display = 'none';
-    
-    // Add all form fields as hidden inputs
-    const fields = [
-      ['Full Name', data.fullName],
-      ['Email Address', data.email], 
-      ['Phone Number', data.phone],
-      ['Position Applied For', data.position],
-      ['Experience Level', data.experience],
-      ['Education Background', data.education],
-      ['Skills & Technologies', data.skills],
-      ['Motivation', data.motivation],
-      ['Availability', data.availability],
-      ['Portfolio/LinkedIn', data.portfolio || ''],
-      ['Resume/CV Link', data.resume || ''],
-      ['_subject', 'New Job Application - Master Fees'],
-      ['_next', window.location.href],
-      ['_template', 'table'],
-      ['_captcha', 'false'],
-      ['_autoresponse', 'Thank you for your job application! We have received your submission and will review it shortly. We\'ll get back to you within 2-3 business days.']
-    ];
-    
-    fields.forEach(([name, value]) => {
-      if (value) {
-        const input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = name;
-        input.value = value;
-        form.appendChild(input);
-      }
-    });
-    
-    // Add form to page and submit
-    document.body.appendChild(form);
-    form.submit();
-    
-    // Show success message
+    // Show immediate feedback - actual submission handled by HTML form
     toast({
-      title: "Application Submitted!",
-      description: "Thank you for your interest. We'll review your application and get back to you soon.",
+      title: "Submitting Application...",
+      description: "Please wait while we process your application.",
     });
-    
-    // Clean up
-    reset();
-    setIsSubmitting(false);
   };
 
   // CV upload functionality removed - using link field only with FormSubmit
@@ -275,7 +232,17 @@ export default function Careers() {
             </p>
           </div>
           <div>
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            <form 
+              action="https://formsubmit.co/el/ruyeje" 
+              method="POST" 
+              onSubmit={handleSubmit(onSubmit)} 
+              className="space-y-6"
+            >
+              {/* FormSubmit Configuration */}
+              <input type="hidden" name="_subject" value="New Job Application - Master Fees" />
+              <input type="hidden" name="_template" value="table" />
+              <input type="hidden" name="_captcha" value="false" />
+              <input type="hidden" name="_autoresponse" value="Thank you for your job application! We have received your submission and will review it shortly. We'll get back to you within 2-3 business days." />
               {/* Personal Information */}
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
