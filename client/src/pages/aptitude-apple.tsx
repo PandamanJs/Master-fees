@@ -31,7 +31,11 @@ import {
   PieChart,
   MessageSquare,
   Target,
-  Rocket
+  Rocket,
+  Award,
+  Zap,
+  BarChart3,
+  Activity
 } from "lucide-react";
 import { candidateFormSchema, type CandidateForm } from "@shared/aptitude-schema";
 import { apiRequest } from "@/lib/queryClient";
@@ -83,6 +87,20 @@ export default function AppleAptitudeTest() {
   const [timeLeft, setTimeLeft] = useState(3600); // 60 minutes
   const [questions, setQuestions] = useState<any[]>([]);
   const [isMonitoring, setIsMonitoring] = useState(false);
+  const [performanceMetrics, setPerformanceMetrics] = useState({
+    correctAnswers: 0,
+    accuracy: 0,
+    timePerQuestion: 0,
+    confidenceScore: 0,
+    focusScore: 100
+  });
+  const [questionStartTime, setQuestionStartTime] = useState<number>(Date.now());
+  const [animatedValues, setAnimatedValues] = useState({
+    accuracy: 0,
+    timePerQuestion: 0,
+    confidenceScore: 0,
+    focusScore: 0
+  });
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const form = useForm<CandidateForm>({
@@ -105,6 +123,48 @@ export default function AppleAptitudeTest() {
       return () => clearInterval(timer);
     }
   }, [step, timeLeft]);
+
+  // Animate performance metrics with smooth transitions
+  useEffect(() => {
+    const animateMetric = (key: keyof typeof animatedValues, targetValue: number) => {
+      const startValue = animatedValues[key];
+      const diff = targetValue - startValue;
+      const duration = 1000; // 1 second animation
+      const steps = 60; // 60fps
+      const stepSize = diff / steps;
+      let currentStep = 0;
+
+      const animate = () => {
+        if (currentStep < steps) {
+          setAnimatedValues(prev => ({
+            ...prev,
+            [key]: startValue + (stepSize * currentStep)
+          }));
+          currentStep++;
+          requestAnimationFrame(animate);
+        } else {
+          setAnimatedValues(prev => ({
+            ...prev,
+            [key]: targetValue
+          }));
+        }
+      };
+      animate();
+    };
+
+    // Animate all metrics when they change
+    animateMetric('accuracy', performanceMetrics.accuracy);
+    animateMetric('timePerQuestion', performanceMetrics.timePerQuestion);
+    animateMetric('confidenceScore', performanceMetrics.confidenceScore);
+    animateMetric('focusScore', performanceMetrics.focusScore);
+  }, [performanceMetrics]);
+
+  // Start timer for each question
+  useEffect(() => {
+    if (step === 'test') {
+      setQuestionStartTime(Date.now());
+    }
+  }, [currentQuestion, step]);
 
   const submitRegistration = useMutation({
     mutationFn: async (data: CandidateForm) => {
@@ -140,6 +200,143 @@ export default function AppleAptitudeTest() {
     const secs = seconds % 60;
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
+
+  // Update performance metrics when answering questions
+  const updatePerformanceMetrics = (questionId: number, selectedAnswer: string) => {
+    const currentTime = Date.now();
+    const timeSpent = (currentTime - questionStartTime) / 1000;
+    const currentQuestion = questions.find(q => q.id === questionId);
+    
+    // Calculate if answer is correct (mock logic for now)
+    const isCorrect = currentQuestion?.correct === parseInt(selectedAnswer);
+    
+    setPerformanceMetrics(prev => {
+      const totalAnswered = Object.keys(answers).length + 1;
+      const newCorrectAnswers = prev.correctAnswers + (isCorrect ? 1 : 0);
+      const newAccuracy = (newCorrectAnswers / totalAnswered) * 100;
+      
+      // Calculate average time per question
+      const avgTimePerQuestion = (prev.timePerQuestion * (totalAnswered - 1) + timeSpent) / totalAnswered;
+      
+      // Calculate confidence score based on answer time (faster = more confident)
+      const confidenceScore = Math.max(20, Math.min(100, 100 - (timeSpent * 5)));
+      
+      // Update focus score (decreases if taking too long)
+      const focusScore = Math.max(50, prev.focusScore - (timeSpent > 30 ? 5 : 0));
+      
+      return {
+        correctAnswers: newCorrectAnswers,
+        accuracy: Math.round(newAccuracy),
+        timePerQuestion: Math.round(avgTimePerQuestion),
+        confidenceScore: Math.round(confidenceScore),
+        focusScore: Math.round(focusScore)
+      };
+    });
+  };
+
+  // Performance visualization component
+  const PerformanceVisualization = () => (
+    <div className="space-y-6">
+      <div className="text-center mb-6">
+        <h3 className="text-lg font-light text-white mb-2">Real-time Performance</h3>
+        <p className="text-sm text-slate-300">Live analytics of your assessment progress</p>
+      </div>
+      
+      <div className="grid grid-cols-2 gap-4">
+        {/* Accuracy */}
+        <div className="bg-white/10 backdrop-blur-xl rounded-2xl p-4 border border-white/20">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-8 h-8 bg-emerald-500/20 rounded-lg flex items-center justify-center">
+              <Target className="w-4 h-4 text-emerald-400" />
+            </div>
+            <div>
+              <p className="text-sm font-medium text-white">Accuracy</p>
+              <p className="text-xs text-slate-300">{animatedValues.accuracy.toFixed(0)}%</p>
+            </div>
+          </div>
+          <Progress 
+            value={animatedValues.accuracy} 
+            className="h-2 bg-white/10"
+          />
+        </div>
+
+        {/* Response Time */}
+        <div className="bg-white/10 backdrop-blur-xl rounded-2xl p-4 border border-white/20">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center">
+              <Zap className="w-4 h-4 text-blue-400" />
+            </div>
+            <div>
+              <p className="text-sm font-medium text-white">Avg. Time</p>
+              <p className="text-xs text-slate-300">{animatedValues.timePerQuestion.toFixed(0)}s</p>
+            </div>
+          </div>
+          <Progress 
+            value={Math.max(0, 100 - (animatedValues.timePerQuestion * 2))} 
+            className="h-2 bg-white/10"
+          />
+        </div>
+
+        {/* Confidence Score */}
+        <div className="bg-white/10 backdrop-blur-xl rounded-2xl p-4 border border-white/20">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-8 h-8 bg-purple-500/20 rounded-lg flex items-center justify-center">
+              <Award className="w-4 h-4 text-purple-400" />
+            </div>
+            <div>
+              <p className="text-sm font-medium text-white">Confidence</p>
+              <p className="text-xs text-slate-300">{animatedValues.confidenceScore.toFixed(0)}%</p>
+            </div>
+          </div>
+          <Progress 
+            value={animatedValues.confidenceScore} 
+            className="h-2 bg-white/10"
+          />
+        </div>
+
+        {/* Focus Score */}
+        <div className="bg-white/10 backdrop-blur-xl rounded-2xl p-4 border border-white/20">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-8 h-8 bg-orange-500/20 rounded-lg flex items-center justify-center">
+              <Activity className="w-4 h-4 text-orange-400" />
+            </div>
+            <div>
+              <p className="text-sm font-medium text-white">Focus</p>
+              <p className="text-xs text-slate-300">{animatedValues.focusScore.toFixed(0)}%</p>
+            </div>
+          </div>
+          <Progress 
+            value={animatedValues.focusScore} 
+            className="h-2 bg-white/10"
+          />
+        </div>
+      </div>
+
+      {/* Overall Progress */}
+      <div className="bg-white/10 backdrop-blur-xl rounded-2xl p-4 border border-white/20">
+        <div className="flex items-center gap-3 mb-3">
+          <div className="w-8 h-8 bg-teal-500/20 rounded-lg flex items-center justify-center">
+            <BarChart3 className="w-4 h-4 text-teal-400" />
+          </div>
+          <div className="flex-1">
+            <p className="text-sm font-medium text-white">Test Progress</p>
+            <p className="text-xs text-slate-300">
+              Question {currentQuestion + 1} of {questions.length}
+            </p>
+          </div>
+          <div className="text-right">
+            <p className="text-lg font-light text-white">
+              {Math.round(((currentQuestion + 1) / questions.length) * 100)}%
+            </p>
+          </div>
+        </div>
+        <Progress 
+          value={((currentQuestion + 1) / questions.length) * 100} 
+          className="h-3 bg-white/10"
+        />
+      </div>
+    </div>
+  );
 
   const handleTestTypeChange = (testType: string, checked: boolean) => {
     if (checked) {
@@ -419,6 +616,131 @@ export default function AppleAptitudeTest() {
     );
   }
 
+  // Test interface with real-time performance visualization
+  if (step === 'test' && questions.length > 0) {
+    const currentQ = questions[currentQuestion];
+    
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-teal-900 p-4">
+        <div className="max-w-7xl mx-auto flex gap-6">
+          {/* Main Test Area */}
+          <div className="flex-1 space-y-6">
+            {/* Header with Timer */}
+            <div className="bg-white/10 backdrop-blur-xl rounded-2xl p-6 border border-white/20">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h1 className="text-xl font-light text-white mb-1">Assessment in Progress</h1>
+                  <p className="text-sm text-slate-300">
+                    Question {currentQuestion + 1} of {questions.length}
+                  </p>
+                </div>
+                <div className="text-right">
+                  <div className="flex items-center gap-2 text-white mb-1">
+                    <Timer className="w-4 h-4" />
+                    <span className="text-lg font-mono">{formatTime(timeLeft)}</span>
+                  </div>
+                  <p className="text-xs text-slate-300">Time remaining</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Question Card */}
+            <Card className="border-0 bg-white/95 backdrop-blur-2xl shadow-2xl rounded-3xl overflow-hidden">
+              <CardContent className="p-8">
+                <div className="mb-6">
+                  <Badge className="mb-4" variant="secondary">
+                    {selectedTestTypes.map(type => testTypeConfigs[type as keyof typeof testTypeConfigs].category).join(', ')}
+                  </Badge>
+                  <h2 className="text-2xl font-light text-slate-900 mb-4 leading-relaxed">
+                    {currentQ.question}
+                  </h2>
+                </div>
+
+                <div className="space-y-3">
+                  {currentQ.options.map((option: string, index: number) => (
+                    <button
+                      key={index}
+                      onClick={() => {
+                        const answerId = index.toString();
+                        setAnswers(prev => ({ ...prev, [currentQ.id]: answerId }));
+                        updatePerformanceMetrics(currentQ.id, answerId);
+                        
+                        // Auto-advance to next question after brief delay
+                        setTimeout(() => {
+                          if (currentQuestion < questions.length - 1) {
+                            setCurrentQuestion(prev => prev + 1);
+                          } else {
+                            setStep('complete');
+                          }
+                        }, 800);
+                      }}
+                      className={`w-full p-4 text-left rounded-2xl border-2 transition-all duration-200 ${
+                        answers[currentQ.id] === index.toString()
+                          ? 'border-emerald-500 bg-emerald-50 text-emerald-900'
+                          : 'border-slate-200 bg-white hover:border-emerald-300 hover:bg-emerald-50/50'
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className={`w-8 h-8 rounded-full border-2 flex items-center justify-center text-sm font-medium ${
+                          answers[currentQ.id] === index.toString()
+                            ? 'border-emerald-500 bg-emerald-500 text-white'
+                            : 'border-slate-300 text-slate-600'
+                        }`}>
+                          {String.fromCharCode(65 + index)}
+                        </div>
+                        <span className="text-slate-900 font-light">{option}</span>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Performance Sidebar */}
+          <div className="w-80">
+            <PerformanceVisualization />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Completion screen
+  if (step === 'complete') {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-teal-900 flex items-center justify-center p-4">
+        <Card className="border-0 bg-white/95 backdrop-blur-2xl shadow-2xl rounded-3xl overflow-hidden max-w-2xl w-full">
+          <CardContent className="p-12 text-center">
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-3xl mb-8">
+              <Trophy className="w-10 h-10 text-white" />
+            </div>
+            <h2 className="text-3xl font-light text-slate-900 mb-4">Assessment Complete!</h2>
+            <p className="text-lg text-slate-600 font-light mb-8">
+              Thank you for completing the assessment. Your results are being processed.
+            </p>
+            
+            {/* Final Performance Summary */}
+            <div className="grid grid-cols-2 gap-4 mb-8">
+              <div className="bg-slate-50 rounded-2xl p-4">
+                <p className="text-2xl font-light text-slate-900">{performanceMetrics.accuracy}%</p>
+                <p className="text-sm text-slate-600">Final Accuracy</p>
+              </div>
+              <div className="bg-slate-50 rounded-2xl p-4">
+                <p className="text-2xl font-light text-slate-900">{performanceMetrics.correctAnswers}/{questions.length}</p>
+                <p className="text-sm text-slate-600">Correct Answers</p>
+              </div>
+            </div>
+            
+            <p className="text-sm text-slate-500">
+              Our team will review your submission and contact you within 48 hours.
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-teal-900 flex items-center justify-center p-4">
       <Card className="border-0 bg-white/95 backdrop-blur-2xl shadow-2xl rounded-3xl overflow-hidden">
@@ -427,7 +749,7 @@ export default function AppleAptitudeTest() {
             <Brain className="w-8 h-8 text-white" />
           </div>
           <h2 className="text-2xl font-light text-slate-900 mb-4">Assessment System</h2>
-          <p className="text-slate-600 font-light">Additional steps will be implemented as needed.</p>
+          <p className="text-slate-600 font-light">Loading assessment interface...</p>
         </CardContent>
       </Card>
     </div>
