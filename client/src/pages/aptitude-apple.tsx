@@ -108,11 +108,13 @@ export default function AppleAptitudeTest() {
 
   const submitRegistration = useMutation({
     mutationFn: async (data: CandidateForm) => {
-      return await apiRequest('/api/aptitude/register', {
+      const response = await fetch('/api/aptitude/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
       });
+      if (!response.ok) throw new Error('Registration failed');
+      return response.json();
     },
     onSuccess: (data: any) => {
       if (data?.questions) {
@@ -317,7 +319,7 @@ export default function AppleAptitudeTest() {
                     })}
                   </div>
 
-                  {form.formState.errors.testTypes && (
+                  {form.formState.errors.testTypes && selectedTestTypes.length === 0 && (
                     <p className="text-red-500 text-sm font-light">{form.formState.errors.testTypes.message}</p>
                   )}
                 </div>
