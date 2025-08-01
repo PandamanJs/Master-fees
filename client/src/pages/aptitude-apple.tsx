@@ -1,0 +1,319 @@
+import { useState, useEffect, useRef } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Progress } from "@/components/ui/progress";
+import { Badge } from "@/components/ui/badge";
+import { 
+  Brain, 
+  Monitor, 
+  Database, 
+  User, 
+  Mail, 
+  Phone,
+  Clock,
+  Timer,
+  Eye,
+  Camera,
+  Mic,
+  CheckCircle,
+  AlertTriangle,
+  Trophy,
+  TrendingUp,
+  Briefcase,
+  Code,
+  PieChart,
+  MessageSquare,
+  Target,
+  Rocket
+} from "lucide-react";
+import { candidateFormSchema, type CandidateForm } from "@shared/aptitude-schema";
+import { apiRequest } from "@/lib/queryClient";
+
+// Test configurations
+const testTypeConfigs = {
+  frontend: { 
+    label: "Frontend Developer", 
+    description: "React, TypeScript, UI/UX", 
+    icon: Monitor,
+    category: "Technical",
+    color: "from-blue-500 to-cyan-500"
+  },
+  backend: { 
+    label: "Backend Developer", 
+    description: "Node.js, APIs, Databases", 
+    icon: Database,
+    category: "Technical", 
+    color: "from-purple-500 to-violet-500"
+  },
+  marketing: { 
+    label: "Marketing Specialist", 
+    description: "SEO, Social Media, Analytics", 
+    icon: TrendingUp,
+    category: "Business",
+    color: "from-pink-500 to-rose-500"
+  },
+  business: { 
+    label: "Business Analyst", 
+    description: "Requirements, Process Analysis", 
+    icon: PieChart,
+    category: "Business",
+    color: "from-green-500 to-emerald-500"
+  },
+  intern: { 
+    label: "Software Engineering Intern", 
+    description: "Programming Fundamentals", 
+    icon: Code,
+    category: "Technical",
+    color: "from-orange-500 to-amber-500"
+  }
+};
+
+export default function AppleAptitudeTest() {
+  const [step, setStep] = useState<'registration' | 'instructions' | 'test' | 'complete'>('registration');
+  const [selectedTestTypes, setSelectedTestTypes] = useState<string[]>([]);
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [answers, setAnswers] = useState<Record<number, string>>({});
+  const [timeLeft, setTimeLeft] = useState(3600); // 60 minutes
+  const [questions, setQuestions] = useState<any[]>([]);
+  const [isMonitoring, setIsMonitoring] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const form = useForm<CandidateForm>({
+    resolver: zodResolver(candidateFormSchema),
+    defaultValues: {
+      fullName: '',
+      email: '',
+      phone: '',
+      experience: '',
+      testTypes: []
+    }
+  });
+
+  // Timer countdown
+  useEffect(() => {
+    if (step === 'test' && timeLeft > 0) {
+      const timer = setInterval(() => {
+        setTimeLeft(prev => prev - 1);
+      }, 1000);
+      return () => clearInterval(timer);
+    }
+  }, [step, timeLeft]);
+
+  const submitRegistration = useMutation({
+    mutationFn: (data: CandidateForm) => apiRequest('/api/aptitude/register', {
+      method: 'POST',
+      body: JSON.stringify(data)
+    }),
+    onSuccess: (data) => {
+      setQuestions(data.questions);
+      setStep('instructions');
+    }
+  });
+
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  };
+
+  const handleTestTypeChange = (testType: string, checked: boolean) => {
+    if (checked) {
+      const config = testTypeConfigs[testType as keyof typeof testTypeConfigs];
+      const currentCategories = selectedTestTypes.map(t => 
+        testTypeConfigs[t as keyof typeof testTypeConfigs].category
+      );
+      
+      if (currentCategories.length > 0 && !currentCategories.includes(config.category)) {
+        return; // Prevent cross-category selection
+      }
+      
+      setSelectedTestTypes(prev => [...prev, testType]);
+    } else {
+      setSelectedTestTypes(prev => prev.filter(t => t !== testType));
+    }
+  };
+
+  const onSubmit = (data: CandidateForm) => {
+    submitRegistration.mutate({ ...data, testTypes: selectedTestTypes });
+  };
+
+  if (step === 'registration') {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-teal-900 p-4">
+        <div className="max-w-4xl mx-auto pt-12">
+          {/* Hero Section */}
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-white/20 to-white/5 rounded-3xl backdrop-blur-xl border border-white/10 mb-8">
+              <Brain className="w-12 h-12 text-white" />
+            </div>
+            <h1 className="text-5xl font-thin text-white mb-4 tracking-tight">
+              Developer Assessment
+            </h1>
+            <p className="text-xl text-slate-300 font-light max-w-2xl mx-auto leading-relaxed">
+              Join our team through comprehensive technical and business evaluation
+            </p>
+          </div>
+
+          <Card className="border-0 bg-white/95 backdrop-blur-2xl shadow-2xl rounded-3xl overflow-hidden">
+            <CardHeader className="text-center pb-8 pt-12 px-12">
+              <CardTitle className="text-3xl font-light text-slate-900 mb-3">
+                Application Registration
+              </CardTitle>
+              <CardDescription className="text-lg text-slate-600 font-light">
+                Complete your profile to begin the assessment process
+              </CardDescription>
+            </CardHeader>
+            
+            <CardContent className="px-12 pb-12">
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10">
+                {/* Personal Information */}
+                <div className="space-y-8">
+                  <h3 className="text-xl font-light text-slate-900 border-b border-slate-200 pb-4">
+                    Personal Information
+                  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="space-y-3">
+                      <Label htmlFor="fullName" className="text-sm font-medium text-slate-800 flex items-center">
+                        <User className="w-4 h-4 mr-2 text-slate-500" />
+                        Full Name
+                      </Label>
+                      <Input
+                        id="fullName"
+                        {...form.register('fullName')}
+                        className="h-12 border-0 bg-slate-50 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-400/20 focus:ring-offset-0 transition-all duration-200"
+                        placeholder="Enter your full name"
+                      />
+                      {form.formState.errors.fullName && (
+                        <p className="text-red-500 text-sm font-light">{form.formState.errors.fullName.message}</p>
+                      )}
+                    </div>
+                  
+                    <div className="space-y-3">
+                      <Label htmlFor="email" className="text-sm font-medium text-slate-800 flex items-center">
+                        <Mail className="w-4 h-4 mr-2 text-slate-500" />
+                        Email Address
+                      </Label>
+                      <Input
+                        id="email"
+                        type="email"
+                        {...form.register('email')}
+                        className="h-12 border-0 bg-slate-50 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-400/20 focus:ring-offset-0 transition-all duration-200"
+                        placeholder="your@email.com"
+                      />
+                      {form.formState.errors.email && (
+                        <p className="text-red-500 text-sm font-light">{form.formState.errors.email.message}</p>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="space-y-3">
+                      <Label htmlFor="phone" className="text-sm font-medium text-slate-800 flex items-center">
+                        <Phone className="w-4 h-4 mr-2 text-slate-500" />
+                        Phone Number
+                      </Label>
+                      <Input
+                        id="phone"
+                        {...form.register('phone')}
+                        className="h-12 border-0 bg-slate-50 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-400/20 focus:ring-offset-0 transition-all duration-200"
+                        placeholder="+260 123 456 789"
+                      />
+                      {form.formState.errors.phone && (
+                        <p className="text-red-500 text-sm font-light">{form.formState.errors.phone.message}</p>
+                      )}
+                    </div>
+
+                    <div className="space-y-3">
+                      <Label htmlFor="experience" className="text-sm font-medium text-slate-800 flex items-center">
+                        <Briefcase className="w-4 h-4 mr-2 text-slate-500" />
+                        Experience Level
+                      </Label>
+                      <Input
+                        id="experience"
+                        {...form.register('experience')}
+                        className="h-12 border-0 bg-slate-50 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-400/20 focus:ring-offset-0 transition-all duration-200"
+                        placeholder="e.g., 2 years, Entry level"
+                      />
+                      {form.formState.errors.experience && (
+                        <p className="text-red-500 text-sm font-light">{form.formState.errors.experience.message}</p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Test Selection */}
+                <div className="space-y-8">
+                  <h3 className="text-xl font-light text-slate-900 border-b border-slate-200 pb-4">
+                    Select Assessment Areas
+                  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {Object.entries(testTypeConfigs).map(([testType, config]) => {
+                      const Icon = config.icon;
+                      const isSelected = selectedTestTypes.includes(testType);
+                      
+                      return (
+                        <div 
+                          key={testType} 
+                          className={`relative p-6 rounded-2xl border-2 transition-all duration-300 cursor-pointer ${
+                            isSelected 
+                              ? 'border-emerald-400 bg-emerald-50 shadow-lg' 
+                              : 'border-slate-200 bg-white hover:border-emerald-200 hover:bg-emerald-50/50'
+                          }`}
+                          onClick={() => handleTestTypeChange(testType, !isSelected)}
+                        >
+                          <div className="flex items-start space-x-4">
+                            <div className={`p-3 rounded-xl bg-gradient-to-r ${config.color} text-white`}>
+                              <Icon className="w-6 h-6" />
+                            </div>
+                            <div className="flex-1">
+                              <div className="flex items-center space-x-2 mb-2">
+                                <h4 className="font-medium text-slate-900">{config.label}</h4>
+                                <Badge variant="secondary" className="text-xs">
+                                  {config.category}
+                                </Badge>
+                              </div>
+                              <p className="text-sm text-slate-600 leading-relaxed">
+                                {config.description}
+                              </p>
+                            </div>
+                            <Checkbox 
+                              checked={isSelected}
+                              onChange={() => {}}
+                              className="mt-1"
+                            />
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  {form.formState.errors.testTypes && (
+                    <p className="text-red-500 text-sm font-light">{form.formState.errors.testTypes.message}</p>
+                  )}
+                </div>
+
+                <Button
+                  type="submit"
+                  className="w-full h-14 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-medium rounded-2xl transition-all duration-200 shadow-lg hover:shadow-xl"
+                  disabled={submitRegistration.isPending}
+                >
+                  <Rocket className="w-5 h-5 mr-2" />
+                  {submitRegistration.isPending ? "Preparing Assessment..." : "Begin Assessment"}
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    );
+  }
+
+  return <div>Other steps to be implemented...</div>;
+}

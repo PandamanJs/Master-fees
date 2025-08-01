@@ -143,19 +143,30 @@ export default function AdminAptitudeResults() {
   // Show login form if not authenticated
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center p-4">
-        <Card className="w-full max-w-md shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
-          <CardHeader className="text-center pb-8">
-            <div className="flex justify-center mb-4">
-              <div className="p-3 bg-emerald-100 rounded-full">
-                <Shield className="w-8 h-8 text-emerald-600" />
-              </div>
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-teal-900 flex items-center justify-center p-4">
+        {/* Apple-style login form */}
+        <div className="w-full max-w-md">
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-white/20 to-white/5 rounded-2xl backdrop-blur-xl border border-white/10 mb-6">
+              <Shield className="w-10 h-10 text-white" />
             </div>
-            <CardTitle className="text-2xl font-bold text-slate-800">Admin Login</CardTitle>
-            <CardDescription className="text-slate-600">
-              Access aptitude test results dashboard
-            </CardDescription>
-          </CardHeader>
+            <h1 className="text-3xl font-thin text-white mb-2 tracking-tight">
+              Admin Access
+            </h1>
+            <p className="text-slate-300 font-light">
+              Secure dashboard authentication
+            </p>
+          </div>
+
+          <Card className="border-0 bg-white/95 backdrop-blur-2xl shadow-2xl rounded-3xl overflow-hidden">
+            <CardHeader className="text-center pb-6 pt-10 px-8">
+              <CardTitle className="text-2xl font-light text-slate-900 mb-2">
+                Sign In
+              </CardTitle>
+              <CardDescription className="text-slate-600 font-light">
+                Enter your credentials to continue
+              </CardDescription>
+            </CardHeader>
           
           <CardContent>
             <form onSubmit={handleLogin} className="space-y-4">
@@ -218,28 +229,34 @@ export default function AdminAptitudeResults() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 py-8">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="mb-8">
-          <div className="flex justify-between items-center">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-teal-900">
+      {/* Apple-style header */}
+      <div className="relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent"></div>
+        <div className="relative max-w-7xl mx-auto px-8 pt-12 pb-8">
+          <div className="flex justify-between items-center mb-8">
             <div>
-              <h1 className="text-4xl font-bold text-slate-900 mb-4">
-                Aptitude Test Results
+              <h1 className="text-5xl font-thin text-white mb-3 tracking-tight">
+                Assessment Dashboard
               </h1>
-              <p className="text-lg text-slate-600">
-                Review and manage developer aptitude test submissions
+              <p className="text-xl text-slate-300 font-light">
+                Comprehensive candidate evaluation system
               </p>
             </div>
             <Button 
               onClick={handleLogout}
-              variant="outline"
-              className="flex items-center space-x-2 hover:bg-red-50 hover:border-red-200"
+              className="bg-white/10 hover:bg-white/20 border border-white/20 text-white backdrop-blur-sm rounded-full px-6 py-2 transition-all duration-200"
             >
-              <Lock className="w-4 h-4" />
-              <span>Logout</span>
+              <Lock className="w-4 h-4 mr-2" />
+              <span className="font-light">Sign Out</span>
             </Button>
           </div>
         </div>
+      </div>
+
+      {/* Main content area */}
+      <div className="max-w-7xl mx-auto px-8 pb-12">
+        <div className="mb-8">
 
         {/* Statistics */}
         <div className="grid grid-cols-2 md:grid-cols-6 gap-4 mb-8">

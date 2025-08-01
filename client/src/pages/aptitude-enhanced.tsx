@@ -605,42 +605,57 @@ export default function AptitudePage() {
 
   if (step === 'registration') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-4">
-        <div className="max-w-4xl mx-auto pt-8">
-          <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
-            <CardHeader className="text-center pb-8">
-              <div className="flex justify-center mb-4">
-                <div className="p-3 bg-emerald-100 rounded-full">
-                  <Brain className="w-8 h-8 text-emerald-600" />
-                </div>
-              </div>
-              <CardTitle className="text-3xl font-bold text-slate-800">Developer Aptitude Test</CardTitle>
-              <CardDescription className="text-lg text-slate-600 mt-2">
-                Register for comprehensive technical and business assessment
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-teal-900 p-4">
+        <div className="max-w-4xl mx-auto pt-12">
+          {/* Hero Section */}
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-white/20 to-white/5 rounded-3xl backdrop-blur-xl border border-white/10 mb-8">
+              <Brain className="w-12 h-12 text-white" />
+            </div>
+            <h1 className="text-5xl font-thin text-white mb-4 tracking-tight">
+              Developer Assessment
+            </h1>
+            <p className="text-xl text-slate-300 font-light max-w-2xl mx-auto leading-relaxed">
+              Join our team through comprehensive technical and business evaluation
+            </p>
+          </div>
+
+          <Card className="border-0 bg-white/95 backdrop-blur-2xl shadow-2xl rounded-3xl overflow-hidden">
+            <CardHeader className="text-center pb-8 pt-12 px-12">
+              <CardTitle className="text-3xl font-light text-slate-900 mb-3">
+                Application Registration
+              </CardTitle>
+              <CardDescription className="text-lg text-slate-600 font-light">
+                Complete your profile to begin the assessment process
               </CardDescription>
             </CardHeader>
             
-            <CardContent className="space-y-8">
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <CardContent className="px-12 pb-12">
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10">
                 {/* Personal Information */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="fullName" className="text-sm font-medium text-slate-700">
-                      <User className="w-4 h-4 inline mr-2" />
-                      Full Name
-                    </Label>
-                    <Input
-                      id="fullName"
-                      {...form.register('fullName')}
-                      className="border-slate-200 focus:border-emerald-400"
-                    />
-                    {form.formState.errors.fullName && (
-                      <p className="text-red-500 text-sm">{form.formState.errors.fullName.message}</p>
-                    )}
-                  </div>
+                <div className="space-y-8">
+                  <h3 className="text-xl font-light text-slate-900 border-b border-slate-200 pb-4">
+                    Personal Information
+                  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="space-y-3">
+                      <Label htmlFor="fullName" className="text-sm font-medium text-slate-800 flex items-center">
+                        <User className="w-4 h-4 mr-2 text-slate-500" />
+                        Full Name
+                      </Label>
+                      <Input
+                        id="fullName"
+                        {...form.register('fullName')}
+                        className="h-12 border-0 bg-slate-50 rounded-xl focus:bg-white focus:ring-2 focus:ring-emerald-400/20 focus:ring-offset-0 transition-all duration-200"
+                        placeholder="Enter your full name"
+                      />
+                      {form.formState.errors.fullName && (
+                        <p className="text-red-500 text-sm font-light">{form.formState.errors.fullName.message}</p>
+                      )}
+                    </div>
                   
-                  <div className="space-y-2">
-                    <Label htmlFor="email" className="text-sm font-medium text-slate-700">
+                    <div className="space-y-3">
+                      <Label htmlFor="email" className="text-sm font-medium text-slate-800 flex items-center">
                       <Mail className="w-4 h-4 inline mr-2" />
                       Email Address
                     </Label>
@@ -790,13 +805,28 @@ export default function AptitudePage() {
 
   if (step === 'instructions') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-4">
-        <div className="max-w-4xl mx-auto pt-8">
-          <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
-            <CardHeader className="text-center pb-6">
-              <CardTitle className="text-2xl font-bold text-slate-800">Test Instructions</CardTitle>
-              <CardDescription className="text-slate-600">
-                Please read carefully before starting your aptitude test
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-teal-900 p-4">
+        <div className="max-w-4xl mx-auto pt-12">
+          {/* Hero Section */}
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-white/20 to-white/5 rounded-2xl backdrop-blur-xl border border-white/10 mb-6">
+              <Timer className="w-10 h-10 text-white" />
+            </div>
+            <h1 className="text-4xl font-thin text-white mb-3 tracking-tight">
+              Assessment Instructions
+            </h1>
+            <p className="text-lg text-slate-300 font-light">
+              Please review the guidelines before beginning
+            </p>
+          </div>
+
+          <Card className="border-0 bg-white/95 backdrop-blur-2xl shadow-2xl rounded-3xl overflow-hidden">
+            <CardHeader className="text-center pb-8 pt-10 px-12">
+              <CardTitle className="text-2xl font-light text-slate-900 mb-3">
+                Ready to Begin
+              </CardTitle>
+              <CardDescription className="text-slate-600 font-light text-lg">
+                Your comprehensive assessment awaits
               </CardDescription>
             </CardHeader>
             
@@ -880,30 +910,30 @@ export default function AptitudePage() {
     const progress = ((currentQuestion) / questions.length) * 100;
 
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-4">
-        <div className="max-w-4xl mx-auto pt-4">
-          {/* Header with timer and progress */}
-          <div className="mb-6 p-4 bg-white/90 backdrop-blur-sm rounded-xl shadow-lg">
-            <div className="flex justify-between items-center mb-4">
-              <div className="flex items-center space-x-4">
-                <div className="flex items-center space-x-2">
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-teal-900 p-4">
+        <div className="max-w-4xl mx-auto pt-8">
+          {/* Apple-style Header with timer and progress */}
+          <div className="mb-8 p-6 bg-white/95 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/10">
+            <div className="flex justify-between items-center mb-6">
+              <div className="flex items-center space-x-6">
+                <div className="flex items-center space-x-3 px-4 py-2 bg-emerald-50 rounded-full">
                   <Timer className="w-5 h-5 text-emerald-600" />
-                  <span className="font-mono text-lg font-semibold text-slate-800">
+                  <span className="font-mono text-lg font-medium text-emerald-800">
                     {formatTime(timeLeft)}
                   </span>
                 </div>
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-3 px-4 py-2 bg-purple-50 rounded-full">
                   <Eye className="w-5 h-5 text-purple-600" />
-                  <span className="text-sm text-slate-600">AI Monitoring Active</span>
+                  <span className="text-sm font-medium text-purple-800">AI Monitoring</span>
                 </div>
               </div>
-              <div className="text-sm text-slate-600">
-                Question {currentQuestion + 1} of {questions.length}
+              <div className="text-sm font-medium text-slate-600 px-4 py-2 bg-slate-50 rounded-full">
+                {currentQuestion + 1} of {questions.length}
               </div>
             </div>
-            <div className="w-full bg-slate-200 rounded-full h-2">
+            <div className="w-full bg-slate-100 rounded-full h-3 overflow-hidden">
               <div 
-                className="bg-emerald-600 h-2 rounded-full transition-all duration-300"
+                className="bg-gradient-to-r from-emerald-500 to-teal-500 h-3 rounded-full transition-all duration-500 ease-out"
                 style={{ width: `${progress}%` }}
               ></div>
             </div>

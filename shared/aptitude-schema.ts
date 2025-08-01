@@ -53,3 +53,14 @@ export const aptitudeRegistrationSchema = z.object({
 });
 
 export type AptitudeRegistration = z.infer<typeof aptitudeRegistrationSchema>;
+
+// Enhanced multi-category form schema
+export const candidateFormSchema = z.object({
+  fullName: z.string().min(2, "Full name must be at least 2 characters"),
+  email: z.string().email("Please enter a valid email address"),
+  phone: z.string().min(10, "Please enter a valid phone number"),
+  experience: z.string().min(1, "Please specify your experience level"),
+  testTypes: z.array(z.string()).min(1, "Please select at least one test category"),
+});
+
+export type CandidateForm = z.infer<typeof candidateFormSchema>;
