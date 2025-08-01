@@ -38,7 +38,7 @@ Preferred communication style: Simple, everyday language.
 - **SMS Notification System**: Twilio integration for payment and contact form confirmations.
 - **QuickBooks Integration**: OAuth2 authentication, bidirectional data sync for customers, items, invoices, and payments.
 - **Figma Integration**: API service for design system synchronization, component generation, and asset export.
-- **Aptitude Testing System**: Clean, modern assessment platform with liquid glass design, multi-step registration, category selection (Frontend and Backend available, others coming soon), timed testing with multiple choice and coding questions, and comprehensive results display.
+- **Aptitude Testing System**: Advanced assessment platform with liquid glass design, adaptive difficulty scaling, real-time skill visualization, multi-step registration, category selection (Frontend and Backend available, others coming soon), timed testing with multiple choice and coding questions, performance tracking with accuracy/speed/confidence metrics, and comprehensive results display with skill assessment.
 
 ## External Dependencies
 

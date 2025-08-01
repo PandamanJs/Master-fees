@@ -30,7 +30,12 @@ import {
   ArrowLeft,
   ArrowRight,
   Play,
-  Pause
+  Pause,
+  BarChart3,
+  Activity,
+  Zap,
+  Target,
+  Award
 } from "lucide-react";
 import { candidateFormSchema, type CandidateForm } from "@shared/aptitude-schema";
 import { apiRequest } from "@/lib/queryClient";
@@ -68,6 +73,23 @@ const testCategories = {
   }
 };
 
+// Skill tracking and adaptive difficulty
+interface SkillMetrics {
+  accuracy: number;
+  speed: number;
+  difficulty: number;
+  confidence: number;
+  streak: number;
+}
+
+interface QuestionResult {
+  questionId: number;
+  isCorrect: boolean;
+  timeSpent: number;
+  difficulty: 'easy' | 'medium' | 'hard';
+  category: string;
+}
+
 export default function AppleAptitudeTest() {
   const [, navigate] = useLocation();
   const [step, setStep] = useState<'registration' | 'category' | 'instructions' | 'test' | 'results'>('registration');
@@ -77,6 +99,18 @@ export default function AppleAptitudeTest() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [questions, setQuestions] = useState<any[]>([]);
+  
+  // Adaptive difficulty and skill tracking
+  const [skillMetrics, setSkillMetrics] = useState<SkillMetrics>({
+    accuracy: 0,
+    speed: 0,
+    difficulty: 1, // Start at medium difficulty
+    confidence: 0,
+    streak: 0
+  });
+  const [questionResults, setQuestionResults] = useState<QuestionResult[]>([]);
+  const [questionStartTime, setQuestionStartTime] = useState<number>(Date.now());
+  const [currentDifficulty, setCurrentDifficulty] = useState<'easy' | 'medium' | 'hard'>('medium');
 
   const form = useForm<CandidateForm>({
     resolver: zodResolver(candidateFormSchema),
@@ -85,8 +119,7 @@ export default function AppleAptitudeTest() {
       email: '',
       phone: '',
       experience: '',
-      portfolio: '',
-      motivation: ''
+      testTypes: []
     }
   });
 
@@ -117,10 +150,7 @@ export default function AppleAptitudeTest() {
 
   const submitApplication = useMutation({
     mutationFn: async (data: CandidateForm & { category: string }) => {
-      return apiRequest('/api/aptitude-applications', {
-        method: 'POST',
-        body: JSON.stringify(data)
-      });
+      return apiRequest('/api/aptitude-applications', 'POST', data);
     },
     onSuccess: () => {
       setStep('category');
@@ -128,66 +158,221 @@ export default function AppleAptitudeTest() {
   });
 
   const onSubmitRegistration = (data: CandidateForm) => {
-    submitApplication.mutate({ ...data, category: selectedCategory });
+    submitApplication.mutate({ 
+      ...data, 
+      category: selectedCategory,
+      testTypes: [selectedCategory] 
+    });
   };
 
   const startTest = () => {
-    // Generate sample questions based on category
-    const sampleQuestions = generateQuestions(selectedCategory);
-    setQuestions(sampleQuestions);
+    // Generate initial questions at medium difficulty
+    const initialQuestions = generateQuestions(selectedCategory, 'medium');
+    setQuestions(initialQuestions);
     setIsTestActive(true);
+    setQuestionStartTime(Date.now());
     setStep('test');
   };
 
-  const generateQuestions = (category: string) => {
+  // Adaptive question generation based on current skill level
+  const generateQuestions = (category: string, difficulty: 'easy' | 'medium' | 'hard' = 'medium') => {
+    const questionPool = getQuestionPool(category);
+    const filteredQuestions = questionPool.filter(q => q.difficulty === difficulty);
+    return filteredQuestions.slice(0, 3); // Return 3 questions of current difficulty
+  };
+
+  const getQuestionPool = (category: string) => {
     if (category === 'frontend') {
       return [
+        // Easy questions
         {
           id: 1,
           type: 'multiple-choice',
+          difficulty: 'easy' as const,
+          question: 'Which HTML tag is used to create a hyperlink?',
+          options: ['<link>', '<a>', '<href>', '<url>'],
+          correctAnswer: 1
+        },
+        {
+          id: 2,
+          type: 'multiple-choice',
+          difficulty: 'easy' as const,
+          question: 'What does CSS stand for?',
+          options: ['Computer Style Sheets', 'Cascading Style Sheets', 'Creative Style Sheets', 'Colorful Style Sheets'],
+          correctAnswer: 1
+        },
+        // Medium questions
+        {
+          id: 3,
+          type: 'multiple-choice',
+          difficulty: 'medium' as const,
           question: 'What is the correct way to handle state in React functional components?',
           options: ['useState hook', 'this.setState', 'setState function', 'state property'],
           correctAnswer: 0
         },
         {
-          id: 2,
+          id: 4,
           type: 'multiple-choice',
+          difficulty: 'medium' as const,
           question: 'Which CSS property is used for creating flexible layouts?',
           options: ['display: block', 'display: flex', 'display: inline', 'display: table'],
           correctAnswer: 1
         },
+        // Hard questions
         {
-          id: 3,
+          id: 5,
+          type: 'multiple-choice',
+          difficulty: 'hard' as const,
+          question: 'What is the purpose of React.memo()?',
+          options: ['State management', 'Performance optimization', 'Event handling', 'Component lifecycle'],
+          correctAnswer: 1
+        },
+        {
+          id: 6,
           type: 'coding',
-          question: 'Write a function that takes an array of numbers and returns the sum:',
-          placeholder: 'function sumArray(numbers) {\n  // Your code here\n}'
+          difficulty: 'hard' as const,
+          question: 'Implement a custom React hook for debouncing:',
+          placeholder: 'function useDebounce(value, delay) {\n  // Your implementation here\n}'
         }
       ];
     } else if (category === 'backend') {
       return [
+        // Easy questions
         {
           id: 1,
           type: 'multiple-choice',
+          difficulty: 'easy' as const,
+          question: 'What does HTTP stand for?',
+          options: ['HyperText Transfer Protocol', 'High Tech Transfer Protocol', 'Home Tool Transfer Protocol', 'Host Transfer Text Protocol'],
+          correctAnswer: 0
+        },
+        {
+          id: 2,
+          type: 'multiple-choice',
+          difficulty: 'easy' as const,
+          question: 'Which method is used to read data in REST APIs?',
+          options: ['POST', 'GET', 'PUT', 'DELETE'],
+          correctAnswer: 1
+        },
+        // Medium questions
+        {
+          id: 3,
+          type: 'multiple-choice',
+          difficulty: 'medium' as const,
           question: 'What HTTP status code indicates a successful request?',
           options: ['404', '500', '200', '301'],
           correctAnswer: 2
         },
         {
-          id: 2,
+          id: 4,
           type: 'multiple-choice',
+          difficulty: 'medium' as const,
           question: 'Which database type is MongoDB?',
           options: ['Relational', 'NoSQL', 'Graph', 'Time-series'],
           correctAnswer: 1
         },
+        // Hard questions
         {
-          id: 3,
+          id: 5,
+          type: 'multiple-choice',
+          difficulty: 'hard' as const,
+          question: 'What is the CAP theorem in distributed systems?',
+          options: ['Consistency, Availability, Partition tolerance', 'Cache, API, Performance', 'Client, Application, Protocol', 'Create, Access, Process'],
+          correctAnswer: 0
+        },
+        {
+          id: 6,
           type: 'coding',
-          question: 'Create a simple Express.js route that returns JSON:',
-          placeholder: 'app.get("/api/users", (req, res) => {\n  // Your code here\n});'
+          difficulty: 'hard' as const,
+          question: 'Implement a rate limiter middleware for Express:',
+          placeholder: 'function rateLimiter(maxRequests, windowMs) {\n  // Your implementation here\n}'
         }
       ];
     }
     return [];
+  };
+
+  // Calculate skill metrics based on performance
+  const updateSkillMetrics = (questionResult: QuestionResult) => {
+    setQuestionResults(prev => [...prev, questionResult]);
+    
+    setSkillMetrics(prev => {
+      const allResults = [...questionResults, questionResult];
+      const totalQuestions = allResults.length;
+      
+      // Calculate accuracy
+      const correctAnswers = allResults.filter(r => r.isCorrect).length;
+      const accuracy = totalQuestions > 0 ? (correctAnswers / totalQuestions) * 100 : 0;
+      
+      // Calculate average speed (lower is better)
+      const avgTimeSpent = allResults.reduce((sum, r) => sum + r.timeSpent, 0) / totalQuestions;
+      const speed = Math.max(0, 100 - (avgTimeSpent / 1000) * 2); // Convert to 0-100 scale
+      
+      // Calculate streak
+      let currentStreak = 0;
+      for (let i = allResults.length - 1; i >= 0; i--) {
+        if (allResults[i].isCorrect) {
+          currentStreak++;
+        } else {
+          break;
+        }
+      }
+      
+      // Calculate confidence based on recent performance
+      const recentResults = allResults.slice(-3);
+      const recentAccuracy = recentResults.filter(r => r.isCorrect).length / Math.max(recentResults.length, 1);
+      const confidence = recentAccuracy * 100;
+      
+      // Adaptive difficulty adjustment
+      let newDifficulty = prev.difficulty;
+      if (accuracy > 80 && currentStreak >= 2) {
+        newDifficulty = Math.min(2, prev.difficulty + 0.2); // Increase difficulty
+      } else if (accuracy < 40 && currentStreak === 0) {
+        newDifficulty = Math.max(0, prev.difficulty - 0.2); // Decrease difficulty
+      }
+      
+      // Update current difficulty level
+      if (newDifficulty < 0.7) {
+        setCurrentDifficulty('easy');
+      } else if (newDifficulty > 1.3) {
+        setCurrentDifficulty('hard');
+      } else {
+        setCurrentDifficulty('medium');
+      }
+      
+      return {
+        accuracy: Math.round(accuracy),
+        speed: Math.round(speed),
+        difficulty: newDifficulty,
+        confidence: Math.round(confidence),
+        streak: currentStreak
+      };
+    });
+  };
+
+  // Handle answer submission with skill tracking
+  const handleAnswerSubmit = (questionId: number, answer: string) => {
+    const timeSpent = Date.now() - questionStartTime;
+    const question = questions[currentQuestion];
+    const isCorrect = question.type === 'multiple-choice' 
+      ? parseInt(answer) === question.correctAnswer
+      : answer.trim().length > 10; // Simple check for coding questions
+    
+    const result: QuestionResult = {
+      questionId,
+      isCorrect,
+      timeSpent,
+      difficulty: question.difficulty,
+      category: selectedCategory
+    };
+    
+    updateSkillMetrics(result);
+    
+    // Generate next questions based on updated difficulty
+    if (currentQuestion === questions.length - 1) {
+      const nextQuestions = generateQuestions(selectedCategory, currentDifficulty);
+      setQuestions(prev => [...prev, ...nextQuestions]);
+    }
   };
 
   if (step === 'registration') {
@@ -229,7 +414,7 @@ export default function AppleAptitudeTest() {
               </CardDescription>
             </CardHeader>
             <CardContent className="px-12 pb-12">
-              <form onSubmit={form.handleSubmit(onSubmitRegistration)} className="space-y-6">
+              <form onSubmit={form.handleSubmit((data) => onSubmitRegistration(data as CandidateForm))} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <Label htmlFor="fullName" className="text-slate-700 font-medium">Full Name</Label>
@@ -269,21 +454,11 @@ export default function AppleAptitudeTest() {
                   </div>
                 </div>
 
-                <div>
-                  <Label htmlFor="portfolio" className="text-slate-700 font-medium">Portfolio/LinkedIn URL</Label>
-                  <Input
-                    {...form.register("portfolio")}
-                    className="mt-2 h-12 liquid-glass-light"
-                    placeholder="https://portfolio.com or https://linkedin.com/in/username"
-                  />
-                </div>
-
-                <div>
-                  <Label htmlFor="motivation" className="text-slate-700 font-medium">Why do you want to join our team?</Label>
+                <div className="col-span-2">
+                  <Label htmlFor="additional-info" className="text-slate-700 font-medium">Additional Information (Optional)</Label>
                   <Textarea
-                    {...form.register("motivation")}
-                    className="mt-2 min-h-[120px] liquid-glass-light"
-                    placeholder="Tell us about your motivation and what you can bring to our team..."
+                    className="mt-2 min-h-[80px] liquid-glass-light"
+                    placeholder="Tell us about your experience, portfolio links, or why you want to join our team..."
                   />
                 </div>
 
@@ -446,9 +621,9 @@ export default function AppleAptitudeTest() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-teal-900 p-4">
         <div className="max-w-6xl mx-auto">
-          {/* Header with Timer */}
+          {/* Header with Timer and Skill Metrics */}
           <div className="liquid-glass-dark rounded-2xl p-6 mb-6">
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between mb-4">
               <div>
                 <h1 className="text-xl font-light text-white mb-1">Assessment in Progress</h1>
                 <p className="text-slate-300">Question {currentQuestion + 1} of {questions.length}</p>
@@ -458,16 +633,112 @@ export default function AppleAptitudeTest() {
                 <p className="text-slate-300 text-sm">Time Remaining</p>
               </div>
             </div>
-            <Progress value={progress} className="mt-4" />
+            
+            {/* Real-time Skill Visualization */}
+            <div className="grid grid-cols-4 gap-4 mb-4">
+              <div className="text-center">
+                <div className="flex items-center justify-center mb-2">
+                  <Target className="w-4 h-4 text-emerald-400 mr-1" />
+                  <span className="text-slate-300 text-sm">Accuracy</span>
+                </div>
+                <div className="text-lg font-semibold text-white">{skillMetrics.accuracy}%</div>
+                <div className="w-full bg-slate-700 rounded-full h-2">
+                  <div 
+                    className="bg-emerald-400 h-2 rounded-full transition-all duration-500"
+                    style={{ width: `${skillMetrics.accuracy}%` }}
+                  ></div>
+                </div>
+              </div>
+              
+              <div className="text-center">
+                <div className="flex items-center justify-center mb-2">
+                  <Zap className="w-4 h-4 text-yellow-400 mr-1" />
+                  <span className="text-slate-300 text-sm">Speed</span>
+                </div>
+                <div className="text-lg font-semibold text-white">{skillMetrics.speed}%</div>
+                <div className="w-full bg-slate-700 rounded-full h-2">
+                  <div 
+                    className="bg-yellow-400 h-2 rounded-full transition-all duration-500"
+                    style={{ width: `${skillMetrics.speed}%` }}
+                  ></div>
+                </div>
+              </div>
+              
+              <div className="text-center">
+                <div className="flex items-center justify-center mb-2">
+                  <BarChart3 className="w-4 h-4 text-blue-400 mr-1" />
+                  <span className="text-slate-300 text-sm">Confidence</span>
+                </div>
+                <div className="text-lg font-semibold text-white">{skillMetrics.confidence}%</div>
+                <div className="w-full bg-slate-700 rounded-full h-2">
+                  <div 
+                    className="bg-blue-400 h-2 rounded-full transition-all duration-500"
+                    style={{ width: `${skillMetrics.confidence}%` }}
+                  ></div>
+                </div>
+              </div>
+              
+              <div className="text-center">
+                <div className="flex items-center justify-center mb-2">
+                  <Activity className="w-4 h-4 text-purple-400 mr-1" />
+                  <span className="text-slate-300 text-sm">Streak</span>
+                </div>
+                <div className="text-lg font-semibold text-white">{skillMetrics.streak}</div>
+                <div className="flex justify-center space-x-1 mt-1">
+                  {[...Array(5)].map((_, i) => (
+                    <div
+                      key={i}
+                      className={`w-2 h-2 rounded-full ${
+                        i < skillMetrics.streak ? 'bg-purple-400' : 'bg-slate-600'
+                      } transition-colors duration-300`}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+            
+            {/* Difficulty Level Indicator */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <Badge 
+                  variant="outline" 
+                  className={`${
+                    currentDifficulty === 'easy' ? 'border-green-400 text-green-400' :
+                    currentDifficulty === 'medium' ? 'border-yellow-400 text-yellow-400' :
+                    'border-red-400 text-red-400'
+                  } bg-transparent`}
+                >
+                  {currentDifficulty.charAt(0).toUpperCase() + currentDifficulty.slice(1)} Level
+                </Badge>
+                <span className="text-slate-400 text-sm">
+                  {currentDifficulty === 'easy' && '🟢 Building confidence'}
+                  {currentDifficulty === 'medium' && '🟡 Steady progress'}
+                  {currentDifficulty === 'hard' && '🔴 Challenge mode'}
+                </span>
+              </div>
+              <Progress value={progress} className="w-1/3" />
+            </div>
           </div>
 
           {/* Question Card */}
           <Card className="border-0 liquid-glass-light shadow-2xl rounded-3xl">
             <CardContent className="p-8">
               <div className="mb-6">
-                <Badge className="mb-4" variant="secondary">
-                  {testCategories[selectedCategory as keyof typeof testCategories]?.label}
-                </Badge>
+                <div className="flex items-center justify-between mb-4">
+                  <Badge className="mb-0" variant="secondary">
+                    {testCategories[selectedCategory as keyof typeof testCategories]?.label}
+                  </Badge>
+                  <Badge 
+                    variant="outline"
+                    className={`${
+                      question?.difficulty === 'easy' ? 'border-green-500 text-green-600' :
+                      question?.difficulty === 'medium' ? 'border-yellow-500 text-yellow-600' :
+                      'border-red-500 text-red-600'
+                    }`}
+                  >
+                    {question?.difficulty?.charAt(0).toUpperCase() + question?.difficulty?.slice(1)}
+                  </Badge>
+                </div>
                 <h2 className="text-xl font-semibold text-slate-900 mb-4">
                   {question?.question}
                 </h2>
@@ -528,8 +799,13 @@ export default function AppleAptitudeTest() {
 
                 <Button
                   onClick={() => {
+                    // Submit current answer and update metrics
+                    const currentAnswer = answers[question.id] || '';
+                    handleAnswerSubmit(question.id, currentAnswer);
+                    
                     if (currentQuestion < questions.length - 1) {
                       setCurrentQuestion(prev => prev + 1);
+                      setQuestionStartTime(Date.now());
                     } else {
                       setStep('results');
                       setIsTestActive(false);
@@ -564,6 +840,50 @@ export default function AppleAptitudeTest() {
             </CardHeader>
             <CardContent className="px-12 pb-12 text-center">
               <div className="space-y-6">
+                {/* Final Skill Assessment */}
+                <div className="bg-slate-50 rounded-xl p-6 mb-6">
+                  <h3 className="font-semibold text-slate-900 mb-4">Your Performance Summary</h3>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-emerald-600">{skillMetrics.accuracy}%</div>
+                      <p className="text-sm text-slate-600">Accuracy</p>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-yellow-600">{skillMetrics.speed}%</div>
+                      <p className="text-sm text-slate-600">Speed</p>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-blue-600">{skillMetrics.confidence}%</div>
+                      <p className="text-sm text-slate-600">Confidence</p>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-purple-600">{skillMetrics.streak}</div>
+                      <p className="text-sm text-slate-600">Best Streak</p>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-4 p-4 bg-white rounded-lg">
+                    <div className="flex items-center justify-center space-x-2">
+                      {skillMetrics.accuracy >= 80 ? (
+                        <>
+                          <Award className="w-5 h-5 text-yellow-500" />
+                          <span className="font-semibold text-slate-900">Excellent Performance!</span>
+                        </>
+                      ) : skillMetrics.accuracy >= 60 ? (
+                        <>
+                          <CheckCircle className="w-5 h-5 text-green-500" />
+                          <span className="font-semibold text-slate-900">Good Performance!</span>
+                        </>
+                      ) : (
+                        <>
+                          <Target className="w-5 h-5 text-blue-500" />
+                          <span className="font-semibold text-slate-900">Room for Growth!</span>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                
                 <p className="text-slate-700 text-lg">
                   Your responses have been submitted successfully. Our team will review your assessment and contact you within 3-5 business days.
                 </p>
