@@ -84,27 +84,7 @@ export default function OnboardingPage() {
           </div>
         </div>
 
-        {/* Apple-style minimal feature indicators */}
-        <div className="mt-12 grid grid-cols-3 gap-6 text-center">
-          <div className="space-y-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl mx-auto flex items-center justify-center">
-              <CheckCircle className="w-4 h-4 text-white" />
-            </div>
-            <p className="text-slate-600 font-light text-sm">Secure</p>
-          </div>
-          <div className="space-y-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-2xl mx-auto flex items-center justify-center">
-              <Zap className="w-4 h-4 text-white" />
-            </div>
-            <p className="text-slate-600 font-light text-sm">Fast</p>
-          </div>
-          <div className="space-y-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl mx-auto flex items-center justify-center">
-              <Award className="w-4 h-4 text-white" />
-            </div>
-            <p className="text-slate-600 font-light text-sm">Reliable</p>
-          </div>
-        </div>
+        
       </div>
     </div>
   );
