@@ -64,7 +64,6 @@ export function ObjectUploader({
       restrictions: {
         maxNumberOfFiles,
         maxFileSize,
-        allowedFileTypes: maxFileSize === 5 * 1024 * 1024 ? ['.pdf', '.doc', '.docx'] : undefined,
       },
       autoProceed: false,
     })
@@ -74,7 +73,6 @@ export function ObjectUploader({
       })
       .on("complete", (result) => {
         onComplete?.(result);
-        setShowModal(false);
       })
   );
 

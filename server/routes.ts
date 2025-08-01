@@ -19,7 +19,10 @@ import { sendContactFormSMS, sendAdminNotificationSMS, sendPaymentConfirmationSM
 import { sendJobApplicationConfirmation, sendJobApplicationNotification } from "./job-application-email";
 import { sendJobApplicationSMS } from "./job-application-sms";
 import { quickbooksRouter } from "./quickbooks-routes";
-import { ObjectStorageService } from "./objectStorage";
+import {
+  ObjectStorageService,
+  ObjectNotFoundError,
+} from "./objectStorage";
 
 // Test question generator
 function generateTestQuestions(testTypes: string[]) {
@@ -477,7 +480,6 @@ router.post("/job-applications", async (req, res) => {
     // Store the job application
     const application = await storage.createJobApplication({
       ...applicationData,
-      appliedAt: new Date(),
       status: 'pending'
     });
 
@@ -513,6 +515,60 @@ router.post("/job-applications", async (req, res) => {
 
     res.status(201).json({ 
       message: "Thank you for your application! We'll review it and get back to you within 5 business days.",
+      applicationId: application.id
+    });
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return res.status(400).json({ error: error.errors });
+    }
+    console.error("Job application error:", error);
+    res.status(500).json({ error: "Failed to submit job application" });
+  }
+});
+
+// Basin integration - Apply endpoint
+router.post("/apply", async (req, res) => {
+  try {
+    const applicationData = jobApplicationSchema.parse(req.body);
+
+    // Store the job application
+    const application = await storage.createJobApplication({
+      ...applicationData,
+      status: 'pending'
+    });
+
+    // Send email notifications
+    try {
+      const emailPromises = [];
+      
+      // Send confirmation email to applicant
+      if (process.env.SENDGRID_API_KEY) {
+        emailPromises.push(
+          sendJobApplicationConfirmation(applicationData.email, applicationData.fullName, applicationData.position)
+        );
+
+        // Send notification to HR/Admin
+        emailPromises.push(
+          sendJobApplicationNotification('masterfees101@gmail.com', applicationData)
+        );
+      }
+
+      // Send SMS notification
+      const smsPromises = [];
+      if (process.env.TWILIO_ACCOUNT_SID && applicationData.phone) {
+        smsPromises.push(
+          sendJobApplicationSMS(applicationData.phone, applicationData.fullName, applicationData.position)
+        );
+      }
+
+      await Promise.all([...emailPromises, ...smsPromises]);
+    } catch (notificationError) {
+      console.error("Job application notification error:", notificationError);
+      // Continue even if notifications fail
+    }
+
+    res.status(201).json({ 
+      message: "Thank you for your internship application! We'll review it and get back to you within 2-3 business days.",
       applicationId: application.id
     });
   } catch (error) {

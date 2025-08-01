@@ -10,8 +10,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
-// Using FormSubmit for form submission instead of API mutations
-// ObjectUploader removed - using link field only with FormSubmit
+// Using Basin for form submission with CV upload support
+import { ObjectUploader } from "@/components/ObjectUploader";
+import type { UploadResult } from '@uppy/core';
+import { apiRequest } from "@/lib/queryClient";
 import { 
   Briefcase, 
   MapPin, 
@@ -47,7 +49,8 @@ type JobApplicationForm = z.infer<typeof jobApplicationSchema>;
 
 export default function Careers() {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  // CV upload state removed - using link field only
+  const [cvFile, setCvFile] = useState<string>("");
+  const [isProcessingCV, setIsProcessingCV] = useState(false);
   const { toast } = useToast();
 
   const {
@@ -61,18 +64,90 @@ export default function Careers() {
     resolver: zodResolver(jobApplicationSchema)
   });
 
-  const onSubmit = (data: JobApplicationForm) => {
-    // Validation passed, form will submit naturally to FormSubmit
+  const onSubmit = async (data: JobApplicationForm) => {
     setIsSubmitting(true);
     
-    // Show immediate feedback - actual submission handled by HTML form
-    toast({
-      title: "Submitting Application...",
-      description: "Please wait while we process your application.",
-    });
+    try {
+      // Submit to Basin API
+      const response = await fetch('/api/apply', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        toast({
+          title: "Application Submitted!",
+          description: "Thank you for your internship application. We'll review it and get back to you soon.",
+        });
+        reset();
+      } else {
+        throw new Error('Application submission failed');
+      }
+    } catch (error) {
+      console.error('Application submission error:', error);
+      toast({
+        title: "Application Failed",
+        description: "There was an error submitting your application. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
-  // CV upload functionality removed - using link field only with FormSubmit
+  const handleCVUpload = async () => {
+    return {
+      method: 'PUT' as const,
+      url: await apiRequest('/api/objects/upload', 'POST').then((res: any) => res.uploadURL),
+    };
+  };
+
+  const handleCVComplete = async (result: UploadResult<Record<string, unknown>, Record<string, unknown>>) => {
+    if (result.successful && result.successful.length > 0) {
+      const uploadedFile = result.successful[0];
+      const cvUrl = uploadedFile.uploadURL;
+      
+      setIsProcessingCV(true);
+      
+      try {
+        // Extract CV information and autofill form
+        const response: any = await apiRequest('/api/extract-cv-info', 'POST', { cvUrl });
+        
+        if (response.extractedInfo) {
+          const info = response.extractedInfo;
+          
+          // Autofill form fields
+          if (info.fullName) setValue('fullName', info.fullName);
+          if (info.email) setValue('email', info.email);
+          if (info.phone) setValue('phone', info.phone);
+          if (info.education) setValue('education', info.education);
+          if (info.skills) setValue('skills', info.skills);
+          if (info.experience && info.experience !== 'Not specified') {
+            setValue('experience', info.experience);
+          }
+          
+          setCvFile(cvUrl || '');
+          
+          toast({
+            title: "CV Processed Successfully!",
+            description: "Your CV has been uploaded and form fields have been automatically filled.",
+          });
+        }
+      } catch (error) {
+        console.error('CV processing error:', error);
+        setCvFile(cvUrl || ''); // Still save the CV URL even if parsing fails
+        toast({
+          title: "CV Uploaded",
+          description: "Your CV has been uploaded. Please fill in the form fields manually.",
+        });
+      } finally {
+        setIsProcessingCV(false);
+      }
+    }
+  };
 
   const openPositions = [
     {
@@ -224,16 +299,10 @@ export default function Careers() {
           </div>
           <div>
             <form 
-              action="https://formsubmit.co/el/ruyeje" 
-              method="POST" 
               onSubmit={handleSubmit(onSubmit)} 
               className="space-y-6"
+              encType="multipart/form-data"
             >
-              {/* FormSubmit Configuration */}
-              <input type="hidden" name="_subject" value="New Internship Application - Master Fees" />
-              <input type="hidden" name="_template" value="table" />
-              <input type="hidden" name="_captcha" value="false" />
-              <input type="hidden" name="_autoresponse" value="Thank you for your internship application! We have received your submission and will review it shortly. We'll get back to you within 2-3 business days." />
               {/* Personal Information */}
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
@@ -355,20 +424,49 @@ export default function Careers() {
                 </div>
               </div>
 
-              {/* Instructions for Resume */}
+              {/* Smart CV Upload Section */}
               <div className="space-y-4 p-6 ultra-glass-dark rounded-2xl border border-emerald-400/30">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="p-2 bg-emerald-400/20 rounded-full border border-emerald-400/30">
-                    <FileText className="w-5 h-5 text-emerald-400" />
+                    <Bot className="w-5 h-5 text-emerald-400" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-white">Resume/CV Instructions</h3>
-                    <p className="text-sm text-slate-300">Please provide a link to your resume in the field below</p>
+                    <h3 className="font-semibold text-white">Smart CV Upload</h3>
+                    <p className="text-sm text-slate-300">Upload your CV and we'll automatically fill out the form for you</p>
                   </div>
                 </div>
                 
+                <div className="flex flex-col sm:flex-row gap-4 items-start">
+                  <ObjectUploader
+                    maxNumberOfFiles={1}
+                    maxFileSize={5 * 1024 * 1024} // 5MB
+                    onGetUploadParameters={handleCVUpload}
+                    onComplete={handleCVComplete}
+                    buttonClassName="bg-emerald-600 hover:bg-emerald-700"
+                  >
+                    <div className="flex items-center gap-2">
+                      <Upload className="w-4 h-4" />
+                      {cvFile ? "CV Uploaded ✓" : "Upload CV/Resume"}
+                    </div>
+                  </ObjectUploader>
+                  
+                  {isProcessingCV && (
+                    <div className="flex items-center gap-2 text-emerald-600">
+                      <div className="animate-spin rounded-full h-4 w-4 border-2 border-emerald-600 border-t-transparent"></div>
+                      <span className="text-sm">Processing CV...</span>
+                    </div>
+                  )}
+                  
+                  {cvFile && !isProcessingCV && (
+                    <div className="flex items-center gap-2 text-emerald-600">
+                      <FileText className="w-4 h-4" />
+                      <span className="text-sm">CV processed successfully</span>
+                    </div>
+                  )}
+                </div>
+                
                 <p className="text-xs text-slate-400">
-                  Upload your resume to Google Drive, Dropbox, or another file sharing service and paste the shareable link in the Resume/CV Link field below.
+                  Supported formats: PDF, DOC, DOCX (max 5MB). Your CV will be securely processed to extract relevant information.
                 </p>
               </div>
 
