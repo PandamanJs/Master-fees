@@ -15,7 +15,7 @@ function Router() {
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/onboarding" component={Onboarding} />
-      <Route path="/aptitude" component={AppleAptitudeTest} />
+      <Route path="/aptitude-apple" component={AppleAptitudeTest} />
       <Route path="/admin/aptitude-results" component={AppleAdminPanel} />
       <Route component={NotFound} />
     </Switch>

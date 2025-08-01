@@ -572,7 +572,9 @@ app.post('/api/users', (req, res) => {
     // Clear any existing testTypes error
     form.clearErrors('testTypes');
     
-    // Store candidate data and proceed to instructions
+    // Generate questions based on selected test types and proceed
+    const sampleQuestions = generateSampleQuestions(selectedTestTypes);
+    setQuestions(sampleQuestions);
     setStep('instructions');
   };
 
