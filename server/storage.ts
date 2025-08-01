@@ -585,10 +585,6 @@ export class MemStorage implements IStorage {
     return true;
   }
 
-  async getStudentFeeById(id: number): Promise<StudentFee | null> {
-    return this.studentFees.get(id) || null;
-  }
-
   // Dashboard data methods
   async getUsers(): Promise<User[]> {
     return Array.from(this.users.values());
