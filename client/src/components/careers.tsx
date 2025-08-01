@@ -96,12 +96,12 @@ export default function Careers() {
   const handleCVUpload = async () => {
     return {
       method: 'PUT' as const,
-      url: await apiRequest('/api/objects/upload', 'POST').then(res => res.uploadURL),
+      url: await apiRequest('/api/objects/upload', 'POST').then((res: any) => res.uploadURL),
     };
   };
 
   const handleCVComplete = async (result: UploadResult<Record<string, unknown>, Record<string, unknown>>) => {
-    if (result.successful.length > 0) {
+    if (result.successful && result.successful.length > 0) {
       const uploadedFile = result.successful[0];
       const cvUrl = uploadedFile.uploadURL;
       
@@ -109,7 +109,7 @@ export default function Careers() {
       
       try {
         // Extract CV information and autofill form
-        const response = await apiRequest('/api/extract-cv-info', 'POST', { cvUrl });
+        const response: any = await apiRequest('/api/extract-cv-info', 'POST', { cvUrl });
         
         if (response.extractedInfo) {
           const info = response.extractedInfo;
@@ -124,7 +124,7 @@ export default function Careers() {
             setValue('experience', info.experience);
           }
           
-          setCvFile(cvUrl);
+          setCvFile(cvUrl || '');
           
           toast({
             title: "CV Processed Successfully!",
@@ -133,7 +133,7 @@ export default function Careers() {
         }
       } catch (error) {
         console.error('CV processing error:', error);
-        setCvFile(cvUrl); // Still save the CV URL even if parsing fails
+        setCvFile(cvUrl || ''); // Still save the CV URL even if parsing fails
         toast({
           title: "CV Uploaded",
           description: "Your CV has been uploaded. Please fill in the form fields manually.",
@@ -276,8 +276,8 @@ export default function Careers() {
                       {position.experience}
                     </div>
                   </div>
-                </CardHeader>
-                <CardContent>
+                </div>
+                <div>
                   <p className="text-slate-600 mb-4">{position.description}</p>
                   <Button 
                     variant="outline" 
@@ -287,8 +287,8 @@ export default function Careers() {
                   >
                     Apply for this position
                   </Button>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             ))}
           </div>
         </div>
