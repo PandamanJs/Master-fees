@@ -30,12 +30,19 @@ export function ContactForm() {
 
   const contactMutation = useMutation({
     mutationFn: async (data: ContactFormData) => {
-      const response = await fetch('/api/contact', {
+      // Submit to Basin form endpoint
+      const formData = new FormData();
+      
+      // Add all form fields to FormData
+      Object.entries(data).forEach(([key, value]) => {
+        if (value) {
+          formData.append(key, value);
+        }
+      });
+
+      const response = await fetch('https://usebasin.com/f/9b77c34dfc7e', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
+        body: formData,
       });
       
       if (!response.ok) {
@@ -46,6 +53,7 @@ export function ContactForm() {
     },
     onSuccess: () => {
       setIsSubmitted(true);
+      form.reset();
       toast({
         title: "Message Sent Successfully!",
         description: "Thank you for contacting us. We'll get back to you within 24 hours.",
