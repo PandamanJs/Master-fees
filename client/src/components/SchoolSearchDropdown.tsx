@@ -115,14 +115,36 @@ export function SchoolSearchDropdown({
                     </button>
                   ))}
                 </div>
-              ) : searchQuery ? (
+              ) : searchQuery && filteredSchools.length === 0 ? (
                 <div className="p-4 text-center text-slate-400">
                   <div className="text-sm">No schools found matching "{searchQuery}"</div>
-                  <div className="text-xs mt-1">Try searching by school name, city, or type (primary, secondary, university, etc.)</div>
+                  <div className="text-xs mt-1">You can still use this name or try a different search</div>
                 </div>
               ) : (
                 <div className="p-4 text-center text-slate-400 text-sm">
                   Search from 150+ schools across Zambia
+                </div>
+              )}
+              
+              {/* Manual entry option */}
+              {searchQuery && filteredSchools.length === 0 && (
+                <div className="p-3 border-t border-slate-600/20">
+                  <button
+                    onClick={() => handleSelectSchool(searchQuery)}
+                    className="w-full px-4 py-3 text-left hover:bg-slate-600/30 transition-colors duration-150 flex items-center justify-between group rounded-lg"
+                  >
+                    <div>
+                      <div className="text-emerald-300 text-sm font-medium">
+                        Use "{searchQuery}"
+                      </div>
+                      <div className="text-slate-400 text-xs">
+                        Enter manually (school not in database)
+                      </div>
+                    </div>
+                    <div className="text-emerald-400 text-xs px-2 py-1 bg-emerald-400/10 rounded">
+                      Custom
+                    </div>
+                  </button>
                 </div>
               )}
             </div>
@@ -131,7 +153,7 @@ export function SchoolSearchDropdown({
             {filteredSchools.length > 0 && (
               <div className="p-3 border-t border-slate-600/20 text-center">
                 <div className="text-xs text-slate-400">
-                  {filteredSchools.length} school{filteredSchools.length !== 1 ? 's' : ''} found
+                  {filteredSchools.length} school{filteredSchools.length !== 1 ? 's' : ''} found • Can't find yours? Just type the name and select "Custom"
                 </div>
               </div>
             )}
