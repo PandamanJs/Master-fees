@@ -388,7 +388,7 @@ export default function AppleAptitudeTest() {
         {/* Back Button */}
         <button
           onClick={() => navigate('/')}
-          className="absolute top-6 left-6 w-10 h-10 liquid-glass-light rounded-full shadow-lg hover:shadow-xl flex items-center justify-center transition-all duration-300 z-20"
+          className="absolute top-6 left-6 w-10 h-10 ultra-glass-light rounded-full shadow-lg hover:shadow-xl flex items-center justify-center transition-all duration-300 z-20"
         >
           <ArrowLeft className="w-4 h-4 text-slate-600" />
         </button>
@@ -420,7 +420,7 @@ export default function AppleAptitudeTest() {
                     <Label htmlFor="fullName" className="text-slate-700 font-medium">Full Name</Label>
                     <Input
                       {...form.register("fullName")}
-                      className="mt-2 h-12 liquid-glass-light"
+                      className="mt-2 h-12 ultra-glass-light"
                       placeholder="Your full name"
                     />
                   </div>
@@ -429,7 +429,7 @@ export default function AppleAptitudeTest() {
                     <Input
                       {...form.register("email")}
                       type="email"
-                      className="mt-2 h-12 liquid-glass-light"
+                      className="mt-2 h-12 ultra-glass-light"
                       placeholder="your.email@example.com"
                     />
                   </div>
@@ -440,7 +440,7 @@ export default function AppleAptitudeTest() {
                     <Label htmlFor="phone" className="text-slate-700 font-medium">Phone Number</Label>
                     <Input
                       {...form.register("phone")}
-                      className="mt-2 h-12 liquid-glass-light"
+                      className="mt-2 h-12 ultra-glass-light"
                       placeholder="+1 (555) 123-4567"
                     />
                   </div>
@@ -448,7 +448,7 @@ export default function AppleAptitudeTest() {
                     <Label htmlFor="experience" className="text-slate-700 font-medium">Years of Experience</Label>
                     <Input
                       {...form.register("experience")}
-                      className="mt-2 h-12 liquid-glass-light"
+                      className="mt-2 h-12 ultra-glass-light"
                       placeholder="e.g., 3 years"
                     />
                   </div>
@@ -457,7 +457,7 @@ export default function AppleAptitudeTest() {
                 <div className="col-span-2">
                   <Label htmlFor="additional-info" className="text-slate-700 font-medium">Additional Information (Optional)</Label>
                   <Textarea
-                    className="mt-2 min-h-[80px] liquid-glass-light"
+                    className="mt-2 min-h-[80px] ultra-glass-light"
                     placeholder="Tell us about your experience, portfolio links, or why you want to join our team..."
                   />
                 </div>
@@ -465,7 +465,7 @@ export default function AppleAptitudeTest() {
                 <Button
                   type="submit"
                   disabled={submitApplication.isPending}
-                  className="w-full h-14 liquid-glass-button text-white font-medium rounded-xl"
+                  className="w-full h-14 ultra-glass-dark text-white font-medium rounded-xl shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50"
                 >
                   {submitApplication.isPending ? 'Submitting...' : 'Continue to Assessment'}
                   <ArrowRight className="w-5 h-5 ml-2" />
@@ -503,7 +503,7 @@ export default function AppleAptitudeTest() {
               return (
                 <Card 
                   key={key}
-                  className={`border-0 liquid-glass-card cursor-pointer transition-all duration-300 ${
+                  className={`border-0 ultra-glass-light cursor-pointer transition-all duration-300 ${
                     selectedCategory === key ? 'ring-2 ring-teal-400' : ''
                   } ${!config.available ? 'opacity-50 cursor-not-allowed' : ''}`}
                   onClick={() => config.available && setSelectedCategory(key)}
@@ -538,7 +538,7 @@ export default function AppleAptitudeTest() {
             <div className="text-center">
               <Button
                 onClick={() => setStep('instructions')}
-                className="liquid-glass-button text-white px-8 py-4 text-lg"
+                className="ultra-glass-dark text-white px-8 py-4 text-lg shadow-lg shadow-teal-500/30 hover:shadow-teal-500/50"
               >
                 Continue to Instructions
                 <ArrowRight className="w-5 h-5 ml-2" />
@@ -554,7 +554,7 @@ export default function AppleAptitudeTest() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-teal-900 p-4 relative overflow-hidden">
         <div className="max-w-4xl mx-auto pt-12 relative z-10">
-          <Card className="border-0 liquid-glass-light shadow-2xl rounded-3xl">
+          <Card className="border-0 ultra-glass-light shadow-2xl rounded-3xl">
             <CardHeader className="text-center pb-8 pt-12">
               <CardTitle className="text-3xl font-light text-slate-900 mb-4">
                 Assessment Instructions
@@ -601,7 +601,7 @@ export default function AppleAptitudeTest() {
               <div className="mt-12 text-center">
                 <Button
                   onClick={startTest}
-                  className="liquid-glass-button text-white px-8 py-4 text-lg"
+                  className="ultra-glass-dark text-white px-8 py-4 text-lg shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50"
                 >
                   <Play className="w-5 h-5 mr-2" />
                   Start Assessment
