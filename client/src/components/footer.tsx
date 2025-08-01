@@ -48,6 +48,12 @@ export default function Footer() {
             >
               Contact
             </button>
+            <a 
+              href="/aptitude"
+              className="text-slate-300 hover:text-emerald-400 transition-colors duration-300 text-base font-light tracking-wide"
+            >
+              Aptitude Tests
+            </a>
           </div>
           
           {/* Right Side - Contact Info */}

@@ -5,12 +5,16 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { AIAssistant } from "@/components/ai-assistant";
 import Home from "@/pages/home";
+import AptitudePage from "@/pages/aptitude";
+import AdminAptitudeResults from "@/pages/admin/aptitude-results";
 import NotFound from "@/pages/not-found";
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
+      <Route path="/aptitude" component={AptitudePage} />
+      <Route path="/admin/aptitude-results" component={AdminAptitudeResults} />
       <Route component={NotFound} />
     </Switch>
   );

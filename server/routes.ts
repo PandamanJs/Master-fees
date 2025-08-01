@@ -482,6 +482,125 @@ router.post("/extract-cv-info", async (req, res) => {
   }
 });
 
+// Aptitude test routes
+router.post("/aptitude/register", async (req, res) => {
+  try {
+    const registrationData = req.body;
+    
+    // Validate registration data
+    if (!registrationData.fullName || !registrationData.email || !registrationData.testType) {
+      return res.status(400).json({ error: 'Missing required fields' });
+    }
+
+    res.status(200).json({ 
+      success: true,
+      message: 'Registration successful',
+      testId: `test_${Date.now()}`
+    });
+  } catch (error) {
+    console.error('Aptitude registration error:', error);
+    res.status(500).json({ error: 'Failed to register for test' });
+  }
+});
+
+router.post("/aptitude/submit", async (req, res) => {
+  try {
+    const testData = req.body;
+    
+    // Calculate scores
+    const questions = testData.questions || [];
+    const answers = testData.answers || {};
+    let correctAnswers = 0;
+    
+    questions.forEach((q: any) => {
+      if (answers[q.id] === q.correct) {
+        correctAnswers++;
+      }
+    });
+    
+    const score = questions.length > 0 ? Math.round((correctAnswers / questions.length) * 100) : 0;
+
+    // AI Analysis simulation
+    const aiAnalysis = {
+      behaviorScore: 85 + Math.floor(Math.random() * 15),
+      focusScore: 80 + Math.floor(Math.random() * 20),
+      suspiciousActivity: [],
+      overallIntegrity: 'high' as const
+    };
+
+    // Store test result - for now just return success
+    res.status(201).json({ 
+      success: true,
+      message: 'Test submitted successfully',
+      testId: `result_${Date.now()}`
+    });
+  } catch (error) {
+    console.error('Aptitude test submission error:', error);
+    res.status(500).json({ error: 'Failed to submit test' });
+  }
+});
+
+router.get("/aptitude/results", async (req, res) => {
+  try {
+    // Mock results for demo - in production would fetch from database
+    const mockResults = [
+      {
+        id: '1',
+        candidate: {
+          fullName: 'John Doe',
+          email: 'john.doe@example.com',
+          phone: '+260971234567',
+          experience: 'mid'
+        },
+        testType: 'frontend',
+        score: 85,
+        totalQuestions: 5,
+        correctAnswers: 4,
+        timeSpent: 1200,
+        codingScore: 75,
+        aiAnalysis: {
+          behaviorScore: 92,
+          focusScore: 88,
+          suspiciousActivity: [],
+          overallIntegrity: 'high'
+        },
+        submittedAt: new Date().toISOString(),
+        status: 'pending',
+        adminNotes: null
+      },
+      {
+        id: '2',
+        candidate: {
+          fullName: 'Jane Smith',
+          email: 'jane.smith@example.com',
+          phone: '+260971234568',
+          experience: 'senior'
+        },
+        testType: 'backend',
+        score: 92,
+        totalQuestions: 5,
+        correctAnswers: 5,
+        timeSpent: 900,
+        codingScore: 88,
+        aiAnalysis: {
+          behaviorScore: 95,
+          focusScore: 93,
+          suspiciousActivity: [],
+          overallIntegrity: 'high'
+        },
+        submittedAt: new Date().toISOString(),
+        status: 'approved',
+        adminNotes: 'Excellent candidate, strong technical skills'
+      }
+    ];
+    
+    res.json(mockResults);
+  } catch (error) {
+    console.error('Failed to fetch aptitude results:', error);
+    res.status(500).json({ error: 'Failed to fetch results' });
+  }
+});
+
 // Register QuickBooks routes
 router.use(quickbooksRouter);
 

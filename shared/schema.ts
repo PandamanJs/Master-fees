@@ -1,4 +1,4 @@
-import { pgTable, text, serial, integer, decimal, timestamp, boolean, uuid } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, integer, decimal, timestamp, boolean, uuid, jsonb } from "drizzle-orm/pg-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -201,6 +201,33 @@ export const insertJobApplicationSchema = createInsertSchema(jobApplications).om
   appliedAt: true,
 });
 
+// Aptitude Tests table
+export const aptitudeTests = pgTable("aptitude_tests", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  candidateName: text("candidate_name").notNull(),
+  candidateEmail: text("candidate_email").notNull(),
+  candidatePhone: text("candidate_phone").notNull(),
+  testType: text("test_type").notNull(), // 'frontend' | 'backend'
+  experience: text("experience").notNull(),
+  answers: jsonb("answers").notNull(),
+  codingAnswer: text("coding_answer"),
+  score: integer("score"),
+  timeSpent: integer("time_spent"),
+  aiAnalysis: jsonb("ai_analysis"),
+  status: text("status").default("pending"), // 'pending' | 'reviewed' | 'approved' | 'rejected'
+  adminNotes: text("admin_notes"),
+  submittedAt: timestamp("submitted_at").defaultNow(),
+});
+
+export const insertAptitudeTestSchema = createInsertSchema(aptitudeTests).omit({
+  id: true,
+  submittedAt: true,
+  score: true,
+  aiAnalysis: true,
+  status: true,
+  adminNotes: true,
+});
+
 // Types
 export type User = typeof users.$inferSelect;
 export type NewUser = z.infer<typeof insertUserSchema>;
@@ -222,6 +249,8 @@ export type ContactMessage = typeof contactMessages.$inferSelect;
 export type NewContactMessage = z.infer<typeof insertContactMessageSchema>;
 export type JobApplication = typeof jobApplications.$inferSelect;
 export type NewJobApplication = z.infer<typeof insertJobApplicationSchema>;
+export type AptitudeTest = typeof aptitudeTests.$inferSelect;
+export type NewAptitudeTest = z.infer<typeof insertAptitudeTestSchema>;
 
 // Auth schemas
 export const loginSchema = z.object({
