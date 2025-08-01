@@ -11,7 +11,8 @@ import {
   Users,
   Award,
   CheckCircle,
-  Zap
+  Zap,
+  ArrowLeft
 } from 'lucide-react';
 
 export default function OnboardingPage() {
@@ -27,7 +28,15 @@ export default function OnboardingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center px-4">
+    <div className="min-h-screen bg-white flex items-center justify-center px-4 relative">
+      {/* Back Button */}
+      <button
+        onClick={() => navigate('/')}
+        className="absolute top-6 left-6 w-10 h-10 bg-white/80 backdrop-blur-xl rounded-full border border-slate-200/50 shadow-lg hover:shadow-xl flex items-center justify-center transition-all duration-300 hover:bg-white/90"
+      >
+        <ArrowLeft className="w-4 h-4 text-slate-600" />
+      </button>
+
       <div className="w-full max-w-md">
         {/* Header Text with Apple-style typography */}
         <div className="text-center mb-12">
