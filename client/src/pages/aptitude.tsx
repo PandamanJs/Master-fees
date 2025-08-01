@@ -414,7 +414,7 @@ export default function AptitudePage() {
     }
     
     if (canSelectTestTypes(newTypes)) {
-      form.setValue('testTypes', newTypes);
+      form.setValue('testTypes', newTypes as any);
       setSelectedTestTypes(newTypes);
     } else {
       toast({
@@ -530,14 +530,15 @@ export default function AptitudePage() {
   };
 
   const handleSubmitTest = () => {
-    const questions = candidate?.testType === 'frontend' ? frontendQuestions : backendQuestions;
+    const primaryTestType = candidate?.testTypes?.[0] || 'frontend';
+    const questions = primaryTestType === 'frontend' ? frontendQuestions : backendQuestions;
     const testData = {
       candidate,
       answers,
       codingAnswer,
       questions,
       timeSpent: (30 * 60) - timeLeft,
-      testType: candidate?.testType,
+      testType: primaryTestType,
       timestamp: new Date().toISOString()
     };
     
@@ -550,7 +551,8 @@ export default function AptitudePage() {
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
-  const questions = candidate?.testType === 'frontend' ? frontendQuestions : backendQuestions;
+  const primaryTestType = candidate?.testTypes?.[0] || 'frontend';
+  const questions = primaryTestType === 'frontend' ? frontendQuestions : backendQuestions;
   const currentQ = questions[currentQuestion];
 
   if (step === 'registration') {
@@ -657,15 +659,15 @@ export default function AptitudePage() {
                 </div>
 
                 <div className="space-y-4">
-                  <Label>Select Test Type *</Label>
+                  <Label>Select Test Types *</Label>
                   <div className="grid md:grid-cols-2 gap-4">
                     <Card 
                       className={`cursor-pointer transition-all duration-200 ${
-                        form.watch('testType') === 'frontend' 
+                        selectedTestTypes.includes('frontend') 
                           ? 'border-emerald-500 bg-emerald-50' 
                           : 'border-slate-200 hover:border-emerald-300'
                       }`}
-                      onClick={() => form.setValue('testType', 'frontend')}
+                      onClick={() => handleTestTypeChange('frontend', !selectedTestTypes.includes('frontend'))}
                     >
                       <CardContent className="p-6 text-center">
                         <Monitor className="w-8 h-8 text-emerald-600 mx-auto mb-4" />
@@ -676,11 +678,11 @@ export default function AptitudePage() {
 
                     <Card 
                       className={`cursor-pointer transition-all duration-200 ${
-                        form.watch('testType') === 'backend' 
+                        selectedTestTypes.includes('backend') 
                           ? 'border-emerald-500 bg-emerald-50' 
                           : 'border-slate-200 hover:border-emerald-300'
                       }`}
-                      onClick={() => form.setValue('testType', 'backend')}
+                      onClick={() => handleTestTypeChange('backend', !selectedTestTypes.includes('backend'))}
                     >
                       <CardContent className="p-6 text-center">
                         <Database className="w-8 h-8 text-emerald-600 mx-auto mb-4" />
@@ -689,8 +691,8 @@ export default function AptitudePage() {
                       </CardContent>
                     </Card>
                   </div>
-                  {form.formState.errors.testType && (
-                    <p className="text-sm text-red-600">{form.formState.errors.testType.message}</p>
+                  {form.formState.errors.testTypes && (
+                    <p className="text-sm text-red-600">{form.formState.errors.testTypes.message}</p>
                   )}
                 </div>
 
@@ -718,7 +720,7 @@ export default function AptitudePage() {
               Test Instructions
             </h1>
             <p className="text-lg text-slate-600">
-              Please read carefully before starting your {candidate?.testType} developer test
+              Please read carefully before starting your {candidate?.testTypes?.[0]} developer test
             </p>
           </div>
 
@@ -763,7 +765,7 @@ export default function AptitudePage() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                {candidate?.testType === 'frontend' ? (
+                {candidate?.testTypes?.[0] === 'frontend' ? (
                   <div className="space-y-2">
                     <Badge variant="secondary">React & Hooks</Badge>
                     <Badge variant="secondary">JavaScript ES6+</Badge>
@@ -826,7 +828,7 @@ export default function AptitudePage() {
           <div className="flex justify-between items-center mb-8">
             <div>
               <h1 className="text-2xl font-bold text-slate-900">
-                {candidate?.testType === 'frontend' ? 'Frontend' : 'Backend'} Developer Test
+                {candidate?.testTypes?.[0] === 'frontend' ? 'Frontend' : 'Backend'} Developer Test
               </h1>
               <p className="text-slate-600">Question {currentQuestion + 1} of {questions.length + 1}</p>
             </div>
@@ -895,7 +897,7 @@ export default function AptitudePage() {
               <CardHeader>
                 <CardTitle className="text-xl">Coding Challenge</CardTitle>
                 <CardDescription>
-                  {candidate?.testType === 'frontend' 
+                  {candidate?.testTypes?.[0] === 'frontend' 
                     ? "Write a React component that displays a list of users with search functionality"
                     : "Write a Node.js function that validates and processes user registration data"
                   }
@@ -911,7 +913,7 @@ export default function AptitudePage() {
                     value={codingAnswer}
                     onChange={(e) => setCodingAnswer(e.target.value)}
                     placeholder={
-                      candidate?.testType === 'frontend'
+                      candidate?.testTypes?.[0] === 'frontend'
                         ? "// Example: Create a UserList component\nfunction UserList({ users }) {\n  // Your code here\n}"
                         : "// Example: Create a validateUser function\nfunction validateUser(userData) {\n  // Your code here\n}"
                     }
@@ -985,7 +987,7 @@ export default function AptitudePage() {
           </div>
 
           <p className="text-slate-600 mb-8">
-            Thank you for taking our {candidate?.testType} developer aptitude test. 
+            Thank you for taking our {candidate?.testTypes?.[0]} developer aptitude test. 
             We appreciate your time and effort.
           </p>
 
