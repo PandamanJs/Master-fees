@@ -11,8 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 // Using FormSubmit for form submission instead of API mutations
-import { ObjectUploader } from "@/components/ObjectUploader";
-import type { UploadResult } from '@uppy/core';
+// ObjectUploader removed - using link field only with FormSubmit
 import { 
   Briefcase, 
   MapPin, 
@@ -48,8 +47,7 @@ type JobApplicationForm = z.infer<typeof jobApplicationSchema>;
 
 export default function Careers() {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [cvFile, setCvFile] = useState<string>("");
-  const [isProcessingCV, setIsProcessingCV] = useState(false);
+  // CV upload state removed - using link field only
   const { toast } = useToast();
 
   const {
@@ -63,71 +61,61 @@ export default function Careers() {
     resolver: zodResolver(jobApplicationSchema)
   });
 
-  const onSubmit = async (data: JobApplicationForm) => {
+  const onSubmit = (data: JobApplicationForm) => {
     setIsSubmitting(true);
     
-    try {
-      // Create FormData for FormSubmit
-      const formData = new FormData();
-      
-      // Add all form fields with descriptive names for email
-      formData.append('Full Name', data.fullName);
-      formData.append('Email Address', data.email);
-      formData.append('Phone Number', data.phone);
-      formData.append('Position Applied For', data.position);
-      formData.append('Experience Level', data.experience);
-      formData.append('Education Background', data.education);
-      formData.append('Skills & Technologies', data.skills);
-      formData.append('Motivation', data.motivation);
-      formData.append('Availability', data.availability);
-      if (data.portfolio) formData.append('Portfolio/LinkedIn', data.portfolio);
-      if (cvFile || data.resume) formData.append('Resume/CV Link', cvFile || data.resume || '');
-      
-      // Submit to FormSubmit using the provided endpoint
-      const response = await fetch('https://formsubmit.co/el/ruyeje', {
-        method: 'POST',
-        body: formData
-      });
-      
-      if (response.ok) {
-        toast({
-          title: "Application Submitted!",
-          description: "Thank you for your interest. We'll review your application and get back to you soon.",
-        });
-        reset();
-        setCvFile("");
-      } else {
-        throw new Error('Form submission failed');
+    // Create a temporary form element for FormSubmit
+    const form = document.createElement('form');
+    form.action = 'https://formsubmit.co/el/ruyeje';
+    form.method = 'POST';
+    form.style.display = 'none';
+    
+    // Add all form fields as hidden inputs
+    const fields = [
+      ['Full Name', data.fullName],
+      ['Email Address', data.email], 
+      ['Phone Number', data.phone],
+      ['Position Applied For', data.position],
+      ['Experience Level', data.experience],
+      ['Education Background', data.education],
+      ['Skills & Technologies', data.skills],
+      ['Motivation', data.motivation],
+      ['Availability', data.availability],
+      ['Portfolio/LinkedIn', data.portfolio || ''],
+      ['Resume/CV Link', data.resume || ''],
+      ['_subject', 'New Job Application - Master Fees'],
+      ['_next', window.location.href],
+      ['_template', 'table'],
+      ['_captcha', 'false'],
+      ['_autoresponse', 'Thank you for your job application! We have received your submission and will review it shortly. We\'ll get back to you within 2-3 business days.']
+    ];
+    
+    fields.forEach(([name, value]) => {
+      if (value) {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = name;
+        input.value = value;
+        form.appendChild(input);
       }
-    } catch (error) {
-      console.error('Form submission error:', error);
-      toast({
-        title: "Application Failed",
-        description: "There was an error submitting your application. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
+    });
+    
+    // Add form to page and submit
+    document.body.appendChild(form);
+    form.submit();
+    
+    // Show success message
+    toast({
+      title: "Application Submitted!",
+      description: "Thank you for your interest. We'll review your application and get back to you soon.",
+    });
+    
+    // Clean up
+    reset();
+    setIsSubmitting(false);
   };
 
-  // CV upload functionality disabled - using form fields only with FormSubmit
-  const handleCVUpload = async () => {
-    toast({
-      title: "CV Upload Not Available",
-      description: "Please use the Resume/CV Link field below to provide a link to your resume.",
-      variant: "destructive",
-    });
-    return null;
-  };
-
-  const handleCVComplete = async (result: UploadResult<Record<string, unknown>, Record<string, unknown>>) => {
-    // CV processing not available with FormSubmit - users should use link field
-    toast({
-      title: "Please Use Link Field",
-      description: "Please provide your resume link in the Resume/CV Link field below.",
-    });
-  };
+  // CV upload functionality removed - using link field only with FormSubmit
 
   const openPositions = [
     {
@@ -288,12 +276,6 @@ export default function Careers() {
           </div>
           <div>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-              {/* FormSubmit Configuration Fields */}
-              <input type="hidden" name="_subject" value="New Job Application - Master Fees" />
-              <input type="hidden" name="_next" value={window.location.href} />
-              <input type="hidden" name="_template" value="table" />
-              <input type="hidden" name="_captcha" value="false" />
-              <input type="hidden" name="_autoresponse" value="Thank you for your job application! We have received your submission and will review it shortly. We'll get back to you within 2-3 business days." />
               {/* Personal Information */}
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
@@ -415,49 +397,20 @@ export default function Careers() {
                 </div>
               </div>
 
-              {/* CV Upload Section */}
+              {/* Instructions for Resume */}
               <div className="space-y-4 p-6 ultra-glass-dark rounded-2xl border border-emerald-400/30">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="p-2 bg-emerald-400/20 rounded-full border border-emerald-400/30">
-                    <Bot className="w-5 h-5 text-emerald-400" />
+                    <FileText className="w-5 h-5 text-emerald-400" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-white">Smart CV Upload</h3>
-                    <p className="text-sm text-slate-300">Upload your CV and we'll automatically fill out the form for you</p>
+                    <h3 className="font-semibold text-white">Resume/CV Instructions</h3>
+                    <p className="text-sm text-slate-300">Please provide a link to your resume in the field below</p>
                   </div>
-                </div>
-                
-                <div className="flex flex-col sm:flex-row gap-4 items-start">
-                  <ObjectUploader
-                    maxNumberOfFiles={1}
-                    maxFileSize={5 * 1024 * 1024} // 5MB
-                    onGetUploadParameters={handleCVUpload}
-                    onComplete={handleCVComplete}
-                    buttonClassName="bg-emerald-600 hover:bg-emerald-700"
-                  >
-                    <div className="flex items-center gap-2">
-                      <Upload className="w-4 h-4" />
-                      {cvFile ? "CV Uploaded ✓" : "Upload CV/Resume"}
-                    </div>
-                  </ObjectUploader>
-                  
-                  {isProcessingCV && (
-                    <div className="flex items-center gap-2 text-emerald-600">
-                      <div className="animate-spin rounded-full h-4 w-4 border-2 border-emerald-600 border-t-transparent"></div>
-                      <span className="text-sm">Processing CV...</span>
-                    </div>
-                  )}
-                  
-                  {cvFile && !isProcessingCV && (
-                    <div className="flex items-center gap-2 text-emerald-600">
-                      <FileText className="w-4 h-4" />
-                      <span className="text-sm">CV processed successfully</span>
-                    </div>
-                  )}
                 </div>
                 
                 <p className="text-xs text-slate-400">
-                  Supported formats: PDF, DOC, DOCX (max 5MB). Your CV will be securely processed to extract relevant information.
+                  Upload your resume to Google Drive, Dropbox, or another file sharing service and paste the shareable link in the Resume/CV Link field below.
                 </p>
               </div>
 
