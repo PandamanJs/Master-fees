@@ -17,7 +17,7 @@ export default function Navigation() {
   };
 
   return (
-    <nav className="ultra-glass-dark sticky top-0 z-50 transition-all duration-500 border-b border-slate-700/30 shadow-2xl">
+    <nav className="sticky top-0 z-50 transition-all duration-500">
       <div className="max-w-8xl mx-auto px-12 lg:px-16">
         <div className="flex justify-between items-center h-20">
           {/* Apple-style Logo */}
