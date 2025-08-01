@@ -557,33 +557,42 @@ export default function AptitudePage() {
 
   if (step === 'registration') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 py-12">
-        <div className="max-w-2xl mx-auto px-6">
-          <div className="text-center mb-8">
-            <div className="inline-flex items-center gap-2 bg-emerald-50 text-emerald-700 px-4 py-2 rounded-full text-sm font-medium mb-6">
-              <Brain className="w-4 h-4" />
-              Developer Aptitude Test
-            </div>
-            <h1 className="text-4xl font-bold text-slate-900 mb-4">
-              Test Your <span className="text-emerald-600">Development Skills</span>
-            </h1>
-            <p className="text-lg text-slate-600">
-              Take our comprehensive aptitude test designed for frontend and backend developers
-            </p>
-          </div>
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-teal-900 relative overflow-hidden">
+        {/* Liquid Glass Background Elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 ultra-glass-dark rounded-full opacity-15 animate-float"></div>
+          <div className="absolute bottom-1/3 right-1/4 w-64 h-64 ultra-glass-dark rounded-full opacity-10 animate-float delay-1000"></div>
+          <div className="absolute top-2/3 left-1/3 w-48 h-48 ultra-glass-dark rounded-full opacity-12 animate-float delay-500"></div>
+          <div className="absolute top-10 right-10 w-32 h-32 ultra-glass-light rounded-full opacity-8 animate-float delay-2000"></div>
+        </div>
 
-          <Card className="border-0 shadow-lg">
-            <CardHeader>
-              <CardTitle>Register for Test</CardTitle>
-              <CardDescription>
-                Please provide your information to begin the aptitude test
-              </CardDescription>
-            </CardHeader>
+        <div className="relative z-10 py-12">
+          <div className="max-w-2xl mx-auto px-6">
+            <div className="text-center mb-8">
+              <div className="inline-flex items-center gap-2 ultra-glass-light border border-emerald-400/30 text-emerald-300 px-6 py-3 rounded-full text-sm font-medium mb-6 backdrop-blur-xl shadow-lg">
+                <Brain className="w-4 h-4" />
+                Developer Aptitude Test
+              </div>
+              <h1 className="text-4xl font-bold text-white mb-4">
+                Test Your <span className="text-emerald-400">Development Skills</span>
+              </h1>
+              <p className="text-lg text-slate-300">
+                Take our comprehensive aptitude test designed for frontend and backend developers
+              </p>
+            </div>
+
+            <Card className="border-0 ultra-glass-light backdrop-blur-xl shadow-2xl border border-slate-600/20">
+              <CardHeader className="border-b border-slate-600/20">
+                <CardTitle className="text-white text-xl">Register for Test</CardTitle>
+                <CardDescription className="text-slate-400">
+                  Please provide your information to begin the aptitude test
+                </CardDescription>
+              </CardHeader>
             <CardContent>
               <form onSubmit={form.handleSubmit((data) => submitRegistration.mutate(data))} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <Label htmlFor="fullName" className="flex items-center gap-2">
+                    <Label htmlFor="fullName" className="flex items-center gap-2 text-slate-200">
                       <User className="w-4 h-4" />
                       Full Name *
                     </Label>
@@ -591,15 +600,15 @@ export default function AptitudePage() {
                       id="fullName"
                       {...form.register("fullName")}
                       placeholder="Enter your full name"
-                      className="border-slate-200 focus:border-emerald-500"
+                      className="border-0 bg-slate-700/50 backdrop-blur-sm text-white placeholder:text-slate-400 focus:bg-slate-600/50 focus:ring-2 focus:ring-emerald-400/30 rounded-xl"
                     />
                     {form.formState.errors.fullName && (
-                      <p className="text-sm text-red-600">{form.formState.errors.fullName.message}</p>
+                      <p className="text-sm text-red-400">{form.formState.errors.fullName.message}</p>
                     )}
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="email" className="flex items-center gap-2">
+                    <Label htmlFor="email" className="flex items-center gap-2 text-slate-200">
                       <Mail className="w-4 h-4" />
                       Email Address *
                     </Label>
@@ -608,17 +617,17 @@ export default function AptitudePage() {
                       type="email"
                       {...form.register("email")}
                       placeholder="your.email@example.com"
-                      className="border-slate-200 focus:border-emerald-500"
+                      className="border-0 bg-slate-700/50 backdrop-blur-sm text-white placeholder:text-slate-400 focus:bg-slate-600/50 focus:ring-2 focus:ring-emerald-400/30 rounded-xl"
                     />
                     {form.formState.errors.email && (
-                      <p className="text-sm text-red-600">{form.formState.errors.email.message}</p>
+                      <p className="text-sm text-red-400">{form.formState.errors.email.message}</p>
                     )}
                   </div>
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <Label htmlFor="phone" className="flex items-center gap-2">
+                    <Label htmlFor="phone" className="flex items-center gap-2 text-slate-200">
                       <Phone className="w-4 h-4" />
                       Phone Number *
                     </Label>
@@ -626,86 +635,87 @@ export default function AptitudePage() {
                       id="phone"
                       {...form.register("phone")}
                       placeholder="+260 XXX XXX XXX"
-                      className="border-slate-200 focus:border-emerald-500"
+                      className="border-0 bg-slate-700/50 backdrop-blur-sm text-white placeholder:text-slate-400 focus:bg-slate-600/50 focus:ring-2 focus:ring-emerald-400/30 rounded-xl"
                     />
                     {form.formState.errors.phone && (
-                      <p className="text-sm text-red-600">{form.formState.errors.phone.message}</p>
+                      <p className="text-sm text-red-400">{form.formState.errors.phone.message}</p>
                     )}
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="experience">Experience Level *</Label>
+                    <Label htmlFor="experience" className="text-slate-200">Experience Level *</Label>
                     <RadioGroup
                       onValueChange={(value) => form.setValue('experience', value)}
                       className="flex flex-col space-y-2"
                     >
                       <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="junior" id="junior" />
-                        <Label htmlFor="junior">Junior (0-2 years)</Label>
+                        <RadioGroupItem value="junior" id="junior" className="border-slate-500 text-emerald-400" />
+                        <Label htmlFor="junior" className="text-slate-300">Junior (0-2 years)</Label>
                       </div>
                       <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="mid" id="mid" />
-                        <Label htmlFor="mid">Mid-level (2-5 years)</Label>
+                        <RadioGroupItem value="mid" id="mid" className="border-slate-500 text-emerald-400" />
+                        <Label htmlFor="mid" className="text-slate-300">Mid-level (2-5 years)</Label>
                       </div>
                       <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="senior" id="senior" />
-                        <Label htmlFor="senior">Senior (5+ years)</Label>
+                        <RadioGroupItem value="senior" id="senior" className="border-slate-500 text-emerald-400" />
+                        <Label htmlFor="senior" className="text-slate-300">Senior (5+ years)</Label>
                       </div>
                     </RadioGroup>
                     {form.formState.errors.experience && (
-                      <p className="text-sm text-red-600">{form.formState.errors.experience.message}</p>
+                      <p className="text-sm text-red-400">{form.formState.errors.experience.message}</p>
                     )}
                   </div>
                 </div>
 
                 <div className="space-y-4">
-                  <Label>Select Test Types *</Label>
+                  <Label className="text-slate-200">Select Test Types *</Label>
                   <div className="grid md:grid-cols-2 gap-4">
                     <Card 
-                      className={`cursor-pointer transition-all duration-200 ${
+                      className={`cursor-pointer transition-all duration-200 border-0 ultra-glass-light backdrop-blur-sm shadow-lg ${
                         selectedTestTypes.includes('frontend') 
-                          ? 'border-emerald-500 bg-emerald-50' 
-                          : 'border-slate-200 hover:border-emerald-300'
+                          ? 'border-emerald-400/50 bg-emerald-500/20' 
+                          : 'border-slate-600/20 hover:border-emerald-400/30'
                       }`}
                       onClick={() => handleTestTypeChange('frontend', !selectedTestTypes.includes('frontend'))}
                     >
                       <CardContent className="p-6 text-center">
-                        <Monitor className="w-8 h-8 text-emerald-600 mx-auto mb-4" />
-                        <h3 className="font-semibold text-slate-900 mb-2">Frontend Developer</h3>
-                        <p className="text-sm text-slate-600">React, JavaScript, CSS, HTML, TypeScript</p>
+                        <Monitor className="w-8 h-8 text-emerald-400 mx-auto mb-4" />
+                        <h3 className="font-semibold text-white mb-2">Frontend Developer</h3>
+                        <p className="text-sm text-slate-300">React, JavaScript, CSS, HTML, TypeScript</p>
                       </CardContent>
                     </Card>
 
                     <Card 
-                      className={`cursor-pointer transition-all duration-200 ${
+                      className={`cursor-pointer transition-all duration-200 border-0 ultra-glass-light backdrop-blur-sm shadow-lg ${
                         selectedTestTypes.includes('backend') 
-                          ? 'border-emerald-500 bg-emerald-50' 
-                          : 'border-slate-200 hover:border-emerald-300'
+                          ? 'border-emerald-400/50 bg-emerald-500/20' 
+                          : 'border-slate-600/20 hover:border-emerald-400/30'
                       }`}
                       onClick={() => handleTestTypeChange('backend', !selectedTestTypes.includes('backend'))}
                     >
                       <CardContent className="p-6 text-center">
-                        <Database className="w-8 h-8 text-emerald-600 mx-auto mb-4" />
-                        <h3 className="font-semibold text-slate-900 mb-2">Backend Developer</h3>
-                        <p className="text-sm text-slate-600">Node.js, APIs, Databases, Security</p>
+                        <Database className="w-8 h-8 text-emerald-400 mx-auto mb-4" />
+                        <h3 className="font-semibold text-white mb-2">Backend Developer</h3>
+                        <p className="text-sm text-slate-300">Node.js, APIs, Databases, Security</p>
                       </CardContent>
                     </Card>
                   </div>
                   {form.formState.errors.testTypes && (
-                    <p className="text-sm text-red-600">{form.formState.errors.testTypes.message}</p>
+                    <p className="text-sm text-red-400">{form.formState.errors.testTypes.message}</p>
                   )}
                 </div>
 
                 <Button
                   type="submit"
                   disabled={submitRegistration.isPending}
-                  className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 text-lg font-semibold"
+                  className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white py-3 text-lg font-semibold shadow-lg backdrop-blur-sm border-0 rounded-xl"
                 >
                   {submitRegistration.isPending ? "Registering..." : "Register for Test"}
                 </Button>
               </form>
             </CardContent>
           </Card>
+          </div>
         </div>
       </div>
     );
@@ -713,90 +723,97 @@ export default function AptitudePage() {
 
   if (step === 'instructions') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 py-12">
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-teal-900 relative overflow-hidden">
+        {/* Liquid Glass Background Elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 right-1/4 w-96 h-96 ultra-glass-dark rounded-full opacity-15 animate-float"></div>
+          <div className="absolute bottom-1/3 left-1/4 w-64 h-64 ultra-glass-dark rounded-full opacity-10 animate-float delay-1000"></div>
+        </div>
+
+        <div className="relative z-10 py-12">
         <div className="max-w-4xl mx-auto px-6">
           <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-slate-900 mb-4">
+            <h1 className="text-4xl font-bold text-white mb-4">
               Test Instructions
             </h1>
-            <p className="text-lg text-slate-600">
+            <p className="text-lg text-slate-300">
               Please read carefully before starting your {candidate?.testTypes?.[0]} developer test
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-6 mb-8">
-            <Card className="border-0 shadow-lg">
+            <Card className="border-0 ultra-glass-light backdrop-blur-xl shadow-2xl border border-slate-600/20">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <AlertCircle className="w-5 h-5 text-amber-600" />
+                <CardTitle className="flex items-center gap-2 text-white">
+                  <AlertCircle className="w-5 h-5 text-amber-400" />
                   Important Rules
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
                 <div className="flex items-start gap-3">
-                  <Timer className="w-5 h-5 text-emerald-600 mt-0.5" />
+                  <Timer className="w-5 h-5 text-emerald-400 mt-0.5" />
                   <div>
-                    <h4 className="font-semibold">Time Limit</h4>
-                    <p className="text-sm text-slate-600">30 minutes to complete all questions</p>
+                    <h4 className="font-semibold text-white">Time Limit</h4>
+                    <p className="text-sm text-slate-300">30 minutes to complete all questions</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <Eye className="w-5 h-5 text-emerald-600 mt-0.5" />
+                  <Eye className="w-5 h-5 text-emerald-400 mt-0.5" />
                   <div>
-                    <h4 className="font-semibold">AI Monitoring</h4>
-                    <p className="text-sm text-slate-600">Camera and microphone will monitor for integrity</p>
+                    <h4 className="font-semibold text-white">AI Monitoring</h4>
+                    <p className="text-sm text-slate-300">Camera and microphone will monitor for integrity</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <Code2 className="w-5 h-5 text-emerald-600 mt-0.5" />
+                  <Code2 className="w-5 h-5 text-emerald-400 mt-0.5" />
                   <div>
-                    <h4 className="font-semibold">Question Types</h4>
-                    <p className="text-sm text-slate-600">Multiple choice + 1 coding problem</p>
+                    <h4 className="font-semibold text-white">Question Types</h4>
+                    <p className="text-sm text-slate-300">Multiple choice + 1 coding problem</p>
                   </div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="border-0 shadow-lg">
+            <Card className="border-0 ultra-glass-light backdrop-blur-xl shadow-2xl border border-slate-600/20">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <CheckCircle className="w-5 h-5 text-emerald-600" />
+                <CardTitle className="flex items-center gap-2 text-white">
+                  <CheckCircle className="w-5 h-5 text-emerald-400" />
                   Test Coverage
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 {candidate?.testTypes?.[0] === 'frontend' ? (
                   <div className="space-y-2">
-                    <Badge variant="secondary">React & Hooks</Badge>
-                    <Badge variant="secondary">JavaScript ES6+</Badge>
-                    <Badge variant="secondary">CSS & Flexbox</Badge>
-                    <Badge variant="secondary">HTML5</Badge>
-                    <Badge variant="secondary">TypeScript</Badge>
+                    <Badge className="bg-emerald-500/20 text-emerald-300 border-emerald-400/30">React & Hooks</Badge>
+                    <Badge className="bg-emerald-500/20 text-emerald-300 border-emerald-400/30">JavaScript ES6+</Badge>
+                    <Badge className="bg-emerald-500/20 text-emerald-300 border-emerald-400/30">CSS & Flexbox</Badge>
+                    <Badge className="bg-emerald-500/20 text-emerald-300 border-emerald-400/30">HTML5</Badge>
+                    <Badge className="bg-emerald-500/20 text-emerald-300 border-emerald-400/30">TypeScript</Badge>
                   </div>
                 ) : (
                   <div className="space-y-2">
-                    <Badge variant="secondary">Node.js & Express</Badge>
-                    <Badge variant="secondary">REST APIs</Badge>
-                    <Badge variant="secondary">Database Design</Badge>
-                    <Badge variant="secondary">Security</Badge>
-                    <Badge variant="secondary">HTTP Protocols</Badge>
+                    <Badge className="bg-emerald-500/20 text-emerald-300 border-emerald-400/30">Node.js & Express</Badge>
+                    <Badge className="bg-emerald-500/20 text-emerald-300 border-emerald-400/30">REST APIs</Badge>
+                    <Badge className="bg-emerald-500/20 text-emerald-300 border-emerald-400/30">Database Design</Badge>
+                    <Badge className="bg-emerald-500/20 text-emerald-300 border-emerald-400/30">Security</Badge>
+                    <Badge className="bg-emerald-500/20 text-emerald-300 border-emerald-400/30">HTTP Protocols</Badge>
                   </div>
                 )}
               </CardContent>
             </Card>
           </div>
 
-          <Card className="border-0 shadow-lg mb-8">
+          <Card className="border-0 ultra-glass-light backdrop-blur-xl shadow-2xl border border-slate-600/20 mb-8">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Camera className="w-5 h-5 text-blue-600" />
+              <CardTitle className="flex items-center gap-2 text-white">
+                <Camera className="w-5 h-5 text-blue-400" />
                 AI Proctoring System
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                <h4 className="font-semibold text-blue-900 mb-2">Monitoring Features:</h4>
-                <ul className="text-sm text-blue-800 space-y-1">
+              <div className="bg-blue-500/10 border border-blue-400/30 rounded-lg p-4 backdrop-blur-sm">
+                <h4 className="font-semibold text-blue-300 mb-2">Monitoring Features:</h4>
+                <ul className="text-sm text-blue-200 space-y-1">
                   <li>• Face detection to ensure you remain in frame</li>
                   <li>• Eye tracking to monitor focus and attention</li>
                   <li>• Audio monitoring for suspicious activity</li>
@@ -810,11 +827,12 @@ export default function AptitudePage() {
           <div className="text-center">
             <Button
               onClick={startTest}
-              className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3 text-lg font-semibold"
+              className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white px-8 py-3 text-lg font-semibold shadow-lg backdrop-blur-sm border-0 rounded-xl"
             >
               I Understand - Start Test
             </Button>
           </div>
+        </div>
         </div>
       </div>
     );
@@ -822,40 +840,47 @@ export default function AptitudePage() {
 
   if (step === 'test') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 py-8">
-        <div className="max-w-4xl mx-auto px-6">
-          {/* Test Header */}
-          <div className="flex justify-between items-center mb-8">
-            <div>
-              <h1 className="text-2xl font-bold text-slate-900">
-                {candidate?.testTypes?.[0] === 'frontend' ? 'Frontend' : 'Backend'} Developer Test
-              </h1>
-              <p className="text-slate-600">Question {currentQuestion + 1} of {questions.length + 1}</p>
-            </div>
-            <div className="flex items-center gap-4">
-              {isMonitoring && (
-                <div className="flex items-center gap-2 text-emerald-600">
-                  <div className="w-2 h-2 bg-emerald-600 rounded-full animate-pulse"></div>
-                  <span className="text-sm">AI Monitoring Active</span>
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-teal-900 relative overflow-hidden">
+        {/* Liquid Glass Background Elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-80 h-80 ultra-glass-dark rounded-full opacity-15 animate-float"></div>
+          <div className="absolute bottom-1/3 right-1/4 w-64 h-64 ultra-glass-dark rounded-full opacity-10 animate-float delay-1000"></div>
+        </div>
+
+        <div className="relative z-10 py-8">
+          <div className="max-w-4xl mx-auto px-6">
+            {/* Test Header */}
+            <div className="flex justify-between items-center mb-8">
+              <div>
+                <h1 className="text-2xl font-bold text-white">
+                  {candidate?.testTypes?.[0] === 'frontend' ? 'Frontend' : 'Backend'} Developer Test
+                </h1>
+                <p className="text-slate-300">Question {currentQuestion + 1} of {questions.length + 1}</p>
+              </div>
+              <div className="flex items-center gap-4">
+                {isMonitoring && (
+                  <div className="flex items-center gap-2 text-emerald-400">
+                    <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+                    <span className="text-sm">AI Monitoring Active</span>
+                  </div>
+                )}
+                <div className="flex items-center gap-2 ultra-glass-light backdrop-blur-xl rounded-lg px-4 py-2 shadow-lg border border-slate-600/20">
+                  <Timer className="w-4 h-4 text-slate-300" />
+                  <span className="font-mono text-lg font-semibold text-white">
+                    {formatTime(timeLeft)}
+                  </span>
                 </div>
-              )}
-              <div className="flex items-center gap-2 bg-white rounded-lg px-4 py-2 shadow">
-                <Timer className="w-4 h-4 text-slate-600" />
-                <span className="font-mono text-lg font-semibold text-slate-900">
-                  {formatTime(timeLeft)}
-                </span>
               </div>
             </div>
-          </div>
 
-          {currentQuestion < questions.length ? (
-            <Card className="border-0 shadow-lg">
-              <CardHeader>
-                <div className="flex justify-between items-start">
-                  <div>
-                    <CardTitle className="text-xl mb-2">{currentQ.question}</CardTitle>
-                    <Badge variant="outline">{currentQ.category}</Badge>
-                  </div>
+            {currentQuestion < questions.length ? (
+              <Card className="border-0 ultra-glass-light backdrop-blur-xl shadow-2xl border border-slate-600/20">
+                <CardHeader>
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <CardTitle className="text-xl mb-2 text-white">{currentQ.question}</CardTitle>
+                      <Badge className="bg-emerald-500/20 text-emerald-300 border-emerald-400/30">{currentQ.category}</Badge>
+                    </div>
                 </div>
               </CardHeader>
               <CardContent>
@@ -940,6 +965,7 @@ export default function AptitudePage() {
               </CardContent>
             </Card>
           )}
+          </div>
         </div>
       </div>
     );
@@ -947,56 +973,64 @@ export default function AptitudePage() {
 
   if (step === 'completed') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 py-12">
-        <div className="max-w-2xl mx-auto px-6 text-center">
-          <div className="flex justify-center mb-8">
-            <div className="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center">
-              <CheckCircle className="w-10 h-10 text-emerald-600" />
-            </div>
-          </div>
-          
-          <h1 className="text-4xl font-bold text-slate-900 mb-4">
-            Test Completed Successfully!
-          </h1>
-          
-          <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
-            <h2 className="text-xl font-semibold text-slate-900 mb-4">What happens next?</h2>
-            <div className="space-y-4 text-left">
-              <div className="flex items-start gap-3">
-                <Brain className="w-5 h-5 text-emerald-600 mt-1" />
-                <div>
-                  <h3 className="font-semibold">AI Analysis</h3>
-                  <p className="text-sm text-slate-600">Your test will be analyzed by our AI system for technical accuracy and behavior patterns</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <User className="w-5 h-5 text-emerald-600 mt-1" />
-                <div>
-                  <h3 className="font-semibold">Admin Review</h3>
-                  <p className="text-sm text-slate-600">Our technical team will review your responses and coding solution</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <Mail className="w-5 h-5 text-emerald-600 mt-1" />
-                <div>
-                  <h3 className="font-semibold">Results Notification</h3>
-                  <p className="text-sm text-slate-600">You'll receive detailed feedback within 48 hours via email</p>
-                </div>
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-teal-900 relative overflow-hidden">
+        {/* Liquid Glass Background Elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 ultra-glass-dark rounded-full opacity-15 animate-float"></div>
+          <div className="absolute bottom-1/3 right-1/4 w-64 h-64 ultra-glass-dark rounded-full opacity-10 animate-float delay-1000"></div>
+        </div>
+
+        <div className="relative z-10 py-12">
+          <div className="max-w-2xl mx-auto px-6 text-center">
+            <div className="flex justify-center mb-8">
+              <div className="w-20 h-20 ultra-glass-light backdrop-blur-xl rounded-full flex items-center justify-center border border-emerald-400/30">
+                <CheckCircle className="w-10 h-10 text-emerald-400" />
               </div>
             </div>
+            
+            <h1 className="text-4xl font-bold text-white mb-4">
+              Test Completed Successfully!
+            </h1>
+          
+            <div className="ultra-glass-light backdrop-blur-xl rounded-lg shadow-2xl p-8 mb-8 border border-slate-600/20">
+              <h2 className="text-xl font-semibold text-white mb-4">What happens next?</h2>
+              <div className="space-y-4 text-left">
+                <div className="flex items-start gap-3">
+                  <Brain className="w-5 h-5 text-emerald-400 mt-1" />
+                  <div>
+                    <h3 className="font-semibold text-white">AI Analysis</h3>
+                    <p className="text-sm text-slate-300">Your test will be analyzed by our AI system for technical accuracy and behavior patterns</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <User className="w-5 h-5 text-emerald-400 mt-1" />
+                  <div>
+                    <h3 className="font-semibold text-white">Admin Review</h3>
+                    <p className="text-sm text-slate-300">Our technical team will review your responses and coding solution</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <Mail className="w-5 h-5 text-emerald-400 mt-1" />
+                  <div>
+                    <h3 className="font-semibold text-white">Results Notification</h3>
+                    <p className="text-sm text-slate-300">You'll receive detailed feedback within 48 hours via email</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <p className="text-slate-300 mb-8">
+              Thank you for taking our {candidate?.testTypes?.[0]} developer aptitude test. 
+              We appreciate your time and effort.
+            </p>
+
+            <Button
+              onClick={() => window.location.href = '/'}
+              className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white px-8 py-3 shadow-lg backdrop-blur-sm border-0 rounded-xl"
+            >
+              Return to Home
+            </Button>
           </div>
-
-          <p className="text-slate-600 mb-8">
-            Thank you for taking our {candidate?.testTypes?.[0]} developer aptitude test. 
-            We appreciate your time and effort.
-          </p>
-
-          <Button
-            onClick={() => window.location.href = '/'}
-            className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3"
-          >
-            Return to Home
-          </Button>
         </div>
       </div>
     );
