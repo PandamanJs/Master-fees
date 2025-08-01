@@ -80,6 +80,10 @@ export interface IStorage {
   createJobApplication(application: NewJobApplication): Promise<JobApplication>;
   getAllJobApplications(): Promise<JobApplication[]>;
   getJobApplicationById(id: number): Promise<JobApplication | null>;
+
+  // Aptitude Tests
+  getAllAptitudeTests(): Promise<any[]>;
+  createAptitudeTest(test: any): Promise<any>;
 }
 
 export class MemStorage implements IStorage {
@@ -93,6 +97,7 @@ export class MemStorage implements IStorage {
   private academicYears: Map<number, AcademicYear> = new Map();
   private contactMessages: Map<number, ContactMessage> = new Map();
   private jobApplications: Map<number, JobApplication> = new Map();
+  private aptitudeTests: Map<string, any> = new Map();
   private currentUserId = 1;
   private currentSchoolId = 1;
   private currentStudentId = 1;
@@ -619,6 +624,21 @@ export class MemStorage implements IStorage {
 
   async getJobApplicationById(id: number): Promise<JobApplication | null> {
     return this.jobApplications.get(id) || null;
+  }
+
+  // Aptitude Tests
+  async getAllAptitudeTests(): Promise<any[]> {
+    return Array.from(this.aptitudeTests.values());
+  }
+
+  async createAptitudeTest(test: any): Promise<any> {
+    const testWithId = {
+      ...test,
+      id: `test_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+      submittedAt: new Date()
+    };
+    this.aptitudeTests.set(testWithId.id, testWithId);
+    return testWithId;
   }
 }
 

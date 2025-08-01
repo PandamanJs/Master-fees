@@ -158,42 +158,27 @@ export default function AppleAdminPanel() {
     );
   }
 
-  // Mock data for demonstration
-  const mockResults: AptitudeResult[] = [
-    {
-      id: '1',
-      candidate: {
-        fullName: 'John Doe',
-        email: 'john@example.com',
-        phone: '+260 123 456 789',
-        experience: '3 years'
-      },
-      testTypes: ['frontend', 'backend'],
-      scores: { frontend: 85, backend: 78 },
-      totalQuestions: 40,
-      correctAnswers: 33,
-      timeSpent: 3200,
-      aiAnalysis: {
-        behaviorScore: 95,
-        focusScore: 88,
-        suspiciousActivity: [],
-        overallIntegrity: 'high'
-      },
-      submittedAt: '2025-01-01T10:00:00Z',
-      status: 'pending',
-      adminNotes: ''
-    }
-  ];
+  // Fetch real aptitude test results
+  const { data: results, isLoading } = useQuery({
+    queryKey: ['/api/aptitude/results'],
+    queryFn: () => fetch('/api/aptitude/results').then(res => res.json()),
+    enabled: isAuthenticated
+  });
+
+  const aptitudeResults: AptitudeResult[] = results || [];
 
   const stats = {
-    total: mockResults.length,
-    frontend: mockResults.filter(r => r.testTypes.includes('frontend')).length,
-    backend: mockResults.filter(r => r.testTypes.includes('backend')).length,
-    pending: mockResults.filter(r => r.status === 'pending').length,
-    approved: mockResults.filter(r => r.status === 'approved').length,
-    avgScore: Math.round(mockResults.reduce((acc, r) => 
-      acc + Object.values(r.scores).reduce((sum, s) => sum + s, 0) / Object.keys(r.scores).length, 0
-    ) / mockResults.length)
+    total: aptitudeResults.length,
+    frontend: aptitudeResults.filter(r => r.testTypes?.includes('frontend')).length,
+    backend: aptitudeResults.filter(r => r.testTypes?.includes('backend')).length,
+    marketing: aptitudeResults.filter(r => r.testTypes?.includes('marketing')).length,
+    business: aptitudeResults.filter(r => r.testTypes?.includes('business')).length,
+    intern: aptitudeResults.filter(r => r.testTypes?.includes('intern')).length,
+    pending: aptitudeResults.filter(r => r.status === 'pending').length,
+    approved: aptitudeResults.filter(r => r.status === 'approved').length,
+    avgScore: aptitudeResults.length > 0 ? Math.round(aptitudeResults.reduce((acc, r) => 
+      acc + (Object.values(r.scores || {}).reduce((sum, s) => sum + s, 0) / Math.max(Object.keys(r.scores || {}).length, 1)), 0
+    ) / aptitudeResults.length) : 0
   };
 
   const formatTime = (seconds: number) => {
@@ -240,7 +225,7 @@ export default function AppleAdminPanel() {
       {/* Main content area */}
       <div className="max-w-7xl mx-auto px-8 pb-12">
         {/* Statistics Cards */}
-        <div className="grid grid-cols-2 md:grid-cols-6 gap-4 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 mb-8">
           <Card className="border-0 bg-white/95 backdrop-blur-xl rounded-2xl overflow-hidden">
             <CardContent className="p-6 text-center">
               <div className="flex items-center justify-center w-12 h-12 bg-gradient-to-r from-slate-500 to-gray-500 rounded-xl mx-auto mb-3">
@@ -268,6 +253,26 @@ export default function AppleAdminPanel() {
               </div>
               <div className="text-2xl font-light text-slate-900 mb-1">{stats.backend}</div>
               <div className="text-sm text-slate-600 font-light">Backend</div>
+            </CardContent>
+          </Card>
+          
+          <Card className="border-0 bg-white/95 backdrop-blur-xl rounded-2xl overflow-hidden">
+            <CardContent className="p-6 text-center">
+              <div className="flex items-center justify-center w-12 h-12 bg-gradient-to-r from-pink-500 to-rose-500 rounded-xl mx-auto mb-3">
+                <TrendingUp className="w-6 h-6 text-white" />
+              </div>
+              <div className="text-2xl font-light text-slate-900 mb-1">{stats.marketing}</div>
+              <div className="text-sm text-slate-600 font-light">Marketing</div>
+            </CardContent>
+          </Card>
+          
+          <Card className="border-0 bg-white/95 backdrop-blur-xl rounded-2xl overflow-hidden">
+            <CardContent className="p-6 text-center">
+              <div className="flex items-center justify-center w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl mx-auto mb-3">
+                <BarChart3 className="w-6 h-6 text-white" />
+              </div>
+              <div className="text-2xl font-light text-slate-900 mb-1">{stats.business}</div>
+              <div className="text-sm text-slate-600 font-light">Business</div>
             </CardContent>
           </Card>
           
@@ -342,9 +347,35 @@ export default function AppleAdminPanel() {
           </CardContent>
         </Card>
 
+        {/* Loading State */}
+        {isLoading && (
+          <div className="flex items-center justify-center py-12">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600"></div>
+          </div>
+        )}
+
         {/* Results List */}
         <div className="space-y-4">
-          {mockResults.map((result) => (
+          {!isLoading && aptitudeResults.length === 0 && (
+            <Card className="border-0 bg-white/95 backdrop-blur-xl rounded-2xl overflow-hidden">
+              <CardContent className="p-12 text-center">
+                <div className="flex items-center justify-center w-16 h-16 bg-slate-100 rounded-2xl mx-auto mb-4">
+                  <Users className="w-8 h-8 text-slate-400" />
+                </div>
+                <h3 className="text-lg font-medium text-slate-900 mb-2">No Test Results Yet</h3>
+                <p className="text-slate-600 font-light">Candidate test submissions will appear here once they complete their assessments.</p>
+              </CardContent>
+            </Card>
+          )}
+
+          {aptitudeResults.filter(result => {
+            const matchesSearch = searchTerm === '' || 
+              result.candidate.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+              result.candidate.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+              result.candidate.phone.includes(searchTerm);
+            const matchesStatus = statusFilter === 'all' || result.status === statusFilter;
+            return matchesSearch && matchesStatus;
+          }).map((result) => (
             <Card key={result.id} className="border-0 bg-white/95 backdrop-blur-xl rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-200">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
@@ -361,7 +392,9 @@ export default function AppleAdminPanel() {
                   <div className="flex items-center space-x-4">
                     <div className="text-center">
                       <div className="text-lg font-medium text-slate-900">
-                        {Math.round(Object.values(result.scores).reduce((sum, s) => sum + s, 0) / Object.keys(result.scores).length)}%
+                        {result.scores && Object.keys(result.scores).length > 0 
+                          ? Math.round(Object.values(result.scores).reduce((sum, s) => sum + s, 0) / Object.keys(result.scores).length)
+                          : 0}%
                       </div>
                       <div className="text-xs text-slate-600">Overall Score</div>
                     </div>

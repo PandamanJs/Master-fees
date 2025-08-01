@@ -315,5 +315,77 @@ export default function AppleAptitudeTest() {
     );
   }
 
-  return <div>Other steps to be implemented...</div>;
+  // Add other test steps (instructions, test, complete) with Apple design
+  if (step === 'instructions') {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-teal-900 p-4">
+        <div className="max-w-4xl mx-auto pt-12">
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-white/20 to-white/5 rounded-2xl backdrop-blur-xl border border-white/10 mb-6">
+              <Timer className="w-10 h-10 text-white" />
+            </div>
+            <h1 className="text-4xl font-thin text-white mb-3 tracking-tight">
+              Assessment Instructions
+            </h1>
+            <p className="text-lg text-slate-300 font-light">
+              Please review the guidelines before beginning
+            </p>
+          </div>
+
+          <Card className="border-0 bg-white/95 backdrop-blur-2xl shadow-2xl rounded-3xl overflow-hidden">
+            <CardContent className="p-12">
+              <div className="space-y-8">
+                <div className="text-center">
+                  <h2 className="text-2xl font-light text-slate-900 mb-4">Ready to Begin Your Assessment</h2>
+                  <p className="text-slate-600 font-light leading-relaxed">
+                    You have selected: {selectedTestTypes.map(type => testTypeConfigs[type as keyof typeof testTypeConfigs].label).join(', ')}
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="text-center p-6 bg-slate-50 rounded-2xl">
+                    <Clock className="w-8 h-8 text-emerald-600 mx-auto mb-3" />
+                    <h3 className="font-medium text-slate-900 mb-2">Time Limit</h3>
+                    <p className="text-sm text-slate-600">60 minutes total</p>
+                  </div>
+                  <div className="text-center p-6 bg-slate-50 rounded-2xl">
+                    <Eye className="w-8 h-8 text-purple-600 mx-auto mb-3" />
+                    <h3 className="font-medium text-slate-900 mb-2">AI Monitoring</h3>
+                    <p className="text-sm text-slate-600">Behavior tracked</p>
+                  </div>
+                  <div className="text-center p-6 bg-slate-50 rounded-2xl">
+                    <CheckCircle className="w-8 h-8 text-blue-600 mx-auto mb-3" />
+                    <h3 className="font-medium text-slate-900 mb-2">Questions</h3>
+                    <p className="text-sm text-slate-600">Multiple choice + coding</p>
+                  </div>
+                </div>
+
+                <Button
+                  onClick={() => setStep('test')}
+                  className="w-full h-14 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-medium rounded-2xl"
+                >
+                  <Rocket className="w-5 h-5 mr-2" />
+                  Start Assessment
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-teal-900 flex items-center justify-center p-4">
+      <Card className="border-0 bg-white/95 backdrop-blur-2xl shadow-2xl rounded-3xl overflow-hidden">
+        <CardContent className="p-12 text-center">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-2xl mb-6">
+            <Brain className="w-8 h-8 text-white" />
+          </div>
+          <h2 className="text-2xl font-light text-slate-900 mb-4">Assessment System</h2>
+          <p className="text-slate-600 font-light">Additional steps will be implemented as needed.</p>
+        </CardContent>
+      </Card>
+    </div>
+  );
 }

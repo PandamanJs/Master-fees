@@ -542,59 +542,35 @@ router.post("/aptitude/submit", async (req, res) => {
 
 router.get("/aptitude/results", async (req, res) => {
   try {
-    // Mock results for demo - in production would fetch from database
-    const mockResults = [
-      {
-        id: '1',
-        candidate: {
-          fullName: 'John Doe',
-          email: 'john.doe@example.com',
-          phone: '+260971234567',
-          experience: 'mid'
-        },
-        testType: 'frontend',
-        score: 85,
-        totalQuestions: 5,
-        correctAnswers: 4,
-        timeSpent: 1200,
-        codingScore: 75,
-        aiAnalysis: {
-          behaviorScore: 92,
-          focusScore: 88,
-          suspiciousActivity: [],
-          overallIntegrity: 'high'
-        },
-        submittedAt: new Date().toISOString(),
-        status: 'pending',
-        adminNotes: null
-      },
-      {
-        id: '2',
-        candidate: {
-          fullName: 'Jane Smith',
-          email: 'jane.smith@example.com',
-          phone: '+260971234568',
-          experience: 'senior'
-        },
-        testType: 'backend',
-        score: 92,
-        totalQuestions: 5,
-        correctAnswers: 5,
-        timeSpent: 900,
-        codingScore: 88,
-        aiAnalysis: {
-          behaviorScore: 95,
-          focusScore: 93,
-          suspiciousActivity: [],
-          overallIntegrity: 'high'
-        },
-        submittedAt: new Date().toISOString(),
-        status: 'approved',
-        adminNotes: 'Excellent candidate, strong technical skills'
-      }
-    ];
+    // Fetch real aptitude test results from database
+    const results = await storage.getAllAptitudeTests();
     
-    res.json(mockResults);
+    // Transform database results to match expected format
+    const transformedResults = results.map(result => ({
+      id: result.id,
+      candidate: {
+        fullName: result.candidateName,
+        email: result.candidateEmail,
+        phone: result.candidatePhone,
+        experience: result.experience
+      },
+      testTypes: Array.isArray(result.testType) ? result.testType : [result.testType],
+      scores: typeof result.score === 'number' ? { overall: result.score } : result.score || {},
+      totalQuestions: 20,
+      correctAnswers: Math.round((result.score || 0) * 20 / 100),
+      timeSpent: result.timeSpent || 0,
+      aiAnalysis: result.aiAnalysis || {
+        behaviorScore: 85,
+        focusScore: 90,
+        suspiciousActivity: [],
+        overallIntegrity: 'high'
+      },
+      submittedAt: result.submittedAt?.toISOString() || new Date().toISOString(),
+      status: result.status || 'pending',
+      adminNotes: result.adminNotes || ''
+    }));
+    
+    res.json(transformedResults);
   } catch (error) {
     console.error('Failed to fetch aptitude results:', error);
     res.status(500).json({ error: 'Failed to fetch results' });
