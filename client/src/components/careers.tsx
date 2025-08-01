@@ -83,8 +83,8 @@ export default function Careers() {
       if (data.portfolio) formData.append('Portfolio/LinkedIn', data.portfolio);
       if (cvFile || data.resume) formData.append('Resume/CV Link', cvFile || data.resume || '');
       
-      // Submit to FormSubmit
-      const response = await fetch('https://formsubmit.co/masterfees101@gmail.com', {
+      // Submit to FormSubmit using the provided endpoint
+      const response = await fetch('https://formsubmit.co/el/ruyeje', {
         method: 'POST',
         body: formData
       });
@@ -111,55 +111,22 @@ export default function Careers() {
     }
   };
 
+  // CV upload functionality disabled - using form fields only with FormSubmit
   const handleCVUpload = async () => {
-    return {
-      method: 'PUT' as const,
-      url: await apiRequest('/api/objects/upload', 'POST').then((res: any) => res.uploadURL),
-    };
+    toast({
+      title: "CV Upload Not Available",
+      description: "Please use the Resume/CV Link field below to provide a link to your resume.",
+      variant: "destructive",
+    });
+    return null;
   };
 
   const handleCVComplete = async (result: UploadResult<Record<string, unknown>, Record<string, unknown>>) => {
-    if (result.successful && result.successful.length > 0) {
-      const uploadedFile = result.successful[0];
-      const cvUrl = uploadedFile.uploadURL;
-      
-      setIsProcessingCV(true);
-      
-      try {
-        // Extract CV information and autofill form
-        const response: any = await apiRequest('/api/extract-cv-info', 'POST', { cvUrl });
-        
-        if (response.extractedInfo) {
-          const info = response.extractedInfo;
-          
-          // Autofill form fields
-          if (info.fullName) setValue('fullName', info.fullName);
-          if (info.email) setValue('email', info.email);
-          if (info.phone) setValue('phone', info.phone);
-          if (info.education) setValue('education', info.education);
-          if (info.skills) setValue('skills', info.skills);
-          if (info.experience && info.experience !== 'Not specified') {
-            setValue('experience', info.experience);
-          }
-          
-          setCvFile(cvUrl || '');
-          
-          toast({
-            title: "CV Processed Successfully!",
-            description: "Your CV has been uploaded and form fields have been automatically filled.",
-          });
-        }
-      } catch (error) {
-        console.error('CV processing error:', error);
-        setCvFile(cvUrl || ''); // Still save the CV URL even if parsing fails
-        toast({
-          title: "CV Uploaded",
-          description: "Your CV has been uploaded. Please fill in the form fields manually.",
-        });
-      } finally {
-        setIsProcessingCV(false);
-      }
-    }
+    // CV processing not available with FormSubmit - users should use link field
+    toast({
+      title: "Please Use Link Field",
+      description: "Please provide your resume link in the Resume/CV Link field below.",
+    });
   };
 
   const openPositions = [
