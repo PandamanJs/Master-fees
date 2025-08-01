@@ -110,7 +110,7 @@ export default function Hero() {
             
             {/* MacBook-style Desktop Showcase with enhanced design principles */}
             <div className="text-center group">
-              <div className={`relative mb-12 transition-all duration-1200 ease-out delay-400 ${
+              <div className={`relative mb-8 transition-all duration-1200 ease-out delay-400 ${
                 isLoaded 
                   ? 'transform translate-y-0 opacity-100 rotate-0 scale-100' 
                   : 'transform translate-y-16 opacity-0 -rotate-2 scale-90'
