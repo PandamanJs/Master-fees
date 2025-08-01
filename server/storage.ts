@@ -7,7 +7,8 @@ import type {
   Payment, NewPayment,
   Notification, NewNotification,
   AcademicYear, NewAcademicYear,
-  ContactMessage, NewContactMessage
+  ContactMessage, NewContactMessage,
+  JobApplication, NewJobApplication
 } from "@shared/schema";
 
 export interface IStorage {
@@ -74,6 +75,11 @@ export interface IStorage {
   getPayments(): Promise<Payment[]>;
   getContacts(): Promise<ContactMessage[]>;
   getSMSSettings(): Promise<any[]>;
+
+  // Job Applications
+  createJobApplication(application: NewJobApplication): Promise<JobApplication>;
+  getAllJobApplications(): Promise<JobApplication[]>;
+  getJobApplicationById(id: number): Promise<JobApplication | null>;
 }
 
 export class MemStorage implements IStorage {
@@ -86,6 +92,7 @@ export class MemStorage implements IStorage {
   private notifications: Map<number, Notification> = new Map();
   private academicYears: Map<number, AcademicYear> = new Map();
   private contactMessages: Map<number, ContactMessage> = new Map();
+  private jobApplications: Map<number, JobApplication> = new Map();
   private currentUserId = 1;
   private currentSchoolId = 1;
   private currentStudentId = 1;
@@ -95,6 +102,7 @@ export class MemStorage implements IStorage {
   private currentNotificationId = 1;
   private currentAcademicYearId = 1;
   private currentContactMessageId = 1;
+  private currentJobApplicationId = 1;
 
   constructor() {
     this.seedInitialData();
@@ -592,6 +600,25 @@ export class MemStorage implements IStorage {
   async getSMSSettings(): Promise<any[]> {
     // Return empty array for now, can be expanded when SMS settings are implemented
     return [];
+  }
+
+  // Job Application methods
+  async createJobApplication(application: NewJobApplication): Promise<JobApplication> {
+    const newApplication: JobApplication = {
+      ...application,
+      id: this.currentJobApplicationId++,
+      appliedAt: new Date(),
+    };
+    this.jobApplications.set(newApplication.id, newApplication);
+    return newApplication;
+  }
+
+  async getAllJobApplications(): Promise<JobApplication[]> {
+    return Array.from(this.jobApplications.values());
+  }
+
+  async getJobApplicationById(id: number): Promise<JobApplication | null> {
+    return this.jobApplications.get(id) || null;
   }
 }
 

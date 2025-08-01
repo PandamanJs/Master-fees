@@ -4,6 +4,7 @@ import Features from "@/components/features";
 import About from "@/components/about";
 import Testimonials from "@/components/testimonials";
 import Contact from "@/components/contact";
+import Careers from "@/components/careers";
 import Footer from "@/components/footer";
 
 export default function Home() {
@@ -15,6 +16,7 @@ export default function Home() {
       <About />
       <Testimonials />
       <Contact />
+      <Careers />
       <Footer />
     </div>
   );

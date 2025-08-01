@@ -59,6 +59,12 @@ export default function Navigation() {
               >
                 Contact
               </button>
+              <button
+                onClick={() => scrollToSection('careers')}
+                className="text-slate-300 hover:text-emerald-400 text-sm font-light transition-all duration-300"
+              >
+                Careers
+              </button>
 
             </div>
           </div>
@@ -112,6 +118,12 @@ export default function Navigation() {
               className="text-slate-300 hover:text-emerald-400 block px-3 py-2 text-base font-medium w-full text-left rounded-lg hover:bg-emerald-400/10 transition-all duration-200"
             >
               Contact
+            </button>
+            <button
+              onClick={() => scrollToSection('careers')}
+              className="text-slate-300 hover:text-emerald-400 block px-3 py-2 text-base font-medium w-full text-left rounded-lg hover:bg-emerald-400/10 transition-all duration-200"
+            >
+              Careers
             </button>
             <div className="pt-4">
               <a href="https://master-fees.com/" target="_blank" rel="noopener noreferrer">

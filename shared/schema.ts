@@ -178,6 +178,29 @@ export const insertContactMessageSchema = createInsertSchema(contactMessages).om
   createdAt: true,
 });
 
+// Job Applications table
+export const jobApplications = pgTable('job_applications', {
+  id: serial('id').primaryKey(),
+  fullName: text('full_name').notNull(),
+  email: text('email').notNull(),
+  phone: text('phone').notNull(),
+  position: text('position').notNull(),
+  experience: text('experience').notNull(),
+  education: text('education').notNull(),
+  skills: text('skills').notNull(),
+  motivation: text('motivation').notNull(),
+  availability: text('availability').notNull(),
+  portfolio: text('portfolio'),
+  resume: text('resume'),
+  status: text('status').default('pending'),
+  appliedAt: timestamp('applied_at').defaultNow(),
+});
+
+export const insertJobApplicationSchema = createInsertSchema(jobApplications).omit({
+  id: true,
+  appliedAt: true,
+});
+
 // Types
 export type User = typeof users.$inferSelect;
 export type NewUser = z.infer<typeof insertUserSchema>;
@@ -197,6 +220,8 @@ export type AcademicYear = typeof academicYears.$inferSelect;
 export type NewAcademicYear = z.infer<typeof insertAcademicYearSchema>;
 export type ContactMessage = typeof contactMessages.$inferSelect;
 export type NewContactMessage = z.infer<typeof insertContactMessageSchema>;
+export type JobApplication = typeof jobApplications.$inferSelect;
+export type NewJobApplication = z.infer<typeof insertJobApplicationSchema>;
 
 // Auth schemas
 export const loginSchema = z.object({

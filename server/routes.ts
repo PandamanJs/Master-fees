@@ -16,6 +16,8 @@ import {
 import { storage } from "./storage";
 import { sendContactNotification, sendContactConfirmation } from "./email";
 import { sendContactFormSMS, sendAdminNotificationSMS, sendPaymentConfirmationSMS } from "./sms";
+import { sendJobApplicationConfirmation, sendJobApplicationNotification } from "./job-application-email";
+import { sendJobApplicationSMS } from "./job-application-sms";
 import { quickbooksRouter } from "./quickbooks-routes";
 
 const router = Router();
@@ -352,6 +354,76 @@ router.put("/admin/contact-messages/:id", async (req, res) => {
   } catch (error) {
     console.error("Error updating contact message:", error);
     res.status(500).json({ error: "Failed to update contact message" });
+  }
+});
+
+// Job Applications Schema
+const jobApplicationSchema = z.object({
+  fullName: z.string().min(2, "Full name is required"),
+  email: z.string().email("Valid email is required"),
+  phone: z.string().min(10, "Valid phone number is required"),
+  position: z.string().min(1, "Please select a position"),
+  experience: z.string().min(1, "Please select your experience level"),
+  education: z.string().min(2, "Education background is required"),
+  skills: z.string().min(10, "Please describe your relevant skills"),
+  motivation: z.string().min(50, "Please tell us why you want to join our team"),
+  availability: z.string().min(1, "Please select your availability"),
+  portfolio: z.string().optional(),
+  resume: z.string().optional()
+});
+
+// Job Applications endpoint
+router.post("/job-applications", async (req, res) => {
+  try {
+    const applicationData = jobApplicationSchema.parse(req.body);
+
+    // Store the job application
+    const application = await storage.createJobApplication({
+      ...applicationData,
+      appliedAt: new Date(),
+      status: 'pending'
+    });
+
+    // Send email notifications
+    try {
+      const emailPromises = [];
+      
+      // Send confirmation email to applicant
+      if (process.env.SENDGRID_API_KEY) {
+        emailPromises.push(
+          sendJobApplicationConfirmation(applicationData.email, applicationData.fullName, applicationData.position)
+        );
+
+        // Send notification to HR/Admin
+        emailPromises.push(
+          sendJobApplicationNotification('charleysiwale@gmail.com', applicationData)
+        );
+      }
+
+      // Send SMS notification
+      const smsPromises = [];
+      if (process.env.TWILIO_ACCOUNT_SID && applicationData.phone) {
+        smsPromises.push(
+          sendJobApplicationSMS(applicationData.phone, applicationData.fullName, applicationData.position)
+        );
+      }
+
+      await Promise.all([...emailPromises, ...smsPromises]);
+    } catch (notificationError) {
+      console.error("Job application notification error:", notificationError);
+      // Continue even if notifications fail
+    }
+
+    res.status(201).json({ 
+      message: "Thank you for your application! We'll review it and get back to you within 5 business days.",
+      applicationId: application.id
+    });
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return res.status(400).json({ error: error.errors });
+    }
+    console.error("Job application error:", error);
+    res.status(500).json({ error: "Failed to submit job application" });
   }
 });
 
