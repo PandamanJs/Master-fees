@@ -234,6 +234,170 @@ export default function AppleAptitudeTest() {
     });
   };
 
+  // Generate sample questions based on selected test types
+  const generateSampleQuestions = (testTypes: string[]) => {
+    const questionBank = {
+      frontend: [
+        {
+          id: 1,
+          question: "What is the purpose of React hooks?",
+          options: [
+            "To manage state in functional components",
+            "To create class components",
+            "To style components",
+            "To handle routing"
+          ],
+          correct: 0,
+          category: "Frontend"
+        },
+        {
+          id: 2,
+          question: "Which CSS property is used to create flexbox layout?",
+          options: [
+            "display: block",
+            "display: flex",
+            "display: grid", 
+            "display: inline"
+          ],
+          correct: 1,
+          category: "Frontend"
+        }
+      ],
+      backend: [
+        {
+          id: 3,
+          question: "What is the purpose of middleware in Express.js?",
+          options: [
+            "To handle database connections",
+            "To process requests before reaching route handlers",
+            "To create HTML templates",
+            "To manage file uploads"
+          ],
+          correct: 1,
+          category: "Backend"
+        },
+        {
+          id: 4,
+          question: "Which HTTP method is typically used to update existing data?",
+          options: [
+            "GET",
+            "POST",
+            "PUT",
+            "DELETE"
+          ],
+          correct: 2,
+          category: "Backend"
+        }
+      ],
+      marketing: [
+        {
+          id: 5,
+          question: "What does SEO stand for?",
+          options: [
+            "Social Engine Optimization",
+            "Search Engine Optimization",
+            "Site Enhancement Operations",
+            "Strategic Email Outreach"
+          ],
+          correct: 1,
+          category: "Marketing"
+        },
+        {
+          id: 6,
+          question: "Which metric measures the percentage of visitors who leave after viewing only one page?",
+          options: [
+            "Conversion Rate",
+            "Click-through Rate", 
+            "Bounce Rate",
+            "Engagement Rate"
+          ],
+          correct: 2,
+          category: "Marketing"
+        }
+      ],
+      business: [
+        {
+          id: 7,
+          question: "What is the primary purpose of a SWOT analysis?",
+          options: [
+            "To analyze financial statements",
+            "To evaluate Strengths, Weaknesses, Opportunities, and Threats",
+            "To create marketing campaigns",
+            "To manage project timelines"
+          ],
+          correct: 1,
+          category: "Business"
+        },
+        {
+          id: 8,
+          question: "Which methodology emphasizes iterative development and customer collaboration?",
+          options: [
+            "Waterfall",
+            "Six Sigma",
+            "Agile",
+            "Lean"
+          ],
+          correct: 2,
+          category: "Business"
+        }
+      ],
+      intern: [
+        {
+          id: 9,
+          question: "What is a variable in programming?",
+          options: [
+            "A fixed value that never changes",
+            "A storage location with an associated name",
+            "A type of loop structure",
+            "A debugging tool"
+          ],
+          correct: 1,
+          category: "Programming"
+        },
+        {
+          id: 10,
+          question: "Which data structure follows Last-In-First-Out (LIFO) principle?",
+          options: [
+            "Queue",
+            "Array",
+            "Stack",
+            "Linked List"
+          ],
+          correct: 2,
+          category: "Programming"
+        }
+      ]
+    };
+
+    let selectedQuestions: any[] = [];
+    
+    testTypes.forEach(type => {
+      if (questionBank[type as keyof typeof questionBank]) {
+        selectedQuestions = [...selectedQuestions, ...questionBank[type as keyof typeof questionBank]];
+      }
+    });
+
+    // If no questions found, add default questions
+    if (selectedQuestions.length === 0) {
+      selectedQuestions = [
+        {
+          id: 999,
+          question: "What is your primary area of interest?",
+          options: [
+            "Frontend Development",
+            "Backend Development",
+            "Marketing",
+            "Business Analysis"
+          ],
+          correct: 0,
+          category: "General"
+        }
+      ];
+    }
+
+    return selectedQuestions;
+  };
+
   // Performance visualization component
   const PerformanceVisualization = () => (
     <div className="space-y-6">
@@ -602,7 +766,12 @@ export default function AppleAptitudeTest() {
                 </div>
 
                 <Button
-                  onClick={() => setStep('test')}
+                  onClick={() => {
+                    // Generate sample questions based on selected test types
+                    const sampleQuestions = generateSampleQuestions(selectedTestTypes);
+                    setQuestions(sampleQuestions);
+                    setStep('test');
+                  }}
                   className="w-full h-14 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-medium rounded-2xl"
                 >
                   <Rocket className="w-5 h-5 mr-2" />
