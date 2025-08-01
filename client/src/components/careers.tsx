@@ -158,27 +158,39 @@ export default function Careers() {
       
       try {
         // Extract CV information and autofill form
-        const response: any = await apiRequest('/api/extract-cv-info', 'POST', { cvUrl });
+        const response = await fetch('/api/extract-cv-info', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ cvUrl }),
+        });
         
-        if (response.extractedInfo) {
-          const info = response.extractedInfo;
+        if (response.ok) {
+          const data = await response.json();
           
-          // Autofill form fields
-          if (info.fullName) setValue('fullName', info.fullName);
-          if (info.email) setValue('email', info.email);
-          if (info.phone) setValue('phone', info.phone);
-          if (info.education) setValue('education', info.education);
-          if (info.skills) setValue('skills', info.skills);
-          if (info.experience && info.experience !== 'Not specified') {
-            setValue('experience', info.experience);
+          if (data.extractedInfo) {
+            const info = data.extractedInfo;
+            
+            // Autofill form fields
+            if (info.fullName) setValue('fullName', info.fullName);
+            if (info.email) setValue('email', info.email);
+            if (info.phone) setValue('phone', info.phone);
+            if (info.education) setValue('education', info.education);
+            if (info.skills) setValue('skills', info.skills);
+            if (info.experience && info.experience !== 'Not specified') {
+              setValue('experience', info.experience);
+            }
+            
+            setCvFile(cvUrl || '');
+            
+            toast({
+              title: "CV Processed Successfully!",
+              description: "Your CV has been uploaded and form fields have been automatically filled.",
+            });
           }
-          
-          setCvFile(cvUrl || '');
-          
-          toast({
-            title: "CV Processed Successfully!",
-            description: "Your CV has been uploaded and form fields have been automatically filled.",
-          });
+        } else {
+          throw new Error('Failed to process CV');
         }
       } catch (error) {
         console.error('CV processing error:', error);
