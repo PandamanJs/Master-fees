@@ -4,6 +4,8 @@ import { Link } from "wouter";
 import mobileImage from "@assets/iPhone 16 - 46_1753900251503.png";
 import desktopImage from "@assets/Dashboard_1753900251517.png";
 
+import Screenshot_2025_07_30_170442 from "@assets/Screenshot 2025-07-30 170442.png";
+
 export default function Hero() {
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -118,7 +120,7 @@ export default function Hero() {
                   {/* Mathematical proportions for desktop image */}
                   <div className="relative">
                     <img 
-                      src={desktopImage} 
+                      src={Screenshot_2025_07_30_170442} 
                       alt="Master Fees Admin Dashboard"
                       className="w-full max-w-2xl h-auto shadow-3xl rounded-2xl relative z-20 transition-all duration-1000 group-hover:scale-[1.02] border-4 border-slate-700/30"
                     />
