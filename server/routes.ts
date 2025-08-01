@@ -640,6 +640,47 @@ router.post("/aptitude/submit", async (req, res) => {
   }
 });
 
+// Assessment Results API endpoints
+router.post("/assessment/submit", async (req, res) => {
+  try {
+    const assessmentData = req.body;
+    
+    // Calculate accuracy
+    const accuracy = Math.round((assessmentData.correctAnswers / assessmentData.totalQuestions) * 100);
+    
+    // Store assessment result in database
+    const result = await storage.createAssessmentResult({
+      fullName: assessmentData.candidateInfo.fullName,
+      email: assessmentData.candidateInfo.email,
+      phone: assessmentData.candidateInfo.phone,
+      experience: assessmentData.candidateInfo.experience,
+      testTypes: assessmentData.candidateInfo.testTypes,
+      answers: assessmentData.answers,
+      performanceMetrics: assessmentData.performanceMetrics,
+      accuracy: accuracy,
+      correctAnswers: assessmentData.correctAnswers,
+      totalQuestions: assessmentData.totalQuestions,
+      timeSpent: assessmentData.timeSpent,
+      status: 'completed'
+    });
+    
+    res.json({ success: true, id: result.id });
+  } catch (error) {
+    console.error('Failed to submit assessment:', error);
+    res.status(500).json({ error: 'Failed to submit assessment' });
+  }
+});
+
+router.get("/assessment/results", async (req, res) => {
+  try {
+    const results = await storage.getAllAssessmentResults();
+    res.json(results);
+  } catch (error) {
+    console.error('Failed to fetch assessment results:', error);
+    res.status(500).json({ error: 'Failed to fetch results' });
+  }
+});
+
 router.get("/aptitude/results", async (req, res) => {
   try {
     // Fetch real aptitude test results from database

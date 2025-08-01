@@ -8,7 +8,9 @@ import type {
   Notification, NewNotification,
   AcademicYear, NewAcademicYear,
   ContactMessage, NewContactMessage,
-  JobApplication, NewJobApplication
+  JobApplication, NewJobApplication,
+  AssessmentResult, InsertAssessmentResult,
+  AptitudeTest, NewAptitudeTest
 } from "@shared/schema";
 
 export interface IStorage {
@@ -84,6 +86,11 @@ export interface IStorage {
   // Aptitude Tests
   getAllAptitudeTests(): Promise<any[]>;
   createAptitudeTest(test: any): Promise<any>;
+
+  // Assessment Results
+  createAssessmentResult(result: InsertAssessmentResult): Promise<AssessmentResult>;
+  getAllAssessmentResults(): Promise<AssessmentResult[]>;
+  getAssessmentResultById(id: number): Promise<AssessmentResult | null>;
 }
 
 export class MemStorage implements IStorage {
@@ -635,6 +642,30 @@ export class MemStorage implements IStorage {
     };
     this.aptitudeTests.set(testWithId.id, testWithId);
     return testWithId;
+  }
+
+  // Assessment Results operations
+  private assessmentResults: Map<number, AssessmentResult> = new Map();
+  private currentAssessmentResultId = 1;
+
+  async createAssessmentResult(result: InsertAssessmentResult): Promise<AssessmentResult> {
+    const newResult: AssessmentResult = {
+      ...result,
+      id: this.currentAssessmentResultId++,
+      createdAt: new Date()
+    };
+    this.assessmentResults.set(newResult.id, newResult);
+    return newResult;
+  }
+
+  async getAllAssessmentResults(): Promise<AssessmentResult[]> {
+    return Array.from(this.assessmentResults.values()).sort(
+      (a, b) => b.createdAt.getTime() - a.createdAt.getTime()
+    );
+  }
+
+  async getAssessmentResultById(id: number): Promise<AssessmentResult | null> {
+    return this.assessmentResults.get(id) || null;
   }
 }
 

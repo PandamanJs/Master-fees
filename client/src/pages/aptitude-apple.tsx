@@ -1023,6 +1023,40 @@ app.post('/api/users', (req, res) => {
     );
   }
 
+  // Submit assessment results mutation
+  const submitAssessment = useMutation({
+    mutationFn: async (data: any) => {
+      const response = await fetch('/api/assessment/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      if (!response.ok) throw new Error('Failed to submit assessment');
+      return response.json();
+    },
+    onSuccess: () => {
+      console.log('Assessment submitted successfully');
+    },
+    onError: (error) => {
+      console.error('Assessment submission error:', error);
+    }
+  });
+
+  // Auto-submit results when assessment completes
+  useEffect(() => {
+    if (step === 'complete' && !submitAssessment.isSuccess && !submitAssessment.isPending) {
+      const assessmentData = {
+        candidateInfo: form.getValues(),
+        answers,
+        performanceMetrics,
+        correctAnswers: performanceMetrics.correctAnswers,
+        totalQuestions: questions.length,
+        timeSpent: 3600 - timeLeft // Total time minus remaining time
+      };
+      submitAssessment.mutate(assessmentData);
+    }
+  }, [step, submitAssessment.isSuccess, submitAssessment.isPending]);
+
   // Completion screen
   if (step === 'complete') {
     return (
@@ -1034,7 +1068,7 @@ app.post('/api/users', (req, res) => {
             </div>
             <h2 className="text-3xl font-light text-slate-900 mb-4">Assessment Complete!</h2>
             <p className="text-lg text-slate-600 font-light mb-8">
-              Thank you for completing the assessment. Your results are being processed.
+              Thank you for completing the assessment. Your results have been submitted successfully.
             </p>
             
             {/* Final Performance Summary */}
@@ -1048,6 +1082,14 @@ app.post('/api/users', (req, res) => {
                 <p className="text-sm text-slate-600">Correct Answers</p>
               </div>
             </div>
+            
+            {submitAssessment.isPending && (
+              <p className="text-sm text-blue-600 mb-4">Submitting results...</p>
+            )}
+            
+            {submitAssessment.isSuccess && (
+              <p className="text-sm text-green-600 mb-4">Results submitted successfully!</p>
+            )}
             
             <p className="text-sm text-slate-500">
               Our team will review your submission and contact you within 48 hours.

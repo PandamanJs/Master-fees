@@ -31,28 +31,27 @@ import {
   MessageSquare
 } from "lucide-react";
 
-interface AptitudeResult {
-  id: string;
-  candidate: {
-    fullName: string;
-    email: string;
-    phone: string;
-    experience: string;
-  };
+interface AssessmentResult {
+  id: number;
+  fullName: string;
+  email: string;
+  phone: string;
+  experience: string;
   testTypes: string[];
-  scores: Record<string, number>;
-  totalQuestions: number;
-  correctAnswers: number;
-  timeSpent: number;
-  aiAnalysis: {
-    behaviorScore: number;
+  answers: Record<string, any>;
+  performanceMetrics: {
+    correctAnswers: number;
+    accuracy: number;
+    timePerQuestion: number;
+    confidenceScore: number;
     focusScore: number;
-    suspiciousActivity: string[];
-    overallIntegrity: 'high' | 'medium' | 'low';
   };
-  submittedAt: string;
-  status: 'pending' | 'reviewed' | 'rejected' | 'approved';
-  adminNotes?: string;
+  accuracy: number;
+  correctAnswers: number;
+  totalQuestions: number;
+  timeSpent: number;
+  status: string;
+  createdAt: string;
 }
 
 export default function AppleAdminPanel() {
@@ -63,9 +62,9 @@ export default function AppleAdminPanel() {
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [selectedCandidate, setSelectedCandidate] = useState<any>(null);
 
-  // Fetch aptitude test results
-  const { data: results = [], isLoading } = useQuery<AptitudeResult[]>({
-    queryKey: ['/api/aptitude/results'],
+  // Fetch assessment results
+  const { data: results = [], isLoading } = useQuery<AssessmentResult[]>({
+    queryKey: ['/api/assessment/results'],
     enabled: isAuthenticated,
   });
 
@@ -86,9 +85,9 @@ export default function AppleAdminPanel() {
   };
 
   // Filter results
-  const filteredResults = results.filter((result: AptitudeResult) => {
-    const matchesSearch = result.candidate.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         result.candidate.email.toLowerCase().includes(searchTerm.toLowerCase());
+  const filteredResults = results.filter((result: AssessmentResult) => {
+    const matchesSearch = result.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         result.email.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = statusFilter === 'all' || result.status === statusFilter;
     return matchesSearch && matchesStatus;
   });
