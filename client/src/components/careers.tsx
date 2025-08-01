@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+// Removed Card imports as we're using liquid glass design
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -294,36 +294,36 @@ export default function Careers() {
         </div>
 
         {/* Application Form */}
-        <Card className="max-w-4xl mx-auto border-0 shadow-lg">
-          <CardHeader className="text-center">
-            <CardTitle className="text-2xl text-slate-900">Apply for a Position</CardTitle>
-            <CardDescription>
+        <div className="max-w-4xl mx-auto ultra-glass-light p-8 rounded-3xl shadow-2xl border border-emerald-400/20">
+          <div className="text-center mb-8">
+            <h3 className="text-3xl font-extralight text-white mb-4 tracking-[-0.02em]">Apply for a Position</h3>
+            <p className="text-slate-300 font-light opacity-90">
               We'd love to hear from you! Fill out the form below to apply for any of our open positions.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
+            </p>
+          </div>
+          <div>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               {/* Personal Information */}
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <Label htmlFor="fullName" className="flex items-center gap-2">
-                    <User className="w-4 h-4" />
+                  <Label htmlFor="fullName" className="flex items-center gap-2 text-white font-medium">
+                    <User className="w-4 h-4 text-emerald-400" />
                     Full Name *
                   </Label>
                   <Input
                     id="fullName"
                     {...register("fullName")}
                     placeholder="Enter your full name"
-                    className="border-slate-200 focus:border-emerald-500"
+                    className="bg-white/10 border-emerald-400/30 text-white placeholder-slate-400 focus:border-emerald-400 focus:bg-white/15 backdrop-blur-sm"
                   />
                   {errors.fullName && (
-                    <p className="text-sm text-red-600">{errors.fullName.message}</p>
+                    <p className="text-sm text-red-400">{errors.fullName.message}</p>
                   )}
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="email" className="flex items-center gap-2">
-                    <Mail className="w-4 h-4" />
+                  <Label htmlFor="email" className="flex items-center gap-2 text-white font-medium">
+                    <Mail className="w-4 h-4 text-emerald-400" />
                     Email Address *
                   </Label>
                   <Input
@@ -331,39 +331,39 @@ export default function Careers() {
                     type="email"
                     {...register("email")}
                     placeholder="your.email@example.com"
-                    className="border-slate-200 focus:border-emerald-500"
+                    className="bg-white/10 border-emerald-400/30 text-white placeholder-slate-400 focus:border-emerald-400 focus:bg-white/15 backdrop-blur-sm"
                   />
                   {errors.email && (
-                    <p className="text-sm text-red-600">{errors.email.message}</p>
+                    <p className="text-sm text-red-400">{errors.email.message}</p>
                   )}
                 </div>
               </div>
 
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <Label htmlFor="phone" className="flex items-center gap-2">
-                    <Phone className="w-4 h-4" />
+                  <Label htmlFor="phone" className="flex items-center gap-2 text-white font-medium">
+                    <Phone className="w-4 h-4 text-emerald-400" />
                     Phone Number *
                   </Label>
                   <Input
                     id="phone"
                     {...register("phone")}
                     placeholder="+260 XXX XXX XXX"
-                    className="border-slate-200 focus:border-emerald-500"
+                    className="bg-white/10 border-emerald-400/30 text-white placeholder-slate-400 focus:border-emerald-400 focus:bg-white/15 backdrop-blur-sm"
                   />
                   {errors.phone && (
-                    <p className="text-sm text-red-600">{errors.phone.message}</p>
+                    <p className="text-sm text-red-400">{errors.phone.message}</p>
                   )}
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="position" className="flex items-center gap-2">
-                    <Briefcase className="w-4 h-4" />
+                  <Label htmlFor="position" className="flex items-center gap-2 text-white font-medium">
+                    <Briefcase className="w-4 h-4 text-emerald-400" />
                     Position Applying For *
                   </Label>
                   <Select onValueChange={(value) => setValue('position', value)}>
-                    <SelectTrigger className="border-slate-200 focus:border-emerald-500">
-                      <SelectValue placeholder="Select a position" />
+                    <SelectTrigger className="bg-white/10 border-emerald-400/30 text-white focus:border-emerald-400 focus:bg-white/15 backdrop-blur-sm">
+                      <SelectValue placeholder="Select a position" className="text-slate-400" />
                     </SelectTrigger>
                     <SelectContent>
                       {openPositions.map((position) => (
@@ -375,20 +375,20 @@ export default function Careers() {
                     </SelectContent>
                   </Select>
                   {errors.position && (
-                    <p className="text-sm text-red-600">{errors.position.message}</p>
+                    <p className="text-sm text-red-400">{errors.position.message}</p>
                   )}
                 </div>
               </div>
 
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <Label htmlFor="experience" className="flex items-center gap-2">
-                    <Clock className="w-4 h-4" />
+                  <Label htmlFor="experience" className="flex items-center gap-2 text-white font-medium">
+                    <Clock className="w-4 h-4 text-emerald-400" />
                     Experience Level *
                   </Label>
                   <Select onValueChange={(value) => setValue('experience', value)}>
-                    <SelectTrigger className="border-slate-200 focus:border-emerald-500">
-                      <SelectValue placeholder="Select experience level" />
+                    <SelectTrigger className="bg-white/10 border-emerald-400/30 text-white focus:border-emerald-400 focus:bg-white/15 backdrop-blur-sm">
+                      <SelectValue placeholder="Select experience level" className="text-slate-400" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="entry">Entry Level (0-2 years)</SelectItem>
@@ -398,18 +398,18 @@ export default function Careers() {
                     </SelectContent>
                   </Select>
                   {errors.experience && (
-                    <p className="text-sm text-red-600">{errors.experience.message}</p>
+                    <p className="text-sm text-red-400">{errors.experience.message}</p>
                   )}
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="availability" className="flex items-center gap-2">
-                    <Clock className="w-4 h-4" />
+                  <Label htmlFor="availability" className="flex items-center gap-2 text-white font-medium">
+                    <Clock className="w-4 h-4 text-emerald-400" />
                     Availability *
                   </Label>
                   <Select onValueChange={(value) => setValue('availability', value)}>
-                    <SelectTrigger className="border-slate-200 focus:border-emerald-500">
-                      <SelectValue placeholder="When can you start?" />
+                    <SelectTrigger className="bg-white/10 border-emerald-400/30 text-white focus:border-emerald-400 focus:bg-white/15 backdrop-blur-sm">
+                      <SelectValue placeholder="When can you start?" className="text-slate-400" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="immediately">Immediately</SelectItem>
@@ -419,20 +419,20 @@ export default function Careers() {
                     </SelectContent>
                   </Select>
                   {errors.availability && (
-                    <p className="text-sm text-red-600">{errors.availability.message}</p>
+                    <p className="text-sm text-red-400">{errors.availability.message}</p>
                   )}
                 </div>
               </div>
 
               {/* CV Upload Section */}
-              <div className="space-y-4 p-6 bg-gradient-to-r from-emerald-50 to-teal-50 rounded-lg border border-emerald-200">
+              <div className="space-y-4 p-6 ultra-glass-dark rounded-2xl border border-emerald-400/30">
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="p-2 bg-emerald-100 rounded-full">
-                    <Bot className="w-5 h-5 text-emerald-600" />
+                  <div className="p-2 bg-emerald-400/20 rounded-full border border-emerald-400/30">
+                    <Bot className="w-5 h-5 text-emerald-400" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-slate-900">Smart CV Upload</h3>
-                    <p className="text-sm text-slate-600">Upload your CV and we'll automatically fill out the form for you</p>
+                    <h3 className="font-semibold text-white">Smart CV Upload</h3>
+                    <p className="text-sm text-slate-300">Upload your CV and we'll automatically fill out the form for you</p>
                   </div>
                 </div>
                 
@@ -465,29 +465,29 @@ export default function Careers() {
                   )}
                 </div>
                 
-                <p className="text-xs text-slate-500">
+                <p className="text-xs text-slate-400">
                   Supported formats: PDF, DOC, DOCX (max 5MB). Your CV will be securely processed to extract relevant information.
                 </p>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="education" className="flex items-center gap-2">
-                  <GraduationCap className="w-4 h-4" />
+                <Label htmlFor="education" className="flex items-center gap-2 text-white font-medium">
+                  <GraduationCap className="w-4 h-4 text-emerald-400" />
                   Education Background *
                 </Label>
                 <Input
                   id="education"
                   {...register("education")}
                   placeholder="e.g., Bachelor's in Computer Science, University of Zambia"
-                  className="border-slate-200 focus:border-emerald-500"
+                  className="bg-white/10 border-emerald-400/30 text-white placeholder-slate-400 focus:border-emerald-400 focus:bg-white/15 backdrop-blur-sm"
                 />
                 {errors.education && (
-                  <p className="text-sm text-red-600">{errors.education.message}</p>
+                  <p className="text-sm text-red-400">{errors.education.message}</p>
                 )}
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="skills">
+                <Label htmlFor="skills" className="text-white font-medium">
                   Relevant Skills & Technologies *
                 </Label>
                 <Textarea
@@ -495,15 +495,15 @@ export default function Careers() {
                   {...register("skills")}
                   placeholder="List your relevant skills, programming languages, frameworks, tools, etc."
                   rows={3}
-                  className="border-slate-200 focus:border-emerald-500"
+                  className="bg-white/10 border-emerald-400/30 text-white placeholder-slate-400 focus:border-emerald-400 focus:bg-white/15 backdrop-blur-sm resize-none"
                 />
                 {errors.skills && (
-                  <p className="text-sm text-red-600">{errors.skills.message}</p>
+                  <p className="text-sm text-red-400">{errors.skills.message}</p>
                 )}
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="motivation">
+                <Label htmlFor="motivation" className="text-white font-medium">
                   Why do you want to join Master Fees? *
                 </Label>
                 <Textarea
@@ -511,37 +511,37 @@ export default function Careers() {
                   {...register("motivation")}
                   placeholder="Tell us about your motivation, what excites you about our mission, and how you can contribute to our team..."
                   rows={4}
-                  className="border-slate-200 focus:border-emerald-500"
+                  className="bg-white/10 border-emerald-400/30 text-white placeholder-slate-400 focus:border-emerald-400 focus:bg-white/15 backdrop-blur-sm resize-none"
                 />
                 {errors.motivation && (
-                  <p className="text-sm text-red-600">{errors.motivation.message}</p>
+                  <p className="text-sm text-red-400">{errors.motivation.message}</p>
                 )}
               </div>
 
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <Label htmlFor="resume" className="flex items-center gap-2">
-                    <FileText className="w-4 h-4" />
+                  <Label htmlFor="resume" className="flex items-center gap-2 text-white font-medium">
+                    <FileText className="w-4 h-4 text-emerald-400" />
                     Resume/CV Link
                   </Label>
                   <Input
                     id="resume"
                     {...register("resume")}
                     placeholder="Link to your resume (Google Drive, Dropbox, etc.)"
-                    className="border-slate-200 focus:border-emerald-500"
+                    className="bg-white/10 border-emerald-400/30 text-white placeholder-slate-400 focus:border-emerald-400 focus:bg-white/15 backdrop-blur-sm"
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="portfolio" className="flex items-center gap-2">
-                    <Upload className="w-4 h-4" />
+                  <Label htmlFor="portfolio" className="flex items-center gap-2 text-white font-medium">
+                    <Upload className="w-4 h-4 text-emerald-400" />
                     Portfolio/LinkedIn
                   </Label>
                   <Input
                     id="portfolio"
                     {...register("portfolio")}
                     placeholder="Link to your portfolio or LinkedIn profile"
-                    className="border-slate-200 focus:border-emerald-500"
+                    className="bg-white/10 border-emerald-400/30 text-white placeholder-slate-400 focus:border-emerald-400 focus:bg-white/15 backdrop-blur-sm"
                   />
                 </div>
               </div>
@@ -556,16 +556,16 @@ export default function Careers() {
                 </Button>
               </div>
             </form>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
         {/* Call to Action */}
         <div className="text-center mt-16">
-          <p className="text-slate-600 mb-4">
+          <p className="text-slate-300 mb-4">
             Don't see a position that fits? We're always looking for talented individuals.
           </p>
-          <p className="text-sm text-slate-500">
-            Send us your resume at <a href="mailto:masterfees101@gmail.com" className="text-emerald-600 hover:text-emerald-700">masterfees101@gmail.com</a>
+          <p className="text-sm text-slate-400">
+            Send us your resume at <a href="mailto:masterfees101@gmail.com" className="text-emerald-400 hover:text-emerald-300 transition-colors">masterfees101@gmail.com</a>
           </p>
         </div>
       </div>
