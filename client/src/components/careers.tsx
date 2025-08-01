@@ -10,8 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
-import { useMutation } from "@tanstack/react-query";
-import { apiRequest } from "@/lib/queryClient";
+// Using FormSubmit for form submission instead of API mutations
 import { ObjectUploader } from "@/components/ObjectUploader";
 import type { UploadResult } from '@uppy/core';
 import { 
@@ -64,33 +63,52 @@ export default function Careers() {
     resolver: zodResolver(jobApplicationSchema)
   });
 
-  const submitApplicationMutation = useMutation({
-    mutationFn: (data: JobApplicationForm) => 
-      apiRequest('/api/job-applications', 'POST', data),
-    onSuccess: () => {
-      toast({
-        title: "Application Submitted!",
-        description: "Thank you for your interest. We'll review your application and get back to you soon.",
+  const onSubmit = async (data: JobApplicationForm) => {
+    setIsSubmitting(true);
+    
+    try {
+      // Create FormData for FormSubmit
+      const formData = new FormData();
+      
+      // Add all form fields with descriptive names for email
+      formData.append('Full Name', data.fullName);
+      formData.append('Email Address', data.email);
+      formData.append('Phone Number', data.phone);
+      formData.append('Position Applied For', data.position);
+      formData.append('Experience Level', data.experience);
+      formData.append('Education Background', data.education);
+      formData.append('Skills & Technologies', data.skills);
+      formData.append('Motivation', data.motivation);
+      formData.append('Availability', data.availability);
+      if (data.portfolio) formData.append('Portfolio/LinkedIn', data.portfolio);
+      if (cvFile || data.resume) formData.append('Resume/CV Link', cvFile || data.resume || '');
+      
+      // Submit to FormSubmit
+      const response = await fetch('https://formsubmit.co/masterfees101@gmail.com', {
+        method: 'POST',
+        body: formData
       });
-      reset();
-      setIsSubmitting(false);
-    },
-    onError: (error: any) => {
+      
+      if (response.ok) {
+        toast({
+          title: "Application Submitted!",
+          description: "Thank you for your interest. We'll review your application and get back to you soon.",
+        });
+        reset();
+        setCvFile("");
+      } else {
+        throw new Error('Form submission failed');
+      }
+    } catch (error) {
+      console.error('Form submission error:', error);
       toast({
         title: "Application Failed",
-        description: error.message || "There was an error submitting your application. Please try again.",
+        description: "There was an error submitting your application. Please try again.",
         variant: "destructive",
       });
+    } finally {
       setIsSubmitting(false);
     }
-  });
-
-  const onSubmit = (data: JobApplicationForm) => {
-    setIsSubmitting(true);
-    submitApplicationMutation.mutate({
-      ...data,
-      resume: cvFile || data.resume
-    });
   };
 
   const handleCVUpload = async () => {
@@ -303,6 +321,12 @@ export default function Careers() {
           </div>
           <div>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+              {/* FormSubmit Configuration Fields */}
+              <input type="hidden" name="_subject" value="New Job Application - Master Fees" />
+              <input type="hidden" name="_next" value={window.location.href} />
+              <input type="hidden" name="_template" value="table" />
+              <input type="hidden" name="_captcha" value="false" />
+              <input type="hidden" name="_autoresponse" value="Thank you for your job application! We have received your submission and will review it shortly. We'll get back to you within 2-3 business days." />
               {/* Personal Information */}
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
