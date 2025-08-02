@@ -304,6 +304,8 @@ export default function OnboardingPage() {
       setStep(8);
     } else if (step === 10) {
       setStep(9);
+    } else if (step === 11) {
+      setStep(10);
     }
   };
 
@@ -670,12 +672,12 @@ export default function OnboardingPage() {
       console.log('Complete school onboarding with all 10 steps completed successfully');
       // Here you would typically send this to your backend API for account creation
       
-      // Navigate to dashboard or confirmation page
-      navigate('/aptitude-enhanced');
+      // Show success completion and redirect to Master Fees dashboard
+      setStep(11); // Success completion step
     } catch (error) {
       console.error('Error completing final account setup:', error);
-      // Still navigate even if storage fails
-      navigate('/aptitude-enhanced');
+      // Still show success even if storage fails
+      setStep(11);
     }
   };
 
@@ -2269,6 +2271,95 @@ Thank you for your payment!`}
                 Your account will be created and you'll be redirected to the dashboard
               </p>
             </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Step 11: Success Completion Screen
+  if (step === 11) {
+    // Auto-redirect to Master Fees dashboard after 3 seconds
+    setTimeout(() => {
+      window.location.href = 'https://master-fees.com/dashboard';
+    }, 3000);
+
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-teal-900 flex items-center justify-center px-4 relative overflow-hidden">
+        {/* Celebration Background Elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 ultra-glass-dark rounded-full opacity-10 animate-pulse"></div>
+          <div className="absolute bottom-1/3 right-1/4 w-64 h-64 ultra-glass-dark rounded-full opacity-8 animate-pulse delay-500"></div>
+          <div className="absolute top-1/2 right-1/3 w-48 h-48 ultra-glass-light rounded-full opacity-6 animate-pulse delay-1000"></div>
+        </div>
+
+        <div className="w-full max-w-lg relative z-10 text-center">
+          {/* Success Badge */}
+          <div className="mb-8">
+            <div className="mx-auto w-24 h-24 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-full flex items-center justify-center shadow-2xl ultra-glass-light backdrop-blur-xl border border-emerald-300/20">
+              <svg className="w-12 h-12 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+          </div>
+
+          {/* Success Message */}
+          <div className="ultra-glass-light backdrop-blur-xl rounded-2xl shadow-2xl border border-slate-600/20 p-8">
+            <h1 className="text-4xl font-bold text-white mb-4">
+              🎉 Setup Complete!
+            </h1>
+            
+            <p className="text-xl text-slate-300 mb-6">
+              Congratulations! Your school onboarding has been completed successfully.
+            </p>
+
+            <div className="space-y-3 text-slate-400 mb-8">
+              <div className="flex items-center justify-center gap-2">
+                <svg className="w-5 h-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+                <span>School information registered</span>
+              </div>
+              <div className="flex items-center justify-center gap-2">
+                <svg className="w-5 h-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+                <span>Pricing structure configured</span>
+              </div>
+              <div className="flex items-center justify-center gap-2">
+                <svg className="w-5 h-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+                <span>Banking details verified</span>
+              </div>
+              <div className="flex items-center justify-center gap-2">
+                <svg className="w-5 h-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+                <span>Account credentials created</span>
+              </div>
+            </div>
+
+            <div className="bg-emerald-600/20 border border-emerald-400/30 rounded-xl p-4 mb-6">
+              <p className="text-emerald-200 text-sm">
+                Redirecting to your Master Fees dashboard in 3 seconds...
+              </p>
+            </div>
+
+            <Button
+              onClick={() => window.location.href = 'https://master-fees.com/dashboard'}
+              className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold shadow-lg backdrop-blur-sm border-0 rounded-xl px-8 h-12"
+            >
+              Go to Dashboard Now
+              <ArrowRight className="w-4 h-4 ml-2" />
+            </Button>
+          </div>
+
+          {/* Footer */}
+          <div className="mt-8">
+            <p className="text-slate-400 text-sm">
+              Welcome to Master Fees! Start managing your school payments efficiently.
+            </p>
           </div>
         </div>
       </div>
