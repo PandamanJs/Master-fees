@@ -27,6 +27,14 @@ export default function OnboardingPage() {
   const [country, setCountry] = useState('');
   const [stateProvince, setStateProvince] = useState('');
   const [townDistrict, setTownDistrict] = useState('');
+  
+  // Step 3: Detailed school info
+  const [schoolEmail, setSchoolEmail] = useState('');
+  const [contactNumbers, setContactNumbers] = useState('');
+  const [physicalAddress, setPhysicalAddress] = useState('');
+  const [schoolCategories, setSchoolCategories] = useState('');
+  const [schoolLogo, setSchoolLogo] = useState('');
+  
   const [, navigate] = useLocation();
 
   const handleStep1Submit = (e: React.FormEvent) => {
@@ -62,18 +70,51 @@ export default function OnboardingPage() {
           console.log('School data stored successfully');
         }
         
-        // Navigate to assessment or dashboard
-        navigate('/aptitude-apple');
+        // Move to step 3 for detailed info
+        setStep(3);
       } catch (error) {
         console.error('Failed to store school data:', error);
-        // Still navigate even if storage fails
-        navigate('/aptitude-apple');
+        // Still move to step 3 even if storage fails
+        setStep(3);
       }
     }
   };
 
+  const handleStep3Submit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    try {
+      // Store the detailed school information
+      const detailedSchoolData = {
+        name: schoolName,
+        country,
+        stateProvince,
+        townDistrict,
+        email: schoolEmail,
+        contactNumbers,
+        physicalAddress,
+        categories: schoolCategories,
+        logo: schoolLogo
+      };
+      
+      console.log('Detailed school data stored successfully');
+      // Here you would typically send this to your backend
+      
+      // Navigate to dashboard or assessment
+      navigate('/aptitude-apple');
+    } catch (error) {
+      console.error('Error storing detailed school data:', error);
+      // Still navigate even if storage fails
+      navigate('/aptitude-apple');
+    }
+  };
+
   const handleBack = () => {
-    setStep(1);
+    if (step === 2) {
+      setStep(1);
+    } else if (step === 3) {
+      setStep(2);
+    }
   };
 
   // Countries list for dropdown
@@ -177,6 +218,153 @@ export default function OnboardingPage() {
             <div className="mt-8 text-center">
               <p className="text-slate-400 font-light text-xs">
                 Designed for modern educational institutions
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Step 3: Detailed School Information
+  if (step === 3) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-teal-900 flex items-center justify-center px-4 relative overflow-hidden">
+        {/* Subtle Liquid Glass Background Elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 ultra-glass-dark rounded-full opacity-8 animate-float"></div>
+          <div className="absolute bottom-1/3 right-1/4 w-64 h-64 ultra-glass-dark rounded-full opacity-6 animate-float delay-1000"></div>
+          <div className="absolute top-1/2 right-1/3 w-48 h-48 ultra-glass-light rounded-full opacity-5 animate-float delay-500"></div>
+        </div>
+
+        <div className="w-full max-w-4xl relative z-10">
+          {/* Header */}
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-bold text-white mb-2">Detailed School Info</h1>
+            <p className="text-slate-400">Complete your school profile with additional details</p>
+          </div>
+
+          {/* Clean form card with liquid glass */}
+          <div className="ultra-glass-light backdrop-blur-xl rounded-2xl shadow-2xl border border-slate-600/20 p-8">
+            <form onSubmit={handleStep3Submit} className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                {/* Left Column - School Logo Upload */}
+                <div className="space-y-4">
+                  <div className="aspect-square max-w-sm mx-auto">
+                    <div className="w-full h-full border-2 border-dashed border-slate-600/40 rounded-xl flex flex-col items-center justify-center bg-slate-700/20 backdrop-blur-sm hover:bg-slate-600/20 transition-colors cursor-pointer">
+                      <div className="text-slate-400 mb-4">
+                        <svg className="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="w-full bg-slate-700/30 border-slate-600/40 text-white hover:bg-slate-600/40 rounded-xl h-12"
+                  >
+                    School Logo Upload
+                  </Button>
+                </div>
+
+                {/* Right Column - School Details */}
+                <div className="space-y-6">
+                  
+                  {/* Official School Email */}
+                  <div>
+                    <label className="block text-slate-200 mb-3 font-medium">
+                      Official School Email
+                    </label>
+                    <Input
+                      type="email"
+                      value={schoolEmail}
+                      onChange={(e) => setSchoolEmail(e.target.value)}
+                      className="border-0 bg-slate-700/30 backdrop-blur-sm text-white placeholder:text-slate-400 focus:bg-slate-600/30 focus:ring-2 focus:ring-emerald-400/30 rounded-xl h-12"
+                      placeholder="school@example.com"
+                    />
+                  </div>
+
+                  {/* Official Contact Numbers */}
+                  <div>
+                    <label className="block text-slate-200 mb-3 font-medium">
+                      Official Contact Numbers
+                    </label>
+                    <Input
+                      type="tel"
+                      value={contactNumbers}
+                      onChange={(e) => setContactNumbers(e.target.value)}
+                      className="border-0 bg-slate-700/30 backdrop-blur-sm text-white placeholder:text-slate-400 focus:bg-slate-600/30 focus:ring-2 focus:ring-emerald-400/30 rounded-xl h-12"
+                      placeholder="+260 xxx xxx xxx"
+                    />
+                  </div>
+
+                  {/* School Physical Address */}
+                  <div>
+                    <label className="block text-slate-200 mb-3 font-medium">
+                      School Physical Address
+                    </label>
+                    <Input
+                      value={physicalAddress}
+                      onChange={(e) => setPhysicalAddress(e.target.value)}
+                      className="border-0 bg-slate-700/30 backdrop-blur-sm text-white placeholder:text-slate-400 focus:bg-slate-600/30 focus:ring-2 focus:ring-emerald-400/30 rounded-xl h-12"
+                      placeholder="Complete physical address"
+                    />
+                  </div>
+
+                  {/* Select School Categories */}
+                  <div>
+                    <label className="block text-slate-200 mb-3 font-medium">
+                      Select School Categories
+                    </label>
+                    <Select value={schoolCategories} onValueChange={setSchoolCategories}>
+                      <SelectTrigger className="border-0 bg-slate-700/30 backdrop-blur-sm text-white focus:bg-slate-600/30 focus:ring-2 focus:ring-emerald-400/30 rounded-xl h-12">
+                        <SelectValue placeholder="Select category" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-slate-800 border-slate-600">
+                        <SelectItem value="primary" className="text-white hover:bg-slate-700">Primary School</SelectItem>
+                        <SelectItem value="secondary" className="text-white hover:bg-slate-700">Secondary School</SelectItem>
+                        <SelectItem value="combined" className="text-white hover:bg-slate-700">Combined School</SelectItem>
+                        <SelectItem value="international" className="text-white hover:bg-slate-700">International School</SelectItem>
+                        <SelectItem value="community" className="text-white hover:bg-slate-700">Community School</SelectItem>
+                        <SelectItem value="private" className="text-white hover:bg-slate-700">Private School</SelectItem>
+                        <SelectItem value="technical" className="text-white hover:bg-slate-700">Technical School</SelectItem>
+                        <SelectItem value="vocational" className="text-white hover:bg-slate-700">Vocational School</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                </div>
+              </div>
+
+              {/* Navigation Buttons */}
+              <div className="flex justify-between pt-6">
+                <Button
+                  type="button" 
+                  onClick={handleBack}
+                  variant="outline"
+                  className="bg-slate-700/30 border-slate-600/40 text-white hover:bg-slate-600/40 rounded-xl px-8 h-12"
+                >
+                  <ArrowLeft className="w-4 h-4 mr-2" />
+                  Back
+                </Button>
+                
+                <Button
+                  type="submit"
+                  className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold shadow-lg backdrop-blur-sm border-0 rounded-xl px-8 h-12"
+                >
+                  Complete Setup
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </div>
+            </form>
+
+            {/* Simple footer text */}
+            <div className="mt-8 text-center">
+              <p className="text-slate-400 font-light text-xs">
+                Your information is secure and will be used to enhance your school management experience
               </p>
             </div>
           </div>
