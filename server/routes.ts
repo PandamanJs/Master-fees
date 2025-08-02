@@ -11,6 +11,9 @@ import {
   insertStudentFeeSchema,
   insertPaymentSchema,
   contactFormSchema,
+  insertSchoolOnboardingSchema,
+  schoolOnboarding,
+  schools,
   type User 
 } from "@shared/schema";
 import { storage } from "./storage";
@@ -23,6 +26,11 @@ import {
   ObjectStorageService,
   ObjectNotFoundError,
 } from "./objectStorage";
+import { db } from "./db";
+import { eq, desc, ilike, or, sql } from "drizzle-orm";
+import { randomUUID } from "crypto";
+import bcrypt from "bcrypt";
+import OpenAI from "openai";
 
 // Test question generator
 function generateTestQuestions(testTypes: string[]) {

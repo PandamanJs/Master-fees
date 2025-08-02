@@ -1563,7 +1563,7 @@ export default function OnboardingPage() {
 
 ${schoolName || '[School Name]'}
 ${physicalAddress || '[School Address]'}
-Contact: ${contactNumbers.join(', ') || '[Contact Numbers]'}
+Contact: ${Array.isArray(contactNumbers) ? contactNumbers.join(', ') : (contactNumbers || '[Contact Numbers]')}
 Email: ${schoolEmail || '[School Email]'}
 
 ----------------------------------------

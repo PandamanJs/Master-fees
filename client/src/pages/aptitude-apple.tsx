@@ -404,75 +404,7 @@ export default function AppleAptitudeTest() {
             </p>
           </div>
 
-          <Card className="border-0 ultra-glass-light shadow-2xl rounded-3xl overflow-hidden">
-            <CardHeader className="text-center pb-8 pt-12 px-12">
-              <CardTitle className="text-3xl font-light text-slate-900 mb-4">
-                Candidate Registration
-              </CardTitle>
-              <CardDescription className="text-lg text-slate-600 font-light">
-                Please provide your details to begin the assessment
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="px-12 pb-12">
-              <form onSubmit={form.handleSubmit((data) => onSubmitRegistration(data as CandidateForm))} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <Label htmlFor="fullName" className="text-slate-700 font-medium">Full Name</Label>
-                    <Input
-                      {...form.register("fullName")}
-                      className="mt-2 h-12 ultra-glass-light"
-                      placeholder="Your full name"
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="email" className="text-slate-700 font-medium">Email</Label>
-                    <Input
-                      {...form.register("email")}
-                      type="email"
-                      className="mt-2 h-12 ultra-glass-light"
-                      placeholder="your.email@example.com"
-                    />
-                  </div>
-                </div>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <Label htmlFor="phone" className="text-slate-700 font-medium">Phone Number</Label>
-                    <Input
-                      {...form.register("phone")}
-                      className="mt-2 h-12 ultra-glass-light"
-                      placeholder="+1 (555) 123-4567"
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="experience" className="text-slate-700 font-medium">Years of Experience</Label>
-                    <Input
-                      {...form.register("experience")}
-                      className="mt-2 h-12 ultra-glass-light"
-                      placeholder="e.g., 3 years"
-                    />
-                  </div>
-                </div>
-
-                <div className="col-span-2">
-                  <Label htmlFor="additional-info" className="text-slate-700 font-medium">Additional Information (Optional)</Label>
-                  <Textarea
-                    className="mt-2 min-h-[80px] ultra-glass-light"
-                    placeholder="Tell us about your experience, portfolio links, or why you want to join our team..."
-                  />
-                </div>
-
-                <Button
-                  type="submit"
-                  disabled={submitApplication.isPending}
-                  className="w-full h-14 ultra-glass-dark text-white font-medium rounded-xl shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50"
-                >
-                  {submitApplication.isPending ? 'Submitting...' : 'Continue to Assessment'}
-                  <ArrowRight className="w-5 h-5 ml-2" />
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
+          
         </div>
       </div>
     );

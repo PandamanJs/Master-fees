@@ -352,3 +352,82 @@ export const contactFormSchema = z.object({
 });
 
 export type ContactFormData = z.infer<typeof contactFormSchema>;
+
+// School Onboarding table - Complete onboarding data storage
+export const schoolOnboarding = pgTable("school_onboarding", {
+  id: serial("id").primaryKey(),
+  
+  // Step 1: School Selection
+  schoolName: text("school_name").notNull(),
+  selectedFromDatabase: boolean("selected_from_database").default(false),
+  
+  // Step 2: Location Information
+  country: text("country").notNull(),
+  stateProvince: text("state_province").notNull(),
+  townDistrict: text("town_district").notNull(),
+  
+  // Step 3: Detailed School Information
+  schoolEmail: text("school_email").notNull(),
+  contactNumbers: text("contact_numbers").array(),
+  physicalAddress: text("physical_address"),
+  schoolCategories: text("school_categories").array(),
+  schoolLogo: text("school_logo"),
+  
+  // Step 4: Fee Categories
+  selectedFeeCategories: text("selected_fee_categories").array(),
+  customFeeCategory: text("custom_fee_category"),
+  
+  // Step 5: Pricing Structure
+  gradePricing: jsonb("grade_pricing"), // Complete pricing structure
+  additionalFees: jsonb("additional_fees"),
+  pricingCategories: text("pricing_categories").array(),
+  
+  // Step 6: Product Groups
+  productGroups: jsonb("product_groups"), // Group assignments
+  
+  // Step 7: Receipt Template
+  receiptTemplate: text("receipt_template"),
+  
+  // Step 8: Bank Account Information
+  bankAccounts: jsonb("bank_accounts"), // Array of bank account objects
+  
+  // Step 9: Account Verification
+  verificationData: jsonb("verification_data"), // Complete verification info
+  
+  // Step 10: Account Credentials
+  dashboardEmail: text("dashboard_email").notNull(),
+  dashboardPassword: text("dashboard_password").notNull(), // Should be hashed in production
+  
+  // AI Enhancement Fields
+  aiAutoFilled: boolean("ai_auto_filled").default(false),
+  aiConfidenceScore: integer("ai_confidence_score"), // 0-100
+  aiSuggestedData: jsonb("ai_suggested_data"), // Store AI suggestions for review
+  
+  // Status and Tracking
+  onboardingStatus: text("onboarding_status").default("in_progress"), // 'in_progress', 'completed', 'pending_verification'
+  currentStep: integer("current_step").default(1),
+  completedSteps: integer("completed_steps").array(),
+  
+  // Unique identifier for dashboard access
+  schoolUniqueId: text("school_unique_id").unique().notNull(),
+  
+  // System Fields
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+  completedAt: timestamp("completed_at"),
+  
+  // Dashboard access tracking
+  lastLoginAt: timestamp("last_login_at"),
+  isActive: boolean("is_active").default(true),
+});
+
+export const insertSchoolOnboardingSchema = createInsertSchema(schoolOnboarding).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+  completedAt: true,
+  lastLoginAt: true,
+});
+
+export type SchoolOnboarding = typeof schoolOnboarding.$inferSelect;
+export type NewSchoolOnboarding = z.infer<typeof insertSchoolOnboardingSchema>;
