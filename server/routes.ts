@@ -824,7 +824,9 @@ router.post("/schools/ai-suggest", async (req, res) => {
     // Get existing schools for context
     const existingSchools = getZambianSchools();
     
-    const suggestions = await generateSchoolSuggestions({
+    // Use fallback suggestions by default since OpenAI quota is exceeded
+    const { generateFallbackSuggestions } = await import("./ai-fallback-suggestions");
+    const suggestions = generateFallbackSuggestions({
       partialSchoolName,
       country,
       province,
@@ -832,12 +834,12 @@ router.post("/schools/ai-suggest", async (req, res) => {
       existingSchools
     });
     
-    res.json({ success: true, suggestions });
+    res.json({ success: true, suggestions, source: 'smart_patterns' });
   } catch (error) {
-    console.error("Error generating AI school suggestions:", error);
+    console.error("Error generating school suggestions:", error);
     res.status(500).json({ 
       success: false, 
-      error: "Failed to generate school suggestions. Please check your OpenAI API key." 
+      error: "Failed to generate school suggestions" 
     });
   }
 });

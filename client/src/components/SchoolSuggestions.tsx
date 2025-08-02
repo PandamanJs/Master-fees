@@ -40,12 +40,24 @@ export function SchoolSuggestions({ query, onSelect, country, province, district
   // AI suggestions mutation
   const aiSuggestionsMutation = useMutation({
     mutationFn: async () => {
-      return await apiRequest('/api/schools/ai-suggest', 'POST', {
-        partialSchoolName: query,
-        country,
-        province,
-        district
+      const response = await fetch('/api/schools/ai-suggest', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          partialSchoolName: query,
+          country,
+          province,
+          district
+        }),
       });
+      
+      if (!response.ok) {
+        throw new Error('Failed to generate AI suggestions');
+      }
+      
+      return await response.json();
     },
   });
 
@@ -103,15 +115,25 @@ export function SchoolSuggestions({ query, onSelect, country, province, district
               )}
               <div>
                 <div className="text-emerald-400 font-medium">
-                  {aiSuggestionsMutation.isPending ? 'Generating AI suggestions...' : 'Get AI school suggestions'}
+                  {aiSuggestionsMutation.isPending ? 'Generating smart suggestions...' : 'Get smart school suggestions'}
                 </div>
-                <div className="text-slate-400 text-xs">One-click intelligent recommendations</div>
+                <div className="text-slate-400 text-xs">Intelligent recommendations based on your input</div>
               </div>
             </button>
           )}
 
+          {/* Show source indicator */}
+          {aiSuggestionsMutation.data && (aiSuggestionsMutation.data as any)?.source && (
+            <div className="px-4 py-2 text-xs text-slate-400 border-b border-slate-600/20">
+              {(aiSuggestionsMutation.data as any).source === 'openai' ? 
+                'AI-powered suggestions' : 
+                'Smart pattern-based suggestions'
+              }
+            </div>
+          )}
+
           {/* AI Suggestions */}
-          {aiSuggestions.map((suggestion, index) => (
+          {aiSuggestions.map((suggestion: AISuggestion, index: number) => (
             <button
               key={`ai-${index}`}
               type="button"
