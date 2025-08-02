@@ -813,6 +813,52 @@ router.post("/assessment/submit", async (req, res) => {
   }
 });
 
+// AI School Suggestions endpoints
+router.post("/schools/ai-suggest", async (req, res) => {
+  try {
+    const { generateSchoolSuggestions } = await import("./ai-school-suggestions");
+    const { getZambianSchools } = await import("./zambian-schools-api");
+    
+    const { partialSchoolName, country, province, district } = req.body;
+    
+    // Get existing schools for context
+    const existingSchools = getZambianSchools();
+    
+    const suggestions = await generateSchoolSuggestions({
+      partialSchoolName,
+      country,
+      province,
+      district,
+      existingSchools
+    });
+    
+    res.json({ success: true, suggestions });
+  } catch (error) {
+    console.error("Error generating AI school suggestions:", error);
+    res.status(500).json({ 
+      success: false, 
+      error: "Failed to generate school suggestions. Please check your OpenAI API key." 
+    });
+  }
+});
+
+router.post("/schools/ai-enhance", async (req, res) => {
+  try {
+    const { enhanceSchoolName } = await import("./ai-school-suggestions");
+    const { partialName, location } = req.body;
+    
+    const enhancedNames = await enhanceSchoolName(partialName, location);
+    
+    res.json({ success: true, names: enhancedNames });
+  } catch (error) {
+    console.error("Error enhancing school name:", error);
+    res.status(500).json({ 
+      success: false, 
+      error: "Failed to enhance school name" 
+    });
+  }
+});
+
 // Register QuickBooks routes
 router.use(quickbooksRouter);
 

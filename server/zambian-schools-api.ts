@@ -1,11 +1,9 @@
 // Zambian Schools API endpoint
 import { Router } from 'express';
 
-const router = Router();
-
-router.get('/schools/zambia', async (req, res) => {
-  try {
-    const zambianSchools = [
+// Export the schools data for use in AI suggestions
+export function getZambianSchools() {
+  return [
       // LUSAKA PROVINCE
       // Primary Schools - Lusaka
       { name: "Lusaka Primary School", type: "primary", district: "Lusaka Urban" },
@@ -208,6 +206,13 @@ router.get('/schools/zambia', async (req, res) => {
       { name: "Mongu Trades Training Institute", type: "technical", district: "Mongu" },
       { name: "Kasama Trades Training Institute", type: "technical", district: "Kasama" },
     ];
+}
+
+const router = Router();
+
+router.get('/schools/zambia', async (req, res) => {
+  try {
+    const zambianSchools = getZambianSchools();
 
     // Filter schools based on query parameter if provided
     const query = req.query.q as string;

@@ -142,10 +142,13 @@ export default function OnboardingPage() {
                   
                   {/* School suggestions dropdown */}
                   {schoolName.length > 0 && (
-                    <div className="absolute top-full left-0 right-0 mt-2 z-50 bg-slate-800/95 backdrop-blur-xl rounded-xl shadow-2xl border border-slate-600/20 max-h-40 overflow-y-auto">
+                    <div className="absolute top-full left-0 right-0 mt-2 z-50 bg-slate-800/95 backdrop-blur-xl rounded-xl shadow-2xl border border-slate-600/20 max-h-80 overflow-y-auto">
                       <SchoolSuggestions 
                         query={schoolName}
                         onSelect={setSchoolName}
+                        country={country}
+                        province={stateProvince}
+                        district={townDistrict}
                       />
                     </div>
                   )}
