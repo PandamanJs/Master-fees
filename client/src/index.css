@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Suppress ResizeObserver warnings */
+* {
+  box-sizing: border-box;
+}
+
 /* Liquid Glass Effects */
 .ultra-glass-light {
   background: rgba(255, 255, 255, 0.05);
