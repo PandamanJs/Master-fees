@@ -52,6 +52,46 @@ export default function OnboardingPage() {
     { name: 'Value Added Tax', description: 'Lorem ipsum dolor sit amet consectetur. Cursus integer egestas in massa neque amet habitant odio quam.', currency: 'ZMW', amount: '150.00', enabled: false }
   ]);
   
+  // Advanced pricing structure with service classes and groups
+  const [pricingCategories, setPricingCategories] = useState([
+    {
+      id: 'school_fees',
+      name: 'School Fees',
+      serviceClasses: [
+        {
+          name: 'Early Childhood Education - ECE',
+          items: [
+            { name: 'Baby Class', serviceGroup: 'ECE', priceStatus: '[Enter Price & Basis]' }
+          ]
+        },
+        {
+          name: 'Lower Primary Section - LPS',
+          items: [
+            { name: 'Baby Class', serviceGroup: 'ECE', priceStatus: '[Enter Price & Basis]' }
+          ]
+        }
+      ]
+    },
+    {
+      id: 'transport_fees',
+      name: 'Transport Fees',
+      serviceClasses: [
+        {
+          name: 'Kaputu Bus Routes',
+          items: [
+            { name: 'KPT-01', serviceGroup: 'KPT', priceStatus: '[Enter Price & Basis]' }
+          ]
+        },
+        {
+          name: 'Chongwe High School Bus Route',
+          items: [
+            { name: 'KPT-01', serviceGroup: 'KPT', priceStatus: '[Enter Price & Basis]' }
+          ]
+        }
+      ]
+    }
+  ]);
+  
   // Step 6: Assign Products to Groups
   const [productGroups, setProductGroups] = useState<{[key: string]: string[]}>({});
   const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
@@ -337,6 +377,51 @@ export default function OnboardingPage() {
           currency: 'ZMW',
           amount: '100.00',
           enabled: false
+        }
+      ]);
+    }
+  };
+
+  const addServiceClass = (categoryId: string) => {
+    const className = prompt('Enter service class name:');
+    if (className?.trim()) {
+      setPricingCategories(prev => 
+        prev.map(cat => 
+          cat.id === categoryId 
+            ? {
+                ...cat,
+                serviceClasses: [
+                  ...cat.serviceClasses,
+                  {
+                    name: className.trim(),
+                    items: [
+                      { name: 'New Item', serviceGroup: 'DEFAULT', priceStatus: '[Enter Price & Basis]' }
+                    ]
+                  }
+                ]
+              }
+            : cat
+        )
+      );
+    }
+  };
+
+  const addPricingCategory = () => {
+    const categoryName = prompt('Enter pricing category name:');
+    if (categoryName?.trim()) {
+      setPricingCategories(prev => [
+        ...prev,
+        {
+          id: categoryName.toLowerCase().replace(/\s+/g, '_'),
+          name: categoryName.trim(),
+          serviceClasses: [
+            {
+              name: 'Default Service Class',
+              items: [
+                { name: 'New Service', serviceGroup: 'DEFAULT', priceStatus: '[Enter Price & Basis]' }
+              ]
+            }
+          ]
         }
       ]);
     }
@@ -853,150 +938,91 @@ export default function OnboardingPage() {
           {/* Header */}
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-white mb-2">Pricing Structure</h1>
-            <p className="text-slate-400">Select/Deselect the Grades that your school offers</p>
+            <p className="text-slate-400">Attach Specific Prices to the different classes</p>
           </div>
 
           {/* Clean form card with liquid glass */}
           <div className="ultra-glass-light backdrop-blur-xl rounded-2xl shadow-2xl border border-slate-600/20 p-8">
             <form onSubmit={handleStep5Submit} className="space-y-6">
               
-              {/* Category Tabs */}
-              <div className="flex flex-wrap gap-2 mb-6">
-                {selectedFeeCategories.map((categoryId) => {
-                  const category = feeCategories.find(c => c.id === categoryId);
-                  const categoryName = category ? category.name : categoryId;
-                  return (
-                    <button
-                      key={categoryId}
-                      type="button"
-                      onClick={() => setCurrentCategory(categoryId)}
-                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                        currentCategory === categoryId
-                          ? 'bg-emerald-500 text-white'
-                          : 'bg-slate-700/30 text-slate-300 hover:bg-slate-600/40'
-                      }`}
-                    >
-                      {categoryName}
-                    </button>
-                  );
-                })}
+              {/* Header with Create Button */}
+              <div className="flex justify-between items-center mb-6">
+                <h3 className="text-xl font-semibold text-white">Pricing Structure</h3>
+                <Button
+                  type="button"
+                  onClick={addPricingCategory}
+                  variant="outline"
+                  className="bg-slate-700/30 border-slate-600/40 text-white hover:bg-slate-600/40 h-8 px-4 text-sm"
+                >
+                  Create
+                </Button>
               </div>
 
-              {/* Current Category Content */}
-              <div className="bg-slate-700/20 backdrop-blur-sm rounded-xl p-6">
-                
-                {/* Grade Pricing List */}
-                <div className="space-y-4 mb-6">
-                  {currentCategoryData.grades.map((grade, index) => (
-                    <div key={index} className="flex items-center gap-4 p-4 bg-slate-600/20 rounded-lg border border-slate-500/20">
-                      <div className="w-5 h-5 rounded-full bg-emerald-500 flex items-center justify-center">
-                        <div className="w-2 h-2 rounded-full bg-white"></div>
-                      </div>
-                      <div className="flex-1">
-                        <span className="text-white font-medium">{grade.name}</span>
-                      </div>
+              {/* Pricing Categories */}
+              <div className="space-y-8">
+                {pricingCategories.map((category) => (
+                  <div key={category.id} className="bg-slate-700/20 backdrop-blur-sm rounded-xl p-6">
+                    
+                    {/* Category Header */}
+                    <div className="flex items-center justify-between mb-6">
+                      <h4 className="text-lg font-semibold text-white">{category.name}</h4>
                       <div className="flex items-center gap-2">
-                        <Select value={grade.currency} onValueChange={() => {}}>
-                          <SelectTrigger className="w-20 border-0 bg-slate-500/30 text-white h-8">
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent className="bg-slate-800 border-slate-600">
-                            <SelectItem value="ZMW" className="text-white">ZMW</SelectItem>
-                            <SelectItem value="USD" className="text-white">USD</SelectItem>
-                          </SelectContent>
-                        </Select>
-                        <Input
-                          value={grade.amount}
-                          onChange={(e) => updateGradeAmount(currentCategory, index, e.target.value)}
-                          className="w-24 border-0 bg-slate-500/30 text-white h-8 text-right"
-                        />
+                        <button
+                          type="button"
+                          onClick={() => addServiceClass(category.id)}
+                          className="text-emerald-400 hover:text-emerald-300 text-xl font-medium"
+                        >
+                          +
+                        </button>
                         <Button
                           type="button"
                           variant="outline"
                           size="sm"
-                          className="bg-slate-500/30 border-slate-400/40 text-white hover:bg-slate-400/40 h-8 px-3"
+                          className="bg-emerald-600/20 border-emerald-500/40 text-emerald-300 hover:bg-emerald-500/30 h-7 px-3 text-xs"
                         >
                           Edit
                         </Button>
                       </div>
                     </div>
-                  ))}
-                </div>
 
-                {/* Additional Fees Section */}
-                <div className="border-t border-slate-600/20 pt-6 mb-6">
-                  <h4 className="text-white font-medium mb-4">Add any attached costs that apply to Different Kinds of Products</h4>
-                  
-                  <div className="space-y-3 mb-4">
-                    {additionalFees.map((fee, index) => (
-                      <div key={index} className="flex items-center gap-4 p-4 bg-slate-600/20 rounded-lg border border-slate-500/20">
-                        <button
-                          type="button"
-                          onClick={() => toggleAdditionalFee(index)}
-                          className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
-                            fee.enabled 
-                              ? 'border-emerald-400 bg-emerald-500' 
-                              : 'border-slate-400'
-                          }`}
-                        >
-                          {fee.enabled && <div className="w-2 h-2 rounded-full bg-white"></div>}
-                        </button>
-                        
-                        <div className="flex-1">
-                          <div className="text-white font-medium">{fee.name}</div>
-                          <div className="text-slate-400 text-xs mt-1">{fee.description}</div>
-                        </div>
-                        
-                        <div className="flex items-center gap-2">
-                          <Select value={fee.currency} onValueChange={(value) => updateAdditionalFee(index, 'currency', value)}>
-                            <SelectTrigger className="w-20 border-0 bg-slate-500/30 text-white h-8">
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent className="bg-slate-800 border-slate-600">
-                              <SelectItem value="ZMW" className="text-white">ZMW</SelectItem>
-                              <SelectItem value="USD" className="text-white">USD</SelectItem>
-                            </SelectContent>
-                          </Select>
-                          <Input
-                            value={fee.amount}
-                            onChange={(e) => updateAdditionalFee(index, 'amount', e.target.value)}
-                            className="w-24 border-0 bg-slate-500/30 text-white h-8 text-right"
-                          />
-                        </div>
+                    {/* Service Classes Table */}
+                    <div className="space-y-4">
+                      {/* Table Header */}
+                      <div className="grid grid-cols-3 gap-4 text-slate-400 text-sm font-medium pb-2 border-b border-slate-600/20">
+                        <div>Service Class</div>
+                        <div>Service Group</div>
+                        <div>Price</div>
                       </div>
-                    ))}
-                  </div>
-                  
-                  {/* Add Custom Fee */}
-                  <div className="border-t border-slate-500/20 pt-4">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <span className="text-slate-300 text-sm">Can't see a category you offer?</span>
-                        <p className="text-slate-400 text-xs mt-1">Lorem ipsum dolor sit amet consectetur. Cursus integer egestas in massa neque amet habitant odio quam.</p>
-                      </div>
-                      <Button
-                        type="button"
-                        onClick={addCustomFee}
-                        className="bg-slate-600/50 hover:bg-slate-500/60 text-white border-0 h-8 px-4 text-sm"
-                      >
-                        Add product/service category
-                      </Button>
+
+                      {/* Service Classes */}
+                      {category.serviceClasses.map((serviceClass, classIndex) => (
+                        <div key={classIndex} className="space-y-2">
+                          {/* Service Class Header */}
+                          <div className="text-slate-300 font-medium text-sm">{serviceClass.name}</div>
+                          
+                          {/* Service Items */}
+                          {serviceClass.items.map((item, itemIndex) => (
+                            <div key={itemIndex} className="grid grid-cols-3 gap-4 items-center py-2 pl-4">
+                              <div className="text-white">{item.name}</div>
+                              <div className="text-slate-300">{item.serviceGroup}</div>
+                              <div className="flex items-center gap-2">
+                                <Button
+                                  type="button"
+                                  variant="outline"
+                                  size="sm"
+                                  className="bg-slate-600/30 border-slate-500/40 text-slate-300 hover:bg-slate-500/40 h-7 px-3 text-xs flex-1 justify-between"
+                                >
+                                  {item.priceStatus}
+                                  <ArrowRight className="w-3 h-3" />
+                                </Button>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      ))}
                     </div>
                   </div>
-                </div>
-
-                {/* Classes Count */}
-                <div>
-                  <label className="block text-slate-300 mb-3 font-medium">
-                    How Many classes does each grade Have
-                  </label>
-                  <Input
-                    value={currentCategoryData.classesCount}
-                    onChange={(e) => updateClassesCount(currentCategory, e.target.value)}
-                    placeholder="Number of classes per grade"
-                    className="border-0 bg-slate-600/30 backdrop-blur-sm text-white placeholder:text-slate-400 focus:bg-slate-500/30 focus:ring-2 focus:ring-emerald-400/30 rounded-xl h-12"
-                  />
-                </div>
+                ))}
               </div>
 
               {/* Navigation Buttons */}
@@ -1015,7 +1041,7 @@ export default function OnboardingPage() {
                   type="submit"
                   className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold shadow-lg backdrop-blur-sm border-0 rounded-xl px-8 h-12"
                 >
-                  Complete Setup
+                  Next
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
               </div>
