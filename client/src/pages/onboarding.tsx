@@ -193,20 +193,31 @@ export default function OnboardingPage() {
     }
   };
 
-  const addGrade = (category: string) => {
-    if (newGradeName.trim()) {
+  const addGrade = (category: string, gradeName?: string) => {
+    const name = gradeName || newGradeName;
+    if (name.trim()) {
       setGradePricing(prev => ({
         ...prev,
         [category]: {
           ...prev[category],
           grades: [
             ...(prev[category]?.grades || []),
-            { name: newGradeName.trim(), currency: 'ZMW', amount: '1,800.00' }
+            { name: name.trim(), currency: 'ZMW', amount: '500.00' }
           ]
         }
       }));
-      setNewGradeName('');
+      if (!gradeName) setNewGradeName('');
     }
+  };
+
+  const deleteAllGrades = (category: string) => {
+    setGradePricing(prev => ({
+      ...prev,
+      [category]: {
+        ...prev[category],
+        grades: []
+      }
+    }));
   };
 
   const updateGradeAmount = (category: string, gradeIndex: number, amount: string) => {
@@ -694,12 +705,33 @@ export default function OnboardingPage() {
 
     // Initialize default grades for current category if not exists
     if (!gradePricing[currentCategory]) {
+      const defaultGrades = {
+        tuition: [
+          { name: 'Baby Class', currency: 'ZMW', amount: '1,800.00' },
+          { name: 'Reception', currency: 'ZMW', amount: '1,800.00' }
+        ],
+        transportation: [
+          { name: 'Early Childhood', currency: 'ZMW', amount: '500.00' },
+          { name: 'Lower Primary', currency: 'ZMW', amount: '600.00' },
+          { name: 'Upper Primary', currency: 'ZMW', amount: '700.00' }
+        ],
+        accommodation: [
+          { name: 'Grade 1-3', currency: 'ZMW', amount: '2,500.00' },
+          { name: 'Grade 4-7', currency: 'ZMW', amount: '2,800.00' },
+          { name: 'Grade 8-12', currency: 'ZMW', amount: '3,200.00' }
+        ],
+        meals: [
+          { name: 'Nursery', currency: 'ZMW', amount: '300.00' },
+          { name: 'Primary', currency: 'ZMW', amount: '400.00' },
+          { name: 'Secondary', currency: 'ZMW', amount: '500.00' }
+        ]
+      };
+
       setGradePricing(prev => ({
         ...prev,
         [currentCategory]: {
-          grades: [
-            { name: 'Baby Class', currency: 'ZMW', amount: '1,800.00' },
-            { name: 'Reception', currency: 'ZMW', amount: '1,800.00' }
+          grades: defaultGrades[currentCategory as keyof typeof defaultGrades] || [
+            { name: 'Basic Level', currency: 'ZMW', amount: '500.00' }
           ],
           classesCount: ''
         }
@@ -791,25 +823,33 @@ export default function OnboardingPage() {
                   ))}
                 </div>
 
-                {/* Add Grade Section */}
+                {/* Add Grade Section and Management */}
                 <div className="border-t border-slate-600/20 pt-4 mb-6">
-                  <div className="flex items-center gap-3">
-                    <span className="text-slate-300 text-sm">Can't see a grade that you offer under {feeCategories.find(c => c.id === currentCategory)?.name}?</span>
-                    <div className="flex gap-2">
-                      <Input
-                        value={newGradeName}
-                        onChange={(e) => setNewGradeName(e.target.value)}
-                        placeholder="Grade name"
-                        className="border-0 bg-slate-600/30 text-white placeholder:text-slate-400 h-8"
-                      />
-                      <Button
-                        type="button"
-                        onClick={() => addGrade(currentCategory)}
-                        disabled={!newGradeName.trim()}
-                        className="bg-slate-600/50 hover:bg-slate-500/60 text-white border-0 h-8 px-4 text-sm disabled:opacity-50"
-                      >
-                        Add Grade
-                      </Button>
+                  <div className="flex flex-col gap-4">
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-300 text-sm">You can add or create new class categories</span>
+                      <div className="flex gap-2">
+                        <Button
+                          type="button"
+                          variant="outline"
+                          onClick={() => deleteAllGrades(currentCategory)}
+                          className="bg-slate-600/30 border-slate-500/40 text-slate-300 hover:bg-slate-500/40 h-8 px-4 text-sm"
+                        >
+                          Delete all
+                        </Button>
+                        <Button
+                          type="button"
+                          className="bg-slate-600/50 hover:bg-slate-500/60 text-white border-0 h-8 px-4 text-sm"
+                          onClick={() => {
+                            const input = prompt('Enter new category name:');
+                            if (input?.trim()) {
+                              addGrade(currentCategory, input.trim());
+                            }
+                          }}
+                        >
+                          Add Category
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 </div>
