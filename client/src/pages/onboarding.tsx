@@ -36,8 +36,13 @@ export default function OnboardingPage() {
   const [schoolLogo, setSchoolLogo] = useState('');
   
   // Step 4: Pricing Setup
-  const [selectedFeeCategories, setSelectedFeeCategories] = useState<string[]>([]);
+  const [selectedFeeCategories, setSelectedFeeCategories] = useState<string[]>(['tuition', 'transportation']); // Default for demo
   const [customCategory, setCustomCategory] = useState('');
+  
+  // Step 5: Pricing Structure
+  const [gradePricing, setGradePricing] = useState<{[key: string]: {grades: {name: string, currency: string, amount: string}[], classesCount: string}}>({});
+  const [currentCategory, setCurrentCategory] = useState('tuition');
+  const [newGradeName, setNewGradeName] = useState('');
   
   const [, navigate] = useLocation();
 
@@ -135,6 +140,38 @@ export default function OnboardingPage() {
       console.log('Complete school setup stored successfully');
       // Here you would typically send this to your backend
       
+      // Move to step 5 for pricing structure
+      setStep(5);
+    } catch (error) {
+      console.error('Error storing complete school setup:', error);
+      // Still move to step 5 even if storage fails
+      setStep(5);
+    }
+  };
+
+  const handleStep5Submit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    try {
+      // Store the complete school setup with pricing structure
+      const completeSchoolData = {
+        name: schoolName,
+        country,
+        stateProvince,
+        townDistrict,
+        email: schoolEmail,
+        contactNumbers,
+        physicalAddress,
+        categories: schoolCategories,
+        logo: schoolLogo,
+        feeCategories: selectedFeeCategories,
+        customCategory,
+        pricingStructure: gradePricing
+      };
+      
+      console.log('Complete school setup with pricing stored successfully');
+      // Here you would typically send this to your backend
+      
       // Navigate to assessment or dashboard
       navigate('/aptitude-apple');
     } catch (error) {
@@ -151,7 +188,47 @@ export default function OnboardingPage() {
       setStep(2);
     } else if (step === 4) {
       setStep(3);
+    } else if (step === 5) {
+      setStep(4);
     }
+  };
+
+  const addGrade = (category: string) => {
+    if (newGradeName.trim()) {
+      setGradePricing(prev => ({
+        ...prev,
+        [category]: {
+          ...prev[category],
+          grades: [
+            ...(prev[category]?.grades || []),
+            { name: newGradeName.trim(), currency: 'ZMW', amount: '1,800.00' }
+          ]
+        }
+      }));
+      setNewGradeName('');
+    }
+  };
+
+  const updateGradeAmount = (category: string, gradeIndex: number, amount: string) => {
+    setGradePricing(prev => ({
+      ...prev,
+      [category]: {
+        ...prev[category],
+        grades: prev[category]?.grades.map((grade, index) => 
+          index === gradeIndex ? { ...grade, amount } : grade
+        ) || []
+      }
+    }));
+  };
+
+  const updateClassesCount = (category: string, count: string) => {
+    setGradePricing(prev => ({
+      ...prev,
+      [category]: {
+        ...prev[category],
+        classesCount: count
+      }
+    }));
   };
 
   const toggleFeeCategory = (category: string) => {
@@ -593,6 +670,190 @@ export default function OnboardingPage() {
             <div className="mt-8 text-center">
               <p className="text-slate-400 font-light text-xs">
                 You can modify these categories later in your school settings
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Step 5: Pricing Structure
+  if (step === 5) {
+    // Initialize pricing structure for selected categories
+    const feeCategories = [
+      { id: 'tuition', name: 'Tuition Fees' },
+      { id: 'transportation', name: 'Transportation Fees' },
+      { id: 'accommodation', name: 'Accommodation Fees' },
+      { id: 'meals', name: 'Meals & Catering' },
+      { id: 'activities', name: 'Activities & Sports' },
+      { id: 'materials', name: 'Books & Materials' },
+      { id: 'uniform', name: 'Uniform & Equipment' },
+      { id: 'examination', name: 'Examination Fees' }
+    ];
+
+    // Initialize default grades for current category if not exists
+    if (!gradePricing[currentCategory]) {
+      setGradePricing(prev => ({
+        ...prev,
+        [currentCategory]: {
+          grades: [
+            { name: 'Baby Class', currency: 'ZMW', amount: '1,800.00' },
+            { name: 'Reception', currency: 'ZMW', amount: '1,800.00' }
+          ],
+          classesCount: ''
+        }
+      }));
+    }
+
+    const currentCategoryData = gradePricing[currentCategory] || { grades: [], classesCount: '' };
+
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-teal-900 flex items-center justify-center px-4 relative overflow-hidden">
+        {/* Subtle Liquid Glass Background Elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 ultra-glass-dark rounded-full opacity-8 animate-float"></div>
+          <div className="absolute bottom-1/3 right-1/4 w-64 h-64 ultra-glass-dark rounded-full opacity-6 animate-float delay-1000"></div>
+          <div className="absolute top-1/2 right-1/3 w-48 h-48 ultra-glass-light rounded-full opacity-5 animate-float delay-500"></div>
+        </div>
+
+        <div className="w-full max-w-4xl relative z-10">
+          {/* Header */}
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-bold text-white mb-2">Pricing Structure</h1>
+            <p className="text-slate-400">Select/Deselect the Grades that your school offers</p>
+          </div>
+
+          {/* Clean form card with liquid glass */}
+          <div className="ultra-glass-light backdrop-blur-xl rounded-2xl shadow-2xl border border-slate-600/20 p-8">
+            <form onSubmit={handleStep5Submit} className="space-y-6">
+              
+              {/* Category Tabs */}
+              <div className="flex flex-wrap gap-2 mb-6">
+                {selectedFeeCategories.map((categoryId) => {
+                  const category = feeCategories.find(c => c.id === categoryId);
+                  const categoryName = category ? category.name : categoryId;
+                  return (
+                    <button
+                      key={categoryId}
+                      type="button"
+                      onClick={() => setCurrentCategory(categoryId)}
+                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                        currentCategory === categoryId
+                          ? 'bg-emerald-500 text-white'
+                          : 'bg-slate-700/30 text-slate-300 hover:bg-slate-600/40'
+                      }`}
+                    >
+                      {categoryName}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Current Category Content */}
+              <div className="bg-slate-700/20 backdrop-blur-sm rounded-xl p-6">
+                
+                {/* Grade Pricing List */}
+                <div className="space-y-4 mb-6">
+                  {currentCategoryData.grades.map((grade, index) => (
+                    <div key={index} className="flex items-center gap-4 p-4 bg-slate-600/20 rounded-lg border border-slate-500/20">
+                      <div className="w-5 h-5 rounded-full bg-emerald-500 flex items-center justify-center">
+                        <div className="w-2 h-2 rounded-full bg-white"></div>
+                      </div>
+                      <div className="flex-1">
+                        <span className="text-white font-medium">{grade.name}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Select value={grade.currency} onValueChange={() => {}}>
+                          <SelectTrigger className="w-20 border-0 bg-slate-500/30 text-white h-8">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent className="bg-slate-800 border-slate-600">
+                            <SelectItem value="ZMW" className="text-white">ZMW</SelectItem>
+                            <SelectItem value="USD" className="text-white">USD</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <Input
+                          value={grade.amount}
+                          onChange={(e) => updateGradeAmount(currentCategory, index, e.target.value)}
+                          className="w-24 border-0 bg-slate-500/30 text-white h-8 text-right"
+                        />
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          className="bg-slate-500/30 border-slate-400/40 text-white hover:bg-slate-400/40 h-8 px-3"
+                        >
+                          Edit
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Add Grade Section */}
+                <div className="border-t border-slate-600/20 pt-4 mb-6">
+                  <div className="flex items-center gap-3">
+                    <span className="text-slate-300 text-sm">Can't see a grade that you offer under {feeCategories.find(c => c.id === currentCategory)?.name}?</span>
+                    <div className="flex gap-2">
+                      <Input
+                        value={newGradeName}
+                        onChange={(e) => setNewGradeName(e.target.value)}
+                        placeholder="Grade name"
+                        className="border-0 bg-slate-600/30 text-white placeholder:text-slate-400 h-8"
+                      />
+                      <Button
+                        type="button"
+                        onClick={() => addGrade(currentCategory)}
+                        disabled={!newGradeName.trim()}
+                        className="bg-slate-600/50 hover:bg-slate-500/60 text-white border-0 h-8 px-4 text-sm disabled:opacity-50"
+                      >
+                        Add Grade
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Classes Count */}
+                <div>
+                  <label className="block text-slate-300 mb-3 font-medium">
+                    How Many classes does each grade Have
+                  </label>
+                  <Input
+                    value={currentCategoryData.classesCount}
+                    onChange={(e) => updateClassesCount(currentCategory, e.target.value)}
+                    placeholder="Number of classes per grade"
+                    className="border-0 bg-slate-600/30 backdrop-blur-sm text-white placeholder:text-slate-400 focus:bg-slate-500/30 focus:ring-2 focus:ring-emerald-400/30 rounded-xl h-12"
+                  />
+                </div>
+              </div>
+
+              {/* Navigation Buttons */}
+              <div className="flex justify-between pt-6">
+                <Button
+                  type="button" 
+                  onClick={handleBack}
+                  variant="outline"
+                  className="bg-slate-700/30 border-slate-600/40 text-white hover:bg-slate-600/40 rounded-xl px-8 h-12"
+                >
+                  <ArrowLeft className="w-4 h-4 mr-2" />
+                  Back
+                </Button>
+                
+                <Button
+                  type="submit"
+                  className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold shadow-lg backdrop-blur-sm border-0 rounded-xl px-8 h-12"
+                >
+                  Complete Setup
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </div>
+            </form>
+
+            {/* Simple footer text */}
+            <div className="mt-8 text-center">
+              <p className="text-slate-400 font-light text-xs">
+                Configure pricing for each selected category. You can adjust these later in your school settings.
               </p>
             </div>
           </div>
