@@ -45,6 +45,13 @@ export default function OnboardingPage() {
   const [currentCategory, setCurrentCategory] = useState('tuition');
   const [newGradeName, setNewGradeName] = useState('');
   
+  // Additional fees/costs structure
+  const [additionalFees, setAdditionalFees] = useState<{name: string, description: string, currency: string, amount: string, enabled: boolean}[]>([
+    { name: 'Maintenance fee', description: 'Lorem ipsum dolor sit amet consectetur. Cursus integer egestas in massa neque amet habitant odio quam.', currency: 'ZMW', amount: '150.00', enabled: true },
+    { name: 'Maintenance fee', description: 'Lorem ipsum dolor sit amet consectetur. Cursus integer egestas in massa neque amet habitant odio quam.', currency: 'ZMW', amount: '150.00', enabled: false },
+    { name: 'Value Added Tax', description: 'Lorem ipsum dolor sit amet consectetur. Cursus integer egestas in massa neque amet habitant odio quam.', currency: 'ZMW', amount: '150.00', enabled: false }
+  ]);
+  
   // Step 6: Assign Products to Groups
   const [productGroups, setProductGroups] = useState<{[key: string]: string[]}>({});
   const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
@@ -171,7 +178,8 @@ export default function OnboardingPage() {
         logo: schoolLogo,
         feeCategories: selectedFeeCategories,
         customCategory,
-        pricingStructure: gradePricing
+        pricingStructure: gradePricing,
+        additionalFees: additionalFees
       };
       
       console.log('Complete school setup with pricing stored successfully');
@@ -297,6 +305,40 @@ export default function OnboardingPage() {
         [groupName]: [...selectedProducts]
       }));
       setSelectedProducts([]);
+    }
+  };
+
+  const toggleAdditionalFee = (index: number) => {
+    setAdditionalFees(prev => 
+      prev.map((fee, i) => 
+        i === index ? { ...fee, enabled: !fee.enabled } : fee
+      )
+    );
+  };
+
+  const updateAdditionalFee = (index: number, field: string, value: string) => {
+    setAdditionalFees(prev => 
+      prev.map((fee, i) => 
+        i === index ? { ...fee, [field]: value } : fee
+      )
+    );
+  };
+
+  const addCustomFee = () => {
+    const name = prompt('Enter fee/service name:');
+    const description = prompt('Enter description (optional):') || 'Custom fee or service charge';
+    
+    if (name?.trim()) {
+      setAdditionalFees(prev => [
+        ...prev,
+        {
+          name: name.trim(),
+          description,
+          currency: 'ZMW',
+          amount: '100.00',
+          enabled: false
+        }
+      ]);
     }
   };
 
@@ -881,33 +923,64 @@ export default function OnboardingPage() {
                   ))}
                 </div>
 
-                {/* Add Grade Section and Management */}
-                <div className="border-t border-slate-600/20 pt-4 mb-6">
-                  <div className="flex flex-col gap-4">
-                    <div className="flex items-center justify-between">
-                      <span className="text-slate-300 text-sm">You can add or create new class categories</span>
-                      <div className="flex gap-2">
-                        <Button
+                {/* Additional Fees Section */}
+                <div className="border-t border-slate-600/20 pt-6 mb-6">
+                  <h4 className="text-white font-medium mb-4">Add any attached costs that apply to Different Kinds of Products</h4>
+                  
+                  <div className="space-y-3 mb-4">
+                    {additionalFees.map((fee, index) => (
+                      <div key={index} className="flex items-center gap-4 p-4 bg-slate-600/20 rounded-lg border border-slate-500/20">
+                        <button
                           type="button"
-                          variant="outline"
-                          onClick={() => deleteAllGrades(currentCategory)}
-                          className="bg-slate-600/30 border-slate-500/40 text-slate-300 hover:bg-slate-500/40 h-8 px-4 text-sm"
+                          onClick={() => toggleAdditionalFee(index)}
+                          className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+                            fee.enabled 
+                              ? 'border-emerald-400 bg-emerald-500' 
+                              : 'border-slate-400'
+                          }`}
                         >
-                          Delete all
-                        </Button>
-                        <Button
-                          type="button"
-                          className="bg-slate-600/50 hover:bg-slate-500/60 text-white border-0 h-8 px-4 text-sm"
-                          onClick={() => {
-                            const input = prompt('Enter new category name:');
-                            if (input?.trim()) {
-                              addGrade(currentCategory, input.trim());
-                            }
-                          }}
-                        >
-                          Add Category
-                        </Button>
+                          {fee.enabled && <div className="w-2 h-2 rounded-full bg-white"></div>}
+                        </button>
+                        
+                        <div className="flex-1">
+                          <div className="text-white font-medium">{fee.name}</div>
+                          <div className="text-slate-400 text-xs mt-1">{fee.description}</div>
+                        </div>
+                        
+                        <div className="flex items-center gap-2">
+                          <Select value={fee.currency} onValueChange={(value) => updateAdditionalFee(index, 'currency', value)}>
+                            <SelectTrigger className="w-20 border-0 bg-slate-500/30 text-white h-8">
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent className="bg-slate-800 border-slate-600">
+                              <SelectItem value="ZMW" className="text-white">ZMW</SelectItem>
+                              <SelectItem value="USD" className="text-white">USD</SelectItem>
+                            </SelectContent>
+                          </Select>
+                          <Input
+                            value={fee.amount}
+                            onChange={(e) => updateAdditionalFee(index, 'amount', e.target.value)}
+                            className="w-24 border-0 bg-slate-500/30 text-white h-8 text-right"
+                          />
+                        </div>
                       </div>
+                    ))}
+                  </div>
+                  
+                  {/* Add Custom Fee */}
+                  <div className="border-t border-slate-500/20 pt-4">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <span className="text-slate-300 text-sm">Can't see a category you offer?</span>
+                        <p className="text-slate-400 text-xs mt-1">Lorem ipsum dolor sit amet consectetur. Cursus integer egestas in massa neque amet habitant odio quam.</p>
+                      </div>
+                      <Button
+                        type="button"
+                        onClick={addCustomFee}
+                        className="bg-slate-600/50 hover:bg-slate-500/60 text-white border-0 h-8 px-4 text-sm"
+                      >
+                        Add product/service category
+                      </Button>
                     </div>
                   </div>
                 </div>
