@@ -96,6 +96,9 @@ export default function OnboardingPage() {
   const [productGroups, setProductGroups] = useState<{[key: string]: string[]}>({});
   const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
   
+  // Step 7: Receipt Template
+  const [receiptTemplate, setReceiptTemplate] = useState('');
+  
   const [, navigate] = useLocation();
 
   const handleStep1Submit = (e: React.FormEvent) => {
@@ -245,6 +248,8 @@ export default function OnboardingPage() {
       setStep(4);
     } else if (step === 6) {
       setStep(5);
+    } else if (step === 7) {
+      setStep(6);
     }
   };
 
@@ -315,18 +320,19 @@ export default function OnboardingPage() {
         feeCategories: selectedFeeCategories,
         customCategory,
         pricingStructure: gradePricing,
-        productGroups
+        productGroups,
+        receiptTemplate
       };
       
       console.log('Final school onboarding completed successfully');
       // Here you would typically send this to your backend
       
-      // Navigate to assessment or dashboard
-      navigate('/aptitude-apple');
+      // Move to step 7 for receipt template
+      setStep(7);
     } catch (error) {
       console.error('Error completing final school setup:', error);
-      // Still navigate even if storage fails
-      navigate('/aptitude-apple');
+      // Still move to step 7 even if storage fails
+      setStep(7);
     }
   };
 
@@ -424,6 +430,42 @@ export default function OnboardingPage() {
           ]
         }
       ]);
+    }
+  };
+
+  const handleStep7Submit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    try {
+      // Store the final complete school setup with receipt template
+      const finalSchoolData = {
+        name: schoolName,
+        country,
+        stateProvince,
+        townDistrict,
+        email: schoolEmail,
+        contactNumbers,
+        physicalAddress,
+        categories: schoolCategories,
+        logo: schoolLogo,
+        feeCategories: selectedFeeCategories,
+        customCategory,
+        pricingStructure: gradePricing,
+        additionalFees: additionalFees,
+        pricingCategories,
+        productGroups,
+        receiptTemplate
+      };
+      
+      console.log('Complete school onboarding with receipt template completed successfully');
+      // Here you would typically send this to your backend API
+      
+      // Navigate to assessment or dashboard
+      navigate('/aptitude-apple');
+    } catch (error) {
+      console.error('Error completing final school setup:', error);
+      // Still navigate even if storage fails
+      navigate('/aptitude-apple');
     }
   };
 
@@ -1246,6 +1288,126 @@ export default function OnboardingPage() {
             <div className="mt-8 text-center">
               <p className="text-slate-400 font-light text-xs">
                 Group related products together for easier management and reporting
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Step 7: Receipt Template
+  if (step === 7) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-teal-900 flex items-center justify-center px-4 relative overflow-hidden">
+        {/* Subtle Liquid Glass Background Elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 ultra-glass-dark rounded-full opacity-8 animate-float"></div>
+          <div className="absolute bottom-1/3 right-1/4 w-64 h-64 ultra-glass-dark rounded-full opacity-6 animate-float delay-1000"></div>
+          <div className="absolute top-1/2 right-1/3 w-48 h-48 ultra-glass-light rounded-full opacity-5 animate-float delay-500"></div>
+        </div>
+
+        <div className="w-full max-w-4xl relative z-10">
+          {/* Header */}
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-bold text-white mb-2">Receipt Template</h1>
+            <p className="text-slate-400">Edit or Confirm How you want your Receipts to look</p>
+          </div>
+
+          {/* Clean form card with liquid glass */}
+          <div className="ultra-glass-light backdrop-blur-xl rounded-2xl shadow-2xl border border-slate-600/20 p-8">
+            <form onSubmit={handleStep7Submit} className="space-y-6">
+              
+              {/* Receipt Template Preview Area */}
+              <div className="mb-8">
+                <div className="w-full h-96 border-2 border-dashed border-slate-500/40 rounded-xl bg-slate-800/20 backdrop-blur-sm flex items-center justify-center">
+                  {receiptTemplate ? (
+                    <div className="w-full h-full p-6 overflow-auto">
+                      <div className="bg-white/5 backdrop-blur-sm rounded-lg p-4 text-slate-300 whitespace-pre-wrap font-mono text-sm">
+                        {receiptTemplate}
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="text-center">
+                      <div className="w-24 h-24 mx-auto mb-4 rounded-xl bg-slate-600/30 flex items-center justify-center">
+                        <svg className="w-12 h-12 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                      </div>
+                      <h3 className="text-slate-300 font-medium mb-2">Receipt Preview</h3>
+                      <p className="text-slate-400 text-sm">Customize your receipt template below</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Template Editor */}
+              <div className="space-y-4">
+                <label className="block text-slate-300 font-medium">
+                  Receipt Template Content
+                </label>
+                <textarea
+                  value={receiptTemplate}
+                  onChange={(e) => setReceiptTemplate(e.target.value)}
+                  placeholder={`Receipt Template
+
+${schoolName || '[School Name]'}
+${physicalAddress || '[School Address]'}
+Contact: ${contactNumbers.join(', ') || '[Contact Numbers]'}
+Email: ${schoolEmail || '[School Email]'}
+
+----------------------------------------
+PAYMENT RECEIPT
+----------------------------------------
+
+Date: [Payment Date]
+Receipt No: [Receipt Number]
+Student Name: [Student Name]
+Class: [Student Class]
+
+Services:
+- [Service Name]: [Amount]
+- [Additional Services]: [Amount]
+
+----------------------------------------
+Total Amount: [Total Amount]
+Payment Method: [Payment Method]
+----------------------------------------
+
+Thank you for your payment!`}
+                  className="w-full h-48 border-0 bg-slate-700/30 backdrop-blur-sm text-white placeholder:text-slate-400 focus:bg-slate-600/30 focus:ring-2 focus:ring-emerald-400/30 rounded-xl p-4 resize-none font-mono text-sm"
+                />
+                <p className="text-slate-400 text-xs">
+                  You can use placeholders like [Student Name], [Amount], [Payment Date] etc. that will be automatically filled when generating receipts.
+                </p>
+              </div>
+
+              {/* Navigation Buttons */}
+              <div className="flex justify-between pt-6">
+                <Button
+                  type="button" 
+                  onClick={handleBack}
+                  variant="outline"
+                  className="bg-slate-700/30 border-slate-600/40 text-white hover:bg-slate-600/40 rounded-xl px-8 h-12"
+                >
+                  <ArrowLeft className="w-4 h-4 mr-2" />
+                  Back
+                </Button>
+                
+                <Button
+                  type="submit"
+                  className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold shadow-lg backdrop-blur-sm border-0 rounded-xl px-8 h-12"
+                >
+                  Proceed to Onboarding
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </div>
+            </form>
+
+            {/* Simple footer text */}
+            <div className="mt-8 text-center">
+              <p className="text-slate-400 font-light text-xs">
+                Customize how your school receipts will appear to parents and students
               </p>
             </div>
           </div>
