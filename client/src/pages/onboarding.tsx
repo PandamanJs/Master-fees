@@ -671,11 +671,11 @@ export default function OnboardingPage() {
       // Here you would typically send this to your backend API for account creation
       
       // Navigate to dashboard or confirmation page
-      navigate('/aptitude-apple');
+      navigate('/aptitude-enhanced');
     } catch (error) {
       console.error('Error completing final account setup:', error);
       // Still navigate even if storage fails
-      navigate('/aptitude-apple');
+      navigate('/aptitude-enhanced');
     }
   };
 

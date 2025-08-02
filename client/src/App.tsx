@@ -7,7 +7,6 @@ import { AIAssistant } from "@/components/ai-assistant";
 import Home from "@/pages/home";
 import Onboarding from "@/pages/onboarding";
 import OnboardingSimple from "@/pages/onboarding-simple";
-import AppleAptitudeTest from "@/pages/aptitude-apple";
 import AptitudeTest from "@/pages/aptitude";
 import AptitudeEnhanced from "@/pages/aptitude-enhanced";
 import AppleAdminPanel from "@/pages/admin/aptitude-apple";
@@ -21,7 +20,6 @@ function Router() {
       <Route path="/onboarding-simple" component={OnboardingSimple} />
       <Route path="/aptitude" component={AptitudeTest} />
       <Route path="/aptitude-enhanced" component={AptitudeEnhanced} />
-      <Route path="/aptitude-apple" component={AppleAptitudeTest} />
       <Route path="/admin/aptitude-results" component={AppleAdminPanel} />
       <Route component={NotFound} />
     </Switch>
