@@ -115,6 +115,37 @@ export default function OnboardingPage() {
     accountName: '',
     sortCode: ''
   });
+
+  // Step 9: Account Verification
+  const [verificationData, setVerificationData] = useState({
+    // Company Details
+    companyName: '',
+    registrationNumber: '',
+    businessAddress: '',
+    tradingName: '',
+    tinNumber: '',
+    postalAddress: '',
+    ownershipType: '',
+    country: 'Zambia',
+    companyEmail: '',
+    businessNature: '',
+    contactNumber: '',
+    
+    // Ownership Details
+    ownershipNature: '',
+    ownershipCountry: 'Zambia',
+    ownershipContact: '',
+    
+    // Document Upload
+    documentsUploaded: false
+  });
+  
+  // Step 10: Create Account Credentials
+  const [credentials, setCredentials] = useState({
+    email: '',
+    password: '',
+    confirmPassword: ''
+  });
   
   const [, navigate] = useLocation();
 
@@ -269,6 +300,10 @@ export default function OnboardingPage() {
       setStep(6);
     } else if (step === 8) {
       setStep(7);
+    } else if (step === 9) {
+      setStep(8);
+    } else if (step === 10) {
+      setStep(9);
     }
   };
 
@@ -516,12 +551,12 @@ export default function OnboardingPage() {
       console.log('Complete school onboarding with all 8 steps completed successfully');
       // Here you would typically send this to your backend API
       
-      // Navigate to assessment or dashboard
-      navigate('/aptitude-apple');
+      // Move to step 9 for account verification
+      setStep(9);
     } catch (error) {
       console.error('Error completing final school setup:', error);
-      // Still navigate even if storage fails
-      navigate('/aptitude-apple');
+      // Still move to step 9 even if storage fails
+      setStep(9);
     }
   };
 
@@ -558,6 +593,91 @@ export default function OnboardingPage() {
     'Indo Zambia Bank',
     'Finance Bank'
   ];
+
+  const handleStep9Submit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    try {
+      // Store the verification data with complete school setup
+      const completeSchoolDataWithVerification = {
+        name: schoolName,
+        country,
+        stateProvince,
+        townDistrict,
+        email: schoolEmail,
+        contactNumbers,
+        physicalAddress,
+        categories: schoolCategories,
+        logo: schoolLogo,
+        feeCategories: selectedFeeCategories,
+        customCategory,
+        pricingStructure: gradePricing,
+        additionalFees: additionalFees,
+        pricingCategories,
+        productGroups,
+        receiptTemplate,
+        bankAccounts,
+        verificationData
+      };
+      
+      console.log('School onboarding with verification completed successfully');
+      // Here you would typically send this to your backend API
+      
+      // Move to final step for account creation
+      setStep(10);
+    } catch (error) {
+      console.error('Error completing verification:', error);
+      // Still move to step 10 even if storage fails
+      setStep(10);
+    }
+  };
+
+  const handleFinalSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (credentials.password !== credentials.confirmPassword) {
+      alert('Passwords do not match');
+      return;
+    }
+    
+    try {
+      // Store the final complete school setup with credentials
+      const finalSchoolSetup = {
+        name: schoolName,
+        country,
+        stateProvince,
+        townDistrict,
+        email: schoolEmail,
+        contactNumbers,
+        physicalAddress,
+        categories: schoolCategories,
+        logo: schoolLogo,
+        feeCategories: selectedFeeCategories,
+        customCategory,
+        pricingStructure: gradePricing,
+        additionalFees: additionalFees,
+        pricingCategories,
+        productGroups,
+        receiptTemplate,
+        bankAccounts,
+        verificationData,
+        credentials: {
+          email: credentials.email,
+          password: credentials.password // In real app, this would be hashed
+        }
+      };
+      
+      console.log('Complete school onboarding with all 10 steps completed successfully');
+      // Here you would typically send this to your backend API for account creation
+      
+      // Navigate to dashboard or confirmation page
+      navigate('/aptitude-apple');
+    } catch (error) {
+      console.error('Error completing final account setup:', error);
+      // Still navigate even if storage fails
+      navigate('/aptitude-apple');
+    }
+  };
 
   const toggleFeeCategory = (category: string) => {
     setSelectedFeeCategories(prev => 
@@ -1725,6 +1845,428 @@ Thank you for your payment!`}
             <div className="mt-8 text-center">
               <p className="text-slate-400 font-light text-xs">
                 Add your bank account details to receive payments from parents and students
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Step 9: Account Verification
+  if (step === 9) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-teal-900 flex items-center justify-center px-4 relative overflow-hidden">
+        {/* Subtle Liquid Glass Background Elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 ultra-glass-dark rounded-full opacity-8 animate-float"></div>
+          <div className="absolute bottom-1/3 right-1/4 w-64 h-64 ultra-glass-dark rounded-full opacity-6 animate-float delay-1000"></div>
+          <div className="absolute top-1/2 right-1/3 w-48 h-48 ultra-glass-light rounded-full opacity-5 animate-float delay-500"></div>
+        </div>
+
+        <div className="w-full max-w-5xl relative z-10">
+          {/* Header */}
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-bold text-white mb-2">Account Verification</h1>
+            <p className="text-slate-400">Account Verification</p>
+          </div>
+
+          {/* Clean form card with liquid glass */}
+          <div className="ultra-glass-light backdrop-blur-xl rounded-2xl shadow-2xl border border-slate-600/20 p-8">
+            <form onSubmit={handleStep9Submit} className="space-y-8">
+              
+              {/* Company Details Section */}
+              <div className="space-y-6">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-white font-semibold text-lg">Company Details</h3>
+                  <div className="flex items-center space-x-2">
+                    <div className="w-3 h-3 bg-emerald-500 rounded-full"></div>
+                    <span className="text-emerald-400 text-sm">Everything is okay</span>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {/* Company/Organization Name */}
+                  <div>
+                    <label className="block text-slate-300 font-medium mb-2">Company/Organization Name</label>
+                    <select
+                      value={verificationData.companyName}
+                      onChange={(e) => setVerificationData(prev => ({ ...prev, companyName: e.target.value }))}
+                      className="w-full border-0 bg-slate-600/30 backdrop-blur-sm text-white placeholder:text-slate-400 focus:bg-slate-500/30 focus:ring-2 focus:ring-emerald-400/30 rounded-xl p-3"
+                    >
+                      <option value="">Twinkumu Educational Trust</option>
+                      <option value="private-company">Private Company Limited by Shares</option>
+                      <option value="public-company">Public Company</option>
+                      <option value="trust">Educational Trust</option>
+                      <option value="foundation">Foundation</option>
+                    </select>
+                  </div>
+
+                  {/* Company Registration Number */}
+                  <div>
+                    <label className="block text-slate-300 font-medium mb-2">Company Registration Number</label>
+                    <input
+                      type="text"
+                      value={verificationData.registrationNumber}
+                      onChange={(e) => setVerificationData(prev => ({ ...prev, registrationNumber: e.target.value }))}
+                      placeholder="750000"
+                      className="w-full border-0 bg-slate-600/30 backdrop-blur-sm text-white placeholder:text-slate-400 focus:bg-slate-500/30 focus:ring-2 focus:ring-emerald-400/30 rounded-xl p-3"
+                    />
+                  </div>
+
+                  {/* Business Physical Address */}
+                  <div>
+                    <label className="block text-slate-300 font-medium mb-2">Business Physical Address</label>
+                    <input
+                      type="text"
+                      value={verificationData.businessAddress}
+                      onChange={(e) => setVerificationData(prev => ({ ...prev, businessAddress: e.target.value }))}
+                      placeholder="Plot No. 800 Ibex Dam Area, Chingola"
+                      className="w-full border-0 bg-slate-600/30 backdrop-blur-sm text-white placeholder:text-slate-400 focus:bg-slate-500/30 focus:ring-2 focus:ring-emerald-400/30 rounded-xl p-3"
+                    />
+                  </div>
+
+                  {/* Trading Name */}
+                  <div>
+                    <label className="block text-slate-300 font-medium mb-2">Trading Name (if Applicable)</label>
+                    <select
+                      value={verificationData.tradingName}
+                      onChange={(e) => setVerificationData(prev => ({ ...prev, tradingName: e.target.value }))}
+                      className="w-full border-0 bg-slate-600/30 backdrop-blur-sm text-white placeholder:text-slate-400 focus:bg-slate-500/30 focus:ring-2 focus:ring-emerald-400/30 rounded-xl p-3"
+                    >
+                      <option value="">Twinkumu Educational Centre</option>
+                      <option value="same-as-company">Same as Company Name</option>
+                      <option value="different">Different Trading Name</option>
+                    </select>
+                  </div>
+
+                  {/* TIN Number */}
+                  <div>
+                    <label className="block text-slate-300 font-medium mb-2">TIN number</label>
+                    <input
+                      type="text"
+                      value={verificationData.tinNumber}
+                      onChange={(e) => setVerificationData(prev => ({ ...prev, tinNumber: e.target.value }))}
+                      placeholder="2000789456"
+                      className="w-full border-0 bg-slate-600/30 backdrop-blur-sm text-white placeholder:text-slate-400 focus:bg-slate-500/30 focus:ring-2 focus:ring-emerald-400/30 rounded-xl p-3"
+                    />
+                  </div>
+
+                  {/* Postal Address */}
+                  <div>
+                    <label className="block text-slate-300 font-medium mb-2">Postal Address</label>
+                    <input
+                      type="text"
+                      value={verificationData.postalAddress}
+                      onChange={(e) => setVerificationData(prev => ({ ...prev, postalAddress: e.target.value }))}
+                      placeholder="Plot No. 800 Ibex Dam Area, Chingola"
+                      className="w-full border-0 bg-slate-600/30 backdrop-blur-sm text-white placeholder:text-slate-400 focus:bg-slate-500/30 focus:ring-2 focus:ring-emerald-400/30 rounded-xl p-3"
+                    />
+                  </div>
+
+                  {/* Type of Ownership */}
+                  <div>
+                    <label className="block text-slate-300 font-medium mb-2">Type of Ownership</label>
+                    <select
+                      value={verificationData.ownershipType}
+                      onChange={(e) => setVerificationData(prev => ({ ...prev, ownershipType: e.target.value }))}
+                      className="w-full border-0 bg-slate-600/30 backdrop-blur-sm text-white placeholder:text-slate-400 focus:bg-slate-500/30 focus:ring-2 focus:ring-emerald-400/30 rounded-xl p-3"
+                    >
+                      <option value="">Private company limited by shares</option>
+                      <option value="private-limited">Private Company Limited by Shares</option>
+                      <option value="public-limited">Public Limited Company</option>
+                      <option value="trust">Trust</option>
+                      <option value="foundation">Foundation</option>
+                      <option value="partnership">Partnership</option>
+                    </select>
+                  </div>
+
+                  {/* Country of Incorporation */}
+                  <div>
+                    <label className="block text-slate-300 font-medium mb-2">Country of Incorporation</label>
+                    <select
+                      value={verificationData.country}
+                      onChange={(e) => setVerificationData(prev => ({ ...prev, country: e.target.value }))}
+                      className="w-full border-0 bg-slate-600/30 backdrop-blur-sm text-white placeholder:text-slate-400 focus:bg-slate-500/30 focus:ring-2 focus:ring-emerald-400/30 rounded-xl p-3"
+                    >
+                      <option value="Zambia">Zambia</option>
+                      <option value="Tanzania">Tanzania</option>
+                      <option value="Kenya">Kenya</option>
+                      <option value="Uganda">Uganda</option>
+                      <option value="Malawi">Malawi</option>
+                    </select>
+                  </div>
+
+                  {/* Official Company Email */}
+                  <div>
+                    <label className="block text-slate-300 font-medium mb-2">Official Company email</label>
+                    <input
+                      type="email"
+                      value={verificationData.companyEmail}
+                      onChange={(e) => setVerificationData(prev => ({ ...prev, companyEmail: e.target.value }))}
+                      placeholder="Plot No. 800 Ibex Dam Area, Chingola"
+                      className="w-full border-0 bg-slate-600/30 backdrop-blur-sm text-white placeholder:text-slate-400 focus:bg-slate-500/30 focus:ring-2 focus:ring-emerald-400/30 rounded-xl p-3"
+                    />
+                  </div>
+
+                  {/* Nature of Business */}
+                  <div>
+                    <label className="block text-slate-300 font-medium mb-2">Nature of Business</label>
+                    <select
+                      value={verificationData.businessNature}
+                      onChange={(e) => setVerificationData(prev => ({ ...prev, businessNature: e.target.value }))}
+                      className="w-full border-0 bg-slate-600/30 backdrop-blur-sm text-white placeholder:text-slate-400 focus:bg-slate-500/30 focus:ring-2 focus:ring-emerald-400/30 rounded-xl p-3"
+                    >
+                      <option value="">Primary education provider</option>
+                      <option value="primary-education">Primary Education Provider</option>
+                      <option value="secondary-education">Secondary Education Provider</option>
+                      <option value="tertiary-education">Tertiary Education Provider</option>
+                      <option value="vocational-training">Vocational Training</option>
+                      <option value="early-childhood">Early Childhood Development</option>
+                    </select>
+                  </div>
+
+                  {/* Official Contact Number */}
+                  <div>
+                    <label className="block text-slate-300 font-medium mb-2">Official Contact Number</label>
+                    <input
+                      type="tel"
+                      value={verificationData.contactNumber}
+                      onChange={(e) => setVerificationData(prev => ({ ...prev, contactNumber: e.target.value }))}
+                      placeholder="Plot No. 800 Ibex Dam Area, Chingola"
+                      className="w-full border-0 bg-slate-600/30 backdrop-blur-sm text-white placeholder:text-slate-400 focus:bg-slate-500/30 focus:ring-2 focus:ring-emerald-400/30 rounded-xl p-3"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Ownership Details Section */}
+              <div className="space-y-6">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-white font-semibold text-lg">Ownership Details</h3>
+                  <div className="flex items-center space-x-2">
+                    <div className="w-3 h-3 bg-emerald-500 rounded-full"></div>
+                    <span className="text-emerald-400 text-sm">Everything is okay</span>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {/* Nature of Business */}
+                  <div>
+                    <label className="block text-slate-300 font-medium mb-2">Nature of Business</label>
+                    <select
+                      value={verificationData.ownershipNature}
+                      onChange={(e) => setVerificationData(prev => ({ ...prev, ownershipNature: e.target.value }))}
+                      className="w-full border-0 bg-slate-600/30 backdrop-blur-sm text-white placeholder:text-slate-400 focus:bg-slate-500/30 focus:ring-2 focus:ring-emerald-400/30 rounded-xl p-3"
+                    >
+                      <option value="">Primary education provider</option>
+                      <option value="primary-education">Primary Education Provider</option>
+                      <option value="secondary-education">Secondary Education Provider</option>
+                      <option value="tertiary-education">Tertiary Education Provider</option>
+                      <option value="vocational-training">Vocational Training</option>
+                    </select>
+                  </div>
+
+                  {/* Country of Incorporation */}
+                  <div>
+                    <label className="block text-slate-300 font-medium mb-2">Country of Incorporation</label>
+                    <select
+                      value={verificationData.ownershipCountry}
+                      onChange={(e) => setVerificationData(prev => ({ ...prev, ownershipCountry: e.target.value }))}
+                      className="w-full border-0 bg-slate-600/30 backdrop-blur-sm text-white placeholder:text-slate-400 focus:bg-slate-500/30 focus:ring-2 focus:ring-emerald-400/30 rounded-xl p-3"
+                    >
+                      <option value="Zambia">Zambia</option>
+                      <option value="Tanzania">Tanzania</option>
+                      <option value="Kenya">Kenya</option>
+                      <option value="Uganda">Uganda</option>
+                      <option value="Malawi">Malawi</option>
+                    </select>
+                  </div>
+
+                  {/* Official Contact Number */}
+                  <div>
+                    <label className="block text-slate-300 font-medium mb-2">Official Contact Number</label>
+                    <input
+                      type="tel"
+                      value={verificationData.ownershipContact}
+                      onChange={(e) => setVerificationData(prev => ({ ...prev, ownershipContact: e.target.value }))}
+                      placeholder="Plot No. 800 Ibex Dam Area, Chingola"
+                      className="w-full border-0 bg-slate-600/30 backdrop-blur-sm text-white placeholder:text-slate-400 focus:bg-slate-500/30 focus:ring-2 focus:ring-emerald-400/30 rounded-xl p-3"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Document Upload Section */}
+              <div className="space-y-6">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-white font-semibold text-lg">Document Upload</h3>
+                  <div className="flex items-center space-x-2">
+                    <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                    <span className="text-red-400 text-sm">Please wait Required</span>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {/* Nature of Business */}
+                  <div>
+                    <label className="block text-slate-300 font-medium mb-2">Nature of Business</label>
+                    <select
+                      className="w-full border-0 bg-slate-600/30 backdrop-blur-sm text-white placeholder:text-slate-400 focus:bg-slate-500/30 focus:ring-2 focus:ring-emerald-400/30 rounded-xl p-3"
+                    >
+                      <option value="">Primary education provider</option>
+                    </select>
+                  </div>
+
+                  {/* Country of Incorporation */}
+                  <div>
+                    <label className="block text-slate-300 font-medium mb-2">Country of Incorporation</label>
+                    <select
+                      className="w-full border-0 bg-slate-600/30 backdrop-blur-sm text-white placeholder:text-slate-400 focus:bg-slate-500/30 focus:ring-2 focus:ring-emerald-400/30 rounded-xl p-3"
+                    >
+                      <option value="Zambia">Zambia</option>
+                    </select>
+                  </div>
+
+                  {/* Official Contact Number */}
+                  <div>
+                    <label className="block text-slate-300 font-medium mb-2">Official Contact Number</label>
+                    <input
+                      type="tel"
+                      placeholder="Plot No. 800 Ibex Dam Area, Chingola"
+                      className="w-full border-0 bg-slate-600/30 backdrop-blur-sm text-white placeholder:text-slate-400 focus:bg-slate-500/30 focus:ring-2 focus:ring-emerald-400/30 rounded-xl p-3"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Navigation Buttons */}
+              <div className="flex justify-between pt-6">
+                <Button
+                  type="button" 
+                  onClick={handleBack}
+                  variant="outline"
+                  className="bg-slate-700/30 border-slate-600/40 text-white hover:bg-slate-600/40 rounded-xl px-8 h-12"
+                >
+                  <ArrowLeft className="w-4 h-4 mr-2" />
+                  Back
+                </Button>
+                
+                <Button
+                  type="submit"
+                  className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold shadow-lg backdrop-blur-sm border-0 rounded-xl px-8 h-12"
+                >
+                  Continue
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </div>
+            </form>
+
+            {/* Simple footer text */}
+            <div className="mt-8 text-center">
+              <p className="text-slate-400 font-light text-xs">
+                Provide company verification details to ensure compliance and security
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Step 10: Create Account Credentials
+  if (step === 10) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-teal-900 flex items-center justify-center px-4 relative overflow-hidden">
+        {/* Subtle Liquid Glass Background Elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 ultra-glass-dark rounded-full opacity-8 animate-float"></div>
+          <div className="absolute bottom-1/3 right-1/4 w-64 h-64 ultra-glass-dark rounded-full opacity-6 animate-float delay-1000"></div>
+          <div className="absolute top-1/2 right-1/3 w-48 h-48 ultra-glass-light rounded-full opacity-5 animate-float delay-500"></div>
+        </div>
+
+        <div className="w-full max-w-md relative z-10">
+          {/* Header */}
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-bold text-white mb-2">Create Your Account</h1>
+            <p className="text-slate-400">Set up your login credentials for the dashboard</p>
+          </div>
+
+          {/* Clean form card with liquid glass */}
+          <div className="ultra-glass-light backdrop-blur-xl rounded-2xl shadow-2xl border border-slate-600/20 p-8">
+            <form onSubmit={handleFinalSubmit} className="space-y-6">
+              
+              {/* Email */}
+              <div>
+                <label className="block text-slate-300 font-medium mb-2">Email Address</label>
+                <input
+                  type="email"
+                  value={credentials.email}
+                  onChange={(e) => setCredentials(prev => ({ ...prev, email: e.target.value }))}
+                  placeholder="Enter your email address"
+                  required
+                  className="w-full border-0 bg-slate-600/30 backdrop-blur-sm text-white placeholder:text-slate-400 focus:bg-slate-500/30 focus:ring-2 focus:ring-emerald-400/30 rounded-xl p-4"
+                />
+              </div>
+
+              {/* Password */}
+              <div>
+                <label className="block text-slate-300 font-medium mb-2">Password</label>
+                <input
+                  type="password"
+                  value={credentials.password}
+                  onChange={(e) => setCredentials(prev => ({ ...prev, password: e.target.value }))}
+                  placeholder="Create a strong password"
+                  required
+                  className="w-full border-0 bg-slate-600/30 backdrop-blur-sm text-white placeholder:text-slate-400 focus:bg-slate-500/30 focus:ring-2 focus:ring-emerald-400/30 rounded-xl p-4"
+                />
+              </div>
+
+              {/* Confirm Password */}
+              <div>
+                <label className="block text-slate-300 font-medium mb-2">Confirm Password</label>
+                <input
+                  type="password"
+                  value={credentials.confirmPassword}
+                  onChange={(e) => setCredentials(prev => ({ ...prev, confirmPassword: e.target.value }))}
+                  placeholder="Confirm your password"
+                  required
+                  className="w-full border-0 bg-slate-600/30 backdrop-blur-sm text-white placeholder:text-slate-400 focus:bg-slate-500/30 focus:ring-2 focus:ring-emerald-400/30 rounded-xl p-4"
+                />
+                {credentials.password && credentials.confirmPassword && credentials.password !== credentials.confirmPassword && (
+                  <p className="text-red-400 text-sm mt-2">Passwords do not match</p>
+                )}
+              </div>
+
+              {/* Navigation Buttons */}
+              <div className="flex justify-between pt-6">
+                <Button
+                  type="button" 
+                  onClick={handleBack}
+                  variant="outline"
+                  className="bg-slate-700/30 border-slate-600/40 text-white hover:bg-slate-600/40 rounded-xl px-8 h-12"
+                >
+                  <ArrowLeft className="w-4 h-4 mr-2" />
+                  Back
+                </Button>
+                
+                <Button
+                  type="submit"
+                  disabled={!credentials.email || !credentials.password || credentials.password !== credentials.confirmPassword}
+                  className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold shadow-lg backdrop-blur-sm border-0 rounded-xl px-8 h-12 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Complete Setup
+                  <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                </Button>
+              </div>
+            </form>
+
+            {/* Simple footer text */}
+            <div className="mt-8 text-center">
+              <p className="text-slate-400 font-light text-xs">
+                Your account will be created and you'll be redirected to the dashboard
               </p>
             </div>
           </div>
