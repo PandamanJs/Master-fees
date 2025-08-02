@@ -39,7 +39,7 @@ Preferred communication style: Simple, everyday language.
 - **QuickBooks Integration**: OAuth2 authentication, bidirectional data sync for customers, items, invoices, and payments.
 - **Figma Integration**: API service for design system synchronization, component generation, and asset export.
 - **Aptitude Testing System**: Advanced assessment platform with liquid glass design, adaptive difficulty scaling, real-time skill visualization, multi-step registration, category selection (Frontend and Backend available, others coming soon), timed testing with multiple choice and coding questions, performance tracking with accuracy/speed/confidence metrics, and comprehensive results display with skill assessment.
-- **School Onboarding System**: Two-step onboarding flow with intelligent school search featuring preloaded Zambian schools database, custom school name entry option, comprehensive location-based form fields, automated school data collection for future auto-fill functionality, and one-click AI-powered school suggestion generation with fallback smart pattern recognition.
+- **School Onboarding System**: Four-step onboarding flow with: 1) intelligent school search featuring preloaded Zambian schools database and AI-powered suggestions, 2) location-based form fields with comprehensive geographic data, 3) detailed school information collection (email, contact, address, categories, logo upload), and 4) pricing setup with selectable fee categories (tuition, transportation, accommodation, etc.) and custom category creation.
 
 ## External Dependencies
 

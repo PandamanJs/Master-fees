@@ -35,6 +35,10 @@ export default function OnboardingPage() {
   const [schoolCategories, setSchoolCategories] = useState('');
   const [schoolLogo, setSchoolLogo] = useState('');
   
+  // Step 4: Pricing Setup
+  const [selectedFeeCategories, setSelectedFeeCategories] = useState<string[]>([]);
+  const [customCategory, setCustomCategory] = useState('');
+  
   const [, navigate] = useLocation();
 
   const handleStep1Submit = (e: React.FormEvent) => {
@@ -100,10 +104,41 @@ export default function OnboardingPage() {
       console.log('Detailed school data stored successfully');
       // Here you would typically send this to your backend
       
-      // Navigate to dashboard or assessment
-      navigate('/aptitude-apple');
+      // Move to step 4 for pricing setup
+      setStep(4);
     } catch (error) {
       console.error('Error storing detailed school data:', error);
+      // Still move to step 4 even if storage fails
+      setStep(4);
+    }
+  };
+
+  const handleStep4Submit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    try {
+      // Store the complete school setup information
+      const completeSchoolData = {
+        name: schoolName,
+        country,
+        stateProvince,
+        townDistrict,
+        email: schoolEmail,
+        contactNumbers,
+        physicalAddress,
+        categories: schoolCategories,
+        logo: schoolLogo,
+        feeCategories: selectedFeeCategories,
+        customCategory
+      };
+      
+      console.log('Complete school setup stored successfully');
+      // Here you would typically send this to your backend
+      
+      // Navigate to assessment or dashboard
+      navigate('/aptitude-apple');
+    } catch (error) {
+      console.error('Error storing complete school setup:', error);
       // Still navigate even if storage fails
       navigate('/aptitude-apple');
     }
@@ -114,6 +149,23 @@ export default function OnboardingPage() {
       setStep(1);
     } else if (step === 3) {
       setStep(2);
+    } else if (step === 4) {
+      setStep(3);
+    }
+  };
+
+  const toggleFeeCategory = (category: string) => {
+    setSelectedFeeCategories(prev => 
+      prev.includes(category) 
+        ? prev.filter(c => c !== category)
+        : [...prev, category]
+    );
+  };
+
+  const addCustomCategory = () => {
+    if (customCategory.trim() && !selectedFeeCategories.includes(customCategory.trim())) {
+      setSelectedFeeCategories(prev => [...prev, customCategory.trim()]);
+      setCustomCategory('');
     }
   };
 
@@ -365,6 +417,182 @@ export default function OnboardingPage() {
             <div className="mt-8 text-center">
               <p className="text-slate-400 font-light text-xs">
                 Your information is secure and will be used to enhance your school management experience
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Step 4: Pricing Setup
+  if (step === 4) {
+    const feeCategories = [
+      {
+        id: 'tuition',
+        name: 'Tuition Fees',
+        description: 'Core academic fees for teaching and learning activities'
+      },
+      {
+        id: 'transportation',
+        name: 'Transportation Fees',
+        description: 'School bus and transport services for students'
+      },
+      {
+        id: 'accommodation',
+        name: 'Accommodation Fees',
+        description: 'Boarding and lodging fees for residential students'
+      },
+      {
+        id: 'meals',
+        name: 'Meals & Catering',
+        description: 'Lunch, breakfast and other meal services'
+      },
+      {
+        id: 'activities',
+        name: 'Activities & Sports',
+        description: 'Extracurricular activities, sports, and club fees'
+      },
+      {
+        id: 'materials',
+        name: 'Books & Materials',
+        description: 'Textbooks, stationery, and learning materials'
+      },
+      {
+        id: 'uniform',
+        name: 'Uniform & Equipment',
+        description: 'School uniforms, PE kit, and equipment'
+      },
+      {
+        id: 'examination',
+        name: 'Examination Fees',
+        description: 'Registration and processing fees for examinations'
+      }
+    ];
+
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-teal-900 flex items-center justify-center px-4 relative overflow-hidden">
+        {/* Subtle Liquid Glass Background Elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 ultra-glass-dark rounded-full opacity-8 animate-float"></div>
+          <div className="absolute bottom-1/3 right-1/4 w-64 h-64 ultra-glass-dark rounded-full opacity-6 animate-float delay-1000"></div>
+          <div className="absolute top-1/2 right-1/3 w-48 h-48 ultra-glass-light rounded-full opacity-5 animate-float delay-500"></div>
+        </div>
+
+        <div className="w-full max-w-3xl relative z-10">
+          {/* Header */}
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-bold text-white mb-2">Pricing Setup</h1>
+            <p className="text-slate-400">Select which products and service categories your school offers</p>
+          </div>
+
+          {/* Clean form card with liquid glass */}
+          <div className="ultra-glass-light backdrop-blur-xl rounded-2xl shadow-2xl border border-slate-600/20 p-8">
+            <form onSubmit={handleStep4Submit} className="space-y-6">
+              
+              {/* Fee Categories */}
+              <div className="space-y-4">
+                {feeCategories.map((category) => (
+                  <div 
+                    key={category.id}
+                    className={`p-4 rounded-xl border transition-all duration-200 cursor-pointer ${
+                      selectedFeeCategories.includes(category.id)
+                        ? 'border-emerald-400/50 bg-emerald-500/10 backdrop-blur-sm'
+                        : 'border-slate-600/40 bg-slate-700/20 backdrop-blur-sm hover:border-slate-500/60 hover:bg-slate-600/20'
+                    }`}
+                    onClick={() => toggleFeeCategory(category.id)}
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center mt-0.5 ${
+                        selectedFeeCategories.includes(category.id)
+                          ? 'border-emerald-400 bg-emerald-500'
+                          : 'border-slate-400'
+                      }`}>
+                        {selectedFeeCategories.includes(category.id) && (
+                          <div className="w-2 h-2 rounded-full bg-white"></div>
+                        )}
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="text-white font-medium mb-1">{category.name}</h3>
+                        <p className="text-slate-400 text-sm">{category.description}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Custom Category Section */}
+              <div className="pt-4 border-t border-slate-600/20">
+                <div className="bg-slate-700/20 backdrop-blur-sm rounded-xl p-4">
+                  <h3 className="text-white font-medium mb-2">Can't see a category you offer?</h3>
+                  <p className="text-slate-400 text-sm mb-4">Add your own custom fee category below</p>
+                  
+                  <div className="flex gap-3">
+                    <Input
+                      value={customCategory}
+                      onChange={(e) => setCustomCategory(e.target.value)}
+                      placeholder="Enter custom category name"
+                      className="flex-1 border-0 bg-slate-600/30 backdrop-blur-sm text-white placeholder:text-slate-400 focus:bg-slate-500/30 focus:ring-2 focus:ring-emerald-400/30 rounded-xl h-10"
+                    />
+                    <Button
+                      type="button"
+                      onClick={addCustomCategory}
+                      disabled={!customCategory.trim()}
+                      className="bg-slate-600/50 hover:bg-slate-500/60 text-white border-0 rounded-xl px-6 h-10 disabled:opacity-50"
+                    >
+                      Add category
+                    </Button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Show selected categories */}
+              {selectedFeeCategories.length > 0 && (
+                <div className="pt-4">
+                  <h4 className="text-slate-300 font-medium mb-3">Selected Categories ({selectedFeeCategories.length})</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {selectedFeeCategories.map((categoryId) => {
+                      const category = feeCategories.find(c => c.id === categoryId);
+                      const displayName = category ? category.name : categoryId;
+                      return (
+                        <span
+                          key={categoryId}
+                          className="px-3 py-1 bg-emerald-500/20 text-emerald-300 rounded-lg text-sm border border-emerald-400/30"
+                        >
+                          {displayName}
+                        </span>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* Navigation Buttons */}
+              <div className="flex justify-between pt-6">
+                <Button
+                  type="button" 
+                  onClick={handleBack}
+                  variant="outline"
+                  className="bg-slate-700/30 border-slate-600/40 text-white hover:bg-slate-600/40 rounded-xl px-8 h-12"
+                >
+                  <ArrowLeft className="w-4 h-4 mr-2" />
+                  Back
+                </Button>
+                
+                <Button
+                  type="submit"
+                  className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold shadow-lg backdrop-blur-sm border-0 rounded-xl px-8 h-12"
+                >
+                  Complete Onboarding
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </div>
+            </form>
+
+            {/* Simple footer text */}
+            <div className="mt-8 text-center">
+              <p className="text-slate-400 font-light text-xs">
+                You can modify these categories later in your school settings
               </p>
             </div>
           </div>
