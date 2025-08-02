@@ -23,6 +23,7 @@ import {
 export default function OnboardingPage() {
   const [step, setStep] = useState(1);
   const [schoolName, setSchoolName] = useState('');
+  const [showSuggestions, setShowSuggestions] = useState(false);
   const [country, setCountry] = useState('');
   const [stateProvince, setStateProvince] = useState('');
   const [townDistrict, setTownDistrict] = useState('');
@@ -135,17 +136,25 @@ export default function OnboardingPage() {
                 <div className="relative">
                   <Input
                     value={schoolName}
-                    onChange={(e) => setSchoolName(e.target.value)}
+                    onChange={(e) => {
+                      setSchoolName(e.target.value);
+                      setShowSuggestions(e.target.value.length > 0);
+                    }}
+                    onFocus={() => setShowSuggestions(schoolName.length > 0)}
+                    onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
                     className="border-0 bg-slate-700/30 backdrop-blur-sm text-white placeholder:text-slate-400 focus:bg-slate-600/30 focus:ring-2 focus:ring-emerald-400/30 rounded-xl h-12 text-center"
                     placeholder="Type your school name or select from list..."
                   />
                   
                   {/* School suggestions dropdown */}
-                  {schoolName.length > 0 && (
+                  {schoolName.length > 0 && showSuggestions && (
                     <div className="absolute top-full left-0 right-0 mt-2 z-50 bg-slate-800/95 backdrop-blur-xl rounded-xl shadow-2xl border border-slate-600/20 max-h-80 overflow-y-auto">
                       <SchoolSuggestions 
                         query={schoolName}
-                        onSelect={setSchoolName}
+                        onSelect={(selectedSchool) => {
+                          setSchoolName(selectedSchool);
+                          setShowSuggestions(false);
+                        }}
                         country={country}
                         province={stateProvince}
                         district={townDistrict}
