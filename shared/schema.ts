@@ -102,6 +102,56 @@ export const students = pgTable("students", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
+// Onboarding Sessions - Track progress for each school onboarding
+export const onboardingSessions = pgTable("onboarding_sessions", {
+  id: serial("id").primaryKey(),
+  sessionId: text("session_id").unique().notNull(), // UUID for unique session
+  schoolName: text("school_name"),
+  country: text("country"),
+  stateProvince: text("state_province"),
+  townDistrict: text("town_district"),
+  
+  // Step 3 data
+  schoolEmail: text("school_email"),
+  contactNumbers: text("contact_numbers").array(),
+  physicalAddress: text("physical_address"),
+  schoolCategories: text("school_categories").array(),
+  schoolLogo: text("school_logo"), // URL to uploaded logo
+  
+  // Step 4 data
+  selectedFeeCategories: text("selected_fee_categories").array(),
+  customCategory: text("custom_category"),
+  
+  // Step 5 data
+  gradePricing: jsonb("grade_pricing"),
+  additionalFees: jsonb("additional_fees"),
+  pricingCategories: jsonb("pricing_categories"),
+  
+  // Step 6 data
+  productGroups: jsonb("product_groups"),
+  
+  // Step 7 data
+  receiptTemplate: jsonb("receipt_template"),
+  
+  // Step 8 data
+  bankAccounts: jsonb("bank_accounts"),
+  
+  // Step 9 data
+  verificationData: jsonb("verification_data"),
+  
+  // Step 10 data
+  credentials: jsonb("credentials"), // Store hashed password and email
+  
+  // Session tracking
+  currentStep: integer("current_step").default(1),
+  completedSteps: text("completed_steps").array().default([]),
+  isCompleted: boolean("is_completed").default(false),
+  finalSchoolId: integer("final_school_id"), // Links to schools table once completed
+  
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
 // Fee categories (tuition, transport, meals, etc.)
 export const feeCategories = pgTable("fee_categories", {
   id: serial("id").primaryKey(),
@@ -247,6 +297,12 @@ export const jobApplications = pgTable('job_applications', {
 export const insertJobApplicationSchema = createInsertSchema(jobApplications).omit({
   id: true,
   appliedAt: true,
+});
+
+export const insertOnboardingSessionSchema = createInsertSchema(onboardingSessions).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
 });
 
 // Aptitude Tests table

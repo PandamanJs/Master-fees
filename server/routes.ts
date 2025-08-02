@@ -2,6 +2,15 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { Router } from "express";
 import figmaRoutes from "./figma-routes";
+import { cvExtractionService } from "./ai-cv-extraction";
+import { 
+  strictRateLimit, 
+  moderateRateLimit, 
+  authRateLimit, 
+  uploadRateLimit, 
+  apiRateLimit 
+} from "./middleware/rate-limiter";
+import { requestLogger, errorLogger } from "./middleware/logger";
 import { z } from "zod";
 import { 
   loginSchema, 
@@ -12,8 +21,10 @@ import {
   insertPaymentSchema,
   contactFormSchema,
   insertSchoolOnboardingSchema,
+  insertOnboardingSessionSchema,
   schoolOnboarding,
   schools,
+  onboardingSessions,
   type User 
 } from "@shared/schema";
 import { storage } from "./storage";
@@ -680,6 +691,171 @@ router.post("/extract-cv-info", async (req, res) => {
   }
 });
 
+// Onboarding Session Management Routes
+router.post("/onboarding/session", async (req, res) => {
+  try {
+    const sessionData = req.body;
+    const sessionId = randomUUID();
+    
+    // Create new onboarding session
+    const [session] = await db.insert(onboardingSessions).values({
+      sessionId,
+      ...sessionData,
+      currentStep: sessionData.currentStep || 1,
+      completedSteps: sessionData.completedSteps || [],
+    }).returning();
+
+    res.json({ 
+      success: true, 
+      sessionId: session.sessionId,
+      message: "Onboarding session created successfully" 
+    });
+  } catch (error) {
+    console.error("Error creating onboarding session:", error);
+    res.status(500).json({ error: "Failed to create onboarding session" });
+  }
+});
+
+router.put("/onboarding/session/:sessionId", async (req, res) => {
+  try {
+    const { sessionId } = req.params;
+    const updateData = req.body;
+    
+    // Update existing onboarding session
+    const [updatedSession] = await db
+      .update(onboardingSessions)
+      .set({
+        ...updateData,
+        updatedAt: new Date(),
+      })
+      .where(eq(onboardingSessions.sessionId, sessionId))
+      .returning();
+
+    if (!updatedSession) {
+      return res.status(404).json({ error: "Onboarding session not found" });
+    }
+
+    res.json({ 
+      success: true, 
+      session: updatedSession,
+      message: "Onboarding session updated successfully" 
+    });
+  } catch (error) {
+    console.error("Error updating onboarding session:", error);
+    res.status(500).json({ error: "Failed to update onboarding session" });
+  }
+});
+
+router.get("/onboarding/session/:sessionId", async (req, res) => {
+  try {
+    const { sessionId } = req.params;
+    
+    const [session] = await db
+      .select()
+      .from(onboardingSessions)
+      .where(eq(onboardingSessions.sessionId, sessionId));
+
+    if (!session) {
+      return res.status(404).json({ error: "Onboarding session not found" });
+    }
+
+    res.json({ success: true, session });
+  } catch (error) {
+    console.error("Error fetching onboarding session:", error);
+    res.status(500).json({ error: "Failed to fetch onboarding session" });
+  }
+});
+
+router.post("/onboarding/complete/:sessionId", async (req, res) => {
+  try {
+    const { sessionId } = req.params;
+    
+    // Get the completed onboarding session
+    const [session] = await db
+      .select()
+      .from(onboardingSessions)
+      .where(eq(onboardingSessions.sessionId, sessionId));
+
+    if (!session) {
+      return res.status(404).json({ error: "Onboarding session not found" });
+    }
+
+    // Create the final school record
+    const [school] = await db.insert(schools).values({
+      name: session.schoolName || '',
+      country: session.country || '',
+      state: session.stateProvince || '',
+      district: session.townDistrict || '',
+      contactEmail: session.schoolEmail || '',
+      contactPhone: session.contactNumbers?.[0] || '',
+      address: session.physicalAddress || '',
+      // Add more fields as needed from the session data
+    }).returning();
+
+    // Mark session as completed and link to school
+    await db
+      .update(onboardingSessions)
+      .set({
+        isCompleted: true,
+        finalSchoolId: school.id,
+        updatedAt: new Date(),
+      })
+      .where(eq(onboardingSessions.sessionId, sessionId));
+
+    res.json({ 
+      success: true, 
+      schoolId: school.id,
+      message: "School onboarding completed successfully" 
+    });
+  } catch (error) {
+    console.error("Error completing onboarding:", error);
+    res.status(500).json({ error: "Failed to complete onboarding" });
+  }
+});
+
+// Object Storage Upload Routes for Logo Upload
+router.post("/objects/upload", async (req, res) => {
+  try {
+    const objectStorageService = new ObjectStorageService();
+    const uploadURL = await objectStorageService.getObjectEntityUploadURL();
+    res.json({ uploadURL });
+  } catch (error) {
+    console.error("Error getting upload URL:", error);
+    res.status(500).json({ error: "Failed to get upload URL" });
+  }
+});
+
+router.get("/objects/:objectPath(*)", async (req, res) => {
+  try {
+    const objectStorageService = new ObjectStorageService();
+    const objectFile = await objectStorageService.getObjectEntityFile(req.path);
+    objectStorageService.downloadObject(objectFile, res);
+  } catch (error) {
+    console.error("Error retrieving object:", error);
+    if (error instanceof ObjectNotFoundError) {
+      return res.sendStatus(404);
+    }
+    return res.sendStatus(500);
+  }
+});
+
+router.put("/objects/update-acl", async (req, res) => {
+  try {
+    const { objectURL } = req.body;
+    if (!objectURL) {
+      return res.status(400).json({ error: "objectURL is required" });
+    }
+
+    const objectStorageService = new ObjectStorageService();
+    const objectPath = objectStorageService.normalizeObjectEntityPath(objectURL);
+
+    res.json({ objectPath });
+  } catch (error) {
+    console.error("Error updating object ACL:", error);
+    res.status(500).json({ error: "Failed to update object" });
+  }
+});
+
 // Aptitude test routes
 router.post("/aptitude/register", async (req, res) => {
   try {
@@ -872,9 +1048,101 @@ router.post("/schools/ai-enhance", async (req, res) => {
 // Register QuickBooks routes
 router.use(quickbooksRouter);
 
+// CV Extraction endpoints with rate limiting
+router.post("/cv/extract-text", apiRateLimit, async (req, res) => {
+  try {
+    const { cvText, options } = req.body;
+    
+    if (!cvText) {
+      return res.status(400).json({ error: "CV text is required" });
+    }
+    
+    const extractedData = await cvExtractionService.extractFromText(cvText, options);
+    res.json({ success: true, data: extractedData });
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'CV extraction failed';
+    res.status(500).json({ error: errorMessage });
+  }
+});
+
+router.post("/cv/extract-image", uploadRateLimit, async (req, res) => {
+  try {
+    const { imageBase64, options } = req.body;
+    
+    if (!imageBase64) {
+      return res.status(400).json({ error: "Image data is required" });
+    }
+    
+    const extractedData = await cvExtractionService.extractFromImage(imageBase64, options);
+    res.json({ success: true, data: extractedData });
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'CV image extraction failed';
+    res.status(500).json({ error: errorMessage });
+  }
+});
+
+router.post("/cv/analyze-skills", apiRateLimit, async (req, res) => {
+  try {
+    const { extractedData } = req.body;
+    
+    if (!extractedData) {
+      return res.status(400).json({ error: "Extracted CV data is required" });
+    }
+    
+    const analysis = await cvExtractionService.analyzeSkills(extractedData);
+    res.json({ success: true, analysis });
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Skills analysis failed';
+    res.status(500).json({ error: errorMessage });
+  }
+});
+
+// Onboarding completion endpoint
+router.post("/onboarding/complete/:sessionId", async (req, res) => {
+  try {
+    const { sessionId } = req.params;
+    
+    // Get session data from database
+    const [session] = await db
+      .select()
+      .from(onboardingSessions)
+      .where(eq(onboardingSessions.id, sessionId));
+    
+    if (!session) {
+      return res.status(404).json({ error: "Session not found" });
+    }
+    
+    // Create final school record
+    const [school] = await db
+      .insert(schoolOnboarding)
+      .values({
+        sessionId: sessionId,
+        schoolName: session.data.schoolName || 'Unknown School',
+        email: session.data.email || '',
+        country: session.data.country || '',
+        stateProvince: session.data.stateProvince || '',
+        townDistrict: session.data.townDistrict || '',
+        contactNumbers: session.data.contactNumbers || [],
+        physicalAddress: session.data.physicalAddress || '',
+        categories: session.data.categories || [],
+        completedAt: new Date()
+      })
+      .returning();
+    
+    res.json({ success: true, schoolId: school.id });
+  } catch (error) {
+    console.error('Error completing onboarding:', error);
+    res.status(500).json({ error: 'Failed to complete onboarding' });
+  }
+});
+
 export { router as routes };
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Apply global middleware
+  app.use(requestLogger);
+  app.use(moderateRateLimit); // Global rate limiting
+  
   // Register all API routes with /api prefix
   app.use("/api", router);
   app.use("/api", figmaRoutes);
@@ -883,6 +1151,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   const zambianSchoolsRouter = await import('./zambian-schools-api');
   app.use("/api", zambianSchoolsRouter.default);
 
+  // Apply error logging middleware at the end
+  app.use(errorLogger);
+  
   const httpServer = createServer(app);
   return httpServer;
 }

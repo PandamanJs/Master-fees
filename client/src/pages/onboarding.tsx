@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation } from 'wouter';
+import { ObjectUploader } from '@/components/ObjectUploader';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { SchoolSuggestions } from '@/components/SchoolSuggestions';
@@ -23,6 +24,7 @@ import {
 
 export default function OnboardingPage() {
   const [step, setStep] = useState(1);
+  const [sessionId, setSessionId] = useState<string>('');
   const [schoolName, setSchoolName] = useState('');
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [country, setCountry] = useState('');
@@ -149,9 +151,106 @@ export default function OnboardingPage() {
   
   const [, navigate] = useLocation();
 
-  const handleStep1Submit = (e: React.FormEvent) => {
+  // Initialize or load session
+  useEffect(() => {
+    const existingSessionId = localStorage.getItem('onboardingSessionId');
+    if (existingSessionId) {
+      setSessionId(existingSessionId);
+      loadSessionData(existingSessionId);
+    }
+  }, []);
+
+  // Save session data to backend
+  const saveSessionData = async (stepData: any, currentStep: number) => {
+    try {
+      const sessionData = {
+        schoolName,
+        country,
+        stateProvince,
+        townDistrict,
+        schoolEmail,
+        contactNumbers: contactNumbers.split(',').map(n => n.trim()).filter(n => n),
+        physicalAddress,
+        schoolCategories: schoolCategories.split(',').map(c => c.trim()).filter(c => c),
+        schoolLogo,
+        selectedFeeCategories,
+        customCategory,
+        gradePricing,
+        additionalFees,
+        pricingCategories,
+        productGroups,
+        receiptTemplate,
+        bankAccounts,
+        verificationData,
+        credentials,
+        currentStep,
+        completedSteps: Array.from({length: currentStep - 1}, (_, i) => (i + 1).toString()),
+        ...stepData,
+      };
+
+      if (sessionId) {
+        // Update existing session
+        await fetch(`/api/onboarding/session/${sessionId}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(sessionData),
+        });
+      } else {
+        // Create new session
+        const response = await fetch('/api/onboarding/session', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(sessionData),
+        });
+        
+        if (response.ok) {
+          const { sessionId: newSessionId } = await response.json();
+          setSessionId(newSessionId);
+          localStorage.setItem('onboardingSessionId', newSessionId);
+        }
+      }
+    } catch (error) {
+      console.error('Error saving session data:', error);
+    }
+  };
+
+  // Load session data from backend
+  const loadSessionData = async (sessionId: string) => {
+    try {
+      const response = await fetch(`/api/onboarding/session/${sessionId}`);
+      if (response.ok) {
+        const { session } = await response.json();
+        // Populate all form fields with session data
+        if (session.schoolName) setSchoolName(session.schoolName);
+        if (session.country) setCountry(session.country);
+        if (session.stateProvince) setStateProvince(session.stateProvince);
+        if (session.townDistrict) setTownDistrict(session.townDistrict);
+        if (session.schoolEmail) setSchoolEmail(session.schoolEmail);
+        if (session.contactNumbers) setContactNumbers(session.contactNumbers.join(', '));
+        if (session.physicalAddress) setPhysicalAddress(session.physicalAddress);
+        if (session.schoolCategories) setSchoolCategories(session.schoolCategories.join(', '));
+        if (session.schoolLogo) setSchoolLogo(session.schoolLogo);
+        if (session.selectedFeeCategories) setSelectedFeeCategories(session.selectedFeeCategories);
+        if (session.customCategory) setCustomCategory(session.customCategory);
+        if (session.gradePricing) setGradePricing(session.gradePricing);
+        if (session.additionalFees) setAdditionalFees(session.additionalFees);
+        if (session.pricingCategories) setPricingCategories(session.pricingCategories);
+        if (session.productGroups) setProductGroups(session.productGroups);
+        if (session.receiptTemplate) setReceiptTemplate(session.receiptTemplate);
+        if (session.bankAccounts) setBankAccounts(session.bankAccounts);
+        if (session.verificationData) setVerificationData(session.verificationData);
+        if (session.credentials) setCredentials(session.credentials);
+        if (session.currentStep) setStep(session.currentStep);
+      }
+    } catch (error) {
+      console.error('Error loading session data:', error);
+    }
+  };
+
+  const handleStep1Submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (schoolName.trim()) {
+      await saveSessionData({ schoolName }, 2);
       setStep(2);
     }
   };
@@ -182,11 +281,13 @@ export default function OnboardingPage() {
           console.log('School data stored successfully');
         }
         
-        // Move to step 3 for detailed info
+        // Save session data and move to step 3
+        await saveSessionData({ country, stateProvince, townDistrict }, 3);
         setStep(3);
       } catch (error) {
         console.error('Failed to store school data:', error);
-        // Still move to step 3 even if storage fails
+        // Still save session and move to step 3 even if storage fails
+        await saveSessionData({ country, stateProvince, townDistrict }, 3);
         setStep(3);
       }
     }
@@ -210,13 +311,26 @@ export default function OnboardingPage() {
       };
       
       console.log('Detailed school data stored successfully');
-      // Here you would typically send this to your backend
       
-      // Move to step 4 for pricing setup
+      // Save session data and move to step 4 for pricing setup
+      await saveSessionData({ 
+        schoolEmail, 
+        contactNumbers: contactNumbers.split(',').map(n => n.trim()).filter(n => n),
+        physicalAddress, 
+        schoolCategories: schoolCategories.split(',').map(c => c.trim()).filter(c => c),
+        schoolLogo 
+      }, 4);
       setStep(4);
     } catch (error) {
       console.error('Error storing detailed school data:', error);
-      // Still move to step 4 even if storage fails
+      // Still save session and move to step 4 even if storage fails
+      await saveSessionData({ 
+        schoolEmail, 
+        contactNumbers: contactNumbers.split(',').map(n => n.trim()).filter(n => n),
+        physicalAddress, 
+        schoolCategories: schoolCategories.split(',').map(c => c.trim()).filter(c => c),
+        schoolLogo 
+      }, 4);
       setStep(4);
     }
   };
@@ -241,13 +355,14 @@ export default function OnboardingPage() {
       };
       
       console.log('Complete school setup stored successfully');
-      // Here you would typically send this to your backend
       
-      // Move to step 5 for pricing structure
+      // Save session data and move to step 5 for pricing structure
+      await saveSessionData({ selectedFeeCategories, customCategory }, 5);
       setStep(5);
     } catch (error) {
       console.error('Error storing complete school setup:', error);
-      // Still move to step 5 even if storage fails
+      // Still save session and move to step 5 even if storage fails
+      await saveSessionData({ selectedFeeCategories, customCategory }, 5);
       setStep(5);
     }
   };
@@ -274,13 +389,14 @@ export default function OnboardingPage() {
       };
       
       console.log('Complete school setup with pricing stored successfully');
-      // Here you would typically send this to your backend
       
-      // Move to step 6 for product grouping
+      // Save session data and move to step 6 for product grouping
+      await saveSessionData({ gradePricing, additionalFees, pricingCategories }, 6);
       setStep(6);
     } catch (error) {
       console.error('Error storing complete school setup:', error);
-      // Still move to step 6 even if storage fails
+      // Still save session and move to step 6 even if storage fails
+      await saveSessionData({ gradePricing, additionalFees, pricingCategories }, 6);
       setStep(6);
     }
   };
@@ -383,11 +499,13 @@ export default function OnboardingPage() {
       console.log('Final school onboarding completed successfully');
       // Here you would typically send this to your backend
       
-      // Move to step 7 for receipt template
+      // Save session data and move to step 7 for receipt template
+      await saveSessionData({ productGroups }, 7);
       setStep(7);
     } catch (error) {
       console.error('Error completing final school setup:', error);
-      // Still move to step 7 even if storage fails
+      // Still save session and move to step 7 even if storage fails
+      await saveSessionData({ productGroups }, 7);
       setStep(7);
     }
   };
@@ -516,11 +634,13 @@ export default function OnboardingPage() {
       console.log('Complete school onboarding with receipt template completed successfully');
       // Here you would typically send this to your backend API
       
-      // Move to step 8 for bank account info
+      // Save session data and move to step 8 for bank account info
+      await saveSessionData({ receiptTemplate }, 8);
       setStep(8);
     } catch (error) {
       console.error('Error completing final school setup:', error);
-      // Still move to step 8 even if storage fails
+      // Still save session and move to step 8 even if storage fails
+      await saveSessionData({ receiptTemplate }, 8);
       setStep(8);
     }
   };
@@ -553,11 +673,13 @@ export default function OnboardingPage() {
       console.log('Complete school onboarding with all 8 steps completed successfully');
       // Here you would typically send this to your backend API
       
-      // Move to step 9 for account verification
+      // Save session data and move to step 9 for account verification
+      await saveSessionData({ bankAccounts }, 9);
       setStep(9);
     } catch (error) {
       console.error('Error completing final school setup:', error);
-      // Still move to step 9 even if storage fails
+      // Still save session and move to step 9 even if storage fails
+      await saveSessionData({ bankAccounts }, 9);
       setStep(9);
     }
   };
@@ -625,11 +747,13 @@ export default function OnboardingPage() {
       console.log('School onboarding with verification completed successfully');
       // Here you would typically send this to your backend API
       
-      // Move to final step for account creation
+      // Save session data and move to final step for account creation
+      await saveSessionData({ verificationData }, 10);
       setStep(10);
     } catch (error) {
       console.error('Error completing verification:', error);
-      // Still move to step 10 even if storage fails
+      // Still save session and move to step 10 even if storage fails
+      await saveSessionData({ verificationData }, 10);
       setStep(10);
     }
   };
@@ -672,12 +796,41 @@ export default function OnboardingPage() {
       console.log('Complete school onboarding with all 10 steps completed successfully');
       // Here you would typically send this to your backend API for account creation
       
-      // Show success completion and redirect to Master Fees dashboard
+      // Save session data and show success completion
+      await saveSessionData({ credentials }, 11);
       setStep(11); // Success completion step
     } catch (error) {
       console.error('Error completing final account setup:', error);
-      // Still show success even if storage fails
+      // Still save session and show success
+      await saveSessionData({ credentials }, 11);
       setStep(11);
+    }
+  };
+
+  const handleCompleteOnboarding = async () => {
+    try {
+      if (sessionId) {
+        // Complete the onboarding process
+        const response = await fetch(`/api/onboarding/complete/${sessionId}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+        });
+        
+        if (response.ok) {
+          const { schoolId } = await response.json();
+          console.log('School onboarding completed with ID:', schoolId);
+        }
+      }
+      
+      // Clear the session from localStorage since onboarding is complete
+      localStorage.removeItem('onboardingSessionId');
+      
+      // Redirect to Master Fees dashboard
+      window.location.href = 'https://master-fees.com';
+    } catch (error) {
+      console.error('Error completing onboarding:', error);  
+      // Still redirect even if there's an error
+      window.location.href = 'https://master-fees.com';
     }
   };
 
@@ -831,22 +984,66 @@ export default function OnboardingPage() {
                 {/* Left Column - School Logo Upload */}
                 <div className="space-y-4">
                   <div className="aspect-square max-w-sm mx-auto">
-                    <div className="w-full h-full border-2 border-dashed border-slate-600/40 rounded-xl flex flex-col items-center justify-center bg-slate-700/20 backdrop-blur-sm hover:bg-slate-600/20 transition-colors cursor-pointer">
-                      <div className="text-slate-400 mb-4">
-                        <svg className="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
+                    {schoolLogo ? (
+                      <div className="w-full h-full rounded-xl overflow-hidden bg-slate-700/20 backdrop-blur-sm border border-slate-600/40">
+                        <img 
+                          src={schoolLogo} 
+                          alt="School Logo" 
+                          className="w-full h-full object-cover"
+                        />
                       </div>
-                    </div>
+                    ) : (
+                      <div className="w-full h-full border-2 border-dashed border-slate-600/40 rounded-xl flex flex-col items-center justify-center bg-slate-700/20 backdrop-blur-sm hover:bg-slate-600/20 transition-colors">
+                        <div className="text-slate-400 mb-4">
+                          <svg className="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                          </svg>
+                        </div>
+                        <p className="text-slate-400 text-sm">Click below to upload logo</p>
+                      </div>
+                    )}
                   </div>
                   
-                  <Button
-                    type="button"
-                    variant="outline"
-                    className="w-full bg-slate-700/30 border-slate-600/40 text-white hover:bg-slate-600/40 rounded-xl h-12"
+                  <ObjectUploader
+                    maxNumberOfFiles={1}
+                    maxFileSize={5 * 1024 * 1024} // 5MB
+                    onGetUploadParameters={async () => {
+                      const response = await fetch('/api/objects/upload', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                      });
+                      if (!response.ok) throw new Error('Failed to get upload URL');
+                      const { uploadURL } = await response.json();
+                      return { method: 'PUT' as const, url: uploadURL };
+                    }}
+                    onComplete={async (result) => {
+                      if (result.successful.length > 0) {
+                        const uploadedFile = result.successful[0];
+                        // Extract object ID from the upload URL
+                        const urlParts = uploadedFile.uploadURL.split('/uploads/');
+                        if (urlParts.length > 1) {
+                          const objectId = urlParts[1].split('?')[0];
+                          const logoPath = `/objects/uploads/${objectId}`;
+                          setSchoolLogo(logoPath);
+                          
+                          // Update ACL for the uploaded logo
+                          try {
+                            await fetch('/api/objects/update-acl', {
+                              method: 'PUT',
+                              headers: { 'Content-Type': 'application/json' },
+                              body: JSON.stringify({ objectURL: uploadedFile.uploadURL }),
+                            });
+                          } catch (error) {
+                            console.error('Failed to update logo ACL:', error);
+                          }
+                        }
+                      }
+                    }}
+                    buttonClassName="w-full bg-slate-700/30 border-slate-600/40 text-white hover:bg-slate-600/40 rounded-xl h-12"
                   >
-                    School Logo Upload
-                  </Button>
+                    <Upload className="w-4 h-4 mr-2" />
+                    {schoolLogo ? 'Change Logo' : 'Upload School Logo'}
+                  </ObjectUploader>
                 </div>
 
                 {/* Right Column - School Details */}
