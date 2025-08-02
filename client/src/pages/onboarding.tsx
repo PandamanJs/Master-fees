@@ -17,7 +17,8 @@ import {
   ArrowLeft,
   Shield,
   Clock,
-  Target
+  Target,
+  Check
 } from 'lucide-react';
 
 export default function OnboardingPage() {
@@ -43,6 +44,10 @@ export default function OnboardingPage() {
   const [gradePricing, setGradePricing] = useState<{[key: string]: {grades: {name: string, currency: string, amount: string}[], classesCount: string}}>({});
   const [currentCategory, setCurrentCategory] = useState('tuition');
   const [newGradeName, setNewGradeName] = useState('');
+  
+  // Step 6: Assign Products to Groups
+  const [productGroups, setProductGroups] = useState<{[key: string]: string[]}>({});
+  const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
   
   const [, navigate] = useLocation();
 
@@ -172,12 +177,12 @@ export default function OnboardingPage() {
       console.log('Complete school setup with pricing stored successfully');
       // Here you would typically send this to your backend
       
-      // Navigate to assessment or dashboard
-      navigate('/aptitude-apple');
+      // Move to step 6 for product grouping
+      setStep(6);
     } catch (error) {
       console.error('Error storing complete school setup:', error);
-      // Still navigate even if storage fails
-      navigate('/aptitude-apple');
+      // Still move to step 6 even if storage fails
+      setStep(6);
     }
   };
 
@@ -190,6 +195,8 @@ export default function OnboardingPage() {
       setStep(3);
     } else if (step === 5) {
       setStep(4);
+    } else if (step === 6) {
+      setStep(5);
     }
   };
 
@@ -240,6 +247,57 @@ export default function OnboardingPage() {
         classesCount: count
       }
     }));
+  };
+
+  const handleStep6Submit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    try {
+      // Store the final complete school setup with product groups
+      const finalSchoolData = {
+        name: schoolName,
+        country,
+        stateProvince,
+        townDistrict,
+        email: schoolEmail,
+        contactNumbers,
+        physicalAddress,
+        categories: schoolCategories,
+        logo: schoolLogo,
+        feeCategories: selectedFeeCategories,
+        customCategory,
+        pricingStructure: gradePricing,
+        productGroups
+      };
+      
+      console.log('Final school onboarding completed successfully');
+      // Here you would typically send this to your backend
+      
+      // Navigate to assessment or dashboard
+      navigate('/aptitude-apple');
+    } catch (error) {
+      console.error('Error completing final school setup:', error);
+      // Still navigate even if storage fails
+      navigate('/aptitude-apple');
+    }
+  };
+
+  const toggleProductSelection = (productName: string) => {
+    setSelectedProducts(prev => 
+      prev.includes(productName) 
+        ? prev.filter(p => p !== productName)
+        : [...prev, productName]
+    );
+  };
+
+  const createProductGroup = (groupName: string) => {
+    if (selectedProducts.length > 0) {
+      setProductGroups(prev => ({
+        ...prev,
+        [groupName]: [...selectedProducts]
+      }));
+      setSelectedProducts([]);
+    }
   };
 
   const toggleFeeCategory = (category: string) => {
@@ -894,6 +952,201 @@ export default function OnboardingPage() {
             <div className="mt-8 text-center">
               <p className="text-slate-400 font-light text-xs">
                 Configure pricing for each selected category. You can adjust these later in your school settings.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Step 6: Assign Products to Groups
+  if (step === 6) {
+    // Get all products/grades from all categories
+    const allProducts: string[] = [];
+    Object.keys(gradePricing).forEach(category => {
+      if (gradePricing[category]?.grades) {
+        gradePricing[category].grades.forEach(grade => {
+          allProducts.push(grade.name);
+        });
+      }
+    });
+
+    // Get ungrouped products
+    const groupedProducts = Object.values(productGroups).flat();
+    const ungroupedProducts = allProducts.filter(product => !groupedProducts.includes(product));
+    
+    const feeCategories = [
+      { id: 'tuition', name: 'Tuition Fees' },
+      { id: 'transportation', name: 'Transport Fees' }
+    ].filter(cat => selectedFeeCategories.includes(cat.id));
+
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-teal-900 flex items-center justify-center px-4 relative overflow-hidden">
+        {/* Subtle Liquid Glass Background Elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 ultra-glass-dark rounded-full opacity-8 animate-float"></div>
+          <div className="absolute bottom-1/3 right-1/4 w-64 h-64 ultra-glass-dark rounded-full opacity-6 animate-float delay-1000"></div>
+          <div className="absolute top-1/2 right-1/3 w-48 h-48 ultra-glass-light rounded-full opacity-5 animate-float delay-500"></div>
+        </div>
+
+        <div className="w-full max-w-4xl relative z-10">
+          {/* Header */}
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-bold text-white mb-2">Assign Products to groups</h1>
+            <p className="text-slate-400">You Can Assign different products to product and service groups.</p>
+          </div>
+
+          {/* Clean form card with liquid glass */}
+          <div className="ultra-glass-light backdrop-blur-xl rounded-2xl shadow-2xl border border-slate-600/20 p-8">
+            <form onSubmit={handleStep6Submit} className="space-y-6">
+              
+              {/* Category Tabs */}
+              <div className="flex flex-wrap gap-2 mb-6">
+                {feeCategories.map((category) => (
+                  <button
+                    key={category.id}
+                    type="button"
+                    className="px-4 py-2 rounded-lg text-sm font-medium bg-emerald-500 text-white"
+                  >
+                    {category.name}
+                  </button>
+                ))}
+              </div>
+
+              {/* Products Status */}
+              <div className="flex items-center justify-between mb-6">
+                <div className="text-slate-300">
+                  There are <span className="font-semibold text-white">{ungroupedProducts.length} Products/services</span> that have not been grouped.
+                </div>
+                <Select>
+                  <SelectTrigger className="w-32 border-0 bg-slate-700/30 text-white h-8">
+                    <SelectValue placeholder="View All" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-slate-800 border-slate-600">
+                    <SelectItem value="all" className="text-white">View All</SelectItem>
+                    <SelectItem value="grouped" className="text-white">Grouped</SelectItem>
+                    <SelectItem value="ungrouped" className="text-white">Ungrouped</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Product List */}
+              <div className="space-y-3">
+                {ungroupedProducts.map((product, index) => (
+                  <div 
+                    key={index}
+                    className={`flex items-center justify-between p-4 rounded-xl border transition-all duration-200 cursor-pointer ${
+                      selectedProducts.includes(product)
+                        ? 'border-emerald-400/50 bg-emerald-500/10 backdrop-blur-sm'
+                        : 'border-slate-600/40 bg-slate-700/20 backdrop-blur-sm hover:border-slate-500/60 hover:bg-slate-600/20'
+                    }`}
+                    onClick={() => toggleProductSelection(product)}
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className={`w-5 h-5 rounded border-2 flex items-center justify-center ${
+                        selectedProducts.includes(product)
+                          ? 'border-emerald-400 bg-emerald-500'
+                          : 'border-slate-400'
+                      }`}>
+                        {selectedProducts.includes(product) && (
+                          <Check className="w-3 h-3 text-white" />
+                        )}
+                      </div>
+                      <span className="text-white font-medium">{product}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <button
+                        type="button"
+                        className="p-1 rounded bg-slate-600/30 hover:bg-slate-500/40 transition-colors"
+                      >
+                        <span className="text-slate-300 text-lg">+</span>
+                      </button>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        className="bg-slate-500/30 border-slate-400/40 text-white hover:bg-slate-400/40 h-8 px-3"
+                      >
+                        Edit
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Create Group Action */}
+              {selectedProducts.length > 0 && (
+                <div className="flex items-center justify-between pt-4 border-t border-slate-600/20">
+                  <span className="text-slate-300">
+                    {selectedProducts.length} product{selectedProducts.length > 1 ? 's' : ''} selected
+                  </span>
+                  <Button
+                    type="button"
+                    onClick={() => {
+                      const groupName = prompt('Enter group name:');
+                      if (groupName?.trim()) {
+                        createProductGroup(groupName.trim());
+                      }
+                    }}
+                    className="bg-emerald-600/50 hover:bg-emerald-500/60 text-white border-0 h-8 px-4 text-sm"
+                  >
+                    Create Group
+                  </Button>
+                </div>
+              )}
+
+              {/* Show Existing Groups */}
+              {Object.keys(productGroups).length > 0 && (
+                <div className="pt-4 border-t border-slate-600/20">
+                  <h4 className="text-slate-300 font-medium mb-3">Product Groups</h4>
+                  <div className="space-y-2">
+                    {Object.entries(productGroups).map(([groupName, products]) => (
+                      <div key={groupName} className="flex items-center justify-between p-3 bg-slate-600/20 rounded-lg">
+                        <div>
+                          <span className="text-white font-medium">{groupName}</span>
+                          <span className="text-slate-400 text-sm ml-2">({products.length} products)</span>
+                        </div>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          className="bg-slate-500/30 border-slate-400/40 text-white hover:bg-slate-400/40 h-7 px-2 text-xs"
+                        >
+                          Edit
+                        </Button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Navigation Buttons */}
+              <div className="flex justify-between pt-6">
+                <Button
+                  type="button" 
+                  onClick={handleBack}
+                  variant="outline"
+                  className="bg-slate-700/30 border-slate-600/40 text-white hover:bg-slate-600/40 rounded-xl px-8 h-12"
+                >
+                  <ArrowLeft className="w-4 h-4 mr-2" />
+                  Back
+                </Button>
+                
+                <Button
+                  type="submit"
+                  className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold shadow-lg backdrop-blur-sm border-0 rounded-xl px-8 h-12"
+                >
+                  Complete Onboarding
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </div>
+            </form>
+
+            {/* Simple footer text */}
+            <div className="mt-8 text-center">
+              <p className="text-slate-400 font-light text-xs">
+                Group related products together for easier management and reporting
               </p>
             </div>
           </div>
