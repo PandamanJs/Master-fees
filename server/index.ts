@@ -56,9 +56,9 @@ app.use((req, res, next) => {
     serveStatic(app);
   }
 
-  // Use environment PORT or fallback to 5000 for hosting providers
+  // Use environment PORT for hosting providers, fallback to 5000 for local dev
   const port = process.env.PORT || 5000;
-  const host = process.env.HOST || "0.0.0.0";
+  const host = process.env.RENDER ? "0.0.0.0" : (process.env.HOST || "0.0.0.0");
   
   server.listen({
     port: Number(port),
