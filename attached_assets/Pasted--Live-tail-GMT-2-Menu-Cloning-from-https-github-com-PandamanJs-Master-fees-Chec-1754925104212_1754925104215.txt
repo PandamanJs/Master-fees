@@ -1,0 +1,75 @@
+
+
+Live tail
+GMT+2
+
+Menu
+
+==> Cloning from https://github.com/PandamanJs/Master-fees
+==> Checking out commit 20d5cfba47fc9b7097407c0c53d036e361813444 in branch main
+==> Using Node.js version 22.16.0 (default)
+==> Docs on specifying a Node.js version: https://render.com/docs/node-version
+==> Running build command 'npm install; npm run build'...
+added 678 packages, and audited 679 packages in 10s
+86 packages are looking for funding
+  run `npm fund` for details
+11 vulnerabilities (3 low, 8 moderate)
+To address issues that do not require attention, run:
+  npm audit fix
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+Run `npm audit` for details.
+> rest-express@1.0.0 build
+> vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
+vite v5.4.19 building for production...
+transforming...
+Browserslist: browsers data (caniuse-lite) is 10 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+✓ 2105 modules transformed.
+rendering chunks...
+computing gzip size...
+../dist/public/index.html                                          1.88 kB │ gzip:   0.79 kB
+../dist/public/assets/iPhone 16 - 46_1753900251503-iq-5hbdJ.png   21.24 kB
+../dist/public/assets/Screenshot 2025-07-30 170442-DfQ64oqr.png   38.51 kB
+../dist/public/assets/index-C6TPD2Cc.css                         183.85 kB │ gzip:  29.92 kB
+../dist/public/assets/index-DMDtpkgi.js                          933.87 kB │ gzip: 264.87 kB
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 6.03s
+  dist/index.js  166.8kb
+⚡ Done in 11ms
+==> Uploading build...
+==> Uploaded in 6.6s. Compression took 4.1s
+==> Build successful 🎉
+==> Deploying...
+==> Running 'npm run start'
+> rest-express@1.0.0 start
+> NODE_ENV=production node dist/index.js
+SENDGRID_API_KEY environment variable not set. Email notifications will be disabled.
+file:///opt/render/project/src/dist/index.js:3648
+  throw new Error(
+        ^
+Error: DATABASE_URL must be set. Did you forget to provision a database?
+    at file:///opt/render/project/src/dist/index.js:3648:9
+    at ModuleJob.run (node:internal/modules/esm/module_job:274:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:644:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+Node.js v22.16.0
+==> Exited with status 1
+==> Common ways to troubleshoot your deploy: https://render.com/docs/troubleshooting-deploys
+==> Running 'npm run start'
+> rest-express@1.0.0 start
+> NODE_ENV=production node dist/index.js
+SENDGRID_API_KEY environment variable not set. Email notifications will be disabled.
+file:///opt/render/project/src/dist/index.js:3648
+  throw new Error(
+        ^
+Error: DATABASE_URL must be set. Did you forget to provision a database?
+    at file:///opt/render/project/src/dist/index.js:3648:9
+    at ModuleJob.run (node:internal/modules/esm/module_job:274:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:644:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+Node.js v22.16.0
