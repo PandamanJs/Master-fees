@@ -25,6 +25,7 @@ import {
   schoolOnboarding,
   schools,
   onboardingSessions,
+  users,
   type User 
 } from "@shared/schema";
 import { storage } from "./storage";
@@ -140,6 +141,33 @@ function generateTestQuestions(testTypes: string[]) {
 }
 
 const router = Router();
+
+// Health check endpoint for hosting providers
+router.get("/health", async (_req, res) => {
+  try {
+    // Test database connection
+    await db.select().from(users).limit(1);
+    
+    res.status(200).json({
+      status: "healthy",
+      timestamp: new Date().toISOString(),
+      environment: process.env.NODE_ENV || 'development',
+      database: "connected",
+      version: "1.0.0"
+    });
+  } catch (error) {
+    res.status(503).json({
+      status: "unhealthy",
+      timestamp: new Date().toISOString(),
+      error: error instanceof Error ? error.message : "Database connection failed"
+    });
+  }
+});
+
+// Basic endpoint check
+router.get("/ping", (_req, res) => {
+  res.status(200).json({ message: "pong", timestamp: new Date().toISOString() });
+});
 
 // Authentication routes
 router.post("/auth/login", async (req, res) => {

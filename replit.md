@@ -20,10 +20,11 @@ Preferred communication style: Simple, everyday language.
 ### Backend Architecture
 - **Runtime**: Node.js with Express.js
 - **Language**: TypeScript with ES modules
-- **API Design**: RESTful API
+- **API Design**: RESTful API with health check endpoints
 - **Database**: PostgreSQL with Drizzle ORM
 - **Session Management**: Connect-pg-simple
-- **Technical Implementations**: Abstracted storage interface, centralized route registration, comprehensive error handling middleware.
+- **Technical Implementations**: Abstracted storage interface, centralized route registration, comprehensive error handling middleware, lazy initialization for external services (Figma API, OpenAI), production-ready deployment configurations.
+- **Hosting Compatibility**: Configured for deployment on Railway, Render, Vercel, Fly.io, Docker, PM2, and traditional VPS hosting.
 
 ### Database Layer
 - **ORM**: Drizzle ORM
