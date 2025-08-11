@@ -1,7 +1,18 @@
 import OpenAI from "openai";
 
-// the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+// Lazy initialization to avoid requiring OPENAI_API_KEY at startup
+let openaiInstance: OpenAI | null = null;
+
+const getOpenAI = (): OpenAI => {
+  if (!openaiInstance) {
+    const apiKey = process.env.OPENAI_API_KEY;
+    if (!apiKey) {
+      throw new Error('OPENAI_API_KEY environment variable is required for AI school suggestions');
+    }
+    openaiInstance = new OpenAI({ apiKey });
+  }
+  return openaiInstance;
+};
 
 interface SchoolSuggestionRequest {
   partialSchoolName?: string;
@@ -68,6 +79,7 @@ Respond with JSON in this exact format:
   ]
 }`;
 
+    const openai = getOpenAI();
     const response = await openai.chat.completions.create({
       model: "gpt-4o",
       messages: [
@@ -107,6 +119,7 @@ export async function enhanceSchoolName(partialName: string, location: { country
     
     Respond with JSON: {"names": ["School Name 1", "School Name 2", "School Name 3"]}`;
 
+    const openai = getOpenAI();
     const response = await openai.chat.completions.create({
       model: "gpt-4o",
       messages: [

@@ -1,9 +1,14 @@
 import OpenAI from "openai";
 
-// Initialize OpenAI client
-const openai = process.env.OPENAI_API_KEY ? new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-}) : null;
+// Lazy initialization to avoid requiring OPENAI_API_KEY at startup
+let openaiInstance: OpenAI | null = null;
+
+const getOpenAI = (): OpenAI | null => {
+  if (!openaiInstance && process.env.OPENAI_API_KEY) {
+    openaiInstance = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+  }
+  return openaiInstance;
+};
 
 // Comprehensive school database for AI auto-fill
 const knownSchoolsDatabase = {
@@ -180,7 +185,7 @@ export async function getAISchoolAutofill(schoolName: string): Promise<{
   try {
     // First check our known schools database
     const normalizedName = schoolName.toLowerCase().trim();
-    const knownSchool = knownSchoolsDatabase[normalizedName];
+    const knownSchool = (knownSchoolsDatabase as any)[normalizedName];
     
     if (knownSchool) {
       return {
@@ -203,6 +208,7 @@ export async function getAISchoolAutofill(schoolName: string): Promise<{
     }
 
     // If OpenAI is available, use AI to generate suggestions
+    const openai = getOpenAI();
     if (openai) {
       const aiSuggestions = await generateAISchoolSuggestions(schoolName);
       return {
@@ -237,7 +243,7 @@ function findSimilarSchool(schoolName: string): any | null {
   // Look for partial matches
   for (const knownName of schools) {
     if (schoolName.includes(knownName.split(' ')[0]) || knownName.includes(schoolName.split(' ')[0])) {
-      return knownSchoolsDatabase[knownName];
+      return (knownSchoolsDatabase as any)[knownName];
     }
   }
   
@@ -246,6 +252,7 @@ function findSimilarSchool(schoolName: string): any | null {
 
 // Generate AI-powered school suggestions
 async function generateAISchoolSuggestions(schoolName: string): Promise<any> {
+  const openai = getOpenAI();
   if (!openai) return null;
 
   try {
@@ -281,7 +288,7 @@ async function generateAISchoolSuggestions(schoolName: string): Promise<any> {
       }
     }`;
 
-    const response = await openai.chat.completions.create({
+    const response = await openai!.chat.completions.create({
       model: "gpt-4o", // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
       messages: [{ role: "user", content: prompt }],
       response_format: { type: "json_object" },

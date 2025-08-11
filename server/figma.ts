@@ -107,11 +107,18 @@ export class FigmaService {
   constructor() {
     this.apiKey = process.env.FIGMA_ACCESS_TOKEN || '';
     if (!this.apiKey) {
-      throw new Error('FIGMA_ACCESS_TOKEN environment variable is required');
+      console.warn('FIGMA_ACCESS_TOKEN environment variable not set. Figma functionality will be limited.');
+    }
+  }
+
+  private checkApiKey() {
+    if (!this.apiKey) {
+      throw new Error('FIGMA_ACCESS_TOKEN environment variable is required for Figma operations');
     }
   }
 
   private async makeRequest(endpoint: string): Promise<any> {
+    this.checkApiKey();
     const response = await fetch(`${this.baseUrl}${endpoint}`, {
       headers: {
         'X-Figma-Token': this.apiKey,
@@ -194,7 +201,7 @@ export class FigmaService {
       });
     }
     
-    return [...new Set(colors)]; // Remove duplicates
+    return Array.from(new Set(colors)); // Remove duplicates
   }
 
   extractTextStyles(node: FigmaNode): FigmaTextStyle[] {
@@ -319,4 +326,12 @@ export default function ${componentName}() {
   }
 }
 
-export const figmaService = new FigmaService();
+// Lazy initialization to avoid requiring FIGMA_ACCESS_TOKEN at startup
+let figmaServiceInstance: FigmaService | null = null;
+
+export const getFigmaService = (): FigmaService => {
+  if (!figmaServiceInstance) {
+    figmaServiceInstance = new FigmaService();
+  }
+  return figmaServiceInstance;
+};

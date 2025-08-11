@@ -1,10 +1,19 @@
 import OpenAI from 'openai';
 import { logger, performanceMonitor } from './middleware/logger';
 
-// Initialize OpenAI client
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+// Lazy initialization to avoid requiring OPENAI_API_KEY at startup
+let openaiInstance: OpenAI | null = null;
+
+const getOpenAI = (): OpenAI => {
+  if (!openaiInstance) {
+    const apiKey = process.env.OPENAI_API_KEY;
+    if (!apiKey) {
+      throw new Error('OPENAI_API_KEY environment variable is required for AI operations');
+    }
+    openaiInstance = new OpenAI({ apiKey });
+  }
+  return openaiInstance;
+};
 
 interface ExtractedCVData {
   personalInfo: {
@@ -83,6 +92,7 @@ export class CVExtractionService {
       const systemPrompt = this.buildSystemPrompt(options);
       const userPrompt = this.buildUserPrompt(cvText, options);
 
+      const openai = getOpenAI();
       const response = await openai.chat.completions.create({
         model: "gpt-4o", // Latest model as per blueprint
         messages: [
@@ -124,6 +134,7 @@ export class CVExtractionService {
       const systemPrompt = this.buildSystemPrompt(options);
       const userPrompt = this.buildUserPrompt("Please extract all text and information from this CV image.", options);
 
+      const openai = getOpenAI();
       const response = await openai.chat.completions.create({
         model: "gpt-4o", // Supports vision
         messages: [
@@ -190,6 +201,7 @@ export class CVExtractionService {
     try {
       logger.info('Starting skills analysis');
 
+      const openai = getOpenAI();
       const response = await openai.chat.completions.create({
         model: "gpt-4o",
         messages: [

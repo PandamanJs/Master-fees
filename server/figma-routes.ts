@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { figmaService } from "./figma";
+import { getFigmaService } from "./figma";
 import { z } from "zod";
 
 const router = Router();
@@ -35,6 +35,7 @@ router.get("/figma/file/:fileKey", async (req, res) => {
     }
     
     // Try to access regular Figma file
+    const figmaService = getFigmaService();
     const file = await figmaService.getFile(fileKey);
     res.json({
       success: true,
@@ -87,6 +88,7 @@ router.post("/figma/file/:fileKey/nodes", async (req, res) => {
     const { nodeIds } = req.body;
     const validatedNodeIds = nodeIdsSchema.parse(nodeIds);
     
+    const figmaService = getFigmaService();
     const nodes = await figmaService.getFileNodes(fileKey, validatedNodeIds);
     
     res.json({
@@ -111,6 +113,7 @@ router.post("/figma/file/:fileKey/images", async (req, res) => {
     const { nodeIds, format = 'png', scale = 2 } = req.body;
     const validatedNodeIds = nodeIdsSchema.parse(nodeIds);
     
+    const figmaService = getFigmaService();
     const images = await figmaService.getImages(fileKey, validatedNodeIds, format, scale);
     
     res.json({
@@ -132,6 +135,7 @@ router.post("/figma/file/:fileKey/images", async (req, res) => {
 router.get("/figma/file/:fileKey/components", async (req, res) => {
   try {
     const fileKey = fileKeySchema.parse(req.params.fileKey);
+    const figmaService = getFigmaService();
     const components = await figmaService.getComponents(fileKey);
     
     res.json({
@@ -153,6 +157,7 @@ router.get("/figma/file/:fileKey/components", async (req, res) => {
 router.get("/figma/file/:fileKey/styles", async (req, res) => {
   try {
     const fileKey = fileKeySchema.parse(req.params.fileKey);
+    const figmaService = getFigmaService();
     const styles = await figmaService.getStyles(fileKey);
     
     res.json({
@@ -203,6 +208,7 @@ router.post("/figma/sync-design/:fileKey", async (req, res) => {
       });
     }
     
+    const figmaService = getFigmaService();
     const designSystem = await figmaService.syncDesignSystem(fileKey);
     
     res.json({
@@ -239,6 +245,7 @@ router.post("/figma/generate-component/:fileKey", async (req, res) => {
       });
     }
     
+    const figmaService = getFigmaService();
     const componentCode = await figmaService.generateReactComponent(fileKey, nodeId);
     
     res.json({
@@ -335,10 +342,11 @@ router.post("/figma/import-dashboard/:fileKey", async (req, res) => {
     const fileKey = fileKeySchema.parse(req.params.fileKey);
     
     // Get the full file to analyze structure
+    const figmaService = getFigmaService();
     const file = await figmaService.getFile(fileKey);
     
     // Extract dashboard-specific elements
-    const dashboardNodes = file.document.children?.filter(node => 
+    const dashboardNodes = file.document.children?.filter((node: any) => 
       node.name.toLowerCase().includes('dashboard') ||
       node.name.toLowerCase().includes('master fees')
     ) || [];
