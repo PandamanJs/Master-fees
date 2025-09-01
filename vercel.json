@@ -1,5 +1,14 @@
 {
   "version": 2,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": ["dist/**", "api/**"]
+      }
+    }
+  ],
   "functions": {
     "api/index.js": {
       "maxDuration": 10
@@ -11,8 +20,13 @@
       "dest": "/api/index.js"
     },
     {
+      "src": "/(.*\\.(js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot))",
+      "dest": "/dist/public/$1"
+    },
+    {
       "src": "/(.*)",
       "dest": "/api/index.js"
     }
-  ]
+  ],
+  "outputDirectory": "dist/public"
 }
