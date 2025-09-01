@@ -56,7 +56,7 @@ app.use((req, res, next) => {
     serveStatic(app);
   }
 
-  // Use environment PORT for hosting providers, fallback to 5000 for local dev
+  // Traditional server for hosting providers (non-serverless)
   const port = process.env.PORT || 5000;
   const host = process.env.RENDER ? "0.0.0.0" : (process.env.HOST || "0.0.0.0");
   
@@ -68,3 +68,6 @@ app.use((req, res, next) => {
     log(`serving on port ${port} in ${process.env.NODE_ENV || 'production'} mode`);
   });
 })();
+
+// Export for Vercel serverless functions
+export default app;

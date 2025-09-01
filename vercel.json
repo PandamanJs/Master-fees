@@ -2,11 +2,8 @@
   "version": 2,
   "builds": [
     {
-      "src": "package.json",
-      "use": "@vercel/node",
-      "config": {
-        "includeFiles": ["dist/**", "client/dist/**"]
-      }
+      "src": "dist/index.js",
+      "use": "@vercel/node"
     }
   ],
   "routes": [
@@ -21,5 +18,10 @@
   ],
   "env": {
     "NODE_ENV": "production"
+  },
+  "functions": {
+    "dist/index.js": {
+      "maxDuration": 30
+    }
   }
 }
